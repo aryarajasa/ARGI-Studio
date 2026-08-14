@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const preloader = document.getElementById("sitePreloader");
     const canvas = document.getElementById("preloaderAsciiCanvas");
     const solidLogo = document.getElementById("preloaderSolidLogo");
+    const logoImgEl = document.getElementById("preloaderLogoImg");
     const counterEl = document.getElementById("preloaderCounter");
 
     if (!preloader || !counterEl) {
@@ -29,51 +30,45 @@ document.addEventListener("DOMContentLoaded", () => {
     let width = 0;
     let height = 0;
 
-    if (canvas) {
+    const buildGridFromImage = (img) => {
+      if (!canvas) return;
       ctx = canvas.getContext("2d");
       const rect = canvas.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = rect.width || 600;
+      width = rect.width || 320;
       height = rect.height || 160;
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       ctx.scale(dpr, dpr);
 
-      // Offscreen canvas: Rasterize matching logo typography from computed styles
       const offCanvas = document.createElement("canvas");
       offCanvas.width = width;
       offCanvas.height = height;
       const offCtx = offCanvas.getContext("2d");
 
-      // Extract exact font size and family from DOM element for 1:1 pixel alignment
-      const sampleWordmark = solidLogo ? solidLogo.querySelector(".preloader-wordmark") : null;
-      let fontSize = Math.min(width * 0.22, 102);
-      let fontFamily = '"Instrument Serif", Georgia, serif';
+      // Draw the exact official logo image centered
+      const imgTargetH = logoImgEl && logoImgEl.offsetHeight > 0
+        ? logoImgEl.offsetHeight
+        : Math.min(height * 0.72, 110);
+      const aspect = (img.naturalWidth && img.naturalHeight)
+        ? (img.naturalWidth / img.naturalHeight)
+        : (100 / 112);
+      const imgTargetW = imgTargetH * aspect;
+      const drawX = (width - imgTargetW) / 2;
+      const drawY = (height - imgTargetH) / 2;
 
-      if (sampleWordmark) {
-        const computed = window.getComputedStyle(sampleWordmark);
-        fontSize = parseFloat(computed.fontSize) || fontSize;
-        fontFamily = computed.fontFamily || fontFamily;
-      }
-
-      offCtx.font = `italic 400 ${fontSize}px ${fontFamily}`;
-      offCtx.fillStyle = "#ffffff";
-      offCtx.textAlign = "center";
-      offCtx.textBaseline = "middle";
-      offCtx.fillText("argi.©", width / 2, height / 2);
+      offCtx.drawImage(img, drawX, drawY, imgTargetW, imgTargetH);
 
       const imgData = offCtx.getImageData(0, 0, width, height).data;
 
       // High-density ASCII cell geometry
-      const cellW = width < 480 ? 5.2 : 6.8;
-      const cellH = width < 480 ? 8.2 : 10.4;
+      const cellW = width < 480 ? 4.8 : 5.8;
+      const cellH = width < 480 ? 7.4 : 9.2;
       const cols = Math.floor(width / cellW);
       const rows = Math.floor(height / cellH);
 
-      const highDensity = ["█", "▓", "@", "#", "M", "W", "8", "B", "%", "&"];
-      const midDensity = ["▒", "*", "=", "+", "a", "r", "g", "i", "x", "z"];
-      const edgeDensity = ["░", ":", "-", "~", "/", "\\", ".", "·"];
+      gridCells = [];
 
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
@@ -82,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
           const endX = Math.min(Math.floor((c + 1) * cellW), width);
           const endY = Math.min(Math.floor((r + 1) * cellH), height);
 
-          // Calculate average luminance in cell
           let totalAlpha = 0;
           let pixelCount = 0;
 
@@ -99,8 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
           if (avgAlpha > 0.04) {
             let densityTier = 0;
             if (avgAlpha > 0.55) densityTier = 2; // high density
-            else if (avgAlpha > 0.24) densityTier = 1; // mid density
-            else densityTier = 0; // edge/serif
+            else if (avgAlpha > 0.22) densityTier = 1; // mid density
+            else densityTier = 0; // edge
 
             gridCells.push({
               x: startX + cellW / 2,
@@ -113,6 +107,14 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       }
+    };
+
+    const logoImg = new Image();
+    logoImg.src = "assets/logo.png";
+    if (logoImg.complete) {
+      buildGridFromImage(logoImg);
+    } else {
+      logoImg.onload = () => buildGridFromImage(logoImg);
     }
 
     let progress = 0;
@@ -130,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ctx.textBaseline = "middle";
 
       const highDensity = ["█", "▓", "@", "#", "M", "W", "8", "B", "%", "&"];
-      const midDensity = ["▒", "*", "=", "+", "a", "r", "g", "i", "x", "z"];
+      const midDensity = ["▒", "*", "=", "+", "a", "g", "x", "z", "o", "s"];
       const edgeDensity = ["░", ":", "-", "~", "/", "\\", ".", "·"];
 
       // Dynamic horizontal illumination sweep

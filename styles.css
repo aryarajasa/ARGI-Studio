@@ -161,8 +161,8 @@ button {
 /* ASCII Box & Solid Logo Morph Container */
 .preloader-ascii-box {
   position: relative;
-  width: min(94vw, 680px);
-  height: clamp(120px, 22vw, 180px);
+  width: min(85vw, 360px);
+  height: clamp(140px, 28vw, 190px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -194,30 +194,16 @@ button {
 
 .preloader-solid-logo.is-visible {
   opacity: 1;
-  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.4));
+  filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.45));
 }
 
-.preloader-wordmark {
-  font-family: var(--font-serif);
-  font-size: clamp(4.5rem, 13vw, 8.5rem);
-  font-style: italic;
-  letter-spacing: -0.035em;
-  color: #ffffff;
-  line-height: 1;
+.preloader-logo-img {
+  height: clamp(90px, 18vw, 130px);
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: invert(1) brightness(2);
   user-select: none;
-}
-
-.preloader-dot {
-  color: #ffffff;
-}
-
-.preloader-symbol {
-  font-size: clamp(1.85rem, 5vw, 3.5rem);
-  font-family: var(--font-sans);
-  font-style: normal;
-  vertical-align: super;
-  margin-left: 0.25rem;
-  opacity: 0.85;
 }
 
 .preloader-counter-wrap {

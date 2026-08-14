@@ -1541,20 +1541,23 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.25rem;
   font-size: 0.8125rem;
-  margin-bottom: 1.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
 
 .telemetry-status-pill {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   background: rgba(16, 185, 129, 0.15);
   color: #34d399;
   border: 1px solid rgba(16, 185, 129, 0.3);
-  padding: 0.3rem 0.75rem;
+  padding: 0.35rem 0.85rem;
   border-radius: var(--radius-full);
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .status-pulse-dot {
@@ -1573,9 +1576,10 @@ button {
 }
 
 .telemetry-freq {
-  color: var(--text-white-subtle);
+  color: var(--text-white-muted);
   font-size: 0.75rem;
   font-family: var(--font-mono);
+  white-space: nowrap;
 }
 
 /* --- REPLACED STUDIO CAPACITY SPRINT MATRIX WIDGET --- */
@@ -1594,6 +1598,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   font-size: 0.75rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   padding-bottom: 0.75rem;
@@ -1604,14 +1609,21 @@ button {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--text-white-muted);
+  white-space: nowrap;
 }
 
 .capacity-badge {
   color: #60a5fa;
   font-weight: 600;
   background: rgba(96, 165, 250, 0.12);
-  padding: 0.15rem 0.55rem;
+  padding: 0.3rem 0.75rem;
   border-radius: var(--radius-full);
+  white-space: nowrap;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .sprint-slot-row {
@@ -1624,6 +1636,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
   font-size: 0.8125rem;
 }
 
@@ -1636,6 +1649,8 @@ button {
   font-size: 0.75rem;
   font-weight: 600;
   font-family: var(--font-mono);
+  white-space: nowrap;
+  text-align: center;
 }
 
 .text-amber { color: #fbbf24; }

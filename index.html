@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>David AI | High-Quality Audio Datasets for Speech &amp; Conversational AI</title>
+  <meta name="description" content="David AI is an audio data research company - trusted by top AI labs to develop the proprietary audio datasets that power their models." />
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="David AI | High-Quality Audio Datasets for Speech &amp; Conversational AI" />
+  <meta property="og:description" content="David AI is an audio data research company - trusted by top AI labs to develop the proprietary audio datasets that power their models." />
+  <meta property="og:image" content="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/68120ffbe020c8678b41419c_OG%20Image-min%20(1).jpg" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/68120fb32782a95f6fe23308_Favicon.png" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/681eab052066f0b22377b0a0_Telegram%20A%20Lines_imresizer.jpg" />
+
+  <!-- Google Fonts: Besley (Serif) & Inter (Sans-serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-wrapper">
+    
+    <!-- FLOATING NAVBAR -->
+    <header class="navbar-wrapper" id="navbar">
+      <div class="nav-container">
+        <div class="nav-pill">
+          <a href="#top" class="nav-brand" aria-label="David AI Home">
+            <!-- Dark Wordmark (Default) -->
+            <svg class="nav-logo is-default" viewBox="0 0 106 20" fill="currentColor" height="18" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0.5H6.2C10.8 0.5 14.1 3.7 14.1 8.3V11.2C14.1 15.8 10.8 19 6.2 19H0V0.5ZM2.8 3.2V16.3H6.1C9.2 16.3 11.2 14.2 11.2 11.1V8.4C11.2 5.3 9.2 3.2 6.1 3.2H2.8Z"/>
+              <path d="M22.5 19H19.7L25.3 0.5H28.4L34 19H31.2L29.6 13.7H24.1L22.5 19ZM24.9 11.2H28.8L26.9 4.8L24.9 11.2Z"/>
+              <path d="M41.8 19L36.3 0.5H39.2L43.2 14.6L47.2 0.5H50.1L44.6 19H41.8Z"/>
+              <path d="M54.2 0.5H57V19H54.2V0.5Z"/>
+              <path d="M62.6 0.5H68.8C73.4 0.5 76.7 3.7 76.7 8.3V11.2C76.7 15.8 73.4 19 68.8 19H62.6V0.5ZM65.4 3.2V16.3H68.7C71.8 16.3 73.8 14.2 73.8 11.1V8.4C73.8 5.3 71.8 3.2 68.7 3.2H65.4Z"/>
+              <path d="M91.2 19H88.4L94 0.5H97.1L102.7 19H99.9L98.3 13.7H92.8L91.2 19ZM93.6 11.2H97.5L95.6 4.8L93.6 11.2Z"/>
+              <path d="M103.2 0.5H106V19H103.2V0.5Z"/>
+            </svg>
+            <!-- White Wordmark (For Dark Sections) -->
+            <svg class="nav-logo is-light" viewBox="0 0 106 20" fill="currentColor" height="18" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0.5H6.2C10.8 0.5 14.1 3.7 14.1 8.3V11.2C14.1 15.8 10.8 19 6.2 19H0V0.5ZM2.8 3.2V16.3H6.1C9.2 16.3 11.2 14.2 11.2 11.1V8.4C11.2 5.3 9.2 3.2 6.1 3.2H2.8Z"/>
+              <path d="M22.5 19H19.7L25.3 0.5H28.4L34 19H31.2L29.6 13.7H24.1L22.5 19ZM24.9 11.2H28.8L26.9 4.8L24.9 11.2Z"/>
+              <path d="M41.8 19L36.3 0.5H39.2L43.2 14.6L47.2 0.5H50.1L44.6 19H41.8Z"/>
+              <path d="M54.2 0.5H57V19H54.2V0.5Z"/>
+              <path d="M62.6 0.5H68.8C73.4 0.5 76.7 3.7 76.7 8.3V11.2C76.7 15.8 73.4 19 68.8 19H62.6V0.5ZM65.4 3.2V16.3H68.7C71.8 16.3 73.8 14.2 73.8 11.1V8.4C73.8 5.3 71.8 3.2 68.7 3.2H65.4Z"/>
+              <path d="M91.2 19H88.4L94 0.5H97.1L102.7 19H99.9L98.3 13.7H92.8L91.2 19ZM93.6 11.2H97.5L95.6 4.8L93.6 11.2Z"/>
+              <path d="M103.2 0.5H106V19H103.2V0.5Z"/>
+            </svg>
+          </a>
+
+          <!-- Navigation Links -->
+          <nav class="nav-menu" id="navMenu">
+            <a href="#mission" class="nav-link">Mission</a>
+            <a href="#process" class="nav-link">Process</a>
+            <a href="#datasets" class="nav-link">Datasets</a>
+            <a href="#careers" class="nav-link">Careers</a>
+            <a href="#news" class="nav-link">News</a>
+            <a href="#contact" class="nav-link">Contact</a>
+            <a href="https://research.withdavid.ai" target="_blank" rel="noopener noreferrer" class="nav-link is-external">Research ↗</a>
+          </nav>
+        </div>
+
+        <!-- Action / Mobile Controls -->
+        <div class="nav-actions">
+          <a href="#contact" class="btn btn-primary nav-cta">Work with us</a>
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle mobile menu" aria-expanded="false">
+            <span class="line line-top"></span>
+            <span class="line line-bottom"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      
+      <!-- HERO SECTION -->
+      <section id="top" class="section-hero">
+        <div class="hero-bg-canvas">
+          <div class="hero-gradient-orb orb-1"></div>
+          <div class="hero-gradient-orb orb-2"></div>
+          <div class="hero-wave-mask"></div>
+        </div>
+
+        <div class="container-medium hero-content">
+          <h1 class="hero-heading">
+            AI is <em class="serif-accent">meaningful</em> when you can naturally interact with it.
+          </h1>
+          <div class="hero-cta-wrap">
+            <a href="#datasets" class="btn btn-primary btn-large">Explore datasets</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 1: MISSION -->
+      <section id="mission" class="section section-mission">
+        <div class="container-medium">
+          <div class="section-badge-wrapper">
+            <div class="section-badge">
+              <span class="badge-number">1</span>
+              <span class="badge-line"></span>
+              <span class="badge-label">Mission</span>
+            </div>
+          </div>
+
+          <div class="mission-text-wrap">
+            <h2 class="editorial-heading">
+              <span class="text-primary">We are an audio data research company.</span>
+              <span class="text-secondary">Our mission is to bring AI into the real world through voice, the most important interface to human interaction.</span>
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: PROCESS -->
+      <section id="process" class="section section-process">
+        <div class="container-medium">
+          <div class="section-badge-wrapper">
+            <div class="section-badge">
+              <span class="badge-number">2</span>
+              <span class="badge-line"></span>
+              <span class="badge-label">Process</span>
+            </div>
+          </div>
+
+          <div class="process-header">
+            <h2 class="section-title">
+              We develop audio datasets with <em class="serif-accent">the same rigor</em> researchers bring to models.
+            </h2>
+          </div>
+
+          <!-- Interactive Process Viewer -->
+          <div class="process-viewer-grid">
+            <!-- Left Side: Interactive Step Cards -->
+            <div class="process-steps-list" id="processStepsList">
+              <div class="process-step-item is-active" data-step="0">
+                <div class="step-indicator">i.</div>
+                <div class="step-body">
+                  <h3 class="step-title">Hypothesize</h3>
+                  <p class="step-desc">Determine an audio AI capability we wish to unlock.</p>
+                </div>
+              </div>
+
+              <div class="process-step-item" data-step="1">
+                <div class="step-indicator">ii.</div>
+                <div class="step-body">
+                  <h3 class="step-title">Design</h3>
+                  <p class="step-desc">Architect a shape of data to teach models that capability.</p>
+                </div>
+              </div>
+
+              <div class="process-step-item" data-step="2">
+                <div class="step-indicator">iii.</div>
+                <div class="step-body">
+                  <h3 class="step-title">Experiment</h3>
+                  <p class="step-desc">Launch a targeted data collection.</p>
+                </div>
+              </div>
+
+              <div class="process-step-item" data-step="3">
+                <div class="step-indicator">iv.</div>
+                <div class="step-body">
+                  <h3 class="step-title">Evaluate &amp; Iterate</h3>
+                  <p class="step-desc">Measure data quality and tune the collection until a small, high-signal set is achieved.</p>
+                </div>
+              </div>
+
+              <div class="process-step-item" data-step="4">
+                <div class="step-indicator">v.</div>
+                <div class="step-body">
+                  <h3 class="step-title">Productionize</h3>
+                  <p class="step-desc">Scale the dataset to thousands of hours.</p>
+                </div>
+              </div>
+
+              <div class="process-step-item" data-step="5">
+                <div class="step-indicator">vi.</div>
+                <div class="step-body">
+                  <h3 class="step-title">Release</h3>
+                  <p class="step-desc">Publish the dataset, and continuously improve it over time.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: Graphic Visual Stage -->
+            <div class="process-visual-stage" id="processVisualStage">
+              <!-- Visual 0: Hypothesize -->
+              <div class="process-art-layer is-active" data-art="0">
+                <img src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6813ba3c54b3601bc3008445_362aacf22eaae431e17d2a02bbd3ae6a_process-graphic.avif" alt="Hypothesize - Audio data capabilities" class="process-img" />
+              </div>
+              <!-- Visual 1: Design -->
+              <div class="process-art-layer" data-art="1">
+                <img src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6813ba3b7fe0bdb9e0476875_6cbd9663d0b7a353ea6c77bcd6c110fd_process-graphic-1.avif" alt="Design - Data shape architecture" class="process-img" />
+              </div>
+              <!-- Visual 2: Experiment -->
+              <div class="process-art-layer" data-art="2">
+                <img src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6813ba3bb6ea5e6e4be488a4_d05a5550ae34f948467c786e73d1d46a_process-graphic-2.avif" alt="Experiment - Targeted data collection" class="process-img" />
+              </div>
+              <!-- Visual 3: Evaluate & Iterate -->
+              <div class="process-art-layer" data-art="3">
+                <img src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6813ba3c153bcdfef79aec24_c0dc648a8e426295ab71ca425a54a00b_process-graphic-3.avif" alt="Evaluate & Iterate - Quality tuning" class="process-img" />
+              </div>
+              <!-- Visual 4: Productionize -->
+              <div class="process-art-layer" data-art="4">
+                <img src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6813ba3c8ae8e114e065fa38_5c795c832677793dbe0b2b726d276204_process-graphic-4.avif" alt="Productionize - Scale to thousands of hours" class="process-img" />
+              </div>
+              <!-- Visual 5: Release -->
+              <div class="process-art-layer" data-art="5">
+                <img src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6814ac224f08fd08b7e316cb_817e1227e6009462b44e840eeb9f81c4_process-graphic-5.avif" alt="Release - Continuous dataset updates" class="process-img" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: FEATURED DATASETS (DARK THEME) -->
+      <section id="datasets" class="section section-datasets-dark" data-theme="dark">
+        <div class="container-medium">
+          
+          <div class="datasets-intro-text">
+            <h2 class="editorial-heading-dark">
+              <span class="text-white">Our datasets are used by Fortune 100 companies and research labs</span>
+              <span class="text-white-muted"> that work with speech recognition, translation, synthesis, and conversational AI.</span>
+            </h2>
+          </div>
+
+          <div class="datasets-header-wrap">
+            <div class="section-badge-wrapper">
+              <div class="section-badge is-light">
+                <span class="badge-number">3</span>
+                <span class="badge-line"></span>
+                <span class="badge-label">Featured Datasets</span>
+              </div>
+            </div>
+
+            <h3 class="datasets-section-title">
+              A dataset suite designed for speech-to-speech, multilingual, and voice interaction systems
+            </h3>
+          </div>
+
+          <!-- DATASET CARDS HORIZONTAL GRID -->
+          <div class="datasets-cards-grid">
+            
+            <!-- Card 1: Converse -->
+            <div class="dataset-card theme-converse">
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-icon-wrap">
+                    <img src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6816487dc6459a3956fd9c05_Icon%20wrapper-3.svg" alt="Converse icon" class="card-icon" />
+                  </div>
+                  <h4 class="card-title">Converse</h4>
+                </div>
+                <p class="card-desc">
+                  Our flagship English dataset consists of channel-separated, natural two-speaker conversations spanning a wide range of topics.
+                </p>
+              </div>
+              <div class="card-media">
+                <video autoplay loop muted playsinline class="card-video" poster="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6814e7d08edc811fe05ebcb3_waveforms%20optimized-poster-00001.jpg">
+                  <source src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6814e7d08edc811fe05ebcb3_waveforms%20optimized-transcode.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+
+            <!-- Card 2: Atlas -->
+            <div class="dataset-card theme-atlas">
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-icon-wrap">
+                    <img src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6816487dcef286fbce92973f_Icon%20wrapper-2.svg" alt="Atlas icon" class="card-icon" />
+                  </div>
+                  <h4 class="card-title">Atlas</h4>
+                </div>
+                <p class="card-desc">
+                  A multilingual dataset spanning 15+ languages. It includes metadata on dialects and accents and follows the same format as Converse.
+                </p>
+              </div>
+              <div class="card-media atlas-media-wrap">
+                <div class="language-pill-badge">15+ Languages • Dialects &amp; Accents</div>
+                <img src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/68194d353fec96f7b3809695_ab08716eb6c6f1b4f37f3b62289e6bc5_Map.avif" alt="World Map Dialects" class="atlas-map-bg" />
+              </div>
+            </div>
+
+            <!-- Card 3: Chorus -->
+            <div class="dataset-card theme-chorus">
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-icon-wrap">
+                    <img src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6816487d20e197dfdc62d1e5_Icon%20wrapper-1.svg" alt="Chorus icon" class="card-icon" />
+                  </div>
+                  <h4 class="card-title">Chorus</h4>
+                </div>
+                <p class="card-desc">
+                  A dataset of conversations involving three or more speakers. Originally designed for training speaker-separation and diarization models.
+                </p>
+              </div>
+              <div class="card-media">
+                <video autoplay loop muted playsinline class="card-video" poster="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6814dfde2d409eeb150ade8d_speaker%20trim%20looped-optimized-poster-00001.jpg">
+                  <source src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6814dfde2d409eeb150ade8d_speaker%20trim%20looped-optimized-transcode.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+
+            <!-- Card 4: Dialog -->
+            <div class="dataset-card theme-dialog">
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-icon-wrap">
+                    <img src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/6816487d9a37f0d3f5fe3006_Icon%20wrapper.svg" alt="Dialog icon" class="card-icon" />
+                  </div>
+                  <h4 class="card-title">Dialog</h4>
+                </div>
+                <p class="card-desc">
+                  A collection of expert conversations across a range of domains.
+                </p>
+              </div>
+              <div class="card-media">
+                <video autoplay loop muted playsinline class="card-video" poster="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/68153ff5385d73ad4e9bcee6_categories%20trim%20looped2-optimized-poster-00001.jpg">
+                  <source src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/68153ff5385d73ad4e9bcee6_categories%20trim%20looped2-optimized-transcode.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- DATASET CTA BANNER -->
+          <div class="datasets-cta-box">
+            <div class="cta-box-text">
+              <h4 class="cta-box-title">Browse more datasets or design one with us</h4>
+              <p class="cta-box-desc">
+                We offer additional proprietary datasets not listed here.<br />
+                Contact us to request a sample, explore more options, or collaborate on a new dataset.
+              </p>
+            </div>
+            <a href="#contact" class="btn btn-secondary-light">Contact us</a>
+          </div>
+
+          <!-- HOW IT WORKS 4-STEP GRID -->
+          <div class="works-steps-grid">
+            <div class="works-item">
+              <div class="works-icon-circle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M22 12C19.5 9.95 19.6875 4.825 17.6375 4.825C15.5875 4.825 15.5875 9.95 13.025 9.95C10.4625 9.95 10.4625 1.75 7.90001 1.75C5.33751 1.75 4.74048 9.5 2.00024 12C4.74048 14.5 5.33751 22.25 7.90001 22.25C10.4625 22.25 10.4625 14.05 13.025 14.05C15.5875 14.05 15.5875 19.175 17.6375 19.175C19.6875 19.175 19.5 14 22 12Z"/>
+                </svg>
+              </div>
+              <h4 class="works-title">1. Request samples</h4>
+              <p class="works-desc">We will set up a quick call to understand your use case and then send you relevant data samples.</p>
+            </div>
+
+            <div class="works-item">
+              <div class="works-icon-circle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M9.75 21.25H4.75V2.75H19.25V10.75"/>
+                  <path d="M13.25 19.0832L15.3929 21.25L20.75 14.75"/>
+                </svg>
+              </div>
+              <h4 class="works-title">2. Purchase access</h4>
+              <p class="works-desc">Enter a data license agreement for the dataset and use-cases your team needs.</p>
+            </div>
+
+            <div class="works-item">
+              <div class="works-icon-circle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M15.5 14.25C18.6756 14.25 21.25 11.6756 21.25 8.5C21.25 5.32436 18.6756 2.75 15.5 2.75C12.3244 2.75 9.75 5.32436 9.75 8.5C9.75 8.98191 9.80928 9.44996 9.92095 9.89728L3.75 16.0682V20.2501H7.93182L9.25 18.9319V16.2501H11.9318L14.1028 14.0791C14.5501 14.1907 15.0181 14.25 15.5 14.25Z"/>
+                </svg>
+              </div>
+              <h4 class="works-title">3. Receive data</h4>
+              <p class="works-desc">For off-the-shelf datasets, we will grant your team access within one to two days.</p>
+            </div>
+
+            <div class="works-item">
+              <div class="works-icon-circle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M22.2808 8.09448L16.6558 2.46948C16.5861 2.39974 16.5034 2.34442 16.4123 2.30668C16.3213 2.26894 16.2237 2.24951 16.1251 2.24951C16.0266 2.24951 15.929 2.26894 15.8379 2.30668C15.7469 2.34442 15.6642 2.39974 15.5945 2.46948L3.47919 14.5848C2.692 15.372 2.24976 16.4396 2.24976 17.5529C2.24976 18.6662 2.692 19.7338 3.47919 20.521C4.26639 21.3082 5.33406 21.7505 6.44732 21.7505C7.56058 21.7505 8.62825 21.3082 9.41544 20.521L19.9051 10.0314L21.9873 9.3376C22.1087 9.29723 22.2177 9.2265 22.304 9.13211C22.3904 9.03773 22.4511 8.92284 22.4805 8.79836C22.5099 8.67388 22.507 8.54394 22.472 8.42091C22.4371 8.29787 22.3712 8.18583 22.2808 8.09541V8.09448Z"/>
+                </svg>
+              </div>
+              <h4 class="works-title">Bonus: Experiment with us</h4>
+              <p class="works-desc">We frequently partner with research teams to design new shapes of data for any use case. <a href="#contact" class="link-inline">Contact us</a> for more info.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 4: CAREERS -->
+      <section id="careers" class="section section-careers">
+        <div class="container-medium">
+          <div class="careers-layout">
+            <div class="careers-copy">
+              <div class="section-badge-wrapper">
+                <div class="section-badge">
+                  <span class="badge-number">4</span>
+                  <span class="badge-line"></span>
+                  <span class="badge-label">Careers</span>
+                </div>
+              </div>
+
+              <h2 class="careers-title">Join us to shape the future of audio AI</h2>
+              <p class="careers-subtitle">We’re hiring for research, engineering, and operations roles.</p>
+              
+              <div class="careers-cta-wrap">
+                <a href="#contact" class="btn btn-primary">See open roles</a>
+              </div>
+            </div>
+
+            <div class="careers-visual">
+              <img src="https://cdn.prod.website-files.com/680b78a664218f03c0d6cce0/680ffd472d3aa1faae36c231_Careers%20illustration.png" alt="Careers at David AI" class="careers-img" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: NEWS -->
+      <section id="news" class="section section-news">
+        <div class="container-medium">
+          <div class="news-header-row">
+            <div>
+              <div class="section-badge-wrapper">
+                <div class="section-badge">
+                  <span class="badge-number">5</span>
+                  <span class="badge-line"></span>
+                  <span class="badge-label">News</span>
+                </div>
+              </div>
+              <h2 class="section-title">Updates on our progress</h2>
+            </div>
+            <a href="#news" class="btn btn-outline">View all</a>
+          </div>
+
+          <!-- News Cards Grid -->
+          <div class="news-cards-grid">
+            
+            <!-- News 1 -->
+            <article class="news-card">
+              <div class="news-thumbnail-wrap">
+                <img src="https://cdn.prod.website-files.com/680f598ff0c7ff36773a8c7b/68e4aae914af777622fc8b8c_Series%20B%20Announcement.png" alt="$50 Million Series B Funding Led by Meritech" class="news-img" />
+              </div>
+              <div class="news-body">
+                <h3 class="news-headline">Announcing Our $50M Series B Led by Meritech</h3>
+                <div class="news-meta">
+                  <span class="news-date">Oct 8, 2025</span>
+                  <span class="news-dot">•</span>
+                  <span class="news-tag">News</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- News 2 -->
+            <article class="news-card">
+              <div class="news-thumbnail-wrap">
+                <img src="https://cdn.prod.website-files.com/680f598ff0c7ff36773a8c7b/682f3d7a717db4497a7e6567_Series%20A%20Announcement.png" alt="David AI announces $25M series A fundraise" class="news-img" />
+              </div>
+              <div class="news-body">
+                <h3 class="news-headline">Announcing Our $25M Series A Led by Alt Capital</h3>
+                <div class="news-meta">
+                  <span class="news-date">May 22, 2025</span>
+                  <span class="news-dot">•</span>
+                  <span class="news-tag">News</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- News 3 -->
+            <article class="news-card">
+              <div class="news-thumbnail-wrap">
+                <img src="https://cdn.prod.website-files.com/680f598ff0c7ff36773a8c7b/6819aed34ec5f361d9bb6ca1_Rebrand%20Seed%20Announcement.png" alt="David AI announces $5M seed funding" class="news-img" />
+              </div>
+              <div class="news-body">
+                <h3 class="news-headline">Announcing Our $5M Seed Round Led by First Round</h3>
+                <div class="news-meta">
+                  <span class="news-date">Jan 16, 2025</span>
+                  <span class="news-dot">•</span>
+                  <span class="news-tag">News</span>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT / CTA SECTION -->
+      <section id="contact" class="section section-contact">
+        <div class="container-medium">
+          <div class="footer-cta-card">
+            <div class="footer-cta-content">
+              <h2 class="footer-cta-heading">Interested in working with us?</h2>
+              <div class="footer-cta-actions">
+                <a href="mailto:contact@withdavid.ai" class="btn btn-secondary-solid">Contact us</a>
+                <a href="#careers" class="btn btn-primary">See open roles</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="container-medium">
+        <div class="footer-bottom-row">
+          <div class="footer-copyright">
+            © 2026 David AI Labs, Inc. All rights reserved.
+          </div>
+
+          <div class="footer-nav-links">
+            <a href="#" class="footer-link">Terms of service</a>
+            <a href="#" class="footer-link">Privacy policy</a>
+          </div>
+
+          <div class="footer-social-links">
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/company/david-ai" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Follow us on LinkedIn">
+              <svg width="18" height="18" viewBox="0 0 20 21" fill="currentColor">
+                <path d="M17.7773 0.488281C19.0046 0.488281 20 1.48364 20 2.71094V18.2656C20 19.4929 19.0046 20.4883 17.7773 20.4883H2.22266C0.995357 20.4883 0 19.4929 0 18.2656V2.71094C0 1.48364 0.995357 0.488281 2.22266 0.488281H17.7773ZM3.06641 17.71H6.04883V8.08105H3.06641V17.71ZM13.7197 7.78613C11.6763 7.78613 10.8164 9.37793 10.8164 9.37793V8.08105H7.95605V17.71H10.8164V12.6553C10.8164 11.3009 11.4395 10.4952 12.6328 10.4951C13.7298 10.4951 14.2568 11.2693 14.2568 12.6553V17.71H17.2246V11.6133C17.2246 9.03375 15.7621 7.78621 13.7197 7.78613ZM4.54395 3.26562C3.5697 3.26562 2.78027 4.06168 2.78027 5.04297C2.7804 6.02415 3.56978 6.81934 4.54395 6.81934C5.51798 6.81918 6.30651 6.02406 6.30664 5.04297C6.30664 4.06177 5.51806 3.26578 4.54395 3.26562Z"/>
+              </svg>
+            </a>
+            <!-- X / Twitter -->
+            <a href="https://x.com/withdavidai" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Follow us on X">
+              <svg width="18" height="18" viewBox="0 0 20 19" fill="currentColor">
+                <path d="M15.7508 0.449219H18.8175L12.1175 8.10755L20 18.5267H13.8283L8.995 12.2067L3.46333 18.5267H0.395L7.56167 10.3351L0 0.450052H6.32833L10.6975 6.22672L15.7508 0.449219ZM14.675 16.6917H16.3742L5.405 2.18839H3.58167L14.675 16.6917Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

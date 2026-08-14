@@ -1,69 +1,45 @@
 /**
- * ARGI Studio - Interactive Frontend Scripts & Dense ASCII Typing Canvas
+ * ARGI Studio - Interactive Frontend Scripts, Floating Bottom Nav, & Footer Gallery Modal
  */
 
 document.addEventListener("DOMContentLoaded", () => {
   // 1. SELECTORS & ELEMENTS
-  const navbar = document.getElementById("navbar");
-  const navMenu = document.getElementById("navMenu");
-  const navToggle = document.getElementById("navToggle");
-  const navLinks = document.querySelectorAll(".nav-link");
+  const topHeader = document.getElementById("topHeader");
+  const bottomNavbar = document.getElementById("bottomNavbar");
+  const navLinks = document.querySelectorAll(".bottom-navbar .nav-link");
   const darkSection = document.querySelector('[data-theme="dark"]');
   const sections = document.querySelectorAll("section[id]");
 
-  // 2. MOBILE MENU TOGGLE
-  if (navToggle && navMenu) {
-    navToggle.addEventListener("click", () => {
-      const isOpen = navMenu.classList.toggle("is-open");
-      navToggle.setAttribute("aria-expanded", isOpen);
-      
-      const top = navToggle.querySelector(".line-top");
-      const bottom = navToggle.querySelector(".line-bottom");
-      if (top && bottom) {
-        if (isOpen) {
-          top.style.transform = "translateY(3.5px) rotate(45deg)";
-          bottom.style.transform = "translateY(-3.5px) rotate(-45deg)";
-        } else {
-          top.style.transform = "none";
-          bottom.style.transform = "none";
-        }
-      }
-    });
-
-    // Close menu when clicking outside or on a link
-    navLinks.forEach((link) => {
-      link.addEventListener("click", () => {
-        navMenu.classList.remove("is-open");
-        navToggle.setAttribute("aria-expanded", "false");
-        const top = navToggle.querySelector(".line-top");
-        const bottom = navToggle.querySelector(".line-bottom");
-        if (top && bottom) {
-          top.style.transform = "none";
-          bottom.style.transform = "none";
-        }
-      });
-    });
-  }
-
-  // 3. NAVBAR THEME SWITCHING ON SCROLL (Dark Section Detection)
+  // 2. THEME SWITCHING ON SCROLL (Top Header & Bottom Navbar)
   const handleScrollTheme = () => {
-    if (!navbar || !darkSection) return;
+    if (!darkSection) return;
 
-    const navRect = navbar.getBoundingClientRect();
     const darkRect = darkSection.getBoundingClientRect();
 
-    // Check if navbar intersects the dark section
-    if (navRect.top >= darkRect.top - 20 && navRect.bottom <= darkRect.bottom + 20) {
-      navbar.classList.add("theme-dark");
-    } else {
-      navbar.classList.remove("theme-dark");
+    // Top Header Dark Theme Check
+    if (topHeader) {
+      if (darkRect.top <= 80 && darkRect.bottom >= 80) {
+        topHeader.classList.add("theme-dark");
+      } else {
+        topHeader.classList.remove("theme-dark");
+      }
     }
 
-    // Active Section Link Highlight
+    // Bottom Navbar Dark Theme Check
+    if (bottomNavbar) {
+      const bottomPos = window.innerHeight - 80;
+      if (darkRect.top <= bottomPos && darkRect.bottom >= bottomPos) {
+        bottomNavbar.classList.add("theme-dark");
+      } else {
+        bottomNavbar.classList.remove("theme-dark");
+      }
+    }
+
+    // Active Section Link Highlight in Bottom Dock
     let currentSectionId = "";
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();
-      if (rect.top <= window.innerHeight * 0.4 && rect.bottom >= window.innerHeight * 0.2) {
+      if (rect.top <= window.innerHeight * 0.45 && rect.bottom >= window.innerHeight * 0.2) {
         currentSectionId = section.getAttribute("id");
       }
     });
@@ -84,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", handleScrollTheme, { passive: true });
   handleScrollTheme();
 
-  // 4. INTERACTIVE PROCESS STEP VIEWER
+  // 3. INTERACTIVE PROCESS STEP VIEWER
   const stepItems = document.querySelectorAll(".process-step-item");
   const artLayers = document.querySelectorAll(".process-art-layer");
 
@@ -109,11 +85,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 5. SMOOTH ANCHOR SCROLLING WITH NAVBAR OFFSET
+  // 4. SMOOTH ANCHOR SCROLLING
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
       const targetId = this.getAttribute("href");
-      if (targetId === "#" || targetId === "#top") {
+      if (!targetId || targetId === "#") return;
+
+      if (targetId === "#top") {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
@@ -122,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
         e.preventDefault();
-        const navOffset = 80;
+        const navOffset = 40;
         const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navOffset;
 
         window.scrollTo({
@@ -133,7 +111,57 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 6. DENSE ASCII ENGINE (Rolled Back Grid + Slower Hover Typing Cadence)
+  // 5. INTERACTIVE FOOTER GALLERY MODAL / LIGHTBOX
+  const galleryCards = document.querySelectorAll(".gallery-card");
+  const galleryModal = document.getElementById("galleryModal");
+  const modalBackdrop = document.getElementById("modalBackdrop");
+  const modalClose = document.getElementById("modalClose");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalCategory = document.getElementById("modalCategory");
+  const modalPreviewArea = document.getElementById("modalPreviewArea");
+
+  if (galleryModal && galleryCards.length) {
+    const openModal = (card) => {
+      const title = card.getAttribute("data-title") || "Project Showcase";
+      const category = card.getAttribute("data-category") || "Voice Research";
+      const innerContent = card.querySelector(".gallery-card-inner");
+
+      modalTitle.textContent = title;
+      modalCategory.textContent = category;
+
+      if (innerContent && modalPreviewArea) {
+        modalPreviewArea.innerHTML = "";
+        const clone = innerContent.cloneNode(true);
+        // Remove overlay for clean modal visual
+        const overlay = clone.querySelector(".gallery-overlay");
+        if (overlay) overlay.remove();
+        modalPreviewArea.appendChild(clone);
+      }
+
+      galleryModal.classList.add("is-active");
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeModal = () => {
+      galleryModal.classList.remove("is-active");
+      document.body.style.overflow = "";
+    };
+
+    galleryCards.forEach((card) => {
+      card.addEventListener("click", () => openModal(card));
+    });
+
+    if (modalClose) modalClose.addEventListener("click", closeModal);
+    if (modalBackdrop) modalBackdrop.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && galleryModal.classList.contains("is-active")) {
+        closeModal();
+      }
+    });
+  }
+
+  // 6. DENSE ASCII ENGINE FOR 100VH HERO
   const initHeroAscii = () => {
     const canvas = document.getElementById("heroAsciiCanvas");
     const heroSection = document.getElementById("top");
@@ -143,10 +171,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let width, height, dpr;
     let cols, rows;
     
-    // Rolled back grid spacing
     const gridSpacing = 15;
     
-    // Character pool for typing mutation
     const charPool = [
       "·", ":", "+", "-", "=", "x", "%", "*", "~", "^",
       "0", "1", "a", "r", "g", "i", "s", "t", "u", "d", "o",
@@ -155,13 +181,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let gridNodes = [];
 
-    // Mouse coordinates relative to hero section
     const mouse = {
       x: -1000,
       y: -1000,
       targetX: -1000,
       targetY: -1000,
-      radius: 135,
+      radius: 140,
       isHovered: false
     };
 
@@ -201,10 +226,8 @@ document.addEventListener("DOMContentLoaded", () => {
             opacity: 0.055,
             targetOpacity: 0.055,
             typeTick: Math.floor(Math.random() * 60),
-            // Slower ambient typing interval
             ambientInterval: 60 + Math.floor(Math.random() * 120),
-            // Smooth, controlled hover typing interval
-            hoverInterval: 22 + Math.floor(Math.random() * 15),
+            hoverInterval: 20 + Math.floor(Math.random() * 16),
             phase: (r * 0.12 + c * 0.12)
           });
         }
@@ -214,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", resize);
     resize();
 
-    // Mouse events
+    // Mouse events on hero
     heroSection.addEventListener("mousemove", (e) => {
       const rect = heroSection.getBoundingClientRect();
       mouse.targetX = e.clientX - rect.left;
@@ -253,12 +276,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const render = () => {
       time += 0.02;
 
-      // Smooth mouse interpolation
       mouse.x += (mouse.targetX - mouse.x) * 0.20;
       mouse.y += (mouse.targetY - mouse.y) * 0.20;
 
       ctx.clearRect(0, 0, width, height);
-      // Rolled back to 9.5px crisp monospace font
       ctx.font = "9.5px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -270,11 +291,9 @@ document.addEventListener("DOMContentLoaded", () => {
       for (let i = 0; i < nodeCount; i++) {
         const node = gridNodes[i];
 
-        // Ambient wave drift
         const ambientWaveX = Math.sin(time + node.phase) * 0.7;
         const ambientWaveY = Math.cos(time + node.phase * 0.8) * 0.7;
 
-        // Distance to cursor
         const dx = mouse.x - node.x;
         const dy = mouse.y - node.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
@@ -286,14 +305,11 @@ document.addEventListener("DOMContentLoaded", () => {
           const angle = Math.atan2(dy, dx);
           const push = proximity * 12;
 
-          // Controlled physical displacement
           node.vx -= Math.cos(angle) * push * 0.16;
           node.vy -= Math.sin(angle) * push * 0.16;
 
-          // Subtle opacity increase on hover (~0.055 to ~0.26)
           node.targetOpacity = 0.055 + proximity * 0.21;
 
-          // Decreased, smoother hover typing cadence (not too fast)
           node.typeTick++;
           if (node.typeTick >= node.hoverInterval) {
             node.char = charPool[Math.floor(Math.random() * charPool.length)];
@@ -302,7 +318,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           node.targetOpacity = 0.055;
 
-          // Ambient slow typing scramble in the background
           node.typeTick++;
           if (node.typeTick >= node.ambientInterval) {
             node.char = charPool[Math.floor(Math.random() * charPool.length)];
@@ -311,7 +326,6 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
 
-        // Return to home grid origin
         const homeDx = (node.originX + ambientWaveX) - node.x;
         const homeDy = (node.originY + ambientWaveY) - node.y;
 
@@ -323,10 +337,8 @@ document.addEventListener("DOMContentLoaded", () => {
         node.x += node.vx;
         node.y += node.vy;
 
-        // Smooth opacity lerp
         node.opacity += (node.targetOpacity - node.opacity) * 0.12;
 
-        // Draw character
         ctx.fillStyle = `rgba(18, 19, 20, ${node.opacity.toFixed(3)})`;
         ctx.fillText(node.char, node.x, node.y);
       }

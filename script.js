@@ -12,71 +12,44 @@ document.addEventListener("DOMContentLoaded", () => {
   const darkSection = document.querySelector('[data-theme="dark"]');
   const sections = document.querySelectorAll("section[id]");
 
-  // 1. BESPOKE ATELIER PRELOADER & KINETIC SHUTTER REVEAL
+  // 1. MINIMALIST ATELIER PRELOADER & CENTER DUAL SHUTTER REVEAL
   const initSitePreloader = () => {
     const preloader = document.getElementById("sitePreloader");
     const counterEl = document.getElementById("preloaderCounter");
-    const progressFill = document.getElementById("preloaderProgressFill");
-    const statusText = document.getElementById("preloaderStatusText");
 
-    if (!preloader || !counterEl || !progressFill) {
+    if (!preloader || !counterEl) {
       document.body.classList.add("site-ready");
       return;
     }
 
     let progress = 0;
-    const disciplines = [
-      { max: 24, text: "[ 01 / BRAND IDENTITY ]" },
-      { max: 48, text: "[ 02 / WEB ARCHITECTURE ]" },
-      { max: 72, text: "[ 03 / EDITORIAL PRINT ]" },
-      { max: 94, text: "[ 04 / SOCIAL SYSTEMS ]" },
-      { max: 100, text: "[ 🟢 ATELIER READY ]" }
-    ];
-
-    const updateStatus = (val) => {
-      if (!statusText) return;
-      for (const item of disciplines) {
-        if (val <= item.max) {
-          if (statusText.textContent !== item.text) {
-            statusText.textContent = item.text;
-          }
-          break;
-        }
-      }
-    };
-
     const startTime = performance.now();
-    const duration = 1350; // High-fashion, snappy 1.35s duration
+    const duration = 1150; // Snappy 1.15s luxury duration
 
     const tick = (now) => {
       const elapsed = now - startTime;
       const t = Math.min(elapsed / duration, 1);
 
-      // Non-linear easing (fast startup, subtle inflection, rapid finish)
+      // Silky smooth easing
       const easeProgress = t < 0.5
         ? 4 * t * t * t
         : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
       progress = Math.min(Math.round(easeProgress * 100), 100);
-
-      // Format as 3 digits: 000, 045, 100
-      counterEl.textContent = String(progress).padStart(3, "0");
-      progressFill.style.width = `${progress}%`;
-      updateStatus(progress);
+      counterEl.textContent = progress;
 
       if (t < 1) {
         requestAnimationFrame(tick);
       } else {
-        // Complete Sequence
+        // Complete & Trigger Shutter Reveal
         setTimeout(() => {
           preloader.classList.add("is-loaded");
           document.body.classList.add("site-ready");
 
-          // Clean up DOM after transition
           setTimeout(() => {
             preloader.style.display = "none";
-          }, 1100);
-        }, 180);
+          }, 1000);
+        }, 120);
       }
     };
 

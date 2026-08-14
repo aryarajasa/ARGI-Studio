@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const darkSection = document.querySelector('[data-theme="dark"]');
   const sections = document.querySelectorAll("section[id]");
 
-  // 1. AUTHENTIC ASCII LOGO RASTER MATRIX & CENTER SHUTTER REVEAL
+  // 1. AUTHENTIC ASCII LOGO RASTER MATRIX & SEAMLESS MORPH REVEAL
   const initSitePreloader = () => {
     const preloader = document.getElementById("sitePreloader");
     const canvas = document.getElementById("preloaderAsciiCanvas");
@@ -40,15 +40,24 @@ document.addEventListener("DOMContentLoaded", () => {
       canvas.height = height * dpr;
       ctx.scale(dpr, dpr);
 
-      // Offscreen canvas: Rasterize high-contrast logo typography
+      // Offscreen canvas: Rasterize matching logo typography from computed styles
       const offCanvas = document.createElement("canvas");
       offCanvas.width = width;
       offCanvas.height = height;
       const offCtx = offCanvas.getContext("2d");
 
-      // Use bold italic serif to give robust stroke coverage for ASCII cells
-      const fontSize = Math.min(width * 0.22, 108);
-      offCtx.font = `italic 700 ${fontSize}px "Instrument Serif", Georgia, serif`;
+      // Extract exact font size and family from DOM element for 1:1 pixel alignment
+      const sampleWordmark = solidLogo ? solidLogo.querySelector(".preloader-wordmark") : null;
+      let fontSize = Math.min(width * 0.22, 102);
+      let fontFamily = '"Instrument Serif", Georgia, serif';
+
+      if (sampleWordmark) {
+        const computed = window.getComputedStyle(sampleWordmark);
+        fontSize = parseFloat(computed.fontSize) || fontSize;
+        fontFamily = computed.fontFamily || fontFamily;
+      }
+
+      offCtx.font = `italic 400 ${fontSize}px ${fontFamily}`;
       offCtx.fillStyle = "#ffffff";
       offCtx.textAlign = "center";
       offCtx.textBaseline = "middle";
@@ -56,9 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const imgData = offCtx.getImageData(0, 0, width, height).data;
 
-      // High-density ASCII grid calculation
-      const cellW = width < 480 ? 5.5 : 7.2;
-      const cellH = width < 480 ? 8.5 : 10.8;
+      // High-density ASCII cell geometry
+      const cellW = width < 480 ? 5.2 : 6.8;
+      const cellH = width < 480 ? 8.2 : 10.4;
       const cols = Math.floor(width / cellW);
       const rows = Math.floor(height / cellH);
 
@@ -73,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const endX = Math.min(Math.floor((c + 1) * cellW), width);
           const endY = Math.min(Math.floor((r + 1) * cellH), height);
 
-          // Calculate average brightness in cell
+          // Calculate average luminance in cell
           let totalAlpha = 0;
           let pixelCount = 0;
 
@@ -87,11 +96,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const avgAlpha = pixelCount > 0 ? (totalAlpha / pixelCount) / 255 : 0;
 
-          if (avgAlpha > 0.05) {
+          if (avgAlpha > 0.04) {
             let densityTier = 0;
-            if (avgAlpha > 0.6) densityTier = 2; // high
-            else if (avgAlpha > 0.28) densityTier = 1; // mid
-            else densityTier = 0; // edge
+            if (avgAlpha > 0.55) densityTier = 2; // high density
+            else if (avgAlpha > 0.24) densityTier = 1; // mid density
+            else densityTier = 0; // edge/serif
 
             gridCells.push({
               x: startX + cellW / 2,
@@ -99,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
               alpha: avgAlpha,
               tier: densityTier,
               char: densityTier === 2 ? "█" : densityTier === 1 ? "▒" : "░",
-              scrambleTick: Math.floor(Math.random() * 8)
+              scrambleTick: Math.floor(Math.random() * 6)
             });
           }
         }
@@ -108,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let progress = 0;
     const startTime = performance.now();
-    const duration = 1500; // 1.5s fluid progression
+    const duration = 1600; // 1.6s fluid, luxurious pacing
 
     const renderAsciiGrid = (pVal) => {
       if (!ctx || gridCells.length === 0) return;
@@ -124,16 +133,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const midDensity = ["▒", "*", "=", "+", "a", "r", "g", "i", "x", "z"];
       const edgeDensity = ["░", ":", "-", "~", "/", "\\", ".", "·"];
 
-      // Dynamic sweep wave effect
-      const scanX = ratio * (width * 1.25) - (width * 0.1);
+      // Dynamic horizontal illumination sweep
+      const scanX = ratio * (width * 1.3) - (width * 0.15);
 
       for (let i = 0; i < gridCells.length; i++) {
         const cell = gridCells[i];
         cell.scrambleTick++;
 
-        // Scramble characters based on loading progress
-        const scrambleThreshold = 3 + Math.floor(ratio * 12);
-        if (cell.scrambleTick >= scrambleThreshold && ratio < 0.98) {
+        // Smoothly reduce scrambling speed as progress nears 100%
+        const scrambleThreshold = 3 + Math.floor(ratio * 16);
+        if (cell.scrambleTick >= scrambleThreshold && ratio < 0.96) {
           if (cell.tier === 2) {
             cell.char = highDensity[Math.floor(Math.random() * highDensity.length)];
           } else if (cell.tier === 1) {
@@ -144,10 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
           cell.scrambleTick = 0;
         }
 
-        // Calculate cell illumination with scanwave
         const distFromScan = Math.abs(cell.x - scanX);
-        const scanBoost = Math.max(0, 1 - distFromScan / 60) * 0.4;
-        const cellOpacity = Math.min(cell.alpha * (0.6 + ratio * 0.4) + scanBoost, 1);
+        const scanBoost = Math.max(0, 1 - distFromScan / 70) * 0.35;
+        const cellOpacity = Math.min(cell.alpha * (0.65 + ratio * 0.35) + scanBoost, 1);
 
         ctx.fillStyle = `rgba(255, 255, 255, ${cellOpacity.toFixed(2)})`;
         ctx.fillText(cell.char, cell.x, cell.y);
@@ -158,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const elapsed = now - startTime;
       const t = Math.min(elapsed / duration, 1);
 
-      // Smooth luxury easing
+      // Silky smooth luxury cubic curve
       const easeProgress = t < 0.5
         ? 4 * t * t * t
         : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -168,14 +176,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
       renderAsciiGrid(progress);
 
+      // Continuous, seamless cross-dissolve blend (from 78% to 100%)
+      if (progress >= 78) {
+        const blend = Math.min(Math.max(0, (progress - 78) / 22), 1);
+        if (solidLogo) {
+          solidLogo.style.opacity = blend.toFixed(3);
+          solidLogo.style.filter = `drop-shadow(0 0 ${(blend * 18).toFixed(1)}px rgba(255, 255, 255, ${(blend * 0.45).toFixed(2)}))`;
+        }
+        if (canvas) {
+          canvas.style.opacity = Math.max(0, 1 - (blend * 1.05)).toFixed(3);
+          canvas.style.filter = `blur(${(blend * 1.5).toFixed(2)}px)`;
+        }
+      } else {
+        if (solidLogo) solidLogo.style.opacity = "0";
+        if (canvas) {
+          canvas.style.opacity = "1";
+          canvas.style.filter = "none";
+        }
+      }
+
       if (t < 1) {
         requestAnimationFrame(tick);
       } else {
-        // At 100%: Crossfade to solid logo
-        if (solidLogo) solidLogo.classList.add("is-visible");
-        if (canvas) canvas.style.opacity = "0";
+        // At 100%: Lock full solid logo
+        if (solidLogo) {
+          solidLogo.classList.add("is-visible");
+          solidLogo.style.opacity = "1";
+        }
+        if (canvas) {
+          canvas.style.opacity = "0";
+        }
 
-        // Center Shutter Reveal
+        // Luxurious 260ms hold before Center Shutter Reveal
         setTimeout(() => {
           preloader.classList.add("is-loaded");
           document.body.classList.add("site-ready");
@@ -183,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
           setTimeout(() => {
             preloader.style.display = "none";
           }, 1100);
-        }, 220);
+        }, 260);
       }
     };
 

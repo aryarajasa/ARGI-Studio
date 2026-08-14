@@ -106,41 +106,71 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 5. INTERACTIVE PORTFOLIO CATEGORY FILTER TABS
-  const filterTabs = document.querySelectorAll(".filter-tab");
-  const showcaseCards = document.querySelectorAll(".showcase-card");
+  // 5. PORTFOLIO VIEW SWITCHER (GALLERY VIEW VS INDEX TABLE)
+  const viewGalleryBtn = document.getElementById("viewGalleryBtn");
+  const viewIndexBtn = document.getElementById("viewIndexBtn");
+  const portfolioGalleryView = document.getElementById("portfolioGalleryView");
+  const portfolioIndexView = document.getElementById("portfolioIndexView");
 
-  if (filterTabs.length && showcaseCards.length) {
-    filterTabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        const filterValue = tab.getAttribute("data-filter");
+  if (viewGalleryBtn && viewIndexBtn && portfolioGalleryView && portfolioIndexView) {
+    viewGalleryBtn.addEventListener("click", () => {
+      viewGalleryBtn.classList.add("is-active");
+      viewIndexBtn.classList.remove("is-active");
+      portfolioGalleryView.style.display = "grid";
+      portfolioIndexView.style.display = "none";
+    });
 
-        // Update active tab
-        filterTabs.forEach((t) => t.classList.remove("is-active"));
-        tab.classList.add("is-active");
+    viewIndexBtn.addEventListener("click", () => {
+      viewIndexBtn.classList.add("is-active");
+      viewGalleryBtn.classList.remove("is-active");
+      portfolioGalleryView.style.display = "none";
+      portfolioIndexView.style.display = "flex";
+    });
+  }
 
-        // Filter cards with smooth animation
-        showcaseCards.forEach((card) => {
-          const categories = card.getAttribute("data-category") || "";
-          if (filterValue === "all" || categories.includes(filterValue)) {
-            card.style.display = "flex";
-            setTimeout(() => {
-              card.style.opacity = "1";
-              card.style.transform = "scale(1)";
-            }, 20);
-          } else {
-            card.style.opacity = "0";
-            card.style.transform = "scale(0.96)";
-            setTimeout(() => {
-              card.style.display = "none";
-            }, 300);
-          }
-        });
+  // 6. INDEX TABLE HOVER CURSOR PORTAL
+  const indexRows = document.querySelectorAll(".index-row-item");
+  const indexHoverPortal = document.getElementById("indexHoverPortal");
+  const indexPortalImg = document.getElementById("indexPortalImg");
+
+  if (indexRows.length && indexHoverPortal && indexPortalImg) {
+    let portalTargetX = 0;
+    let portalTargetY = 0;
+    let portalCurrentX = 0;
+    let portalCurrentY = 0;
+
+    document.addEventListener("mousemove", (e) => {
+      portalTargetX = e.clientX + 160;
+      portalTargetY = e.clientY;
+    });
+
+    const updatePortalPosition = () => {
+      portalCurrentX += (portalTargetX - portalCurrentX) * 0.15;
+      portalCurrentY += (portalTargetY - portalCurrentY) * 0.15;
+
+      indexHoverPortal.style.left = `${portalCurrentX}px`;
+      indexHoverPortal.style.top = `${portalCurrentY}px`;
+
+      requestAnimationFrame(updatePortalPosition);
+    };
+    requestAnimationFrame(updatePortalPosition);
+
+    indexRows.forEach((row) => {
+      row.addEventListener("mouseenter", () => {
+        const previewUrl = row.getAttribute("data-preview");
+        if (previewUrl) {
+          indexPortalImg.src = previewUrl;
+          indexHoverPortal.classList.add("is-visible");
+        }
+      });
+
+      row.addEventListener("mouseleave", () => {
+        indexHoverPortal.classList.remove("is-visible");
       });
     });
   }
 
-  // 6. SMOOTH ANCHOR SCROLLING
+  // 7. SMOOTH ANCHOR SCROLLING
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
       const targetId = this.getAttribute("href");
@@ -166,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 7. CREATIVE COMMISSION WORKBENCH LOGIC
+  // 8. CREATIVE COMMISSION WORKBENCH LOGIC
   const tagPills = document.querySelectorAll(".tag-pill");
   const summaryTagsPreview = document.getElementById("summaryTagsPreview");
   const inquiryEmailBtn = document.getElementById("inquiryEmailBtn");
@@ -221,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 8. HERO FLOATING PORTFOLIO SNIPPETS PARALLAX ENGINE
+  // 9. HERO FLOATING PORTFOLIO SNIPPETS PARALLAX ENGINE
   const heroSection = document.getElementById("top");
   const floatingCards = document.querySelectorAll(".floating-card");
 
@@ -271,7 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(animateParallax);
   }
 
-  // 9. DENSE ASCII CANVAS ENGINE FOR 100VH HERO
+  // 10. DENSE ASCII CANVAS ENGINE FOR 100VH HERO
   const initHeroAscii = () => {
     const canvas = document.getElementById("heroAsciiCanvas");
     if (!canvas || !heroSection) return;

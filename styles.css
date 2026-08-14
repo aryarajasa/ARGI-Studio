@@ -463,7 +463,7 @@ button {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* --- HERO SECTION (100VH FULL VIEWPORT WITH CENTERED EDITORIAL HEADLINE & FLOATING PORTFOLIO SNIPPETS) --- */
+/* --- HERO SECTION (100VH FULL VIEWPORT WITH SHARP 0px RADIUS FLOATING CARDS) --- */
 .section-hero {
   position: relative;
   background-color: var(--bg-hero);
@@ -488,7 +488,7 @@ button {
   z-index: 1;
 }
 
-/* Scattered Floating Gallery */
+/* Scattered Floating Gallery with Sharp 0px Edges */
 .hero-floating-gallery {
   position: absolute;
   inset: 0;
@@ -505,16 +505,21 @@ button {
   cursor: pointer;
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
   user-select: none;
+  border-radius: 0px !important;
 }
 
 .floating-img-wrap {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: 3px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
+  border-radius: 0px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
   background: #eee;
   position: relative;
+}
+
+.sharp-edge {
+  border-radius: 0px !important;
 }
 
 .floating-img {
@@ -522,6 +527,7 @@ button {
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 0px !important;
   transition: transform 0.5s ease;
 }
 
@@ -531,7 +537,7 @@ button {
 }
 
 .floating-card:hover .floating-img-wrap {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 }
 
 .floating-card:hover .floating-img {
@@ -891,7 +897,7 @@ button {
 }
 
 /* ==========================================================================
-   SECTION 3: ASYMMETRICAL EDITORIAL SHOWCASE (DARK THEME)
+   SECTION 3: SHARP 2-COLUMN EDITORIAL PORTFOLIO GALLERY & INDEX LIST (DARK THEME)
    ========================================================================== */
 .section-datasets-dark {
   background-color: var(--bg-dark);
@@ -930,108 +936,71 @@ button {
   color: var(--text-white);
 }
 
-/* Interactive Filter Tabs */
-.portfolio-filter-tabs {
+/* View Switcher */
+.portfolio-view-switcher {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.3rem 0.4rem;
+  border-radius: var(--radius-full);
 }
 
-.filter-tab {
+.view-btn {
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--text-white-muted);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.45rem 1.15rem;
+  padding: 0.35rem 0.95rem;
   border-radius: var(--radius-full);
-  cursor: pointer;
   transition: all var(--transition-fast);
 }
 
-.filter-tab:hover {
-  background: rgba(255, 255, 255, 0.14);
-  color: #ffffff;
-}
-
-.filter-tab.is-active {
+.view-btn.is-active {
   background: #ffffff;
   color: var(--text-primary);
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
 }
 
-/* Staggered Editorial Portfolio Grid */
-.editorial-showcase-grid {
+/* 1. Sharp 2-Column Editorial Gallery */
+.sharp-editorial-gallery {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4rem 2.5rem;
   margin-bottom: 4.5rem;
 }
 
-.showcase-card {
-  background: var(--bg-dark-card);
-  border: 1px solid var(--bg-dark-card-border);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
+.gallery-item-sharp {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth), opacity 0.35s ease;
+  gap: 1.25rem;
   cursor: pointer;
 }
 
-.showcase-card.card-span-wide {
-  grid-column: span 8;
-}
-
-.showcase-card.card-span-tall {
-  grid-column: span 4;
-}
-
-.showcase-card.card-span-square {
-  grid-column: span 6;
-}
-
-.showcase-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-}
-
-.showcase-media-container {
+.gallery-item-frame {
   position: relative;
   width: 100%;
+  aspect-ratio: 4 / 3.1;
   overflow: hidden;
-  background: #16181a;
+  background: #141618;
+  border-radius: 0px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.card-span-wide .showcase-media-container {
-  aspect-ratio: 16 / 9.5;
-}
-
-.card-span-tall .showcase-media-container {
-  aspect-ratio: 4 / 4.8;
-}
-
-.card-span-square .showcase-media-container {
-  aspect-ratio: 1 / 0.85;
-}
-
-.showcase-img {
+.gallery-img-sharp {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 0px !important;
   transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.showcase-card:hover .showcase-img {
-  transform: scale(1.06);
+.gallery-item-sharp:hover .gallery-img-sharp {
+  transform: scale(1.04);
 }
 
-.showcase-hover-veil {
+.gallery-sharp-overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.35);
@@ -1043,70 +1012,175 @@ button {
   backdrop-filter: blur(2px);
 }
 
-.showcase-card:hover .showcase-hover-veil {
+.gallery-item-sharp:hover .gallery-sharp-overlay {
   opacity: 1;
 }
 
-.view-project-pill {
+.explore-sharp-pill {
   background: #ffffff;
   color: var(--text-primary);
   font-size: 0.8125rem;
   font-weight: 600;
-  padding: 0.55rem 1.25rem;
+  padding: 0.6rem 1.35rem;
   border-radius: var(--radius-full);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  transform: translateY(8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  transform: translateY(6px);
   transition: transform var(--transition-bounce);
 }
 
-.showcase-card:hover .view-project-pill {
+.gallery-item-sharp:hover .explore-sharp-pill {
   transform: translateY(0);
 }
 
-.showcase-meta-row {
-  padding: 1.75rem 2rem 2rem;
+.gallery-item-caption {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 1.5rem;
-  flex-wrap: wrap;
+  padding-top: 0.35rem;
 }
 
-.showcase-title-group {
+.caption-left {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.project-id-num {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--text-white-subtle);
+}
+
+.caption-project-name {
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+  transition: color var(--transition-fast);
+}
+
+.gallery-item-sharp:hover .caption-project-name {
+  color: #60a5fa;
+}
+
+.caption-right {
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  text-align: right;
 }
 
-.showcase-index {
+.caption-discipline {
+  font-size: 0.8125rem;
+  color: var(--text-white-muted);
+  font-weight: 500;
+}
+
+.caption-year {
   font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--text-white-subtle);
-  margin-bottom: 0.35rem;
+  font-family: monospace;
 }
 
-.showcase-title {
-  font-size: 1.45rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  color: #ffffff;
-}
-
-.showcase-tags-group {
+/* 2. High-Fashion Editorial Index Table */
+.portfolio-index-table {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
+  flex-direction: column;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 4.5rem;
 }
 
-.s-tag {
-  font-size: 0.75rem;
+.index-row-item {
+  display: grid;
+  grid-template-columns: 50px 1.5fr 1.5fr 1fr 80px 90px;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.75rem 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background-color var(--transition-fast), padding var(--transition-fast);
+  cursor: pointer;
+}
+
+.index-row-item:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.col-num {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--text-white-subtle);
+}
+
+.col-client {
+  font-size: 1.25rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.3rem 0.75rem;
-  border-radius: var(--radius-full);
+  color: #ffffff;
+  transition: color var(--transition-fast);
+}
+
+.index-row-item:hover .col-client {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: #60a5fa;
+  font-size: 1.35rem;
+}
+
+.col-discipline {
+  font-size: 0.875rem;
+  color: var(--text-white-muted);
+}
+
+.col-location {
+  font-size: 0.8125rem;
+  color: var(--text-white-subtle);
+}
+
+.col-year {
+  font-size: 0.8125rem;
+  color: var(--text-white-subtle);
+  font-family: monospace;
+}
+
+.col-link {
+  font-size: 0.875rem;
+  color: #ffffff;
+  font-weight: 500;
+  text-align: right;
+}
+
+/* Floating Hover Preview Portal for Index List */
+.index-floating-preview {
+  position: fixed;
+  width: 280px;
+  height: 360px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1000;
+  transform: translate(-50%, -50%) scale(0.92);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+  border-radius: 0px !important;
+  background: #141618;
+}
+
+.index-floating-preview.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+#indexPortalImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0px !important;
 }
 
 /* Datasets / Portfolio CTA Box */
@@ -1791,14 +1865,17 @@ button {
   .pos-bl-1 { bottom: 10%; left: 4%; width: 85px; height: 115px; }
   .pos-br { bottom: 8%; right: 4%; width: 95px; height: 125px; }
 
-  .editorial-showcase-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .sharp-editorial-gallery {
+    grid-template-columns: 1fr;
+    gap: 3rem;
   }
 
-  .showcase-card.card-span-wide,
-  .showcase-card.card-span-tall,
-  .showcase-card.card-span-square {
-    grid-column: span 1;
+  .index-row-item {
+    grid-template-columns: 40px 1.5fr 1fr 80px;
+  }
+
+  .col-discipline, .col-location {
+    display: none;
   }
 }
 
@@ -1896,10 +1973,6 @@ button {
   .pos-tr-2 { width: 70px; height: 95px; top: 12%; right: 3%; }
   .pos-bl-1 { width: 70px; height: 95px; bottom: 8%; left: 3%; }
   .pos-br { width: 70px; height: 95px; bottom: 8%; right: 3%; }
-
-  .editorial-showcase-grid {
-    grid-template-columns: 1fr;
-  }
 
   .service-card {
     padding: 2rem 1.5rem;

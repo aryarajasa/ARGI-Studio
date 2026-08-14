@@ -40,52 +40,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initBaliClock();
 
-  // 2.1 GLOBAL THEME MANAGER (DARK / LIGHT MODE TOGGLE)
-  const initTheme = () => {
-    const themeToggleBtn = document.getElementById("themeToggleBtn");
+  // 2.1 ADAPTIVE DARK/LIGHT MODE FAVICON SWITCHER (BASED ON OS PREFERENCE)
+  const initFaviconThemeSwitcher = () => {
+    // Clear any previous manual theme overrides
+    localStorage.removeItem("argi-theme");
+    document.documentElement.removeAttribute("data-theme");
+
     const faviconTag = document.getElementById("faviconTag");
-    
-    // Check saved theme preference or system preference
-    const savedTheme = localStorage.getItem("argi-theme");
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
-    const applyTheme = (theme) => {
-      if (theme === "dark") {
-        document.documentElement.setAttribute("data-theme", "dark");
-        if (faviconTag) faviconTag.href = "assets/favicon-dark.svg";
+    if (!faviconTag) return;
+
+    const darkModeMatcher = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateFavicon = (e) => {
+      if (e.matches) {
+        faviconTag.href = "assets/favicon-dark.svg";
       } else {
-        document.documentElement.removeAttribute("data-theme");
-        if (faviconTag) faviconTag.href = "assets/favicon.svg";
+        faviconTag.href = "assets/favicon.svg";
       }
-      localStorage.setItem("argi-theme", theme);
     };
 
-    // Initialize initial theme
-    if (savedTheme) {
-      applyTheme(savedTheme);
-    } else if (systemPrefersDark) {
-      applyTheme("dark");
-    } else {
-      applyTheme("light");
-    }
-
-    // Toggle button click listener
-    if (themeToggleBtn) {
-      themeToggleBtn.addEventListener("click", () => {
-        const isCurrentlyDark = document.documentElement.getAttribute("data-theme") === "dark";
-        applyTheme(isCurrentlyDark ? "light" : "dark");
-      });
-    }
-
-    // System theme change listener (fallback if not explicitly toggled)
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-      if (!localStorage.getItem("argi-theme")) {
-        applyTheme(e.matches ? "dark" : "light");
-      }
-    });
+    darkModeMatcher.addEventListener("change", updateFavicon);
+    updateFavicon(darkModeMatcher);
   };
 
-  initTheme();
+  initFaviconThemeSwitcher();
 
   // 3. MOBILE MENU TOGGLE
   if (navToggle && navMenu) {
@@ -733,10 +710,7 @@ ${clientName}`
 
         node.opacity += (node.targetOpacity - node.opacity) * 0.12;
 
-        const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-        ctx.fillStyle = isDark
-          ? `rgba(240, 240, 245, ${node.opacity.toFixed(3)})`
-          : `rgba(18, 19, 20, ${node.opacity.toFixed(3)})`;
+        ctx.fillStyle = `rgba(18, 19, 20, ${node.opacity.toFixed(3)})`;
         ctx.fillText(node.char, node.x, node.y);
       }
 

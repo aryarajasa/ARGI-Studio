@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 6. TIGHT DENSE ASCII TYPING ENGINE (Larger glyphs, compact grid)
+  // 6. DENSE ASCII ENGINE (Rolled Back Grid + Slower Hover Typing Cadence)
   const initHeroAscii = () => {
     const canvas = document.getElementById("heroAsciiCanvas");
     const heroSection = document.getElementById("top");
@@ -143,11 +143,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let width, height, dpr;
     let cols, rows;
     
-    // Tight horizontal & vertical step matching monospace character aspect ratio
-    const cellWidth = 10.5;   // Tight horizontal spacing (px)
-    const cellHeight = 13.5;  // Tight vertical spacing (px)
+    // Rolled back grid spacing
+    const gridSpacing = 15;
     
-    // Character pool for dynamic typing mutation
+    // Character pool for typing mutation
     const charPool = [
       "·", ":", "+", "-", "=", "x", "%", "*", "~", "^",
       "0", "1", "a", "r", "g", "i", "s", "t", "u", "d", "o",
@@ -162,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
       y: -1000,
       targetX: -1000,
       targetY: -1000,
-      radius: 140,
+      radius: 135,
       isHovered: false
     };
 
@@ -178,17 +177,17 @@ document.addEventListener("DOMContentLoaded", () => {
       canvas.style.height = `${height}px`;
       ctx.scale(dpr, dpr);
 
-      cols = Math.floor(width / cellWidth);
-      rows = Math.floor(height / cellHeight);
+      cols = Math.floor(width / gridSpacing);
+      rows = Math.floor(height / gridSpacing);
 
       gridNodes = [];
-      const offsetX = (width - cols * cellWidth) / 2;
-      const offsetY = (height - rows * cellHeight) / 2;
+      const offsetX = (width - cols * gridSpacing) / 2;
+      const offsetY = (height - rows * gridSpacing) / 2;
 
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
-          const originX = offsetX + c * cellWidth + cellWidth / 2;
-          const originY = offsetY + r * cellHeight + cellHeight / 2;
+          const originX = offsetX + c * gridSpacing + gridSpacing / 2;
+          const originY = offsetY + r * gridSpacing + gridSpacing / 2;
           const randomChar = charPool[Math.floor(Math.random() * charPool.length)];
           
           gridNodes.push({
@@ -199,11 +198,14 @@ document.addEventListener("DOMContentLoaded", () => {
             vx: 0,
             vy: 0,
             char: randomChar,
-            opacity: 0.05,
-            targetOpacity: 0.05,
-            typeTick: Math.floor(Math.random() * 80),
-            typeInterval: 35 + Math.floor(Math.random() * 85),
-            phase: (r * 0.1 + c * 0.1)
+            opacity: 0.055,
+            targetOpacity: 0.055,
+            typeTick: Math.floor(Math.random() * 60),
+            // Slower ambient typing interval
+            ambientInterval: 60 + Math.floor(Math.random() * 120),
+            // Smooth, controlled hover typing interval
+            hoverInterval: 22 + Math.floor(Math.random() * 15),
+            phase: (r * 0.12 + c * 0.12)
           });
         }
       }
@@ -252,25 +254,25 @@ document.addEventListener("DOMContentLoaded", () => {
       time += 0.02;
 
       // Smooth mouse interpolation
-      mouse.x += (mouse.targetX - mouse.x) * 0.22;
-      mouse.y += (mouse.targetY - mouse.y) * 0.22;
+      mouse.x += (mouse.targetX - mouse.x) * 0.20;
+      mouse.y += (mouse.targetY - mouse.y) * 0.20;
 
       ctx.clearRect(0, 0, width, height);
-      // Increased font size to 12.5px for crisp, prominent glyphs in a tight matrix
-      ctx.font = "500 12.5px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace";
+      // Rolled back to 9.5px crisp monospace font
+      ctx.font = "9.5px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      const spring = 0.12;
-      const friction = 0.70;
+      const spring = 0.10;
+      const friction = 0.72;
 
       const nodeCount = gridNodes.length;
       for (let i = 0; i < nodeCount; i++) {
         const node = gridNodes[i];
 
-        // Subtle ambient wave drift
-        const ambientWaveX = Math.sin(time + node.phase) * 0.6;
-        const ambientWaveY = Math.cos(time + node.phase * 0.8) * 0.6;
+        // Ambient wave drift
+        const ambientWaveX = Math.sin(time + node.phase) * 0.7;
+        const ambientWaveY = Math.cos(time + node.phase * 0.8) * 0.7;
 
         // Distance to cursor
         const dx = mouse.x - node.x;
@@ -280,33 +282,32 @@ document.addEventListener("DOMContentLoaded", () => {
         const isNearMouse = dist < mouse.radius && mouse.isHovered;
 
         if (isNearMouse) {
-          // Dynamic proximity factor (0 to 1)
           const proximity = (1 - dist / mouse.radius);
           const angle = Math.atan2(dy, dx);
-          const push = proximity * 10;
+          const push = proximity * 12;
 
           // Controlled physical displacement
-          node.vx -= Math.cos(angle) * push * 0.15;
-          node.vy -= Math.sin(angle) * push * 0.15;
+          node.vx -= Math.cos(angle) * push * 0.16;
+          node.vy -= Math.sin(angle) * push * 0.16;
 
-          // Increased hover opacity: from 0.05 to ~0.28
-          node.targetOpacity = 0.05 + proximity * 0.23;
+          // Subtle opacity increase on hover (~0.055 to ~0.26)
+          node.targetOpacity = 0.055 + proximity * 0.21;
 
-          // Rapid typing scramble when hovered
-          node.typeTick += 4;
-          if (node.typeTick >= 5) {
+          // Decreased, smoother hover typing cadence (not too fast)
+          node.typeTick++;
+          if (node.typeTick >= node.hoverInterval) {
             node.char = charPool[Math.floor(Math.random() * charPool.length)];
             node.typeTick = 0;
           }
         } else {
-          node.targetOpacity = 0.05;
+          node.targetOpacity = 0.055;
 
           // Ambient slow typing scramble in the background
           node.typeTick++;
-          if (node.typeTick >= node.typeInterval) {
+          if (node.typeTick >= node.ambientInterval) {
             node.char = charPool[Math.floor(Math.random() * charPool.length)];
             node.typeTick = 0;
-            node.typeInterval = 40 + Math.floor(Math.random() * 90);
+            node.ambientInterval = 60 + Math.floor(Math.random() * 120);
           }
         }
 
@@ -323,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
         node.y += node.vy;
 
         // Smooth opacity lerp
-        node.opacity += (node.targetOpacity - node.opacity) * 0.14;
+        node.opacity += (node.targetOpacity - node.opacity) * 0.12;
 
         // Draw character
         ctx.fillStyle = `rgba(18, 19, 20, ${node.opacity.toFixed(3)})`;

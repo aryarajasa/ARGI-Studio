@@ -100,6 +100,180 @@ button {
 }
 
 /* ==========================================================================
+   PRIVATE ATELIER ACCESS PASSCODE GATE
+   ========================================================================== */
+.private-access-gate {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #08090a;
+  padding: 1.5rem;
+  overflow: hidden;
+  transition: opacity 0.55s ease, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.65s;
+}
+
+.private-access-gate.is-unlocked {
+  opacity: 0;
+  transform: scale(1.03);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.private-gate-card {
+  background: rgba(16, 18, 20, 0.95);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-xl);
+  padding: 3rem 2.25rem;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.65rem;
+  transition: transform 0.4s ease;
+}
+
+.private-gate-card.shake-error {
+  animation: gateShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes gateShake {
+  10%, 90% { transform: translate3d(-2px, 0, 0); }
+  20%, 80% { transform: translate3d(4px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+  40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+.gate-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gate-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 1.25rem;
+}
+
+.gate-logo-img {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+  filter: invert(1) brightness(2);
+  margin-bottom: 1.25rem;
+}
+
+.gate-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.85rem, 5vw, 2.25rem);
+  font-style: italic;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.gate-desc {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-white-muted);
+  max-width: 320px;
+}
+
+.gate-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gate-input-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.4rem 0.35rem 1.15rem;
+  width: 100%;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.gate-input-wrap:focus-within {
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.gate-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  letter-spacing: 0.08em;
+}
+
+.gate-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-family: var(--font-sans);
+  letter-spacing: normal;
+}
+
+.gate-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 0.6rem 1.15rem;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.gate-submit-btn:hover {
+  background: #e6e6e6;
+  transform: translateY(-1px);
+}
+
+.gate-submit-btn:active {
+  transform: scale(0.97);
+}
+
+.gate-status-msg {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: #ef4444;
+  min-height: 1.2rem;
+  letter-spacing: 0.04em;
+}
+
+.gate-status-msg.is-success {
+  color: #10b981;
+}
+
+/* ==========================================================================
    MINIMALIST ATELIER INTRO PRELOADER & DUAL SHUTTER REVEAL
    ========================================================================== */
 .site-preloader {

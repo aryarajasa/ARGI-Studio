@@ -45,7 +45,7 @@
 
         <!-- Right: Action CTA & Mobile Toggle -->
         <div class="nav-actions">
-          <a href="#contact" class="btn btn-primary nav-cta">
+          <a href="#contact" class="btn btn-primary nav-cta" id="navCtaBtn">
             <span>Commission Work</span>
             <svg class="btn-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none">
               <path d="M3.33334 8H12.6667M12.6667 8L8.66668 4M12.6667 8L8.66668 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -718,14 +718,14 @@
           <!-- Services Bottom CTA -->
           <div class="services-cta-row">
             <span class="services-cta-text">Looking for a custom combination of services?</span>
-            <a href="#contact" class="btn btn-primary btn-animated">
+            <button type="button" class="btn btn-primary btn-animated open-modal-btn">
               <span class="btn-text">Discuss your project scope</span>
               <span class="btn-icon-circle">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                   <path d="M3.33334 8H12.6667M12.6667 8L8.66668 4M12.6667 8L8.66668 12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
-            </a>
+            </button>
           </div>
 
         </div>
@@ -800,7 +800,7 @@
         </div>
       </section>
 
-      <!-- REWORKED HIGH-IMPACT INTERACTIVE CONTACT WORKBENCH -->
+      <!-- REWORKED INTERACTIVE CONTACT / COMMISSION WORKBENCH (WITH STUDIO CAPACITY SPRINT MATRIX) -->
       <section id="contact" class="section section-contact">
         <div class="container-medium">
           <div class="contact-workbench-card">
@@ -810,7 +810,7 @@
 
             <div class="workbench-layout">
               
-              <!-- Left Side: Interactive Scope Selector & Inquiry Builder -->
+              <!-- Left Side: Interactive Scope Selector & Brief Trigger -->
               <div class="workbench-main">
                 <div class="section-badge-wrapper">
                   <div class="section-badge">
@@ -824,7 +824,7 @@
                   Ready to architect <em class="serif-accent">your brand's</em> next chapter?
                 </h2>
                 <p class="workbench-subtitle">
-                  Select the creative disciplines your project requires to initiate a bespoke collaboration:
+                  Select the creative disciplines your project requires, then generate your bespoke commission brief:
                 </p>
 
                 <!-- Interactive Tag Selector Pills (Aligned with 4 Core Services) -->
@@ -856,14 +856,14 @@
                     <span class="summary-tags-preview" id="summaryTagsPreview">Brand Identity Design, Web Design &amp; Development</span>
                   </div>
                   <div class="workbench-actions-row">
-                    <a href="mailto:studio@argistudio.dev?subject=Creative%20Commission%20Inquiry%20for%20Brand%20Identity%20Design,%20Web%20Design" class="btn btn-primary btn-animated" id="inquiryEmailBtn">
+                    <button type="button" class="btn btn-primary btn-animated open-modal-btn" id="inquiryModalTriggerBtn">
                       <span class="btn-text">Initiate Commission</span>
                       <span class="btn-icon-circle">
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                           <path d="M3.33334 8H12.6667M12.6667 8L8.66668 4M12.6667 8L8.66668 12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                       </span>
-                    </a>
+                    </button>
                     <button type="button" class="btn btn-outline copy-email-btn" id="copyEmailBtn">
                       <span id="copyEmailText">Copy studio@argistudio.dev</span>
                     </button>
@@ -871,33 +871,50 @@
                 </div>
               </div>
 
-              <!-- Right Side: Studio Telemetry / Availability Card (Bali, Indonesia) -->
+              <!-- Right Side: Studio Atelier Capacity & Sprint Roadmap Card (NO AUDIO WAVE) -->
               <div class="workbench-side-card">
                 <div class="telemetry-card-header">
                   <div class="telemetry-status-pill">
                     <span class="status-pulse-dot"></span>
                     <span>Atelier Status: Open for Q3/Q4</span>
                   </div>
-                  <span class="telemetry-freq" id="wbLiveTime">Bali • 21:17 WITA</span>
+                  <span class="telemetry-freq" id="wbLiveTime">Bali • 21:35 WITA</span>
                 </div>
 
-                <!-- Interactive Aesthetic Equalizer / Pulse Bars -->
-                <div class="telemetry-visualizer" id="telemetryVisualizer">
-                  <div class="sound-wave-bar" style="--h: 45%;"></div>
-                  <div class="sound-wave-bar" style="--h: 80%;"></div>
-                  <div class="sound-wave-bar" style="--h: 30%;"></div>
-                  <div class="sound-wave-bar" style="--h: 95%;"></div>
-                  <div class="sound-wave-bar" style="--h: 60%;"></div>
-                  <div class="sound-wave-bar" style="--h: 85%;"></div>
-                  <div class="sound-wave-bar" style="--h: 40%;"></div>
-                  <div class="sound-wave-bar" style="--h: 75%;"></div>
-                  <div class="sound-wave-bar" style="--h: 100%;"></div>
-                  <div class="sound-wave-bar" style="--h: 65%;"></div>
-                  <div class="sound-wave-bar" style="--h: 35%;"></div>
-                  <div class="sound-wave-bar" style="--h: 90%;"></div>
-                  <div class="sound-wave-bar" style="--h: 55%;"></div>
-                  <div class="sound-wave-bar" style="--h: 70%;"></div>
-                  <div class="sound-wave-bar" style="--h: 40%;"></div>
+                <!-- Creative Studio Capacity & Sprint Roadmap Widget (Replaces Audio Wave) -->
+                <div class="studio-capacity-widget">
+                  <div class="capacity-header">
+                    <span class="capacity-title">Studio Sprint Roadmap</span>
+                    <span class="capacity-badge">2 of 4 Slots Available</span>
+                  </div>
+
+                  <!-- Sprint 1: Autumn Cycle -->
+                  <div class="sprint-slot-row">
+                    <div class="sprint-meta">
+                      <span class="sprint-name">Autumn Cycle (Sep – Nov)</span>
+                      <span class="sprint-availability text-amber">1 Slot Open</span>
+                    </div>
+                    <div class="sprint-progress-track">
+                      <div class="slot-segment is-filled" title="Booked: Global Fashion Flagship"></div>
+                      <div class="slot-segment is-filled" title="Booked: Architecture Monograph"></div>
+                      <div class="slot-segment is-filled" title="Booked: Botanic E-Commerce"></div>
+                      <div class="slot-segment is-open" title="Available for Commission"></div>
+                    </div>
+                  </div>
+
+                  <!-- Sprint 2: Winter Cycle -->
+                  <div class="sprint-slot-row">
+                    <div class="sprint-meta">
+                      <span class="sprint-name">Winter Cycle (Dec – Feb)</span>
+                      <span class="sprint-availability text-green">3 Slots Open</span>
+                    </div>
+                    <div class="sprint-progress-track">
+                      <div class="slot-segment is-filled" title="Booked: Fragrance Brand Identity"></div>
+                      <div class="slot-segment is-open" title="Available for Commission"></div>
+                      <div class="slot-segment is-open" title="Available for Commission"></div>
+                      <div class="slot-segment is-open" title="Available for Commission"></div>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="telemetry-specs-list">
@@ -917,7 +934,7 @@
 
                 <div class="telemetry-card-footer">
                   <div class="direct-call-badge">
-                    <span class="clock-icon">⚡</span> Studio partner review time: <strong>&lt; 24 hours</strong>
+                    <span class="clock-icon">⚡</span> Founding partners direct response: <strong>&lt; 24 hours</strong>
                   </div>
                 </div>
               </div>
@@ -1022,13 +1039,93 @@
               <span class="location-pulse-dot"></span>
               <span class="location-city">Bali, Indonesia</span>
               <span class="utility-dot">•</span>
-              <span class="location-clock" id="baliLiveTime">21:17:00 WITA (UTC+8)</span>
+              <span class="location-clock" id="baliLiveTime">21:35:00 WITA (UTC+8)</span>
             </div>
           </div>
         </div>
 
       </div>
     </footer>
+
+    <!-- INTERACTIVE COMMISSION EMAIL BRIEF MODAL -->
+    <div class="modal-backdrop" id="commissionModal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal-card">
+        
+        <!-- Modal Top Bar -->
+        <div class="modal-header">
+          <div class="modal-header-meta">
+            <span class="modal-badge">Direct Studio Commission Brief</span>
+            <h3 class="modal-title">Initiate Collaboration with <em class="serif-accent">ARGI Studio</em></h3>
+          </div>
+          <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">✕</button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          
+          <div class="modal-form-grid">
+            <!-- Client Name / Organization -->
+            <div class="form-group">
+              <label for="modalClientName" class="form-label">Your Name or Brand / Organization</label>
+              <input type="text" id="modalClientName" class="form-input" placeholder="e.g., Vivien Atelier / Founder Name" />
+            </div>
+
+            <!-- Client Contact Email -->
+            <div class="form-group">
+              <label for="modalClientEmail" class="form-label">Your Direct Email</label>
+              <input type="email" id="modalClientEmail" class="form-input" placeholder="e.g., founder@domain.com" />
+            </div>
+          </div>
+
+          <!-- Active Scope Chips inside Modal -->
+          <div class="form-group">
+            <label class="form-label">Selected Creative Disciplines</label>
+            <div class="modal-chips-row" id="modalChipsRow">
+              <span class="modal-chip">Brand Identity Design</span>
+              <span class="modal-chip">Web Design &amp; Development</span>
+            </div>
+          </div>
+
+          <!-- Inquiries & Goals Textarea -->
+          <div class="form-group">
+            <label for="modalInquiryDetails" class="form-label">Project Inquiries, Vision &amp; Goals</label>
+            <textarea id="modalInquiryDetails" class="form-textarea" rows="3" placeholder="Tell us about your brand challenge, key deliverables, target launch timeframe, or aesthetic direction..."></textarea>
+          </div>
+
+          <!-- Live Generated Email Brief Preview -->
+          <div class="form-group">
+            <div class="preview-header-row">
+              <label class="form-label">Generated Email Template</label>
+              <span class="preview-hint">Auto-formatted for studio@argistudio.dev</span>
+            </div>
+            <div class="brief-preview-box">
+              <pre class="brief-pre-text" id="briefPreText"></pre>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Modal Actions -->
+        <div class="modal-footer">
+          <div class="modal-footer-left">
+            <button type="button" class="btn btn-outline" id="modalCopyBriefBtn">
+              <span id="modalCopyBriefText">📋 Copy Template</span>
+            </button>
+          </div>
+          <div class="modal-footer-right">
+            <a href="#" class="btn btn-primary btn-animated" id="modalSendEmailBtn">
+              <span class="btn-text">Open in Email Client</span>
+              <span class="btn-icon-circle">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M3.33334 8H12.6667M12.6667 8L8.66668 4M12.6667 8L8.66668 12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
   </div>
 

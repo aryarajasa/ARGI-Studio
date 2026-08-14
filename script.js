@@ -229,59 +229,215 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 9. CREATIVE COMMISSION WORKBENCH LOGIC
+  // 9. CREATIVE COMMISSION & INTERACTIVE EMAIL BRIEF TEMPLATE MODAL
   const tagPills = document.querySelectorAll(".tag-pill");
   const summaryTagsPreview = document.getElementById("summaryTagsPreview");
-  const inquiryEmailBtn = document.getElementById("inquiryEmailBtn");
   const copyEmailBtn = document.getElementById("copyEmailBtn");
   const copyEmailText = document.getElementById("copyEmailText");
 
-  if (tagPills.length && summaryTagsPreview && inquiryEmailBtn) {
-    const updateInquiryState = () => {
-      const selected = Array.from(tagPills)
-        .filter((pill) => pill.classList.contains("is-selected"))
-        .map((pill) => pill.getAttribute("data-tag"));
+  // Modal Elements
+  const commissionModal = document.getElementById("commissionModal");
+  const modalCloseBtn = document.getElementById("modalCloseBtn");
+  const openModalBtns = document.querySelectorAll(".open-modal-btn, #inquiryModalTriggerBtn, #navCtaBtn");
+  const modalChipsRow = document.getElementById("modalChipsRow");
+  const modalClientName = document.getElementById("modalClientName");
+  const modalClientEmail = document.getElementById("modalClientEmail");
+  const modalInquiryDetails = document.getElementById("modalInquiryDetails");
+  const briefPreText = document.getElementById("briefPreText");
+  const modalCopyBriefBtn = document.getElementById("modalCopyBriefBtn");
+  const modalCopyBriefText = document.getElementById("modalCopyBriefText");
+  const modalSendEmailBtn = document.getElementById("modalSendEmailBtn");
 
+  const getSelectedDisciplines = () => {
+    return Array.from(tagPills)
+      .filter((pill) => pill.classList.contains("is-selected"))
+      .map((pill) => pill.getAttribute("data-tag"));
+  };
+
+  const generateEmailTemplate = () => {
+    const selected = getSelectedDisciplines();
+    const disciplinesList = selected.length > 0
+      ? selected.map((d) => `• ${d}`).join("\n")
+      : "• Brand Identity & Strategic Visual Direction";
+
+    const clientName = modalClientName && modalClientName.value.trim() ? modalClientName.value.trim() : "[Your Brand / Name]";
+    const clientEmail = modalClientEmail && modalClientEmail.value.trim() ? modalClientEmail.value.trim() : "[your-email@domain.com]";
+    const details = modalInquiryDetails && modalInquiryDetails.value.trim()
+      ? modalInquiryDetails.value.trim()
+      : "[Briefly describe your brand ambitions, key deliverables, and target timeframe...]";
+
+    const briefText = `To: studio@argistudio.dev
+Subject: Studio Commission Inquiry — ${clientName}
+
+Dear ARGI Studio Team,
+
+We would like to commission ARGI Studio for the following creative disciplines:
+${disciplinesList}
+
+---
+Brand / Organization: ${clientName}
+Direct Contact: ${clientEmail}
+Location / Studio Base: Bali / Global Remote
+
+Project Vision & Inquiries:
+${details}
+
+Looking forward to architecting our brand's next chapter with you.
+
+Best regards,
+${clientName}`;
+
+    if (briefPreText) {
+      briefPreText.textContent = briefText;
+    }
+
+    if (modalSendEmailBtn) {
+      const subject = encodeURIComponent(`Studio Commission Inquiry — ${clientName}`);
+      const body = encodeURIComponent(
+`Dear ARGI Studio Team,
+
+We would like to commission ARGI Studio for the following creative disciplines:
+${disciplinesList}
+
+---
+Brand / Organization: ${clientName}
+Direct Contact: ${clientEmail}
+
+Project Vision & Inquiries:
+${details}
+
+Looking forward to collaborating.
+
+Best regards,
+${clientName}`
+      );
+
+      modalSendEmailBtn.href = `mailto:studio@argistudio.dev?subject=${subject}&body=${body}`;
+    }
+
+    // Also update chips in modal
+    if (modalChipsRow) {
+      modalChipsRow.innerHTML = "";
       if (selected.length === 0) {
-        summaryTagsPreview.textContent = "General Creative Commission Inquiry";
-        inquiryEmailBtn.setAttribute(
-          "href",
-          "mailto:studio@argistudio.dev?subject=General%20Studio%20Commission%20Inquiry%20(Bali,%20Indonesia)"
-        );
+        const chip = document.createElement("span");
+        chip.className = "modal-chip";
+        chip.textContent = "General Creative Direction";
+        modalChipsRow.appendChild(chip);
       } else {
-        const formatted = selected.join(", ");
-        summaryTagsPreview.textContent = formatted;
-        inquiryEmailBtn.setAttribute(
-          "href",
-          `mailto:studio@argistudio.dev?subject=Creative%20Commission%20Inquiry%20for%20${encodeURIComponent(formatted)}`
-        );
+        selected.forEach((tag) => {
+          const chip = document.createElement("span");
+          chip.className = "modal-chip";
+          chip.textContent = tag;
+          modalChipsRow.appendChild(chip);
+        });
       }
-    };
+    }
+  };
 
+  const updateInquiryState = () => {
+    const selected = getSelectedDisciplines();
+
+    if (selected.length === 0) {
+      summaryTagsPreview.textContent = "General Creative Direction";
+    } else {
+      summaryTagsPreview.textContent = selected.join(", ");
+    }
+
+    generateEmailTemplate();
+  };
+
+  // Tag pills toggle
+  if (tagPills.length && summaryTagsPreview) {
     tagPills.forEach((pill) => {
       pill.addEventListener("click", () => {
         pill.classList.toggle("is-selected");
         updateInquiryState();
       });
     });
+    updateInquiryState();
+  }
 
-    // Copy Email button with feedback
-    if (copyEmailBtn && copyEmailText) {
-      copyEmailBtn.addEventListener("click", () => {
-        navigator.clipboard.writeText("studio@argistudio.dev").then(() => {
-          const original = copyEmailText.textContent;
-          copyEmailText.textContent = "✓ Copied to clipboard!";
-          copyEmailBtn.style.borderColor = "var(--accent-green)";
-          copyEmailBtn.style.color = "var(--accent-green)";
+  // Modal Open / Close Logic
+  const openModal = () => {
+    if (!commissionModal) return;
+    generateEmailTemplate();
+    commissionModal.classList.add("is-open");
+    commissionModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  };
 
-          setTimeout(() => {
-            copyEmailText.textContent = original;
-            copyEmailBtn.style.borderColor = "";
-            copyEmailBtn.style.color = "";
-          }, 2200);
-        });
-      });
+  const closeModal = () => {
+    if (!commissionModal) return;
+    commissionModal.classList.remove("is-open");
+    commissionModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  };
+
+  openModalBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openModal();
+    });
+  });
+
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener("click", closeModal);
+  }
+
+  if (commissionModal) {
+    commissionModal.addEventListener("click", (e) => {
+      if (e.target === commissionModal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && commissionModal.classList.contains("is-open")) {
+        closeModal();
+      }
+    });
+  }
+
+  // Real-time live update as user types
+  [modalClientName, modalClientEmail, modalInquiryDetails].forEach((input) => {
+    if (input) {
+      input.addEventListener("input", generateEmailTemplate);
     }
+  });
+
+  // Copy Formatted Brief to Clipboard Button
+  if (modalCopyBriefBtn && modalCopyBriefText && briefPreText) {
+    modalCopyBriefBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(briefPreText.textContent).then(() => {
+        modalCopyBriefText.textContent = "✓ Template Copied!";
+        modalCopyBriefBtn.style.borderColor = "var(--accent-green)";
+        modalCopyBriefBtn.style.color = "var(--accent-green)";
+
+        setTimeout(() => {
+          modalCopyBriefText.textContent = "📋 Copy Template";
+          modalCopyBriefBtn.style.borderColor = "";
+          modalCopyBriefBtn.style.color = "";
+        }, 2200);
+      });
+    });
+  }
+
+  // Copy Email Address button with feedback on main page
+  if (copyEmailBtn && copyEmailText) {
+    copyEmailBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText("studio@argistudio.dev").then(() => {
+        const original = copyEmailText.textContent;
+        copyEmailText.textContent = "✓ Copied studio@argistudio.dev";
+        copyEmailBtn.style.borderColor = "var(--accent-green)";
+        copyEmailBtn.style.color = "var(--accent-green)";
+
+        setTimeout(() => {
+          copyEmailText.textContent = original;
+          copyEmailBtn.style.borderColor = "";
+          copyEmailBtn.style.color = "";
+        }, 2200);
+      });
+    });
   }
 
   // 10. HERO FLOATING PORTFOLIO SNIPPETS PARALLAX ENGINE

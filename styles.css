@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ARGI Studio - Design System & Stylesheet
+   ARGI Studio - Design System & Stylesheet (Creative Atelier Edition)
    ========================================================================== */
 
 /* --- CSS Variables & Design Tokens --- */
@@ -10,7 +10,7 @@
   --bg-card: #ffffff;
   --bg-subtle: #ede8e1;
   --bg-dark: #0c0d0e;
-  --bg-dark-card: #151719;
+  --bg-dark-card: #141618;
   --bg-dark-card-border: rgba(255, 255, 255, 0.08);
 
   --text-primary: #121314;
@@ -419,7 +419,51 @@ button {
   transform: translateY(-1.5px);
 }
 
-/* --- HERO SECTION (100VH FULL VIEWPORT WITH CENTERED EDITORIAL HEADLINE & FLOATING GALLERY) --- */
+/* --- Section Badge --- */
+.section-badge-wrapper {
+  margin-bottom: 2rem;
+}
+
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.badge-number {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.badge-line {
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background-color: var(--border-light);
+}
+
+.badge-label {
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+}
+
+.section-badge.is-light {
+  color: var(--text-white-muted);
+}
+
+.section-badge.is-light .badge-number {
+  color: var(--text-white);
+}
+
+.section-badge.is-light .badge-line {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* --- HERO SECTION (100VH FULL VIEWPORT WITH CENTERED EDITORIAL HEADLINE & FLOATING PORTFOLIO SNIPPETS) --- */
 .section-hero {
   position: relative;
   background-color: var(--bg-hero);
@@ -444,7 +488,7 @@ button {
   z-index: 1;
 }
 
-/* Scattered Floating Gallery (Matching Reference Image) */
+/* Scattered Floating Gallery */
 .hero-floating-gallery {
   position: absolute;
   inset: 0;
@@ -846,7 +890,9 @@ button {
   object-fit: contain;
 }
 
-/* --- SECTION 3: FEATURED DATASETS (DARK THEME) --- */
+/* ==========================================================================
+   SECTION 3: VERTICAL SELECTED PORTFOLIO PROJECTS (DARK THEME)
+   ========================================================================== */
 .section-datasets-dark {
   background-color: var(--bg-dark);
   color: var(--text-white);
@@ -879,122 +925,163 @@ button {
   color: var(--text-white);
 }
 
-.datasets-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.75rem;
-  margin-bottom: 3rem;
-}
-
-.dataset-card {
-  background: var(--bg-dark-card);
-  border: 1px solid var(--bg-dark-card-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+/* Vertical Portfolio Projects Stack */
+.portfolio-vertical-stack {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 480px;
+  gap: 3.5rem;
+  margin-bottom: 4.5rem;
+}
+
+.portfolio-vertical-card {
+  background: var(--bg-dark-card);
+  border: 1px solid var(--bg-dark-card-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 3.5rem;
+  align-items: stretch;
+  padding: 3rem;
   transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth);
 }
 
-.dataset-card:hover {
+.portfolio-vertical-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
 }
 
-.card-content {
-  padding: 2.25rem 2.25rem 1.5rem;
-}
-
-.card-header {
+.project-info-side {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.card-icon-wrap {
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  gap: 1.25rem;
 }
 
-.card-icon {
-  width: 100%;
-  height: 100%;
-}
-
-.card-title {
-  font-size: 1.5rem;
+.project-num-tag {
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-white-subtle);
 }
 
-.card-desc {
+.project-title {
+  font-size: clamp(1.85rem, 2.75vw, 2.65rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #ffffff;
+}
+
+.project-summary {
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--text-white-muted);
 }
 
-.card-media {
-  position: relative;
-  width: 100%;
-  height: 240px;
-  background: rgba(0, 0, 0, 0.4);
-  overflow: hidden;
+.project-tags-list {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
 }
 
-.card-video {
+.p-tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+}
+
+.project-link-wrap {
+  margin-top: 0.75rem;
+}
+
+.project-view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 4px;
+  width: fit-content;
+  transition: all var(--transition-fast);
+}
+
+.project-view-btn .arrow-dot {
+  font-size: 1.1em;
+  transition: transform var(--transition-fast);
+}
+
+.project-view-btn:hover {
+  border-color: #ffffff;
+  color: #60a5fa;
+}
+
+.project-view-btn:hover .arrow-dot {
+  transform: translate(2px, -2px);
+}
+
+.project-visual-side {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.project-media-wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #1a1c1e;
+  border-radius: var(--radius-lg);
+}
+
+.project-media-wrap.color-blue-backdrop {
+  background: #111a2e;
+}
+
+.project-media-wrap.color-red-backdrop {
+  background: #2b110f;
+}
+
+.project-cover-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.atlas-media-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background: #0d1217;
+.portfolio-vertical-card:hover .project-cover-img {
+  transform: scale(1.04);
 }
 
-.language-pill-badge {
+.media-overlay-badge {
   position: absolute;
-  top: 1.25rem;
-  background: rgba(255, 255, 255, 0.1);
+  bottom: 1.25rem;
+  right: 1.25rem;
+  background: rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  color: var(--text-white);
-  font-size: 0.8125rem;
+  color: #ffffff;
+  font-size: 0.75rem;
   font-weight: 500;
   padding: 0.35rem 0.85rem;
   border-radius: var(--radius-full);
-  z-index: 2;
 }
 
-.atlas-map-bg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.65;
-  animation: mapPan 25s linear infinite;
-}
-
-@keyframes mapPan {
-  0% { transform: scale(1.1) translateX(0); }
-  50% { transform: scale(1.1) translateX(-5%); }
-  100% { transform: scale(1.1) translateX(0); }
-}
-
-/* Datasets CTA Box */
+/* Datasets / Portfolio CTA Box */
 .datasets-cta-box {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--bg-dark-card-border);
@@ -1059,7 +1146,7 @@ button {
   color: var(--text-white-muted);
 }
 
-/* --- SECTION 4: CAREERS --- */
+/* --- SECTION 4: CAREERS / STUDIO --- */
 .section-careers {
   background-color: var(--bg-body);
 }
@@ -1095,7 +1182,7 @@ button {
   max-width: 460px;
 }
 
-/* --- SECTION 5: NEWS --- */
+/* --- SECTION 5: JOURNAL / NEWS --- */
 .section-news {
   background-color: var(--bg-body);
   border-top: 1px solid var(--border-light-subtle);
@@ -1182,7 +1269,7 @@ button {
 }
 
 /* ==========================================================================
-   REWORKED INTERACTIVE CONTACT / CTA WORKBENCH SECTION
+   REWORKED INTERACTIVE CONTACT / COMMISSION WORKBENCH SECTION
    ========================================================================== */
 .section-contact {
   padding-top: 5rem;
@@ -1329,7 +1416,7 @@ button {
   padding: 0.65rem 1.25rem;
 }
 
-/* Right Side: Acoustic Telemetry / Live Simulator Card */
+/* Right Side: Studio Telemetry / Availability Card */
 .workbench-side-card {
   background: var(--bg-dark-card);
   border: 1px solid var(--bg-dark-card-border);
@@ -1467,7 +1554,7 @@ button {
 }
 
 /* ==========================================================================
-   CLEAN MULTI-COLUMN FOOTER (REFERENCE DESIGN)
+   CLEAN MULTI-COLUMN FOOTER (CREATIVE STUDIO SITEMAP)
    ========================================================================== */
 .site-footer {
   background: #ffffff;
@@ -1589,6 +1676,12 @@ button {
   .pos-tr-2 { top: 10%; right: 4%; width: 85px; height: 110px; }
   .pos-bl-1 { bottom: 10%; left: 4%; width: 85px; height: 115px; }
   .pos-br { bottom: 8%; right: 4%; width: 95px; height: 125px; }
+
+  .portfolio-vertical-card {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 2.5rem;
+  }
 }
 
 @media screen and (max-width: 991px) {
@@ -1634,6 +1727,10 @@ button {
     display: none;
   }
 
+  .portfolio-vertical-card {
+    padding: 2rem;
+  }
+
   .workbench-layout {
     grid-template-columns: 1fr;
     gap: 2.5rem;
@@ -1642,10 +1739,6 @@ button {
   .process-viewer-grid {
     grid-template-columns: 1fr;
     gap: 2.5rem;
-  }
-
-  .datasets-cards-grid {
-    grid-template-columns: 1fr;
   }
 
   .works-steps-grid {
@@ -1690,6 +1783,14 @@ button {
   .pos-tr-2 { width: 70px; height: 95px; top: 12%; right: 3%; }
   .pos-bl-1 { width: 70px; height: 95px; bottom: 8%; left: 3%; }
   .pos-br { width: 70px; height: 95px; bottom: 8%; right: 3%; }
+
+  .portfolio-vertical-card {
+    padding: 1.5rem;
+  }
+
+  .project-visual-side {
+    min-height: 260px;
+  }
 
   .contact-workbench-card {
     padding: 2rem 1.5rem;

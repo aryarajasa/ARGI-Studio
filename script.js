@@ -1,5 +1,5 @@
 /**
- * ARGI Studio - Interactive Frontend Scripts, Floating Parallax Gallery & Contact Workbench
+ * ARGI Studio - Independent Creative Atelier Scripts & Interactions
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const navRect = navbar.getBoundingClientRect();
     const darkRect = darkSection.getBoundingClientRect();
 
-    // Check if navbar intersects the dark section
+    // Check if navbar intersects the dark portfolio section
     if (navRect.top >= darkRect.top - 30 && navRect.bottom <= darkRect.bottom + 30) {
       navbar.classList.add("theme-dark");
     } else {
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", handleScrollTheme, { passive: true });
   handleScrollTheme();
 
-  // 4. INTERACTIVE PROCESS STEP VIEWER
+  // 4. INTERACTIVE METHODOLOGY STEP VIEWER
   const stepItems = document.querySelectorAll(".process-step-item");
   const artLayers = document.querySelectorAll(".process-art-layer");
 
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 6. REWORKED INTERACTIVE CONTACT WORKBENCH LOGIC
+  // 6. CREATIVE COMMISSION WORKBENCH LOGIC
   const tagPills = document.querySelectorAll(".tag-pill");
   const summaryTagsPreview = document.getElementById("summaryTagsPreview");
   const inquiryEmailBtn = document.getElementById("inquiryEmailBtn");
@@ -146,17 +146,17 @@ document.addEventListener("DOMContentLoaded", () => {
         .map((pill) => pill.getAttribute("data-tag"));
 
       if (selected.length === 0) {
-        summaryTagsPreview.textContent = "General Audio AI Inquiry";
+        summaryTagsPreview.textContent = "General Creative Commission Inquiry";
         inquiryEmailBtn.setAttribute(
           "href",
-          "mailto:contact@argistudio.dev?subject=General%20Voice%20AI%20Dataset%20Inquiry"
+          "mailto:studio@argistudio.dev?subject=General%20Studio%20Commission%20Inquiry"
         );
       } else {
         const formatted = selected.join(", ");
         summaryTagsPreview.textContent = formatted;
         inquiryEmailBtn.setAttribute(
           "href",
-          `mailto:contact@argistudio.dev?subject=Inquiry%20for%20${encodeURIComponent(formatted)}`
+          `mailto:studio@argistudio.dev?subject=Creative%20Commission%20Inquiry%20for%20${encodeURIComponent(formatted)}`
         );
       }
     };
@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Copy Email button with feedback
     if (copyEmailBtn && copyEmailText) {
       copyEmailBtn.addEventListener("click", () => {
-        navigator.clipboard.writeText("contact@argistudio.dev").then(() => {
+        navigator.clipboard.writeText("studio@argistudio.dev").then(() => {
           const original = copyEmailText.textContent;
           copyEmailText.textContent = "✓ Copied to clipboard!";
           copyEmailBtn.style.borderColor = "var(--accent-green)";
@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 7. HERO FLOATING IMAGES PARALLAX ENGINE
+  // 7. HERO FLOATING PORTFOLIO SNIPPETS PARALLAX ENGINE
   const heroSection = document.getElementById("top");
   const floatingCards = document.querySelectorAll(".floating-card");
 

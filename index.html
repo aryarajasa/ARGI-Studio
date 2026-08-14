@@ -32,12 +32,20 @@
 
     <div class="preloader-inner-container">
       <div class="preloader-center-stage">
-        <div class="preloader-brand-title">
-          <span class="preloader-wordmark">argi</span><span class="preloader-dot">.</span><span class="preloader-symbol">©</span>
+        
+        <!-- KINETIC ASCII LOGO MATRIX & MORPH WRAPPER -->
+        <div class="preloader-ascii-box" id="preloaderAsciiBox">
+          <canvas id="preloaderAsciiCanvas" class="preloader-ascii-canvas"></canvas>
+          <div class="preloader-solid-logo" id="preloaderSolidLogo">
+            <span class="preloader-wordmark">argi</span><span class="preloader-dot">.</span><span class="preloader-symbol">©</span>
+          </div>
         </div>
+
+        <!-- MINIMALIST PERCENTAGE COUNTER -->
         <div class="preloader-counter-wrap">
           <span class="preloader-counter" id="preloaderCounter">0</span><span class="preloader-percent">%</span>
         </div>
+
       </div>
     </div>
   </aside>

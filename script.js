@@ -12,9 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const darkSection = document.querySelector('[data-theme="dark"]');
   const sections = document.querySelectorAll("section[id]");
 
-  // 1. MINIMALIST ATELIER PRELOADER & CENTER DUAL SHUTTER REVEAL
+  // 1. KINETIC ASCII LOGO MORPH PRELOADER & CENTER SHUTTER REVEAL
   const initSitePreloader = () => {
     const preloader = document.getElementById("sitePreloader");
+    const canvas = document.getElementById("preloaderAsciiCanvas");
+    const solidLogo = document.getElementById("preloaderSolidLogo");
     const counterEl = document.getElementById("preloaderCounter");
 
     if (!preloader || !counterEl) {
@@ -22,15 +24,105 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // Setup Canvas for ASCII Logo Matrix
+    let ctx = null;
+    let nodes = [];
+    let width = 0;
+    let height = 0;
+
+    if (canvas) {
+      ctx = canvas.getContext("2d");
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = rect.width || 420;
+      height = rect.height || 120;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+
+      // Render offscreen text to generate target logo particle grid
+      const offCanvas = document.createElement("canvas");
+      offCanvas.width = width;
+      offCanvas.height = height;
+      const offCtx = offCanvas.getContext("2d");
+
+      const fontSize = Math.min(width * 0.19, 78);
+      offCtx.font = `italic 400 ${fontSize}px "Instrument Serif", serif`;
+      offCtx.fillStyle = "#ffffff";
+      offCtx.textAlign = "center";
+      offCtx.textBaseline = "middle";
+      offCtx.fillText("argi.©", width / 2, height / 2);
+
+      const imgData = offCtx.getImageData(0, 0, width, height).data;
+      const step = width < 400 ? 7 : 8;
+      const charPool = ["·", ":", "+", "*", "#", "%", "░", "▒", "▓", "█", "a", "r", "g", "i", "."];
+
+      for (let y = 0; y < height; y += step) {
+        for (let x = 0; x < width; x += step) {
+          const idx = (y * width + x) * 4;
+          const alpha = imgData[idx + 3];
+
+          if (alpha > 45) {
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 25 + Math.random() * 50;
+
+            nodes.push({
+              originX: x,
+              originY: y,
+              x: x + Math.cos(angle) * dist,
+              y: y + Math.sin(angle) * dist,
+              alphaNorm: alpha / 255,
+              char: charPool[Math.floor(Math.random() * charPool.length)],
+              tick: Math.floor(Math.random() * 10)
+            });
+          }
+        }
+      }
+    }
+
     let progress = 0;
     const startTime = performance.now();
-    const duration = 1150; // Snappy 1.15s luxury duration
+    const duration = 1450; // 1.45s fluid progression
+
+    const renderAscii = (pVal) => {
+      if (!ctx || nodes.length === 0) return;
+      ctx.clearRect(0, 0, width, height);
+
+      const ratio = pVal / 100;
+      const charPool = ratio > 0.7
+        ? ["░", "▒", "▓", "█", "a", "r", "g", "i", "·"]
+        : ["·", ":", "+", "*", "/", "\\", "~", "#", "%", "░", "▓"];
+
+      ctx.font = '10px "Inter", monospace';
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+
+        // Gravitate from scrambled position to exact origin
+        node.x += (node.originX - node.x) * 0.16;
+        node.y += (node.originY - node.y) * 0.16;
+
+        // Scramble characters faster at early stages, settle at high ratio
+        node.tick++;
+        if (node.tick > 4 && ratio < 0.95) {
+          node.char = charPool[Math.floor(Math.random() * charPool.length)];
+          node.tick = 0;
+        }
+
+        const opacity = Math.min(node.alphaNorm * (0.35 + ratio * 0.65), 1);
+        ctx.fillStyle = `rgba(255, 255, 255, ${opacity.toFixed(2)})`;
+        ctx.fillText(node.char, node.x, node.y);
+      }
+    };
 
     const tick = (now) => {
       const elapsed = now - startTime;
       const t = Math.min(elapsed / duration, 1);
 
-      // Silky smooth easing
+      // Smooth cubic-bezier curve
       const easeProgress = t < 0.5
         ? 4 * t * t * t
         : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -38,18 +130,24 @@ document.addEventListener("DOMContentLoaded", () => {
       progress = Math.min(Math.round(easeProgress * 100), 100);
       counterEl.textContent = progress;
 
+      renderAscii(progress);
+
       if (t < 1) {
         requestAnimationFrame(tick);
       } else {
-        // Complete & Trigger Shutter Reveal
+        // At 100%: Morph from ASCII to Solid Logo with subtle glow
+        if (solidLogo) solidLogo.classList.add("is-visible");
+        if (canvas) canvas.style.opacity = "0";
+
+        // Trigger Shutter Curtain Reveal
         setTimeout(() => {
           preloader.classList.add("is-loaded");
           document.body.classList.add("site-ready");
 
           setTimeout(() => {
             preloader.style.display = "none";
-          }, 1000);
-        }, 120);
+          }, 1100);
+        }, 220);
       }
     };
 

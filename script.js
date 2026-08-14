@@ -1,5 +1,5 @@
 /**
- * ARGI Studio - Interactive Frontend Scripts, Top Pill Nav & Contact Workbench
+ * ARGI Studio - Interactive Frontend Scripts, Floating Parallax Gallery & Contact Workbench
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -187,10 +187,59 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 7. DENSE ASCII CANVAS ENGINE FOR 100VH HERO
+  // 7. HERO FLOATING IMAGES PARALLAX ENGINE
+  const heroSection = document.getElementById("top");
+  const floatingCards = document.querySelectorAll(".floating-card");
+
+  if (heroSection && floatingCards.length) {
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    heroSection.addEventListener("mousemove", (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      // Normalize between -1 and 1
+      mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    });
+
+    heroSection.addEventListener("mouseleave", () => {
+      mouseX = 0;
+      mouseY = 0;
+    });
+
+    let timeDrift = 0;
+    const animateParallax = () => {
+      timeDrift += 0.015;
+
+      // Smooth lerp interpolation
+      currentX += (mouseX - currentX) * 0.08;
+      currentY += (mouseY - currentY) * 0.08;
+
+      floatingCards.forEach((card, index) => {
+        const speed = parseFloat(card.getAttribute("data-speed") || "1");
+        const baseRotate = parseFloat(card.getAttribute("data-rotate") || "0");
+        
+        // Gentle organic idle oscillation
+        const driftX = Math.sin(timeDrift + index) * 3.5;
+        const driftY = Math.cos(timeDrift + index * 0.7) * 3.5;
+
+        const posX = currentX * speed * 18 + driftX;
+        const posY = currentY * speed * 18 + driftY;
+
+        card.style.transform = `translate3d(${posX.toFixed(2)}px, ${posY.toFixed(2)}px, 0px) rotate(${baseRotate}deg)`;
+      });
+
+      requestAnimationFrame(animateParallax);
+    };
+
+    requestAnimationFrame(animateParallax);
+  }
+
+  // 8. DENSE ASCII CANVAS ENGINE FOR 100VH HERO
   const initHeroAscii = () => {
     const canvas = document.getElementById("heroAsciiCanvas");
-    const heroSection = document.getElementById("top");
     if (!canvas || !heroSection) return;
 
     const ctx = canvas.getContext("2d");

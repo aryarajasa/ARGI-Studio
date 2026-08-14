@@ -1,74 +1,69 @@
-# David AI - Visual & Layout Clone
+# ARGI Studio
 
-A high-fidelity, responsive frontend visual and layout clone of [withdavid.ai](https://www.withdavid.ai/), built with modern semantic HTML5, Vanilla CSS3 (Custom Properties & Responsive Layouts), and interactive JavaScript.
+A modern, high-performance web platform and digital experience for ARGI Studio, built to showcase next-generation speech datasets, voice AI research, and multimodal intelligence.
 
-## 🚀 Features & Highlights
+---
 
-- **Floating Adaptive Pill Navigation**:
-  - Automatically transitions between light and dark theme styles when crossing over the dark `#datasets` section.
-  - Active section indicator synchronization during scrolling.
-  - Mobile hamburger navigation drawer with smooth transitions.
-- **Hero Showcase**:
-  - Serif headline typography (*Besley*) paired with clean modern sans-serif (*Inter*).
-  - Ambient gradient glow and wave mask background.
-- **Section 1: Mission**:
-  - Numbered pill badge `[ 1 | Mission ]` and dual-tone editorial typography.
-- **Section 2: Process (Interactive Timeline)**:
-  - 6 distinct workflow stages (*Hypothesize, Design, Experiment, Evaluate & Iterate, Productionize, Release*).
-  - Interactive click-to-view step switcher with synchronized artwork previews.
-- **Section 3: Featured Datasets (Dark Mode Experience)**:
-  - Deep dark background theme with high-contrast card styling.
-  - 4 showcase dataset cards: **Converse**, **Atlas**, **Chorus**, and **Dialog** with video playback & dialect map graphics.
-  - 4-step procurement guide grid (*Request samples, Purchase access, Receive data, Experiment with us*).
-- **Section 4: Careers**:
-  - Clean split layout featuring custom isometric artwork and CTA button.
-- **Section 5: News & Funding**:
-  - Latest press release cards (Series B $50M, Series A $25M, Seed Round $5M) with date tags and zoom micro-interactions.
-- **Footer**:
-  - "Interested in working with us?" call-to-action banner, legal links, copyright, and social links (LinkedIn, X).
+## ✨ Features & Architecture
+
+- **Adaptive Floating Navigation**:
+  - Context-aware pill navbar with backdrop blur and dynamic light/dark theme transitions across different viewport sections.
+  - Active scroll spy indicator and mobile responsive drawer navigation.
+- **Interactive Research & Process Visualizer**:
+  - Multi-stage audio AI workflow showcase (*Hypothesize, Design, Experiment, Evaluate & Iterate, Productionize, Release*).
+  - Click-and-scroll synchronized visual displays for model and dataset architectures.
+- **Featured Datasets & Speech Systems Showcase**:
+  - Dedicated dark-theme suite highlighting core dataset collections (*Converse, Atlas, Chorus, Dialog*).
+  - Waveform animations, dialect mapping previews, and streamlined multi-step data access workflows.
+- **Careers & Updates**:
+  - Interactive career opportunities section and press/announcement feed.
+- **Performance & Design Excellence**:
+  - Clean semantic HTML5, zero heavy dependencies, custom CSS design tokens, and smooth micro-animations.
 
 ---
 
 ## 📁 Project Structure
 
 ```text
-├── index.html       # Semantic HTML5 page structure
-├── styles.css       # Design tokens, typography, layouts, and responsive breakpoints
-├── script.js        # Dynamic theme switcher, interactive tabs, and mobile menu
-├── .gitignore       # Git ignore rules for clean repository state
-└── README.md        # Documentation and setup instructions
+├── index.html       # Semantic web page structure & content
+├── styles.css       # Design tokens, typography, layouts, and responsive styling
+├── script.js        # Dynamic theme switcher, interactive stage viewer, and mobile menu
+├── .gitignore       # Git ignore rules for clean repository tracking
+└── README.md        # Project documentation
 ```
 
 ---
 
-## 🛠️ How to Run Locally
+## 🛠️ Local Development
 
-You can open `index.html` directly in any modern web browser or run a lightweight local static server:
+Open `index.html` directly in any web browser or spin up a local development server:
 
-### Option 1: Double-click or open directly
-Double-click `index.html` in your file explorer.
+### Option 1: Direct in Browser
+Double-click `index.html` or open it with your preferred browser.
 
-### Option 2: Using Python (built-in)
+### Option 2: Built-in Python Server
 ```bash
 python -m http.server 8000
 ```
-Then visit `http://localhost:8000` in your browser.
+Visit `http://localhost:8000` in your browser.
 
-### Option 3: Using Node / npx serve
+### Option 3: Node / npx
 ```bash
 npx serve .
 ```
 
 ---
 
-## 🌐 Pushing to GitHub
+## 🚀 Deployment
 
-To push this repository to your GitHub account:
+This project is fully static and ready to deploy with **GitHub Pages**, **Vercel**, **Netlify**, or **Cloudflare Pages**.
 
-1. **Create a new repository** on [github.com](https://github.com/new) (e.g. `david-ai-clone`).
-2. **Link the remote repository and push**:
-   ```bash
-   git remote add origin https://github.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>.git
-   git branch -M main
-   git push -u origin main
-   ```
+### GitHub Pages Setup:
+1. Go to repository **Settings** > **Pages**.
+2. Set source branch to `main` and folder to `/(root)`.
+3. Save to publish instantly.
+
+---
+
+## 📄 License
+© 2026 ARGI Studio. All rights reserved.

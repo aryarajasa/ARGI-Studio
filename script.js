@@ -282,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ? modalInquiryDetails.value.trim()
       : "[Briefly describe your brand ambitions, key deliverables, and target timeframe...]";
 
-    const briefText = `To: studio@argistudio.dev
+    const briefText = `To: hello@argistudio.com
 Subject: Studio Commission Inquiry — ${clientName}
 
 Dear ARGI Studio Team,
@@ -328,7 +328,7 @@ Best regards,
 ${clientName}`
       );
 
-      modalSendEmailBtn.href = `mailto:studio@argistudio.dev?subject=${subject}&body=${body}`;
+      modalSendEmailBtn.href = `mailto:hello@argistudio.com?subject=${subject}&body=${body}`;
     }
 
     // Also update chips in modal
@@ -464,9 +464,9 @@ ${clientName}`
   // Copy Email Address button with feedback on main page
   if (copyEmailBtn && copyEmailText) {
     copyEmailBtn.addEventListener("click", () => {
-      navigator.clipboard.writeText("studio@argistudio.dev").then(() => {
+      navigator.clipboard.writeText("hello@argistudio.com").then(() => {
         const original = copyEmailText.textContent;
-        copyEmailText.textContent = "✓ Copied studio@argistudio.dev";
+        copyEmailText.textContent = "✓ Copied hello@argistudio.com";
         copyEmailBtn.style.borderColor = "var(--accent-green)";
         copyEmailBtn.style.color = "var(--accent-green)";
 

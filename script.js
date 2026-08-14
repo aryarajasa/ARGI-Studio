@@ -735,4 +735,55 @@ ${clientName}`
   };
 
   initHeroAscii();
+
+  // 17. MOBILE/TABLET: PORTFOLIO "SEE MORE WORKS" TOGGLE (LIMIT 3 BY DEFAULT)
+  const initPortfolioSeeMore = () => {
+    const seeMoreBtn = document.getElementById("seeMoreProjectsBtn");
+    const seeMoreBtnText = document.getElementById("seeMoreBtnText");
+    const seeMoreWrap = document.getElementById("portfolioSeeMoreWrap");
+    const galleryView = document.getElementById("portfolioGalleryView");
+    const indexView = document.getElementById("portfolioIndexView");
+
+    if (!seeMoreBtn || !galleryView || !indexView) return;
+
+    seeMoreBtn.addEventListener("click", () => {
+      const isExpanded = galleryView.classList.toggle("is-expanded");
+      indexView.classList.toggle("is-expanded", isExpanded);
+      if (seeMoreWrap) seeMoreWrap.classList.toggle("is-expanded", isExpanded);
+
+      seeMoreBtn.setAttribute("aria-expanded", isExpanded);
+
+      if (seeMoreBtnText) {
+        seeMoreBtnText.textContent = isExpanded ? "Show Less" : "See More Works (3)";
+      }
+    });
+  };
+
+  initPortfolioSeeMore();
+
+  // 18. MOBILE/TABLET: FLOATING UP ARROW BUTTON (SCROLL BACK TO HERO)
+  const initMobileScrollTop = () => {
+    const scrollTopBtn = document.getElementById("mobileScrollTopBtn");
+    if (!scrollTopBtn) return;
+
+    const handleScrollBtn = () => {
+      if (window.scrollY > 350) {
+        scrollTopBtn.classList.add("is-visible");
+      } else {
+        scrollTopBtn.classList.remove("is-visible");
+      }
+    };
+
+    window.addEventListener("scroll", handleScrollBtn, { passive: true });
+    handleScrollBtn();
+
+    scrollTopBtn.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  };
+
+  initMobileScrollTop();
 });

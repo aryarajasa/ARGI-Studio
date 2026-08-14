@@ -736,11 +736,16 @@ body.site-ready .page-wrapper {
 }
 
 .hero-subcaption {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  font-family: var(--font-sans);
+  font-size: clamp(0.9375rem, 1.8vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  text-transform: none;
   color: var(--text-secondary);
+  max-width: 580px;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 2.25rem;
 }
 
@@ -2446,9 +2451,11 @@ body.site-ready .page-wrapper {
   }
 
   .hero-subcaption {
-    font-size: 0.8125rem;
-    letter-spacing: 0.1em;
-    max-width: 600px;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    max-width: 480px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 1.75rem;
@@ -2660,11 +2667,12 @@ body.site-ready .page-wrapper {
   }
 
   .hero-subcaption {
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
+    font-size: 0.84375rem;
+    letter-spacing: -0.01em;
     line-height: 1.45;
+    text-transform: none;
     margin-bottom: 1.75rem;
-    padding: 0 0.25rem;
+    padding: 0 0.5rem;
     max-width: 320px;
   }
 

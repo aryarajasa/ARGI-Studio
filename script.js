@@ -106,7 +106,41 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 5. SMOOTH ANCHOR SCROLLING
+  // 5. INTERACTIVE PORTFOLIO CATEGORY FILTER TABS
+  const filterTabs = document.querySelectorAll(".filter-tab");
+  const showcaseCards = document.querySelectorAll(".showcase-card");
+
+  if (filterTabs.length && showcaseCards.length) {
+    filterTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const filterValue = tab.getAttribute("data-filter");
+
+        // Update active tab
+        filterTabs.forEach((t) => t.classList.remove("is-active"));
+        tab.classList.add("is-active");
+
+        // Filter cards with smooth animation
+        showcaseCards.forEach((card) => {
+          const categories = card.getAttribute("data-category") || "";
+          if (filterValue === "all" || categories.includes(filterValue)) {
+            card.style.display = "flex";
+            setTimeout(() => {
+              card.style.opacity = "1";
+              card.style.transform = "scale(1)";
+            }, 20);
+          } else {
+            card.style.opacity = "0";
+            card.style.transform = "scale(0.96)";
+            setTimeout(() => {
+              card.style.display = "none";
+            }, 300);
+          }
+        });
+      });
+    });
+  }
+
+  // 6. SMOOTH ANCHOR SCROLLING
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
       const targetId = this.getAttribute("href");
@@ -132,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 6. CREATIVE COMMISSION WORKBENCH LOGIC
+  // 7. CREATIVE COMMISSION WORKBENCH LOGIC
   const tagPills = document.querySelectorAll(".tag-pill");
   const summaryTagsPreview = document.getElementById("summaryTagsPreview");
   const inquiryEmailBtn = document.getElementById("inquiryEmailBtn");
@@ -187,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 7. HERO FLOATING PORTFOLIO SNIPPETS PARALLAX ENGINE
+  // 8. HERO FLOATING PORTFOLIO SNIPPETS PARALLAX ENGINE
   const heroSection = document.getElementById("top");
   const floatingCards = document.querySelectorAll(".floating-card");
 
@@ -237,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(animateParallax);
   }
 
-  // 8. DENSE ASCII CANVAS ENGINE FOR 100VH HERO
+  // 9. DENSE ASCII CANVAS ENGINE FOR 100VH HERO
   const initHeroAscii = () => {
     const canvas = document.getElementById("heroAsciiCanvas");
     if (!canvas || !heroSection) return;

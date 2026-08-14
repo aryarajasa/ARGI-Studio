@@ -891,7 +891,7 @@ button {
 }
 
 /* ==========================================================================
-   SECTION 3: VERTICAL SELECTED PORTFOLIO PROJECTS (DARK THEME)
+   SECTION 3: ASYMMETRICAL EDITORIAL SHOWCASE (DARK THEME)
    ========================================================================== */
 .section-datasets-dark {
   background-color: var(--bg-dark);
@@ -902,7 +902,7 @@ button {
 
 .datasets-intro-text {
   max-width: 950px;
-  margin-bottom: 5rem;
+  margin-bottom: 4.5rem;
 }
 
 .editorial-heading-dark {
@@ -912,8 +912,13 @@ button {
   letter-spacing: -0.02em;
 }
 
-.datasets-header-wrap {
+.showcase-header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
   margin-bottom: 3.5rem;
+  flex-wrap: wrap;
 }
 
 .datasets-section-title {
@@ -921,141 +926,100 @@ button {
   font-weight: 500;
   line-height: 1.3;
   letter-spacing: -0.02em;
-  max-width: 800px;
+  max-width: 750px;
   color: var(--text-white);
 }
 
-/* Vertical Portfolio Projects Stack */
-.portfolio-vertical-stack {
+/* Interactive Filter Tabs */
+.portfolio-filter-tabs {
   display: flex;
-  flex-direction: column;
-  gap: 3.5rem;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-white-muted);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.45rem 1.15rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-tab:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+}
+
+.filter-tab.is-active {
+  background: #ffffff;
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+/* Staggered Editorial Portfolio Grid */
+.editorial-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
   margin-bottom: 4.5rem;
 }
 
-.portfolio-vertical-card {
+.showcase-card {
   background: var(--bg-dark-card);
   border: 1px solid var(--bg-dark-card-border);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 3.5rem;
-  align-items: stretch;
-  padding: 3rem;
-  transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth);
-}
-
-.portfolio-vertical-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
-}
-
-.project-info-side {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 1.25rem;
+  justify-content: space-between;
+  transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth), opacity 0.35s ease;
+  cursor: pointer;
 }
 
-.project-num-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-white-subtle);
+.showcase-card.card-span-wide {
+  grid-column: span 8;
 }
 
-.project-title {
-  font-size: clamp(1.85rem, 2.75vw, 2.65rem);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  color: #ffffff;
+.showcase-card.card-span-tall {
+  grid-column: span 4;
 }
 
-.project-summary {
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: var(--text-white-muted);
+.showcase-card.card-span-square {
+  grid-column: span 6;
 }
 
-.project-tags-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.25rem;
+.showcase-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
 }
 
-.p-tag {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.75);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.35rem 0.85rem;
-  border-radius: var(--radius-full);
-}
-
-.project-link-wrap {
-  margin-top: 0.75rem;
-}
-
-.project-view-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  color: #ffffff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
-  padding-bottom: 4px;
-  width: fit-content;
-  transition: all var(--transition-fast);
-}
-
-.project-view-btn .arrow-dot {
-  font-size: 1.1em;
-  transition: transform var(--transition-fast);
-}
-
-.project-view-btn:hover {
-  border-color: #ffffff;
-  color: #60a5fa;
-}
-
-.project-view-btn:hover .arrow-dot {
-  transform: translate(2px, -2px);
-}
-
-.project-visual-side {
-  width: 100%;
-  height: 100%;
-  min-height: 380px;
+.showcase-media-container {
   position: relative;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-
-.project-media-wrap {
   width: 100%;
-  height: 100%;
-  position: relative;
   overflow: hidden;
-  background: #1a1c1e;
-  border-radius: var(--radius-lg);
+  background: #16181a;
 }
 
-.project-media-wrap.color-blue-backdrop {
-  background: #111a2e;
+.card-span-wide .showcase-media-container {
+  aspect-ratio: 16 / 9.5;
 }
 
-.project-media-wrap.color-red-backdrop {
-  background: #2b110f;
+.card-span-tall .showcase-media-container {
+  aspect-ratio: 4 / 4.8;
 }
 
-.project-cover-img {
+.card-span-square .showcase-media-container {
+  aspect-ratio: 1 / 0.85;
+}
+
+.showcase-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1063,21 +1027,85 @@ button {
   transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.portfolio-vertical-card:hover .project-cover-img {
-  transform: scale(1.04);
+.showcase-card:hover .showcase-img {
+  transform: scale(1.06);
 }
 
-.media-overlay-badge {
+.showcase-hover-veil {
   position: absolute;
-  bottom: 1.25rem;
-  right: 1.25rem;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--transition-smooth);
+  backdrop-filter: blur(2px);
+}
+
+.showcase-card:hover .showcase-hover-veil {
+  opacity: 1;
+}
+
+.view-project-pill {
+  background: #ffffff;
+  color: var(--text-primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.55rem 1.25rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(8px);
+  transition: transform var(--transition-bounce);
+}
+
+.showcase-card:hover .view-project-pill {
+  transform: translateY(0);
+}
+
+.showcase-meta-row {
+  padding: 1.75rem 2rem 2rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.showcase-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.showcase-index {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-white-subtle);
+  margin-bottom: 0.35rem;
+}
+
+.showcase-title {
+  font-size: 1.45rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: #ffffff;
+}
+
+.showcase-tags-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.s-tag {
   font-size: 0.75rem;
   font-weight: 500;
-  padding: 0.35rem 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.75rem;
   border-radius: var(--radius-full);
 }
 
@@ -1146,40 +1174,126 @@ button {
   color: var(--text-white-muted);
 }
 
-/* --- SECTION 4: CAREERS / STUDIO --- */
-.section-careers {
+/* ==========================================================================
+   SECTION 4: SERVICES (4 CORE DISCIPLINES)
+   ========================================================================== */
+.section-services {
   background-color: var(--bg-body);
+  border-top: 1px solid var(--border-light-subtle);
 }
 
-.careers-layout {
+.services-header-wrap {
+  margin-bottom: 4rem;
+  max-width: 850px;
+}
+
+.services-intro-subtitle {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  margin-top: 1rem;
+  line-height: 1.6;
+}
+
+.services-four-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 4rem;
-  align-items: center;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 3.5rem;
 }
 
-.careers-title {
-  font-size: clamp(2rem, 3.8vw, 3.25rem);
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+.service-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth), border-color var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.07);
+}
+
+.service-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+}
+
+.service-num-badge {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.6rem;
+  color: var(--text-muted);
+}
+
+.service-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-body);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.service-card:hover .service-icon-wrap {
+  background: var(--text-primary);
+  color: #ffffff;
+}
+
+.service-name {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
-.careers-subtitle {
-  font-size: 1.15rem;
+.service-description {
+  font-size: 0.95rem;
   color: var(--text-secondary);
-  margin-bottom: 2.25rem;
+  line-height: 1.65;
+  margin-bottom: 2rem;
 }
 
-.careers-visual {
+.service-deliverables-list {
+  list-style: none;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  border-top: 1px solid var(--border-light);
+  padding-top: 1.5rem;
 }
 
-.careers-img {
-  width: 100%;
-  max-width: 460px;
+.services-cta-row {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.services-cta-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
 }
 
 /* --- SECTION 5: JOURNAL / NEWS --- */
@@ -1677,10 +1791,14 @@ button {
   .pos-bl-1 { bottom: 10%; left: 4%; width: 85px; height: 115px; }
   .pos-br { bottom: 8%; right: 4%; width: 95px; height: 125px; }
 
-  .portfolio-vertical-card {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    padding: 2.5rem;
+  .editorial-showcase-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .showcase-card.card-span-wide,
+  .showcase-card.card-span-tall,
+  .showcase-card.card-span-square {
+    grid-column: span 1;
   }
 }
 
@@ -1727,8 +1845,8 @@ button {
     display: none;
   }
 
-  .portfolio-vertical-card {
-    padding: 2rem;
+  .services-four-grid {
+    grid-template-columns: 1fr;
   }
 
   .workbench-layout {
@@ -1743,11 +1861,6 @@ button {
 
   .works-steps-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .careers-layout {
-    grid-template-columns: 1fr;
-    text-align: left;
   }
 
   .news-cards-grid {
@@ -1784,12 +1897,18 @@ button {
   .pos-bl-1 { width: 70px; height: 95px; bottom: 8%; left: 3%; }
   .pos-br { width: 70px; height: 95px; bottom: 8%; right: 3%; }
 
-  .portfolio-vertical-card {
-    padding: 1.5rem;
+  .editorial-showcase-grid {
+    grid-template-columns: 1fr;
   }
 
-  .project-visual-side {
-    min-height: 260px;
+  .service-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .services-cta-row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.75rem;
   }
 
   .contact-workbench-card {

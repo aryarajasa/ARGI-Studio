@@ -1,45 +1,68 @@
 /**
- * ARGI Studio - Interactive Frontend Scripts, Floating Bottom Nav, & Footer Gallery Modal
+ * ARGI Studio - Interactive Frontend Scripts, Top Pill Nav & Contact Workbench
  */
 
 document.addEventListener("DOMContentLoaded", () => {
   // 1. SELECTORS & ELEMENTS
-  const topHeader = document.getElementById("topHeader");
-  const bottomNavbar = document.getElementById("bottomNavbar");
-  const navLinks = document.querySelectorAll(".bottom-navbar .nav-link");
+  const navbar = document.getElementById("navbar");
+  const navMenu = document.getElementById("navMenu");
+  const navToggle = document.getElementById("navToggle");
+  const navLinks = document.querySelectorAll(".nav-pill .nav-link");
   const darkSection = document.querySelector('[data-theme="dark"]');
   const sections = document.querySelectorAll("section[id]");
 
-  // 2. THEME SWITCHING ON SCROLL (Top Header & Bottom Navbar)
-  const handleScrollTheme = () => {
-    if (!darkSection) return;
+  // 2. MOBILE MENU TOGGLE
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", () => {
+      const isOpen = navMenu.classList.toggle("is-open");
+      navToggle.setAttribute("aria-expanded", isOpen);
+      
+      const top = navToggle.querySelector(".line-top");
+      const bottom = navToggle.querySelector(".line-bottom");
+      if (top && bottom) {
+        if (isOpen) {
+          top.style.transform = "translateY(3.5px) rotate(45deg)";
+          bottom.style.transform = "translateY(-3.5px) rotate(-45deg)";
+        } else {
+          top.style.transform = "none";
+          bottom.style.transform = "none";
+        }
+      }
+    });
 
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        navMenu.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        const top = navToggle.querySelector(".line-top");
+        const bottom = navToggle.querySelector(".line-bottom");
+        if (top && bottom) {
+          top.style.transform = "none";
+          bottom.style.transform = "none";
+        }
+      });
+    });
+  }
+
+  // 3. NAVBAR THEME SWITCHING & ACTIVE PILL ON SCROLL
+  const handleScrollTheme = () => {
+    if (!navbar || !darkSection) return;
+
+    const navRect = navbar.getBoundingClientRect();
     const darkRect = darkSection.getBoundingClientRect();
 
-    // Top Header Dark Theme Check
-    if (topHeader) {
-      if (darkRect.top <= 80 && darkRect.bottom >= 80) {
-        topHeader.classList.add("theme-dark");
-      } else {
-        topHeader.classList.remove("theme-dark");
-      }
+    // Check if navbar intersects the dark section
+    if (navRect.top >= darkRect.top - 30 && navRect.bottom <= darkRect.bottom + 30) {
+      navbar.classList.add("theme-dark");
+    } else {
+      navbar.classList.remove("theme-dark");
     }
 
-    // Bottom Navbar Dark Theme Check
-    if (bottomNavbar) {
-      const bottomPos = window.innerHeight - 80;
-      if (darkRect.top <= bottomPos && darkRect.bottom >= bottomPos) {
-        bottomNavbar.classList.add("theme-dark");
-      } else {
-        bottomNavbar.classList.remove("theme-dark");
-      }
-    }
-
-    // Active Section Link Highlight in Bottom Dock
+    // Active Section Link Highlight in Center Pill
     let currentSectionId = "";
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();
-      if (rect.top <= window.innerHeight * 0.45 && rect.bottom >= window.innerHeight * 0.2) {
+      if (rect.top <= window.innerHeight * 0.45 && rect.bottom >= window.innerHeight * 0.15) {
         currentSectionId = section.getAttribute("id");
       }
     });
@@ -60,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", handleScrollTheme, { passive: true });
   handleScrollTheme();
 
-  // 3. INTERACTIVE PROCESS STEP VIEWER
+  // 4. INTERACTIVE PROCESS STEP VIEWER
   const stepItems = document.querySelectorAll(".process-step-item");
   const artLayers = document.querySelectorAll(".process-art-layer");
 
@@ -69,11 +92,9 @@ document.addEventListener("DOMContentLoaded", () => {
       item.addEventListener("click", () => {
         const stepIndex = item.getAttribute("data-step");
 
-        // Update active step item
         stepItems.forEach((s) => s.classList.remove("is-active"));
         item.classList.add("is-active");
 
-        // Update active art layer
         artLayers.forEach((layer) => {
           if (layer.getAttribute("data-art") === stepIndex) {
             layer.classList.add("is-active");
@@ -85,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 4. SMOOTH ANCHOR SCROLLING
+  // 5. SMOOTH ANCHOR SCROLLING
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
       const targetId = this.getAttribute("href");
@@ -100,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
         e.preventDefault();
-        const navOffset = 40;
+        const navOffset = 90;
         const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navOffset;
 
         window.scrollTo({
@@ -111,57 +132,62 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 5. INTERACTIVE FOOTER GALLERY MODAL / LIGHTBOX
-  const galleryCards = document.querySelectorAll(".gallery-card");
-  const galleryModal = document.getElementById("galleryModal");
-  const modalBackdrop = document.getElementById("modalBackdrop");
-  const modalClose = document.getElementById("modalClose");
-  const modalTitle = document.getElementById("modalTitle");
-  const modalCategory = document.getElementById("modalCategory");
-  const modalPreviewArea = document.getElementById("modalPreviewArea");
+  // 6. REWORKED INTERACTIVE CONTACT WORKBENCH LOGIC
+  const tagPills = document.querySelectorAll(".tag-pill");
+  const summaryTagsPreview = document.getElementById("summaryTagsPreview");
+  const inquiryEmailBtn = document.getElementById("inquiryEmailBtn");
+  const copyEmailBtn = document.getElementById("copyEmailBtn");
+  const copyEmailText = document.getElementById("copyEmailText");
 
-  if (galleryModal && galleryCards.length) {
-    const openModal = (card) => {
-      const title = card.getAttribute("data-title") || "Project Showcase";
-      const category = card.getAttribute("data-category") || "Voice Research";
-      const innerContent = card.querySelector(".gallery-card-inner");
+  if (tagPills.length && summaryTagsPreview && inquiryEmailBtn) {
+    const updateInquiryState = () => {
+      const selected = Array.from(tagPills)
+        .filter((pill) => pill.classList.contains("is-selected"))
+        .map((pill) => pill.getAttribute("data-tag"));
 
-      modalTitle.textContent = title;
-      modalCategory.textContent = category;
-
-      if (innerContent && modalPreviewArea) {
-        modalPreviewArea.innerHTML = "";
-        const clone = innerContent.cloneNode(true);
-        // Remove overlay for clean modal visual
-        const overlay = clone.querySelector(".gallery-overlay");
-        if (overlay) overlay.remove();
-        modalPreviewArea.appendChild(clone);
+      if (selected.length === 0) {
+        summaryTagsPreview.textContent = "General Audio AI Inquiry";
+        inquiryEmailBtn.setAttribute(
+          "href",
+          "mailto:contact@argistudio.dev?subject=General%20Voice%20AI%20Dataset%20Inquiry"
+        );
+      } else {
+        const formatted = selected.join(", ");
+        summaryTagsPreview.textContent = formatted;
+        inquiryEmailBtn.setAttribute(
+          "href",
+          `mailto:contact@argistudio.dev?subject=Inquiry%20for%20${encodeURIComponent(formatted)}`
+        );
       }
-
-      galleryModal.classList.add("is-active");
-      document.body.style.overflow = "hidden";
     };
 
-    const closeModal = () => {
-      galleryModal.classList.remove("is-active");
-      document.body.style.overflow = "";
-    };
-
-    galleryCards.forEach((card) => {
-      card.addEventListener("click", () => openModal(card));
+    tagPills.forEach((pill) => {
+      pill.addEventListener("click", () => {
+        pill.classList.toggle("is-selected");
+        updateInquiryState();
+      });
     });
 
-    if (modalClose) modalClose.addEventListener("click", closeModal);
-    if (modalBackdrop) modalBackdrop.addEventListener("click", closeModal);
+    // Copy Email button with feedback
+    if (copyEmailBtn && copyEmailText) {
+      copyEmailBtn.addEventListener("click", () => {
+        navigator.clipboard.writeText("contact@argistudio.dev").then(() => {
+          const original = copyEmailText.textContent;
+          copyEmailText.textContent = "✓ Copied to clipboard!";
+          copyEmailBtn.style.borderColor = "var(--accent-green)";
+          copyEmailBtn.style.color = "var(--accent-green)";
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && galleryModal.classList.contains("is-active")) {
-        closeModal();
-      }
-    });
+          setTimeout(() => {
+            copyEmailText.textContent = original;
+            copyEmailBtn.style.borderColor = "";
+            copyEmailBtn.style.color = "";
+          }, 2200);
+        });
+      });
+    }
   }
 
-  // 6. DENSE ASCII ENGINE FOR 100VH HERO
+  // 7. DENSE ASCII CANVAS ENGINE FOR 100VH HERO
   const initHeroAscii = () => {
     const canvas = document.getElementById("heroAsciiCanvas");
     const heroSection = document.getElementById("top");

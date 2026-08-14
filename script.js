@@ -12,10 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const darkSection = document.querySelector('[data-theme="dark"]');
   const sections = document.querySelectorAll("section[id]");
 
-  // 2. REAL-TIME BALI, INDONESIA CLOCK (UTC+8 / WITA)
+  // 2. REAL-TIME BALI, INDONESIA CLOCK (UTC+8 / WITA) IN FOOTER
   const initBaliClock = () => {
     const footerClockEl = document.getElementById("baliLiveTime");
-    const workbenchClockEl = document.getElementById("wbLiveTime");
 
     const updateClocks = () => {
       const now = new Date();
@@ -33,9 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (footerClockEl) {
         footerClockEl.textContent = `${timeString} WITA (UTC+8)`;
       }
-      if (workbenchClockEl) {
-        workbenchClockEl.textContent = `Bali • ${timeString} WITA`;
-      }
     };
 
     updateClocks();
@@ -43,6 +39,26 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   initBaliClock();
+
+  // 2.1 ADAPTIVE DARK/LIGHT MODE FAVICON SWITCHER
+  const initFaviconThemeSwitcher = () => {
+    const faviconTag = document.getElementById("faviconTag");
+    if (!faviconTag) return;
+
+    const darkModeMatcher = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateFavicon = (e) => {
+      if (e.matches) {
+        faviconTag.href = "assets/favicon-dark.svg";
+      } else {
+        faviconTag.href = "assets/favicon.svg";
+      }
+    };
+
+    darkModeMatcher.addEventListener("change", updateFavicon);
+    updateFavicon(darkModeMatcher);
+  };
+
+  initFaviconThemeSwitcher();
 
   // 3. MOBILE MENU TOGGLE
   if (navToggle && navMenu) {

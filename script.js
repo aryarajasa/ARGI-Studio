@@ -1,5 +1,6 @@
 /**
  * ARGI Studio - Independent Creative Atelier Scripts & Interactions
+ * Location: Bali, Indonesia
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -11,7 +12,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const darkSection = document.querySelector('[data-theme="dark"]');
   const sections = document.querySelectorAll("section[id]");
 
-  // 2. MOBILE MENU TOGGLE
+  // 2. REAL-TIME BALI, INDONESIA CLOCK (UTC+8 / WITA)
+  const initBaliClock = () => {
+    const footerClockEl = document.getElementById("baliLiveTime");
+    const workbenchClockEl = document.getElementById("wbLiveTime");
+
+    const updateClocks = () => {
+      const now = new Date();
+      // Format time in Bali timezone (Asia/Makassar, UTC+8)
+      const options = {
+        timeZone: "Asia/Makassar",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      };
+
+      const timeString = new Intl.DateTimeFormat("en-GB", options).format(now);
+
+      if (footerClockEl) {
+        footerClockEl.textContent = `${timeString} WITA (UTC+8)`;
+      }
+      if (workbenchClockEl) {
+        workbenchClockEl.textContent = `Bali • ${timeString} WITA`;
+      }
+    };
+
+    updateClocks();
+    setInterval(updateClocks, 1000);
+  };
+
+  initBaliClock();
+
+  // 3. MOBILE MENU TOGGLE
   if (navToggle && navMenu) {
     navToggle.addEventListener("click", () => {
       const isOpen = navMenu.classList.toggle("is-open");
@@ -44,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 3. NAVBAR THEME SWITCHING & ACTIVE PILL ON SCROLL
+  // 4. NAVBAR THEME SWITCHING & ACTIVE PILL ON SCROLL
   const handleScrollTheme = () => {
     if (!navbar || !darkSection) return;
 
@@ -83,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", handleScrollTheme, { passive: true });
   handleScrollTheme();
 
-  // 4. INTERACTIVE METHODOLOGY STEP VIEWER
+  // 5. INTERACTIVE METHODOLOGY STEP VIEWER
   const stepItems = document.querySelectorAll(".process-step-item");
   const artLayers = document.querySelectorAll(".process-art-layer");
 
@@ -106,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 5. PORTFOLIO VIEW SWITCHER (GALLERY VIEW VS INDEX TABLE)
+  // 6. PORTFOLIO VIEW SWITCHER (GALLERY VIEW VS INDEX TABLE)
   const viewGalleryBtn = document.getElementById("viewGalleryBtn");
   const viewIndexBtn = document.getElementById("viewIndexBtn");
   const portfolioGalleryView = document.getElementById("portfolioGalleryView");
@@ -128,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 6. INDEX TABLE HOVER CURSOR PORTAL
+  // 7. INDEX TABLE HOVER CURSOR PORTAL
   const indexRows = document.querySelectorAll(".index-row-item");
   const indexHoverPortal = document.getElementById("indexHoverPortal");
   const indexPortalImg = document.getElementById("indexPortalImg");
@@ -170,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 7. SMOOTH ANCHOR SCROLLING
+  // 8. SMOOTH ANCHOR SCROLLING
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
       const targetId = this.getAttribute("href");
@@ -196,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 8. CREATIVE COMMISSION WORKBENCH LOGIC
+  // 9. CREATIVE COMMISSION WORKBENCH LOGIC
   const tagPills = document.querySelectorAll(".tag-pill");
   const summaryTagsPreview = document.getElementById("summaryTagsPreview");
   const inquiryEmailBtn = document.getElementById("inquiryEmailBtn");
@@ -213,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
         summaryTagsPreview.textContent = "General Creative Commission Inquiry";
         inquiryEmailBtn.setAttribute(
           "href",
-          "mailto:studio@argistudio.dev?subject=General%20Studio%20Commission%20Inquiry"
+          "mailto:studio@argistudio.dev?subject=General%20Studio%20Commission%20Inquiry%20(Bali,%20Indonesia)"
         );
       } else {
         const formatted = selected.join(", ");
@@ -251,7 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 9. HERO FLOATING PORTFOLIO SNIPPETS PARALLAX ENGINE
+  // 10. HERO FLOATING PORTFOLIO SNIPPETS PARALLAX ENGINE
   const heroSection = document.getElementById("top");
   const floatingCards = document.querySelectorAll(".floating-card");
 
@@ -301,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(animateParallax);
   }
 
-  // 10. DENSE ASCII CANVAS ENGINE FOR 100VH HERO
+  // 11. DENSE ASCII CANVAS ENGINE FOR 100VH HERO
   const initHeroAscii = () => {
     const canvas = document.getElementById("heroAsciiCanvas");
     if (!canvas || !heroSection) return;

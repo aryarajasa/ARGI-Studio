@@ -1,5 +1,5 @@
 /**
- * ARGI Studio - Interactive Frontend Scripts & ASCII Canvas Engine
+ * ARGI Studio - Interactive Frontend Scripts & Dense ASCII Typing Canvas
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 6. INTERACTIVE ASCII HERO BACKGROUND ENGINE
+  // 6. DENSE INTERACTIVE ASCII TYPING ENGINE
   const initHeroAscii = () => {
     const canvas = document.getElementById("heroAsciiCanvas");
     const heroSection = document.getElementById("top");
@@ -142,11 +142,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const ctx = canvas.getContext("2d");
     let width, height, dpr;
     let cols, rows;
-    const gridSpacing = 28; // spacing between ascii characters in px
-    const asciiChars = ["·", "•", "+", "×", "~", "°", ":", "/", "-", "*", "^"];
-    const activeChars = ["+", "×", "*", "~", "1", "0", "§", "#", "∆", "◊"];
+    
+    // Tighter grid configuration
+    const gridSpacing = 15; // Tighter grid density (px)
+    
+    // Character pool for dynamic typing mutation
+    const charPool = [
+      "·", ":", "+", "-", "=", "x", "%", "*", "~", "^",
+      "0", "1", "a", "r", "g", "i", "s", "t", "u", "d", "o",
+      "/", "\\", "{", "}", "[", "]", "<", ">", "_", "•"
+    ];
 
-    // Particles/Nodes array
     let gridNodes = [];
 
     // Mouse coordinates relative to hero section
@@ -155,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
       y: -1000,
       targetX: -1000,
       targetY: -1000,
-      radius: 160,
+      radius: 130,
       isHovered: false
     };
 
@@ -182,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let c = 0; c < cols; c++) {
           const originX = offsetX + c * gridSpacing + gridSpacing / 2;
           const originY = offsetY + r * gridSpacing + gridSpacing / 2;
-          const charIndex = (r * 3 + c * 5) % asciiChars.length;
+          const randomChar = charPool[Math.floor(Math.random() * charPool.length)];
           
           gridNodes.push({
             originX,
@@ -191,13 +197,14 @@ document.addEventListener("DOMContentLoaded", () => {
             y: originY,
             vx: 0,
             vy: 0,
-            baseChar: asciiChars[charIndex],
-            activeChar: activeChars[(r + c) % activeChars.length],
-            currentChar: asciiChars[charIndex],
-            opacity: 0.18,
-            targetOpacity: 0.18,
-            scale: 1,
-            phase: (r * 0.15 + c * 0.15)
+            char: randomChar,
+            // Subtle base idle opacity: 0.055
+            opacity: 0.055,
+            targetOpacity: 0.055,
+            // Typing effect timers
+            typeTick: Math.floor(Math.random() * 80),
+            typeInterval: 40 + Math.floor(Math.random() * 90), // ambient change frequency
+            phase: (r * 0.12 + c * 0.12)
           });
         }
       }
@@ -206,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", resize);
     resize();
 
-    // Mouse tracking on hero section
+    // Mouse events
     heroSection.addEventListener("mousemove", (e) => {
       const rect = heroSection.getBoundingClientRect();
       mouse.targetX = e.clientX - rect.left;
@@ -224,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
       mouse.isHovered = false;
     });
 
-    // Touch support
+    // Touch events
     heroSection.addEventListener("touchmove", (e) => {
       if (e.touches.length > 0) {
         const rect = heroSection.getBoundingClientRect();
@@ -243,49 +250,69 @@ document.addEventListener("DOMContentLoaded", () => {
     // Animation Loop
     let time = 0;
     const render = () => {
-      time += 0.03;
+      time += 0.02;
 
       // Smooth mouse interpolation
-      mouse.x += (mouse.targetX - mouse.x) * 0.18;
-      mouse.y += (mouse.targetY - mouse.y) * 0.18;
+      mouse.x += (mouse.targetX - mouse.x) * 0.2;
+      mouse.y += (mouse.targetY - mouse.y) * 0.2;
 
       ctx.clearRect(0, 0, width, height);
-      ctx.font = "12px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace";
+      // Small, crisp monospace font for dense matrix
+      ctx.font = "9.5px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      const spring = 0.08;
-      const friction = 0.75;
+      const spring = 0.1;
+      const friction = 0.72;
 
-      for (let i = 0; i < gridNodes.length; i++) {
+      const nodeCount = gridNodes.length;
+      for (let i = 0; i < nodeCount; i++) {
         const node = gridNodes[i];
 
-        // Ambient gentle wave
-        const ambientWaveX = Math.sin(time + node.phase) * 1.5;
-        const ambientWaveY = Math.cos(time + node.phase * 0.8) * 1.5;
+        // Micro ambient wave drift
+        const ambientWaveX = Math.sin(time + node.phase) * 0.8;
+        const ambientWaveY = Math.cos(time + node.phase * 0.7) * 0.8;
 
-        // Calculate distance to mouse
+        // Distance to cursor
         const dx = mouse.x - node.x;
         const dy = mouse.y - node.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < mouse.radius && mouse.isHovered) {
-          // Repulsion force
-          const force = (1 - dist / mouse.radius);
+        const isNearMouse = dist < mouse.radius && mouse.isHovered;
+
+        if (isNearMouse) {
+          // Dynamic proximity factor (0 to 1)
+          const proximity = (1 - dist / mouse.radius);
           const angle = Math.atan2(dy, dx);
-          const pushDistance = force * 24;
+          const push = proximity * 14;
 
-          node.vx -= Math.cos(angle) * pushDistance * 0.2;
-          node.vy -= Math.sin(angle) * pushDistance * 0.2;
+          // Subtle physical displacement
+          node.vx -= Math.cos(angle) * push * 0.18;
+          node.vy -= Math.sin(angle) * push * 0.18;
 
-          node.targetOpacity = 0.2 + force * 0.55;
-          node.currentChar = force > 0.45 ? node.activeChar : node.baseChar;
+          // Opacity increases slightly when hovered (from ~0.055 up to ~0.26)
+          node.targetOpacity = 0.06 + proximity * 0.20;
+
+          // Accelerated typing / character scramble when hovered
+          node.typeTick += 3;
+          if (node.typeTick >= 6) {
+            node.char = charPool[Math.floor(Math.random() * charPool.length)];
+            node.typeTick = 0;
+          }
         } else {
-          node.targetOpacity = 0.15 + Math.sin(time * 0.5 + node.phase) * 0.05;
-          node.currentChar = node.baseChar;
+          // Idle low opacity
+          node.targetOpacity = 0.055;
+
+          // Ambient slow typing scramble in the background
+          node.typeTick++;
+          if (node.typeTick >= node.typeInterval) {
+            node.char = charPool[Math.floor(Math.random() * charPool.length)];
+            node.typeTick = 0;
+            node.typeInterval = 50 + Math.floor(Math.random() * 120);
+          }
         }
 
-        // Spring physics to return to origin
+        // Return to home grid origin
         const homeDx = (node.originX + ambientWaveX) - node.x;
         const homeDy = (node.originY + ambientWaveY) - node.y;
 
@@ -298,11 +325,11 @@ document.addEventListener("DOMContentLoaded", () => {
         node.y += node.vy;
 
         // Smooth opacity lerp
-        node.opacity += (node.targetOpacity - node.opacity) * 0.1;
+        node.opacity += (node.targetOpacity - node.opacity) * 0.12;
 
         // Draw character
         ctx.fillStyle = `rgba(18, 19, 20, ${node.opacity.toFixed(3)})`;
-        ctx.fillText(node.currentChar, node.x, node.y);
+        ctx.fillText(node.char, node.x, node.y);
       }
 
       requestAnimationFrame(render);

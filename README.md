@@ -1,69 +1,73 @@
-# ARGI Studio
+# ARGI Studio (`argi.©`)
 
-A modern, high-performance web platform and digital experience for ARGI Studio, built to showcase next-generation speech datasets, voice AI research, and multimodal intelligence.
-
----
-
-## ✨ Features & Architecture
-
-- **Adaptive Floating Navigation**:
-  - Context-aware pill navbar with backdrop blur and dynamic light/dark theme transitions across different viewport sections.
-  - Active scroll spy indicator and mobile responsive drawer navigation.
-- **Interactive Research & Process Visualizer**:
-  - Multi-stage audio AI workflow showcase (*Hypothesize, Design, Experiment, Evaluate & Iterate, Productionize, Release*).
-  - Click-and-scroll synchronized visual displays for model and dataset architectures.
-- **Featured Datasets & Speech Systems Showcase**:
-  - Dedicated dark-theme suite highlighting core dataset collections (*Converse, Atlas, Chorus, Dialog*).
-  - Waveform animations, dialect mapping previews, and streamlined multi-step data access workflows.
-- **Careers & Updates**:
-  - Interactive career opportunities section and press/announcement feed.
-- **Performance & Design Excellence**:
-  - Clean semantic HTML5, zero heavy dependencies, custom CSS design tokens, and smooth micro-animations.
+Official website for **ARGI Studio**, an independent creative studio and art direction atelier based in Bali, Indonesia. We craft brand identities, digital flagships, tactile editorial publications, and progressive visual languages for visionary founders and cultural institutions worldwide.
 
 ---
 
-## 📁 Project Structure
+## Overview
+
+- **Studio**: ARGI Studio (`argi.©`)
+- **Location**: Bali, Indonesia
+- **Disciplines**: Brand Identity Design, Web Design & Development, Social Media & Content, Graphic Design & Print
+- **Contact**: `hello@argistudio.com`
+- **Tech Stack**: HTML5, Vanilla CSS3, Vanilla JavaScript (Zero external framework dependencies)
+
+---
+
+## Highlights
+
+- **Interactive Hero**: Full 100vh layout with dynamic ASCII background canvas and mouse-lerped parallax editorial cards with sharp 0px geometry.
+- **Methodology Viewer**: Step-by-step interactive process visualizer (*Inquire, Concept, Form, Prototype, Production, Release*).
+- **Curated Selected Work**: Dual-mode portfolio with a 2-column sharp editorial gallery and a switchable index table view with a live cursor hover preview portal.
+- **Commission Workbench & Brief Generator**: Interactive service scope selector that dynamically compiles a pre-formatted email template with one-click clipboard copying.
+- **Adaptive SVG Monogram Favicon**: Dynamic `ag.©` SVG icon that automatically shifts between black and white based on system light/dark mode preferences.
+- **Bali Real-Time Clock**: Live WITA (`Asia/Makassar` / UTC+8) studio timezone tracker in the footer.
+
+---
+
+## Directory Structure
 
 ```text
-├── index.html       # Semantic web page structure & content
-├── styles.css       # Design tokens, typography, layouts, and responsive styling
-├── script.js        # Dynamic theme switcher, interactive stage viewer, and mobile menu
-├── .gitignore       # Git ignore rules for clean repository tracking
-└── README.md        # Project documentation
+├── index.html            # Main site markup
+├── styles.css            # Custom design system, typography, and responsive layouts
+├── script.js             # Interactions, ASCII canvas, parallax, and modal brief logic
+├── server.js             # Lightweight local static server
+├── assets/
+│   ├── logo.png          # High-resolution official serif wordmark
+│   ├── favicon.svg       # Adaptive light/dark SVG monogram
+│   ├── favicon-dark.svg  # Dark theme SVG icon
+│   ├── favicon-light.svg # Light theme SVG icon
+│   └── favicon.png       # PNG fallback icon
+└── README.md
 ```
 
 ---
 
-## 🛠️ Local Development
+## Getting Started
 
-Open `index.html` directly in any web browser or spin up a local development server:
+No build step or package installations required. 
 
-### Option 1: Direct in Browser
-Double-click `index.html` or open it with your preferred browser.
+### Run locally:
 
-### Option 2: Built-in Python Server
 ```bash
-python -m http.server 8000
-```
-Visit `http://localhost:8000` in your browser.
+# Using Node
+node server.js
 
-### Option 3: Node / npx
-```bash
+# Or using Python
+python -m http.server 3000
+
+# Or using npx
 npx serve .
 ```
 
----
-
-## 🚀 Deployment
-
-This project is fully static and ready to deploy with **GitHub Pages**, **Vercel**, **Netlify**, or **Cloudflare Pages**.
-
-### GitHub Pages Setup:
-1. Go to repository **Settings** > **Pages**.
-2. Set source branch to `main` and folder to `/(root)`.
-3. Save to publish instantly.
+Open `http://localhost:3000` in your browser.
 
 ---
 
-## 📄 License
+## Colophon
+
+- **Typography**: [Instrument Serif](https://fonts.google.com/specimen/Instrument+Serif) & [Inter](https://fonts.google.com/specimen/Inter) via Google Fonts
+- **Photography**: Curated authentic design & branding photography via Unsplash
+- **Design & Code**: ARGI Studio Atelier
+
 © 2026 ARGI Studio. All rights reserved.

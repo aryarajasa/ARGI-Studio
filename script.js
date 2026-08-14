@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const darkSection = document.querySelector('[data-theme="dark"]');
   const sections = document.querySelectorAll("section[id]");
 
-  // 1. KINETIC ASCII LOGO MORPH PRELOADER & CENTER SHUTTER REVEAL
+  // 1. AUTHENTIC ASCII LOGO RASTER MATRIX & CENTER SHUTTER REVEAL
   const initSitePreloader = () => {
     const preloader = document.getElementById("sitePreloader");
     const canvas = document.getElementById("preloaderAsciiCanvas");
@@ -24,9 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Setup Canvas for ASCII Logo Matrix
     let ctx = null;
-    let nodes = [];
+    let gridCells = [];
     let width = 0;
     let height = 0;
 
@@ -34,47 +33,73 @@ document.addEventListener("DOMContentLoaded", () => {
       ctx = canvas.getContext("2d");
       const rect = canvas.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = rect.width || 420;
-      height = rect.height || 120;
+      width = rect.width || 600;
+      height = rect.height || 160;
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       ctx.scale(dpr, dpr);
 
-      // Render offscreen text to generate target logo particle grid
+      // Offscreen canvas: Rasterize high-contrast logo typography
       const offCanvas = document.createElement("canvas");
       offCanvas.width = width;
       offCanvas.height = height;
       const offCtx = offCanvas.getContext("2d");
 
-      const fontSize = Math.min(width * 0.19, 78);
-      offCtx.font = `italic 400 ${fontSize}px "Instrument Serif", serif`;
+      // Use bold italic serif to give robust stroke coverage for ASCII cells
+      const fontSize = Math.min(width * 0.22, 108);
+      offCtx.font = `italic 700 ${fontSize}px "Instrument Serif", Georgia, serif`;
       offCtx.fillStyle = "#ffffff";
       offCtx.textAlign = "center";
       offCtx.textBaseline = "middle";
       offCtx.fillText("argi.©", width / 2, height / 2);
 
       const imgData = offCtx.getImageData(0, 0, width, height).data;
-      const step = width < 400 ? 7 : 8;
-      const charPool = ["·", ":", "+", "*", "#", "%", "░", "▒", "▓", "█", "a", "r", "g", "i", "."];
 
-      for (let y = 0; y < height; y += step) {
-        for (let x = 0; x < width; x += step) {
-          const idx = (y * width + x) * 4;
-          const alpha = imgData[idx + 3];
+      // High-density ASCII grid calculation
+      const cellW = width < 480 ? 5.5 : 7.2;
+      const cellH = width < 480 ? 8.5 : 10.8;
+      const cols = Math.floor(width / cellW);
+      const rows = Math.floor(height / cellH);
 
-          if (alpha > 45) {
-            const angle = Math.random() * Math.PI * 2;
-            const dist = 25 + Math.random() * 50;
+      const highDensity = ["█", "▓", "@", "#", "M", "W", "8", "B", "%", "&"];
+      const midDensity = ["▒", "*", "=", "+", "a", "r", "g", "i", "x", "z"];
+      const edgeDensity = ["░", ":", "-", "~", "/", "\\", ".", "·"];
 
-            nodes.push({
-              originX: x,
-              originY: y,
-              x: x + Math.cos(angle) * dist,
-              y: y + Math.sin(angle) * dist,
-              alphaNorm: alpha / 255,
-              char: charPool[Math.floor(Math.random() * charPool.length)],
-              tick: Math.floor(Math.random() * 10)
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const startX = Math.floor(c * cellW);
+          const startY = Math.floor(r * cellH);
+          const endX = Math.min(Math.floor((c + 1) * cellW), width);
+          const endY = Math.min(Math.floor((r + 1) * cellH), height);
+
+          // Calculate average brightness in cell
+          let totalAlpha = 0;
+          let pixelCount = 0;
+
+          for (let py = startY; py < endY; py++) {
+            for (let px = startX; px < endX; px++) {
+              const idx = (py * width + px) * 4;
+              totalAlpha += imgData[idx + 3];
+              pixelCount++;
+            }
+          }
+
+          const avgAlpha = pixelCount > 0 ? (totalAlpha / pixelCount) / 255 : 0;
+
+          if (avgAlpha > 0.05) {
+            let densityTier = 0;
+            if (avgAlpha > 0.6) densityTier = 2; // high
+            else if (avgAlpha > 0.28) densityTier = 1; // mid
+            else densityTier = 0; // edge
+
+            gridCells.push({
+              x: startX + cellW / 2,
+              y: startY + cellH / 2,
+              alpha: avgAlpha,
+              tier: densityTier,
+              char: densityTier === 2 ? "█" : densityTier === 1 ? "▒" : "░",
+              scrambleTick: Math.floor(Math.random() * 8)
             });
           }
         }
@@ -83,38 +108,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let progress = 0;
     const startTime = performance.now();
-    const duration = 1450; // 1.45s fluid progression
+    const duration = 1500; // 1.5s fluid progression
 
-    const renderAscii = (pVal) => {
-      if (!ctx || nodes.length === 0) return;
+    const renderAsciiGrid = (pVal) => {
+      if (!ctx || gridCells.length === 0) return;
       ctx.clearRect(0, 0, width, height);
 
       const ratio = pVal / 100;
-      const charPool = ratio > 0.7
-        ? ["░", "▒", "▓", "█", "a", "r", "g", "i", "·"]
-        : ["·", ":", "+", "*", "/", "\\", "~", "#", "%", "░", "▓"];
-
-      ctx.font = '10px "Inter", monospace';
+      const fontSize = width < 480 ? "8px" : "10px";
+      ctx.font = `600 ${fontSize} "Inter", monospace`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      for (let i = 0; i < nodes.length; i++) {
-        const node = nodes[i];
+      const highDensity = ["█", "▓", "@", "#", "M", "W", "8", "B", "%", "&"];
+      const midDensity = ["▒", "*", "=", "+", "a", "r", "g", "i", "x", "z"];
+      const edgeDensity = ["░", ":", "-", "~", "/", "\\", ".", "·"];
 
-        // Gravitate from scrambled position to exact origin
-        node.x += (node.originX - node.x) * 0.16;
-        node.y += (node.originY - node.y) * 0.16;
+      // Dynamic sweep wave effect
+      const scanX = ratio * (width * 1.25) - (width * 0.1);
 
-        // Scramble characters faster at early stages, settle at high ratio
-        node.tick++;
-        if (node.tick > 4 && ratio < 0.95) {
-          node.char = charPool[Math.floor(Math.random() * charPool.length)];
-          node.tick = 0;
+      for (let i = 0; i < gridCells.length; i++) {
+        const cell = gridCells[i];
+        cell.scrambleTick++;
+
+        // Scramble characters based on loading progress
+        const scrambleThreshold = 3 + Math.floor(ratio * 12);
+        if (cell.scrambleTick >= scrambleThreshold && ratio < 0.98) {
+          if (cell.tier === 2) {
+            cell.char = highDensity[Math.floor(Math.random() * highDensity.length)];
+          } else if (cell.tier === 1) {
+            cell.char = midDensity[Math.floor(Math.random() * midDensity.length)];
+          } else {
+            cell.char = edgeDensity[Math.floor(Math.random() * edgeDensity.length)];
+          }
+          cell.scrambleTick = 0;
         }
 
-        const opacity = Math.min(node.alphaNorm * (0.35 + ratio * 0.65), 1);
-        ctx.fillStyle = `rgba(255, 255, 255, ${opacity.toFixed(2)})`;
-        ctx.fillText(node.char, node.x, node.y);
+        // Calculate cell illumination with scanwave
+        const distFromScan = Math.abs(cell.x - scanX);
+        const scanBoost = Math.max(0, 1 - distFromScan / 60) * 0.4;
+        const cellOpacity = Math.min(cell.alpha * (0.6 + ratio * 0.4) + scanBoost, 1);
+
+        ctx.fillStyle = `rgba(255, 255, 255, ${cellOpacity.toFixed(2)})`;
+        ctx.fillText(cell.char, cell.x, cell.y);
       }
     };
 
@@ -122,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const elapsed = now - startTime;
       const t = Math.min(elapsed / duration, 1);
 
-      // Smooth cubic-bezier curve
+      // Smooth luxury easing
       const easeProgress = t < 0.5
         ? 4 * t * t * t
         : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -130,16 +166,16 @@ document.addEventListener("DOMContentLoaded", () => {
       progress = Math.min(Math.round(easeProgress * 100), 100);
       counterEl.textContent = progress;
 
-      renderAscii(progress);
+      renderAsciiGrid(progress);
 
       if (t < 1) {
         requestAnimationFrame(tick);
       } else {
-        // At 100%: Morph from ASCII to Solid Logo with subtle glow
+        // At 100%: Crossfade to solid logo
         if (solidLogo) solidLogo.classList.add("is-visible");
         if (canvas) canvas.style.opacity = "0";
 
-        // Trigger Shutter Curtain Reveal
+        // Center Shutter Reveal
         setTimeout(() => {
           preloader.classList.add("is-loaded");
           document.body.classList.add("site-ready");

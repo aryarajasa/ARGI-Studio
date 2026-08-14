@@ -362,11 +362,34 @@ ${clientName}`
     generateEmailTemplate();
   };
 
-  // Tag pills toggle
+  // Tag pills toggle with Full Brand Overhaul exclusive logic
   if (tagPills.length && summaryTagsPreview) {
     tagPills.forEach((pill) => {
       pill.addEventListener("click", () => {
-        pill.classList.toggle("is-selected");
+        const isFullOverhaul = pill.getAttribute("data-tag") === "Full Brand Overhaul";
+        
+        if (isFullOverhaul) {
+          const willBeSelected = !pill.classList.contains("is-selected");
+          if (willBeSelected) {
+            // Select Full Overhaul and automatically unselect all other options
+            tagPills.forEach((p) => p.classList.remove("is-selected"));
+            pill.classList.add("is-selected");
+          } else {
+            pill.classList.remove("is-selected");
+          }
+        } else {
+          // Toggle this individual discipline
+          const willBeSelected = pill.classList.toggle("is-selected");
+          if (willBeSelected) {
+            // Automatically unselect Full Brand Overhaul when choosing specific disciplines
+            tagPills.forEach((p) => {
+              if (p.getAttribute("data-tag") === "Full Brand Overhaul") {
+                p.classList.remove("is-selected");
+              }
+            });
+          }
+        }
+
         updateInquiryState();
       });
     });

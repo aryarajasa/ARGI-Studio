@@ -2100,49 +2100,65 @@ button {
   font-weight: 600;
 }
 
-/* --- RESPONSIVE MEDIA QUERIES --- */
-@media screen and (max-width: 1100px) {
-  .pos-tl-1 { top: 12%; left: 4%; width: 90px; height: 120px; }
-  .pos-tr-2 { top: 10%; right: 4%; width: 85px; height: 110px; }
-  .pos-bl-1 { bottom: 10%; left: 4%; width: 85px; height: 115px; }
-  .pos-br { bottom: 8%; right: 4%; width: 95px; height: 125px; }
+/* ==========================================================================
+   COMPREHENSIVE RESPONSIVE DESIGN SYSTEM (ALL VIEWPORTS & DEVICES)
+   ========================================================================== */
 
-  .sharp-editorial-gallery {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
-  .index-row-item {
-    grid-template-columns: 40px 1.5fr 1fr 80px;
-  }
-
-  .col-discipline, .col-location {
-    display: none;
+/* Touch & Pointer Fine-Tuning */
+@media (hover: none) and (pointer: coarse) {
+  .index-floating-preview {
+    display: none !important;
   }
 }
 
+/* 1. Large Laptops & Small Desktops (<= 1200px) */
+@media screen and (max-width: 1200px) {
+  .pos-tl-1 { top: 13%; left: 4%; width: 95px; height: 125px; }
+  .pos-tr-2 { top: 11%; right: 4%; width: 90px; height: 115px; }
+  .pos-bl-1 { bottom: 10%; left: 4%; width: 90px; height: 125px; }
+  .pos-br { bottom: 8%; right: 4%; width: 105px; height: 140px; }
+}
+
+/* 2. Tablets & Small Laptops (<= 991px) */
 @media screen and (max-width: 991px) {
   :root {
     --container-padding: 1.5rem;
   }
 
+  .section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  /* Navbar Mobile Menu Drawer */
   .nav-pill {
     position: fixed;
-    top: 5rem;
+    top: 4.75rem;
     left: 1rem;
     right: 1rem;
-    background: var(--bg-card);
+    background: rgba(246, 241, 235, 0.98);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--border-light);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
+    border-radius: var(--radius-xl);
+    padding: 1.5rem 1.25rem;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+    align-items: stretch;
+    gap: 0.45rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
     opacity: 0;
     pointer-events: none;
-    transform: translateY(-10px);
+    transform: translateY(-12px);
     transition: all var(--transition-smooth);
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    z-index: 999;
+  }
+
+  .navbar-wrapper.theme-dark .nav-pill {
+    background: rgba(18, 20, 22, 0.98);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
   }
 
   .nav-pill.is-open {
@@ -2151,40 +2167,155 @@ button {
     transform: translateY(0);
   }
 
+  .nav-link {
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    text-align: left;
+    width: 100%;
+  }
+
   .nav-toggle {
     display: flex;
   }
 
-  .hero-heading-centered {
-    font-size: 3.4rem;
+  /* Hero Section */
+  .section-hero {
+    min-height: 100vh;
+    height: 100dvh;
+    padding-top: 4.5rem;
   }
 
-  .pos-tc, .pos-bc, .pos-tl-2, .pos-tr-1 {
+  .hero-heading-centered {
+    font-size: clamp(2.75rem, 6.5vw, 4.25rem);
+    line-height: 1.08;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-subcaption {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.75rem;
+  }
+
+  /* Hide overlapping floating hero cards */
+  .pos-tc, .pos-bc, .pos-tl-2, .pos-tr-1, .pos-bcr {
     display: none;
   }
 
-  .services-four-grid {
-    grid-template-columns: 1fr;
-  }
+  .pos-tl-1 { top: 12%; left: 3%; width: 85px; height: 115px; }
+  .pos-tr-2 { top: 10%; right: 3%; width: 80px; height: 105px; }
+  .pos-ml { top: 52%; left: 2%; width: 75px; height: 75px; }
+  .pos-mr { top: 44%; right: 2%; width: 75px; height: 95px; }
+  .pos-bl-1 { bottom: 8%; left: 3%; width: 80px; height: 110px; }
+  .pos-bl-2 { display: none; }
+  .pos-br { bottom: 7%; right: 3%; width: 90px; height: 120px; }
 
-  .workbench-layout {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-
+  /* Methodology / Process Grid */
   .process-viewer-grid {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
 
+  .process-visual-stage {
+    aspect-ratio: 16 / 10;
+    max-height: 360px;
+    border-radius: var(--radius-lg);
+  }
+
+  .process-steps-list {
+    gap: 0.75rem;
+  }
+
+  .process-step-item {
+    padding: 1rem 1.25rem;
+  }
+
+  /* Selected Work Portfolio */
+  .showcase-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .sharp-editorial-gallery {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .gallery-item-frame {
+    aspect-ratio: 16 / 10;
+  }
+
+  .index-row-item {
+    grid-template-columns: 36px 1.5fr 1.2fr 75px;
+    gap: 1rem;
+    padding: 1.35rem 0.5rem;
+  }
+
+  .col-location {
+    display: none;
+  }
+
+  .datasets-cta-box {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2.25rem;
+  }
+
   .works-steps-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  /* Services Grid */
+  .services-four-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .service-card {
+    padding: 2.5rem 2rem;
+  }
+
+  .services-cta-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .services-cta-row .btn {
+    width: 100%;
+  }
+
+  /* Journal / News */
+  .news-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
   }
 
   .news-cards-grid {
     grid-template-columns: 1fr;
+    gap: 1.75rem;
   }
 
+  /* Contact Workbench */
+  .workbench-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .contact-workbench-card {
+    padding: 2.75rem 2rem;
+  }
+
+  /* Footer */
   .footer-columns-grid {
     grid-template-columns: 1fr 1fr;
     gap: 2.5rem;
@@ -2194,91 +2325,443 @@ button {
     grid-column: 1 / -1;
   }
 
+  /* Modal */
   .modal-form-grid {
     grid-template-columns: 1fr;
   }
 }
 
+/* 3. Small Tablets & Phones (<= 640px) */
 @media screen and (max-width: 640px) {
+  :root {
+    --container-padding: 1.15rem;
+  }
+
   .section {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  /* Hero Section Mobile */
+  .section-hero {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .hero-center-content {
+    padding: 0 0.5rem;
+    max-width: 100%;
   }
 
   .hero-heading-centered {
-    font-size: 2.5rem;
+    font-size: clamp(2.15rem, 8.5vw, 2.85rem);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
   }
 
-  .pos-ml, .pos-mr, .pos-bl-2, .pos-bcr {
-    display: none;
+  .hero-subcaption {
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    line-height: 1.45;
+    margin-bottom: 1.75rem;
+    padding: 0 0.25rem;
   }
 
-  .pos-tl-1 { width: 70px; height: 95px; top: 12%; left: 3%; }
-  .pos-tr-2 { width: 70px; height: 95px; top: 12%; right: 3%; }
-  .pos-bl-1 { width: 70px; height: 95px; bottom: 8%; left: 3%; }
-  .pos-br { width: 70px; height: 95px; bottom: 8%; right: 3%; }
+  .btn-large {
+    font-size: 0.9375rem;
+    padding: 0.65rem 0.85rem 0.65rem 1.35rem;
+    width: 100%;
+    max-width: 290px;
+  }
 
+  .hero-scroll-indicator {
+    bottom: 1rem;
+    font-size: 0.6875rem;
+  }
+
+  .scroll-mouse-icon {
+    width: 16px;
+    height: 24px;
+  }
+
+  /* Clean corner stamps on mobile (prevent any center text overlap) */
+  .pos-ml, .pos-mr, .pos-bl-2, .pos-bcr, .pos-tl-2, .pos-tr-1, .pos-tc, .pos-bc {
+    display: none !important;
+  }
+
+  .pos-tl-1 { width: 62px; height: 82px; top: 11%; left: 2%; opacity: 0.85; }
+  .pos-tr-2 { width: 60px; height: 78px; top: 10%; right: 2%; opacity: 0.85; }
+  .pos-bl-1 { width: 60px; height: 80px; bottom: 7%; left: 2%; opacity: 0.85; }
+  .pos-br { width: 65px; height: 88px; bottom: 6%; right: 2%; opacity: 0.85; }
+  .floating-caption { font-size: 0.55rem; }
+
+  /* Navbar */
+  .navbar-wrapper {
+    top: 0.75rem;
+  }
+
+  .nav-container {
+    width: calc(100% - 1.25rem);
+  }
+
+  .nav-brand {
+    padding: 0.35rem 0.85rem;
+  }
+
+  .nav-brand-logo {
+    height: 21px;
+  }
+
+  .nav-cta {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.8125rem;
+  }
+
+  .nav-toggle {
+    width: 38px;
+    height: 38px;
+  }
+
+  /* Section Headings */
+  .editorial-heading,
+  .editorial-heading-dark,
+  .section-title {
+    font-size: clamp(1.45rem, 5.5vw, 1.85rem);
+    line-height: 1.3;
+  }
+
+  .datasets-section-title {
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+  }
+
+  /* Methodology / Process */
+  .process-visual-stage {
+    aspect-ratio: 16 / 10;
+    max-height: 240px;
+    border-radius: var(--radius-md);
+  }
+
+  .step-title {
+    font-size: 1.05rem;
+  }
+
+  .step-desc {
+    font-size: 0.875rem;
+  }
+
+  .process-step-item {
+    padding: 0.85rem 1rem;
+    gap: 1rem;
+  }
+
+  /* Selected Work */
+  .sharp-editorial-gallery {
+    gap: 2.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .gallery-item-frame {
+    aspect-ratio: 16 / 11;
+  }
+
+  .gallery-item-caption {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+
+  .caption-left {
+    gap: 0.5rem;
+  }
+
+  .caption-project-name {
+    font-size: 1.15rem;
+  }
+
+  .caption-right {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+  }
+
+  /* Index Table on Mobile */
+  .portfolio-index-table {
+    margin-bottom: 3rem;
+  }
+
+  .index-row-item {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    gap: 0.75rem;
+    padding: 1.15rem 0.25rem;
+    align-items: baseline;
+  }
+
+  .col-num { font-size: 1.05rem; }
+  .col-client { font-size: 1.05rem; grid-column: 2; }
+  .col-discipline { display: none; }
+  .col-location { display: none; }
+  .col-year { display: none; }
+  .col-link { font-size: 0.8125rem; text-align: right; grid-column: 3; }
+
+  .datasets-cta-box {
+    padding: 1.75rem 1.25rem;
+    border-radius: var(--radius-md);
+  }
+
+  .cta-box-title {
+    font-size: 1.15rem;
+  }
+
+  .cta-box-desc {
+    font-size: 0.875rem;
+  }
+
+  .works-steps-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    padding-top: 2.5rem;
+  }
+
+  /* Services */
   .service-card {
-    padding: 2rem 1.5rem;
+    padding: 1.75rem 1.25rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .service-name {
+    font-size: 1.35rem;
+  }
+
+  .service-description {
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-deliverables-list {
+    font-size: 0.8125rem;
+    gap: 0.5rem;
+    padding-top: 1.25rem;
   }
 
   .services-cta-row {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1.75rem;
+    padding: 1.5rem 1.25rem;
+    border-radius: var(--radius-md);
   }
 
+  .services-cta-text {
+    font-size: 0.95rem;
+  }
+
+  /* Journal */
+  .news-headline {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+  }
+
+  .news-body {
+    padding: 1.25rem;
+  }
+
+  /* Contact Workbench */
   .contact-workbench-card {
-    padding: 2rem 1.5rem;
+    padding: 1.75rem 1.15rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .workbench-title {
+    font-size: clamp(1.5rem, 6.5vw, 2.15rem);
+  }
+
+  .workbench-subtitle {
+    font-size: 0.9375rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .inquiry-tags-grid {
+    gap: 0.45rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tag-pill {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.8125rem;
+  }
+
+  .inquiry-summary-box {
+    padding: 1.25rem 1rem;
   }
 
   .workbench-actions-row {
     flex-direction: column;
     width: 100%;
+    gap: 0.75rem;
   }
 
   .workbench-actions-row .btn {
     width: 100%;
   }
 
-  .datasets-cta-box {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem;
+  .workbench-side-card {
+    padding: 1.5rem 1.15rem;
+    border-radius: var(--radius-md);
   }
 
-  .works-steps-grid {
-    grid-template-columns: 1fr;
+  .telemetry-card-header {
+    margin-bottom: 1.25rem;
+  }
+
+  .telemetry-status-pill {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.65rem;
+  }
+
+  .studio-capacity-widget {
+    padding: 1.15rem 0.95rem;
+  }
+
+  .capacity-title {
+    font-size: 0.7rem;
+  }
+
+  .capacity-badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.55rem;
+  }
+
+  .sprint-name {
+    font-size: 0.75rem;
+  }
+
+  .sprint-availability {
+    font-size: 0.7rem;
+  }
+
+  .telemetry-spec-row {
+    font-size: 0.8125rem;
+  }
+
+  .direct-call-badge {
+    font-size: 0.75rem;
+  }
+
+  /* Footer */
+  .site-footer {
+    padding-top: 3.5rem;
+    padding-bottom: 2.5rem;
   }
 
   .footer-columns-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand-logo {
+    height: 32px;
   }
 
   .footer-bottom-bar {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.25rem;
+    gap: 1rem;
+  }
+
+  .footer-legals {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-location-badge {
+    width: 100%;
+    justify-content: flex-start;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .location-clock {
+    font-size: 0.75rem;
+  }
+
+  /* Modal */
+  .modal-backdrop {
+    padding: 0.65rem;
   }
 
   .modal-card {
-    padding: 0;
+    max-height: 94vh;
+    border-radius: var(--radius-lg);
   }
 
-  .modal-header,
-  .modal-body,
-  .modal-footer {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+  .modal-header {
+    padding: 1.5rem 1.25rem 1rem;
+  }
+
+  .modal-title {
+    font-size: 1.25rem;
+  }
+
+  .modal-body {
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+
+  .form-input,
+  .form-textarea {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.875rem;
+  }
+
+  .brief-preview-box {
+    max-height: 150px;
+    padding: 0.85rem;
+  }
+
+  .brief-pre-text {
+    font-size: 0.75rem;
   }
 
   .modal-footer {
+    padding: 1rem 1.25rem 1.5rem;
     flex-direction: column;
-    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .modal-footer-left,
+  .modal-footer-right {
+    width: 100%;
   }
 
   .modal-footer .btn {
     width: 100%;
+  }
+}
+
+/* 4. Extra Small Mobile Phones (<= 380px) */
+@media screen and (max-width: 380px) {
+  .nav-cta {
+    display: none;
+  }
+
+  .hero-heading-centered {
+    font-size: 1.95rem;
+  }
+
+  .tag-pill {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .footer-location-badge {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .footer-location-badge .utility-dot {
+    display: none;
   }
 }

@@ -95,6 +95,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
+
+    // Close mobile menu on outside click
+    document.addEventListener("click", (e) => {
+      if (navMenu.classList.contains("is-open") && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+        navMenu.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        const top = navToggle.querySelector(".line-top");
+        const bottom = navToggle.querySelector(".line-bottom");
+        if (top && bottom) {
+          top.style.transform = "none";
+          bottom.style.transform = "none";
+        }
+      }
+    });
   }
 
   // 4. NAVBAR THEME SWITCHING & ACTIVE PILL ON SCROLL

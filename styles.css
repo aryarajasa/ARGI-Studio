@@ -840,7 +840,7 @@ body.site-ready .page-wrapper {
   width: 20px;
   height: 30px;
   border: 1.5px solid var(--text-muted);
-  border-radius: 0px;
+  border-radius: 12px;
   position: relative;
 }
 
@@ -852,7 +852,7 @@ body.site-ready .page-wrapper {
   width: 3px;
   height: 6px;
   background: var(--text-muted);
-  border-radius: 0px;
+  border-radius: 3px;
   animation: scrollDown 2s infinite ease-in-out;
 }
 

@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const darkSection = document.querySelector('[data-theme="dark"]');
   const sections = document.querySelectorAll("section[id]");
 
-  // 1. AUTHENTIC ASCII LOGO RASTER MATRIX & SEAMLESS MORPH REVEAL
+  // 1. AUTHENTIC ASCII LOGO RASTER MATRIX & SEAMLESS MORPH REVEAL (FIRST VISIT ONLY)
   const initSitePreloader = () => {
     const preloader = document.getElementById("sitePreloader");
     const canvas = document.getElementById("preloaderAsciiCanvas");
@@ -20,7 +20,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const logoImgEl = document.getElementById("preloaderLogoImg");
     const counterEl = document.getElementById("preloaderCounter");
 
-    if (!preloader || !counterEl) {
+    // Check if the user has already visited the site in this session
+    const hasVisited = sessionStorage.getItem("argi_has_visited");
+
+    if (!preloader || !counterEl || hasVisited === "true") {
+      if (preloader) {
+        preloader.style.display = "none";
+        preloader.classList.add("is-loaded");
+      }
       document.body.classList.add("site-ready");
       return;
     }
@@ -213,6 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
           preloader.classList.add("is-loaded");
           document.body.classList.add("site-ready");
+          sessionStorage.setItem("argi_has_visited", "true");
 
           setTimeout(() => {
             preloader.style.display = "none";

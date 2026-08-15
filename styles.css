@@ -32,14 +32,14 @@
   --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
-  /* Spacing */
+  /* Spacing & Sharp 0px Architectural Radii (Except Buttons) */
   --container-max-width: 1200px;
   --container-padding: 2rem;
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-  --radius-full: 9999px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-full: 9999px; /* Reserved for buttons, pills & circular CTAs */
 
   /* Transitions */
   --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -814,7 +814,7 @@ body.site-ready .page-wrapper {
   width: 20px;
   height: 30px;
   border: 1.5px solid var(--text-muted);
-  border-radius: 12px;
+  border-radius: 0px;
   position: relative;
 }
 
@@ -826,7 +826,7 @@ body.site-ready .page-wrapper {
   width: 3px;
   height: 6px;
   background: var(--text-muted);
-  border-radius: 3px;
+  border-radius: 0px;
   animation: scrollDown 2s infinite ease-in-out;
 }
 

@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
           title: "02 / The 60FPS Tactile Web",
           content: `
             <p class="essay-paragraph">
-              A luxury digital experience must perform with the speed and crisp feedback of a mechanical timepiece. Every button click, image preview, modal drawer, and font transition in our studio’s websites is tuned with bespoke cubic-bezier curves (`cubic-bezier(0.16, 1, 0.3, 1)`) running at a locked 60 frames per second.
+              A luxury digital experience must perform with the speed and crisp feedback of a mechanical timepiece. Every button click, image preview, modal drawer, and font transition in our studio’s websites is tuned with bespoke cubic-bezier curves (<code>cubic-bezier(0.16, 1, 0.3, 1)</code>) running at a locked 60 frames per second.
             </p>
             
             <div class="article-inline-grid">

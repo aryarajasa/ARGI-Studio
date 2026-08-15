@@ -1008,4 +1008,53 @@ ${clientName}`
   };
 
   initMobileScrollTop();
+
+  // 19. SLIGHT BLUR TRANSITION ON PAGE SWITCH
+  const initPageTransitions = () => {
+    const pageWrapper = document.querySelector(".page-wrapper");
+    if (!pageWrapper) return;
+
+    window.addEventListener("pageshow", () => {
+      pageWrapper.classList.remove("is-leaving");
+    });
+
+    document.addEventListener("click", (e) => {
+      const anchor = e.target.closest("a");
+      if (!anchor) return;
+
+      const href = anchor.getAttribute("href");
+      if (!href) return;
+
+      if (
+        href.startsWith("#") ||
+        anchor.target === "_blank" ||
+        href.startsWith("mailto:") ||
+        href.startsWith("tel:") ||
+        anchor.hasAttribute("download") ||
+        e.metaKey || e.ctrlKey || e.shiftKey || e.altKey
+      ) {
+        return;
+      }
+
+      try {
+        const url = new URL(anchor.href, window.location.href);
+        if (url.origin === window.location.origin) {
+          if (url.pathname === window.location.pathname && url.search === window.location.search && url.hash) {
+            return;
+          }
+
+          e.preventDefault();
+          pageWrapper.classList.add("is-leaving");
+
+          setTimeout(() => {
+            window.location.href = anchor.href;
+          }, 200);
+        }
+      } catch (err) {
+        // Fallback for relative or unsupported URLs
+      }
+    });
+  };
+
+  initPageTransitions();
 });

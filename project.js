@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       quote: "ARGI Studio captured the exact balance of Parisian heritage and unapologetic modern edge we had been searching for. The response from our global clientele has been extraordinary.",
       quoteAuthor: "Éléonore de Vivien",
       quoteRole: "Creative Director & Founder",
-      heroImage: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1600&q=85",
+      heroImage: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=2000&q=85",
       heroCaption: "EDITORIAL LOOKBOOK & BESPOKE STATIONERY SYSTEM",
       spreadImg1: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=85",
       spreadCaption1: "01 / Archival Lookbook & Blind-Debossed Hardcover Monograph",

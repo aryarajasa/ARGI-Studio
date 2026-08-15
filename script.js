@@ -417,39 +417,67 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 7. INDEX TABLE HOVER CURSOR PORTAL
+  // 7. INDEX TABLE HOVER CURSOR PORTAL (GPU-ACCELERATED FLOATING MAIN IMAGE)
   const indexRows = document.querySelectorAll(".index-row-item");
   const indexHoverPortal = document.getElementById("indexHoverPortal");
   const indexPortalImg = document.getElementById("indexPortalImg");
 
   if (indexRows.length && indexHoverPortal && indexPortalImg) {
-    let portalTargetX = 0;
-    let portalTargetY = 0;
-    let portalCurrentX = 0;
-    let portalCurrentY = 0;
+    let portalTargetX = -9999;
+    let portalTargetY = -9999;
+    let portalCurrentX = -9999;
+    let portalCurrentY = -9999;
+    let isTracking = false;
 
-    document.addEventListener("mousemove", (e) => {
-      portalTargetX = e.clientX + 160;
-      portalTargetY = e.clientY;
+    window.addEventListener("mousemove", (e) => {
+      let posX = e.clientX + 35;
+      let posY = e.clientY - 120;
+
+      // Smart viewport bounds checking
+      if (posX + 360 > window.innerWidth) {
+        posX = e.clientX - 375;
+      }
+      if (posY < 20) {
+        posY = 20;
+      }
+      if (posY + 260 > window.innerHeight) {
+        posY = window.innerHeight - 270;
+      }
+
+      portalTargetX = posX;
+      portalTargetY = posY;
+
+      if (!isTracking) {
+        portalCurrentX = portalTargetX;
+        portalCurrentY = portalTargetY;
+        isTracking = true;
+      }
     });
 
     const updatePortalPosition = () => {
-      portalCurrentX += (portalTargetX - portalCurrentX) * 0.15;
-      portalCurrentY += (portalTargetY - portalCurrentY) * 0.15;
+      if (isTracking && portalTargetX !== -9999) {
+        portalCurrentX += (portalTargetX - portalCurrentX) * 0.18;
+        portalCurrentY += (portalTargetY - portalCurrentY) * 0.18;
 
-      indexHoverPortal.style.left = `${portalCurrentX}px`;
-      indexHoverPortal.style.top = `${portalCurrentY}px`;
+        indexHoverPortal.style.transform = `translate3d(${portalCurrentX}px, ${portalCurrentY}px, 0)`;
+      }
 
       requestAnimationFrame(updatePortalPosition);
     };
     requestAnimationFrame(updatePortalPosition);
 
     indexRows.forEach((row) => {
-      row.addEventListener("mouseenter", () => {
+      row.addEventListener("mouseenter", (e) => {
         const previewUrl = row.getAttribute("data-preview");
         if (previewUrl) {
           indexPortalImg.src = previewUrl;
           indexHoverPortal.classList.add("is-visible");
+
+          if (!isTracking) {
+            portalCurrentX = e.clientX + 35;
+            portalCurrentY = e.clientY - 120;
+            isTracking = true;
+          }
         }
       });
 

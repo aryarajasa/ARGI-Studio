@@ -1,0 +1,649 @@
+/**
+ * ARGI Studio — Project Case Study Controller & Dynamic Data Engine
+ * Location: Bali, Indonesia
+ */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  // =========================================================================
+  // 1. COMPLETE CASE STUDY DATASET (6 ATELIER PROJECTS)
+  // =========================================================================
+  const PROJECTS_DATA = {
+    "01": {
+      id: "01",
+      slug: "viviens-haute-couture",
+      title: "Vivien's",
+      titleAccent: "Haute Couture",
+      client: "Vivien's Haute Couture",
+      sector: "Luxury Fashion • Paris, FR",
+      year: "Q1 2026",
+      timeline: "14 Weeks",
+      disciplines: "Brand Identity, Packaging",
+      disciplinesSub: "Web Architecture & Art Direction",
+      liveUrl: "https://viviens-couture.fr",
+      liveUrlText: "viviens-couture.fr ↗",
+      summary: "A comprehensive brand repositioning, bespoke serif typography system, luxury tactile packaging, and high-conversion digital flagship e-commerce experience.",
+      challenge: "Vivien’s required a total visual reinvention to transcend traditional haute couture tropes. The brand needed to harmonize centuries of Parisian bespoke craftsmanship with contemporary, ultra-fast digital commerce without sacrificing an ounce of exclusivity.",
+      concept: "We engineered an architectural typographic identity pairing bespoke letterforms with razor-sharp editorial layouts. Every touchpoint—from French linen embossed garment boxes to the micro-interactions on the digital flagship—was calibrated for tactile luxury and effortless performance.",
+      quote: "ARGI Studio captured the exact balance of Parisian heritage and unapologetic modern edge we had been searching for. The response from our global clientele has been extraordinary.",
+      quoteAuthor: "Éléonore de Vivien",
+      quoteRole: "Creative Director & Founder",
+      heroImage: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1600&q=85",
+      heroCaption: "EDITORIAL LOOKBOOK & BESPOKE STATIONERY SYSTEM",
+      spreadImg1: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption1: "01 / Archival Lookbook & Blind-Debossed Hardcover Monograph",
+      spreadImg2: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption2: "02 / Tactile Garment Tags & Foil-Stamped Business Cards",
+      colors: [
+        { name: "Noir Intense", hex: "#0c0d0e", bg: "#0c0d0e", textColor: "#fff" },
+        { name: "Silk Alabaster", hex: "#f5f0ea", bg: "#f5f0ea", textColor: "#111" },
+        { name: "Bleu Royal", hex: "#2b4acb", bg: "#2b4acb", textColor: "#fff" },
+        { name: "Gilt Accent", hex: "#d4a373", bg: "#d4a373", textColor: "#111" }
+      ],
+      typeHint: "Instrument Serif + Inter",
+      typeSample: "“Architecture of Elegance & Contemporary Restraint.”",
+      interfaceImg: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1400&q=85",
+      browserUrl: "https://viviens-couture.fr/flagship",
+      gallery: [
+        { img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1000&q=85", caption: "Editorial Catalog Spread", isWide: false },
+        { img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1400&q=85", caption: "Luxury Packaging Box Suite", isWide: true },
+        { img: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1000&q=85", caption: "Typography Specimen Sheets", isWide: false },
+        { img: "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=1000&q=85", caption: "Studio Design Workshop", isWide: false },
+        { img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=85", caption: "Mobile Shopping Interface", isWide: false }
+      ],
+      deliverables: [
+        "Brand Strategy & Positioning",
+        "Custom Wordmark & Monogram",
+        "120-Page Identity Guidelines",
+        "Sustainable Packaging Suite",
+        "Bespoke Shopify Plus Flagship",
+        "Social Campaign Art Direction",
+        "Retail Spatial Typography"
+      ],
+      nextId: "02"
+    },
+
+    "02": {
+      id: "02",
+      slug: "aura-fragrance-studio",
+      title: "Aura Fragrance",
+      titleAccent: "Studio",
+      client: "Aura Parfumerie",
+      sector: "Artisanal Fragrance • Grasse / London",
+      year: "Q4 2025",
+      timeline: "12 Weeks",
+      disciplines: "Packaging Design, Visual Identity",
+      disciplinesSub: "Flagship Web & 3D Spatial Renders",
+      liveUrl: "https://aurafragrance.co.uk",
+      liveUrlText: "aurafragrance.co.uk ↗",
+      summary: "Olfactory identity, weighted flacon packaging structures, tactile unboxing rituals, and an ambient sensory web platform for an avant-garde perfume atelier.",
+      challenge: "Aura needed to communicate the invisible art of scent through visual and tactile media. The objective was to avoid clichéd luxury tropes and create an ethereal, grounding identity celebrating raw organic botanicals and molecular perfumery.",
+      concept: "We developed a sensory design system based on translucent glass substrates, blind debossing, and a muted earth-smoke palette. The digital flagship leverages ambient soundscapes and generative scent notes visualization.",
+      quote: "The packaging ARGI created feels sacred in your hands. Our direct-to-consumer launch sold out within 48 hours purely based on the visual and sensory storytelling.",
+      quoteAuthor: "Julian Mercer",
+      quoteRole: "Master Perfumer & Co-Founder",
+      heroImage: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1600&q=85",
+      heroCaption: "WEIGHTED FLACON SUITE & EMBOSSED ARCHIVAL BOXES",
+      spreadImg1: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption1: "01 / Recycled Cotton Box Shell with Organic Amber Glass Flacon",
+      spreadImg2: "https://images.unsplash.com/photo-1608248597359-05d688cf41f8?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption2: "02 / Molecular Note Formula Cards & Dropper Packaging",
+      colors: [
+        { name: "Obsidian Amber", hex: "#1f1813", bg: "#1f1813", textColor: "#fff" },
+        { name: "Smoked Alabaster", hex: "#ede7e0", bg: "#ede7e0", textColor: "#111" },
+        { name: "Botanical Sage", hex: "#839788", bg: "#839788", textColor: "#fff" },
+        { name: "Warm Ochre", hex: "#c98a4c", bg: "#c98a4c", textColor: "#fff" }
+      ],
+      typeHint: "Instrument Serif + SFMono",
+      typeSample: "“Sensory Architecture & Distilled Botanical Form.”",
+      interfaceImg: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=85",
+      browserUrl: "https://aurafragrance.co.uk/sensory-finder",
+      gallery: [
+        { img: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1000&q=85", caption: "Formulation Notebooks & Identity System", isWide: false },
+        { img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1400&q=85", caption: "Digital Olfactory Discovery Engine", isWide: true },
+        { img: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=1000&q=85", caption: "Mobile Checkout Experience", isWide: false },
+        { img: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1000&q=85", caption: "Monogram Blind-Deboss Seals", isWide: false },
+        { img: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1000&q=85", caption: "Scent Catalog & Paper Specimen", isWide: false }
+      ],
+      deliverables: [
+        "Flacon Structural 3D Design",
+        "Visual Identity & Monogram",
+        "Paper & Cotton Sourcing R&D",
+        "Sensory Web E-Commerce Flagship",
+        "Social Art Direction & Still Life",
+        "Point of Sale Fragrance Stand"
+      ],
+      nextId: "03"
+    },
+
+    "03": {
+      id: "03",
+      slug: "twyg-regenerative-botanic",
+      title: "Twyg Regenerative",
+      titleAccent: "Botanic",
+      client: "Twyg Botanic Form",
+      sector: "Regenerative Skincare • Cape Town / NYC",
+      year: "Q3 2025",
+      timeline: "10 Weeks",
+      disciplines: "E-Commerce Web, Sustainable Packaging",
+      disciplinesSub: "Brand Identity & 3D Prototyping",
+      liveUrl: "https://twygbotanic.com",
+      liveUrlText: "twygbotanic.com ↗",
+      summary: "Closed-loop circular packaging, raw mycelium structures, vibrant botanical color theory, and an ultra-fast headless e-commerce store for ethical beauty.",
+      challenge: "Twyg wanted to disrupt the skincare market with 100% compostable mycelium packaging while maintaining a premium high-end bathroom aesthetic.",
+      concept: "We embraced brutalist organic shapes paired with high-contrast editorial typography. The visual language bridges raw earth textures with clinical modernism.",
+      quote: "ARGI proved that sustainability does not mean boring brown paper. Our brand is bold, artistic, and completely unforgettable.",
+      quoteAuthor: "Thandiwe Khumalo",
+      quoteRole: "Founder & Head of Botanical R&D",
+      heroImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1600&q=85",
+      heroCaption: "CIRCULAR MYCELIUM PACKAGING & BOTANIC IDENTITY",
+      spreadImg1: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption1: "01 / Recycled FSC Kraft Secondary Cartons & Aluminum Tubes",
+      spreadImg2: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption2: "02 / High-Contrast Laboratory Flasks & Pump Bottles",
+      colors: [
+        { name: "Forest Canopy", hex: "#16302b", bg: "#16302b", textColor: "#fff" },
+        { name: "Terracotta Clay", hex: "#c85a38", bg: "#c85a38", textColor: "#fff" },
+        { name: "Raw Ecru", hex: "#f3ede2", bg: "#f3ede2", textColor: "#111" },
+        { name: "Chlorophyll Yellow", hex: "#dfd876", bg: "#dfd876", textColor: "#111" }
+      ],
+      typeHint: "Instrument Serif + Inter Tight",
+      typeSample: "“Living Flora & Circular Material Innovation.”",
+      interfaceImg: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=1400&q=85",
+      browserUrl: "https://twygbotanic.com/products/restorative-serum",
+      gallery: [
+        { img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1000&q=85", caption: "Botanical Illustration Silkscreen", isWide: false },
+        { img: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1400&q=85", caption: "Brand Guidelines & Material Guide", isWide: true },
+        { img: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1000&q=85", caption: "Custom Plant-Based Inks", isWide: false },
+        { img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=85", caption: "Interactive Subscription Funnel", isWide: false },
+        { img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=85", caption: "Packaging Unboxing Protocol", isWide: false }
+      ],
+      deliverables: [
+        "Complete Brand Identity Suite",
+        "Circular Packaging Engineering",
+        "Headless Next.js / Shopify Web",
+        "Custom 3D Product Renders",
+        "Sustainable Material Sourcing",
+        "Global Launch Campaign"
+      ],
+      nextId: "04"
+    },
+
+    "04": {
+      id: "04",
+      slug: "monolith-architecture-studio",
+      title: "Monolith",
+      titleAccent: "Architecture Studio",
+      client: "Monolith Architecture",
+      sector: "Spatial Design & Architecture • Zurich / Tokyo",
+      year: "Q2 2025",
+      timeline: "16 Weeks",
+      disciplines: "Interactive Web, Print Monograph",
+      disciplinesSub: "Spatial Signage & Identity Guidelines",
+      liveUrl: "https://monolith-arch.ch",
+      liveUrlText: "monolith-arch.ch ↗",
+      summary: "Brutalist architectural monograph print publication, cast-aluminum spatial wayfinding, and an interactive 3D WebGL project archive.",
+      challenge: "Monolith constructs monumental concrete and glass architecture across the Alps and Japan. They needed a portfolio web platform and physical monograph that reflected their exact architectural discipline: light, mass, and structural honesty.",
+      concept: "We built a monochromatic, high-density layout inspired by architectural blueprints and Swiss typographic grids. The web archive features smooth micro-panoramas and structural blueprints.",
+      quote: "ARGI translated our physical buildings into pure digital mass. Their spatial understanding of typography is unmatched.",
+      quoteAuthor: "Hannes von Berg",
+      quoteRole: "Principal Architect",
+      heroImage: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1600&q=85",
+      heroCaption: "CLOTH-BOUND MONOGRAPH & SPATIAL BLUEPRINT SUITE",
+      spreadImg1: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption1: "01 / Cast-Aluminum Entrance Signage & Building Wayfinding",
+      spreadImg2: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption2: "02 / 380-Page Swiss Linen Monograph Layouts",
+      colors: [
+        { name: "Alpine Granite", hex: "#181a1b", bg: "#181a1b", textColor: "#fff" },
+        { name: "Cast Concrete", hex: "#d8d8d6", bg: "#d8d8d6", textColor: "#111" },
+        { name: "Pure Titanium", hex: "#ffffff", bg: "#ffffff", textColor: "#111" },
+        { name: "Safety Ochre", hex: "#ff5e14", bg: "#ff5e14", textColor: "#fff" }
+      ],
+      typeHint: "Inter + Instrument Serif",
+      typeSample: "“Monumental Silence, Heavy Concrete & Pure Geometry.”",
+      interfaceImg: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=1400&q=85",
+      browserUrl: "https://monolith-arch.ch/projects/alps-pavilion",
+      gallery: [
+        { img: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1000&q=85", caption: "Architectural Business Cards", isWide: false },
+        { img: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1400&q=85", caption: "Editorial Monograph Spreads", isWide: true },
+        { img: "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=1000&q=85", caption: "Studio Model Workshop", isWide: false },
+        { img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=85", caption: "Interactive Blueprint Viewer", isWide: false },
+        { img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1000&q=85", caption: "Architectural Detail Archive", isWide: false }
+      ],
+      deliverables: [
+        "Complete Studio Brand Identity",
+        "Hardcover 380-Page Monograph",
+        "Custom WebGL Interactive Archive",
+        "Aluminum Spatial Wayfinding System",
+        "Architectural Exhibition Graphics",
+        "Stationery & Construction Documents"
+      ],
+      nextId: "05"
+    },
+
+    "05": {
+      id: "05",
+      slug: "komorebi-cinema-festival",
+      title: "Komorebi Cinema",
+      titleAccent: "Festival",
+      client: "Kyoto Film Society",
+      sector: "Film & Cultural Institution • Kyoto, JP",
+      year: "Q1 2025",
+      timeline: "8 Weeks",
+      disciplines: "Visual Identity, Motion Campaign",
+      disciplinesSub: "Spatial Signage & Festival Program",
+      liveUrl: "https://komorebicinema.jp",
+      liveUrlText: "komorebicinema.jp ↗",
+      summary: "Cinematic festival identity, screen-printed silkscreen posters, interactive schedule app, and environmental light projections in historic Kyoto temples.",
+      challenge: "The annual Komorebi Cinema Festival needed an avant-garde visual identity celebrating independent Asian cinema, bridging traditional Japanese woodblock aesthetics with cutting-edge kinetic typography.",
+      concept: "We developed a fluid kinetic typographic grid that mimics light filtering through forest trees (the literal meaning of 'Komorebi'). Custom Kanji-Latin hybrid typography was screenprinted across citywide billboards.",
+      quote: "The visual presence of the festival was breathtaking. ARGI created an aesthetic aura that defined the entire Kyoto art season.",
+      quoteAuthor: "Kenjiro Takahashi",
+      quoteRole: "Festival Director",
+      heroImage: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1600&q=85",
+      heroCaption: "SILKSCREEN POSTER SUITE & KINETIC TYPOGRAPHY",
+      spreadImg1: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption1: "01 / Citywide Billboard Campaign in Gion & Kyoto Station",
+      spreadImg2: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption2: "02 / Festival Passes, Foil Lanyards & Screening Guides",
+      colors: [
+        { name: "Kyoto Night", hex: "#0b0c10", bg: "#0b0c10", textColor: "#fff" },
+        { name: "Crimson Cinnabar", hex: "#e63946", bg: "#e63946", textColor: "#fff" },
+        { name: "Paper Washi", hex: "#f1ede6", bg: "#f1ede6", textColor: "#111" },
+        { name: "Electric Indigo", hex: "#3a56d4", bg: "#3a56d4", textColor: "#fff" }
+      ],
+      typeHint: "Instrument Serif + Kanji Mono",
+      typeSample: "“Cinema of Light, Shadow & Fleeting Memory.”",
+      interfaceImg: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1400&q=85",
+      browserUrl: "https://komorebicinema.jp/schedule",
+      gallery: [
+        { img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1000&q=85", caption: "Screening Program Book", isWide: false },
+        { img: "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=1400&q=85", caption: "Silkscreen Printing Workshop", isWide: true },
+        { img: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1000&q=85", caption: "Official Festival Tote & Pins", isWide: false },
+        { img: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=1000&q=85", caption: "Mobile Ticket Wallet Integration", isWide: false },
+        { img: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1000&q=85", caption: "Cinema Poster Archive", isWide: false }
+      ],
+      deliverables: [
+        "Festival Identity & Logo System",
+        "Motion Design & Title Idents",
+        "Interactive Screening Schedule Web",
+        "Silkscreen Poster Series (A0)",
+        "Spatial Temple Light Projections",
+        "Merchandise & Ticket Pass Suite"
+      ],
+      nextId: "06"
+    },
+
+    "06": {
+      id: "06",
+      slug: "braids-magazine-issue-04",
+      title: "Braids Magazine",
+      titleAccent: "Issue 04",
+      client: "Braids Publishing",
+      sector: "Independent Editorial Press • London / NYC",
+      year: "Q1 2026",
+      timeline: "12 Weeks",
+      disciplines: "Editorial Print, Typography",
+      disciplinesSub: "Digital Edition & Subscription Hub",
+      liveUrl: "https://braidsmagazine.com",
+      liveUrlText: "braidsmagazine.com ↗",
+      summary: "Avant-garde editorial publication art direction, custom ligature typeface design, tactile holographic cover foil, and digital reader app.",
+      challenge: "Braids Magazine is an international print monograph exploring contemporary fashion theory and critical culture. Issue 04 needed a complete typographic overhaul that challenged conventional editorial grids.",
+      concept: "We designed a bespoke high-contrast ligature typeface and deployed asymmetrical 12-column dynamic layouts with extreme typographic scale contrast and tactile coated/uncoated paper stocks.",
+      quote: "ARGI Studio pushed our publication into a work of collectible art. Every single page feels alive, provocative, and razor sharp.",
+      quoteAuthor: "Sienna Callow",
+      quoteRole: "Editor-in-Chief",
+      heroImage: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1600&q=85",
+      heroCaption: "HOLOGRAPHIC FOIL ISSUE COVER & EDITORIAL SPREADS",
+      spreadImg1: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption1: "01 / Custom Display Serif Ligatures & Column Grids",
+      spreadImg2: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption2: "02 / High-Gloss Fashion Feature & Essay Layouts",
+      colors: [
+        { name: "Editorial Carbon", hex: "#111213", bg: "#111213", textColor: "#fff" },
+        { name: "Bleached Newsprint", hex: "#f6f4ef", bg: "#f6f4ef", textColor: "#111" },
+        { name: "Acid Vermilion", hex: "#e03e2d", bg: "#e03e2d", textColor: "#fff" },
+        { name: "Silver Mylar", hex: "#c0c4cc", bg: "#c0c4cc", textColor: "#111" }
+      ],
+      typeHint: "Braids Serif + Inter Display",
+      typeSample: "“Critical Culture, Avant-Garde Form & Printed Matter.”",
+      interfaceImg: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=1400&q=85",
+      browserUrl: "https://braidsmagazine.com/issue-04",
+      gallery: [
+        { img: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1000&q=85", caption: "Holographic Foil Test Prints", isWide: false },
+        { img: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1400&q=85", caption: "Archival Double Page Spreads", isWide: true },
+        { img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=85", caption: "Custom Slipcase Packaging", isWide: false },
+        { img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=85", caption: "Digital Reading Tablet Edition", isWide: false },
+        { img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1000&q=85", caption: "Global Stockist Poster Campaign", isWide: false }
+      ],
+      deliverables: [
+        "Complete Publication Art Direction",
+        "Custom Editorial Ligature Typeface",
+        "240-Page Print Production R&D",
+        "Digital Reader Progressive Web App",
+        "Holographic Slipcase Packaging",
+        "Launch Exhibition & Book Signing"
+      ],
+      nextId: "01"
+    }
+  };
+
+  // =========================================================================
+  // 2. QUERY PARAMETER ROUTING & DATA POPULATION
+  // =========================================================================
+  const getProjectIdFromUrl = () => {
+    const params = new URLSearchParams(window.location.search);
+    let id = params.get("id") || "01";
+    // Normalize id like '1' -> '01'
+    if (id.length === 1) id = "0" + id;
+    return PROJECTS_DATA[id] ? id : "01";
+  };
+
+  const currentProjectId = getProjectIdFromUrl();
+  const currentProject = PROJECTS_DATA[currentProjectId];
+  const nextProject = PROJECTS_DATA[currentProject.nextId];
+
+  // Update Page Meta & Title
+  document.title = `${currentProject.title} ${currentProject.titleAccent} — Case Study | ARGI Studio`;
+  const pageDesc = document.getElementById("pageDescription");
+  if (pageDesc) pageDesc.content = `${currentProject.summary} Designed by ARGI Studio, Bali.`;
+
+  // Populate Hero Content
+  const csTitle = document.getElementById("csTitle");
+  if (csTitle) {
+    csTitle.innerHTML = `${currentProject.title} <em class="serif-accent" id="csTitleAccent">${currentProject.titleAccent}</em>`;
+  }
+
+  const csSummary = document.getElementById("csSummary");
+  if (csSummary) csSummary.textContent = currentProject.summary;
+
+  const csIdBadge = document.getElementById("csIdBadge");
+  if (csIdBadge) csIdBadge.textContent = `CASE STUDY // ${currentProject.id}`;
+
+  const navCurrentProjectName = document.getElementById("navCurrentProjectName");
+  if (navCurrentProjectName) navCurrentProjectName.textContent = `${currentProject.id} / ${currentProject.title.toUpperCase()}`;
+
+  // Populate 4-Column Metadata
+  const csMetaClient = document.getElementById("csMetaClient");
+  if (csMetaClient) csMetaClient.textContent = currentProject.client;
+
+  const csMetaSector = document.getElementById("csMetaSector");
+  if (csMetaSector) csMetaSector.textContent = currentProject.sector;
+
+  const csMetaTimeline = document.getElementById("csMetaTimeline");
+  if (csMetaTimeline) csMetaTimeline.textContent = currentProject.timeline;
+
+  const csMetaYear = document.getElementById("csMetaYear");
+  if (csMetaYear) csMetaYear.textContent = currentProject.year;
+
+  const csMetaDisciplines = document.getElementById("csMetaDisciplines");
+  if (csMetaDisciplines) csMetaDisciplines.textContent = currentProject.disciplines;
+
+  const csMetaDisciplinesSub = document.getElementById("csMetaDisciplinesSub");
+  if (csMetaDisciplinesSub) csMetaDisciplinesSub.textContent = currentProject.disciplinesSub;
+
+  const csMetaLiveUrl = document.getElementById("csMetaLiveUrl");
+  const csMetaLiveText = document.getElementById("csMetaLiveText");
+  if (csMetaLiveUrl && csMetaLiveText) {
+    csMetaLiveUrl.href = currentProject.liveUrl;
+    csMetaLiveText.textContent = currentProject.liveUrlText;
+  }
+
+  // Populate Hero Image Frame
+  const csHeroImg = document.getElementById("csHeroImg");
+  if (csHeroImg) {
+    csHeroImg.src = currentProject.heroImage;
+    csHeroImg.alt = `${currentProject.title} Hero Visual`;
+  }
+
+  const csHeroCaption = document.getElementById("csHeroCaption");
+  if (csHeroCaption) csHeroCaption.textContent = currentProject.heroCaption;
+
+  // Populate Narrative
+  const csChallengeText = document.getElementById("csChallengeText");
+  if (csChallengeText) csChallengeText.textContent = currentProject.challenge;
+
+  const csConceptText = document.getElementById("csConceptText");
+  if (csConceptText) csConceptText.textContent = currentProject.concept;
+
+  const csQuoteText = document.getElementById("csQuoteText");
+  if (csQuoteText) csQuoteText.textContent = currentProject.quote;
+
+  const csQuoteAuthor = document.getElementById("csQuoteAuthor");
+  if (csQuoteAuthor) csQuoteAuthor.textContent = currentProject.quoteAuthor;
+
+  const csQuoteRole = document.getElementById("csQuoteRole");
+  if (csQuoteRole) csQuoteRole.textContent = currentProject.quoteRole;
+
+  // Populate Two-Column Spread Images
+  const csSpreadImg1 = document.getElementById("csSpreadImg1");
+  if (csSpreadImg1) {
+    csSpreadImg1.src = currentProject.spreadImg1;
+    csSpreadImg1.alt = currentProject.spreadCaption1;
+  }
+  const csSpreadCaption1 = document.getElementById("csSpreadCaption1");
+  if (csSpreadCaption1) csSpreadCaption1.textContent = currentProject.spreadCaption1;
+
+  const csSpreadImg2 = document.getElementById("csSpreadImg2");
+  if (csSpreadImg2) {
+    csSpreadImg2.src = currentProject.spreadImg2;
+    csSpreadImg2.alt = currentProject.spreadCaption2;
+  }
+  const csSpreadCaption2 = document.getElementById("csSpreadCaption2");
+  if (csSpreadCaption2) csSpreadCaption2.textContent = currentProject.spreadCaption2;
+
+  // Populate Interactive Color Palette Swatches
+  const csPaletteRow = document.getElementById("csPaletteRow");
+  if (csPaletteRow && currentProject.colors) {
+    csPaletteRow.innerHTML = currentProject.colors.map(color => `
+      <div class="swatch-item" data-hex="${color.hex}">
+        <div class="swatch-color-box" style="background-color: ${color.bg};">
+          <div class="swatch-copy-overlay">COPY</div>
+        </div>
+        <span class="swatch-name">${color.name}</span>
+        <span class="swatch-hex">${color.hex}</span>
+      </div>
+    `).join("");
+  }
+
+  // Populate Type Specimen
+  const csTypeHint = document.getElementById("csTypeHint");
+  if (csTypeHint) csTypeHint.textContent = currentProject.typeHint;
+
+  const csTypeSpecimenSample = document.getElementById("csTypeSpecimenSample");
+  if (csTypeSpecimenSample) csTypeSpecimenSample.textContent = currentProject.typeSample;
+
+  // Populate Interface Frame
+  const csInterfaceImg = document.getElementById("csInterfaceImg");
+  if (csInterfaceImg) {
+    csInterfaceImg.src = currentProject.interfaceImg;
+    csInterfaceImg.alt = `${currentProject.title} Interface Showcase`;
+  }
+  const csBrowserUrl = document.getElementById("csBrowserUrl");
+  if (csBrowserUrl) csBrowserUrl.textContent = currentProject.browserUrl;
+
+  // Populate Multi-Photo Gallery Mosaic
+  const csGalleryMosaic = document.getElementById("csGalleryMosaic");
+  if (csGalleryMosaic && currentProject.gallery) {
+    csGalleryMosaic.innerHTML = currentProject.gallery.map(item => `
+      <div class="mosaic-card ${item.isWide ? 'is-wide' : ''}" data-lightbox>
+        <img src="${item.img}" alt="${item.caption}" class="mosaic-img" />
+        <div class="mosaic-badge">${item.caption}</div>
+      </div>
+    `).join("");
+  }
+
+  // Populate Deliverables Scope
+  const csDeliverablesList = document.getElementById("csDeliverablesList");
+  if (csDeliverablesList && currentProject.deliverables) {
+    csDeliverablesList.innerHTML = currentProject.deliverables.map(del => `
+      <div class="deliverable-chip">
+        <span class="deliverable-chip-icon">✦</span>
+        <span>${del}</span>
+      </div>
+    `).join("");
+  }
+
+  // Populate Next Project Full-Width Hero Card
+  const csNextProjectLink = document.getElementById("csNextProjectLink");
+  if (csNextProjectLink) {
+    csNextProjectLink.href = `project.html?id=${nextProject.id}`;
+  }
+
+  const csNextBgImg = document.getElementById("csNextBgImg");
+  if (csNextBgImg) {
+    csNextBgImg.style.backgroundImage = `url('${nextProject.heroImage}')`;
+  }
+
+  const csNextNum = document.getElementById("csNextNum");
+  if (csNextNum) csNextNum.textContent = `${nextProject.id} / 06`;
+
+  const csNextTitle = document.getElementById("csNextTitle");
+  if (csNextTitle) {
+    csNextTitle.innerHTML = `${nextProject.title} <em class="serif-accent" id="csNextTitleAccent">${nextProject.titleAccent}</em>`;
+  }
+
+  const csNextDiscipline = document.getElementById("csNextDiscipline");
+  if (csNextDiscipline) {
+    csNextDiscipline.textContent = `${nextProject.disciplines} • ${nextProject.sector}`;
+  }
+
+  // Highlight Active Dropdown Item
+  const dropdownItems = document.querySelectorAll(".dropdown-item");
+  dropdownItems.forEach(item => {
+    if (item.dataset.id === currentProjectId) {
+      item.classList.add("is-active");
+    } else {
+      item.classList.remove("is-active");
+    }
+  });
+
+  // =========================================================================
+  // 3. INTERACTIVE FEATURES & INTERACTIONS
+  // =========================================================================
+
+  // Navbar Project Switcher Dropdown Toggle
+  const navProjectPill = document.getElementById("navProjectPill");
+  const projectPillHeader = document.getElementById("projectPillHeader");
+
+  if (navProjectPill && projectPillHeader) {
+    projectPillHeader.addEventListener("click", (e) => {
+      e.stopPropagation();
+      navProjectPill.classList.toggle("is-open");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!navProjectPill.contains(e.target)) {
+        navProjectPill.classList.remove("is-open");
+      }
+    });
+  }
+
+  // One-Click Hex Code Copy to Clipboard
+  const toast = document.getElementById("csToast");
+  const showToast = (message) => {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add("is-visible");
+    setTimeout(() => {
+      toast.classList.remove("is-visible");
+    }, 2400);
+  };
+
+  document.querySelectorAll(".swatch-item").forEach(swatch => {
+    swatch.addEventListener("click", () => {
+      const hex = swatch.dataset.hex;
+      if (hex) {
+        navigator.clipboard.writeText(hex).then(() => {
+          showToast(`Copied ${hex} to clipboard!`);
+        }).catch(() => {
+          showToast(`Color: ${hex}`);
+        });
+      }
+    });
+  });
+
+  // Image Lightbox Modal
+  const lightboxModal = document.getElementById("csLightboxModal");
+  const lightboxImg = document.getElementById("lightboxImg");
+  const lightboxCaption = document.getElementById("lightboxCaption");
+  const lightboxCloseBtn = document.getElementById("lightboxCloseBtn");
+  const lightboxBackdrop = document.getElementById("lightboxBackdrop");
+
+  const openLightbox = (src, caption) => {
+    if (!lightboxModal || !lightboxImg) return;
+    lightboxImg.src = src;
+    if (lightboxCaption) lightboxCaption.textContent = caption || "";
+    lightboxModal.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeLightbox = () => {
+    if (!lightboxModal) return;
+    lightboxModal.classList.remove("is-open");
+    document.body.style.overflow = "";
+  };
+
+  if (lightboxCloseBtn) lightboxCloseBtn.addEventListener("click", closeLightbox);
+  if (lightboxBackdrop) lightboxBackdrop.addEventListener("click", closeLightbox);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeLightbox();
+  });
+
+  // Attach Lightbox to all clickable image containers
+  document.querySelectorAll("[data-lightbox]").forEach(el => {
+    el.addEventListener("click", () => {
+      const img = el.querySelector("img");
+      const caption = el.querySelector(".spread-caption, .mosaic-badge")?.textContent || img?.alt || "";
+      if (img && img.src) {
+        openLightbox(img.src, caption);
+      }
+    });
+  });
+
+  // Floating Mobile Scroll-to-Top Button
+  const scrollTopBtn = document.getElementById("mobileScrollTopBtn");
+  if (scrollTopBtn) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 400) {
+        scrollTopBtn.classList.add("is-visible");
+      } else {
+        scrollTopBtn.classList.remove("is-visible");
+      }
+    }, { passive: true });
+
+    scrollTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  // Real-Time Bali Indonesia Clock (UTC+8 / WITA)
+  const footerClockEl = document.getElementById("baliLiveTime");
+  const updateClock = () => {
+    if (!footerClockEl) return;
+    const now = new Date();
+    const options = {
+      timeZone: "Asia/Makassar",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false
+    };
+    footerClockEl.textContent = `${new Intl.DateTimeFormat("en-GB", options).format(now)} WITA`;
+  };
+
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Keyboard Arrow Navigation (Left = Previous, Right = Next)
+  document.addEventListener("keydown", (e) => {
+    if (lightboxModal && lightboxModal.classList.contains("is-open")) return;
+
+    if (e.key === "ArrowRight") {
+      window.location.href = `project.html?id=${nextProject.id}`;
+    }
+  });
+
+});

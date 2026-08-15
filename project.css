@@ -267,7 +267,8 @@
   position: relative;
   width: 100vw;
   max-width: 100%;
-  height: clamp(480px, 80vh, 900px);
+  height: clamp(650px, 92vh, 1200px);
+  min-height: 85vh;
   aspect-ratio: auto;
   overflow: hidden;
   background: #0c0d0e;
@@ -1204,6 +1205,11 @@
 
   .cs-hero-title {
     font-size: clamp(2.5rem, 11vw, 3.5rem);
+  }
+
+  .cs-hero-image-frame {
+    height: clamp(480px, 75vh, 650px);
+    min-height: 60vh;
   }
 
   .palette-swatches-row {

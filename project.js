@@ -45,11 +45,11 @@ document.addEventListener("DOMContentLoaded", () => {
       interfaceImg: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1400&q=85",
       browserUrl: "https://viviens-couture.fr/flagship",
       gallery: [
-        { img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1000&q=85", caption: "Editorial Catalog Spread", isWide: false },
-        { img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1400&q=85", caption: "Luxury Packaging Box Suite", isWide: true },
-        { img: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1000&q=85", caption: "Typography Specimen Sheets", isWide: false },
-        { img: "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=1000&q=85", caption: "Studio Design Workshop", isWide: false },
-        { img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=85", caption: "Mobile Shopping Interface", isWide: false }
+        { img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85", tag: "MONOGRAPH", title: "Lookbook Editorial Spread", desc: "Gold foil stamp & tactile uncoated cotton stock" },
+        { img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=85", tag: "PACKAGING", title: "Bespoke Packaging Suite", desc: "Custom structural rigid boxes & silk ribbons" },
+        { img: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1000&q=85", tag: "STATIONERY", title: "Blind Embossed Cards", desc: "Heavyweight 600gsm Colorplan duplex" },
+        { img: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1000&q=85", tag: "TEXTILE", title: "Monogram Silk Scarf", desc: "Screen-printed archival silk twill" },
+        { img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=85", tag: "ENVIRONMENTAL", title: "Paris Flagship Storefront", desc: "Cast brass letterforms & spatial signage" }
       ],
       deliverables: [
         "Brand Strategy & Positioning",
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
       quote: "The packaging ARGI created feels sacred in your hands. Our direct-to-consumer launch sold out within 48 hours purely based on the visual and sensory storytelling.",
       quoteAuthor: "Julian Mercer",
       quoteRole: "Master Perfumer & Co-Founder",
-      heroImage: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1600&q=85",
+      heroImage: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1600&q=85",
       heroCaption: "WEIGHTED FLACON SUITE & EMBOSSED ARCHIVAL BOXES",
       spreadImg1: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85",
       spreadCaption1: "01 / Recycled Cotton Box Shell with Organic Amber Glass Flacon",
@@ -96,14 +96,14 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       typeHint: "Instrument Serif + SFMono",
       typeSample: "“Sensory Architecture & Distilled Botanical Form.”",
-      interfaceImg: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=85",
+      interfaceImg: "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?auto=format&fit=crop&w=1400&q=85",
       browserUrl: "https://aurafragrance.co.uk/sensory-finder",
       gallery: [
-        { img: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1000&q=85", caption: "Formulation Notebooks & Identity System", isWide: false },
-        { img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1400&q=85", caption: "Digital Olfactory Discovery Engine", isWide: true },
-        { img: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=1000&q=85", caption: "Mobile Checkout Experience", isWide: false },
-        { img: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1000&q=85", caption: "Monogram Blind-Deboss Seals", isWide: false },
-        { img: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1000&q=85", caption: "Scent Catalog & Paper Specimen", isWide: false }
+        { img: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=85", tag: "FLACON ARCHIVE", title: "Heavyweight Amber Flacon", desc: "Solid glass base & laser-etched metal cap" },
+        { img: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=85", tag: "FORMULATION", title: "Botanical Scent Cards", desc: "Printed on heavy cotton rag paper" },
+        { img: "https://images.unsplash.com/photo-1608248597359-05d688cf41f8?auto=format&fit=crop&w=1000&q=85", tag: "LABORATORY", title: "Raw Extraction Glassware", desc: "Organic essence distillation protocols" },
+        { img: "https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=1000&q=85", tag: "MONOGRAM", title: "Tactile Wax Seal", desc: "Custom seal stamp for numbered batches" },
+        { img: "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?auto=format&fit=crop&w=1200&q=85", tag: "SPATIAL", title: "London Olfactory Chamber", desc: "Atmospheric sensory flagship installation" }
       ],
       deliverables: [
         "Flacon Structural 3D Design",
@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
       quote: "ARGI proved that sustainability does not mean boring brown paper. Our brand is bold, artistic, and completely unforgettable.",
       quoteAuthor: "Thandiwe Khumalo",
       quoteRole: "Founder & Head of Botanical R&D",
-      heroImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1600&q=85",
+      heroImage: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1600&q=85",
       heroCaption: "CIRCULAR MYCELIUM PACKAGING & BOTANIC IDENTITY",
       spreadImg1: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=1200&q=85",
       spreadCaption1: "01 / Recycled FSC Kraft Secondary Cartons & Aluminum Tubes",
@@ -149,14 +149,14 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       typeHint: "Instrument Serif + Inter Tight",
       typeSample: "“Living Flora & Circular Material Innovation.”",
-      interfaceImg: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=1400&q=85",
+      interfaceImg: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1400&q=85",
       browserUrl: "https://twygbotanic.com/products/restorative-serum",
       gallery: [
-        { img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1000&q=85", caption: "Botanical Illustration Silkscreen", isWide: false },
-        { img: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1400&q=85", caption: "Brand Guidelines & Material Guide", isWide: true },
-        { img: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1000&q=85", caption: "Custom Plant-Based Inks", isWide: false },
-        { img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=85", caption: "Interactive Subscription Funnel", isWide: false },
-        { img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=85", caption: "Packaging Unboxing Protocol", isWide: false }
+        { img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=85", tag: "MYCELIUM", title: "Compostable Box Shells", desc: "Grown agricultural mycelium structures" },
+        { img: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=1000&q=85", tag: "BOTANICAL", title: "Plant-Based Inks & Cards", desc: "100% post-consumer seed paper print" },
+        { img: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1000&q=85", tag: "CERAMIC", title: "Handmade Ceramic Jars", desc: "Refillable stoneware containers" },
+        { img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1000&q=85", tag: "MICROSCOPY", title: "Flora Cellular Macro", desc: "Brand imagery shot under darkfield lens" },
+        { img: "https://images.unsplash.com/photo-1463936575829-25148e1db1b8?auto=format&fit=crop&w=1200&q=85", tag: "RETAIL", title: "Greenhouse Flagship Space", desc: "Living plant wall retail interior" }
       ],
       deliverables: [
         "Complete Brand Identity Suite",
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
       quote: "ARGI translated our physical buildings into pure digital mass. Their spatial understanding of typography is unmatched.",
       quoteAuthor: "Hannes von Berg",
       quoteRole: "Principal Architect",
-      heroImage: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1600&q=85",
+      heroImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85",
       heroCaption: "CLOTH-BOUND MONOGRAPH & SPATIAL BLUEPRINT SUITE",
       spreadImg1: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=85",
       spreadCaption1: "01 / Cast-Aluminum Entrance Signage & Building Wayfinding",
@@ -202,14 +202,14 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       typeHint: "Inter + Instrument Serif",
       typeSample: "“Monumental Silence, Heavy Concrete & Pure Geometry.”",
-      interfaceImg: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=1400&q=85",
+      interfaceImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=85",
       browserUrl: "https://monolith-arch.ch/projects/alps-pavilion",
       gallery: [
-        { img: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1000&q=85", caption: "Architectural Business Cards", isWide: false },
-        { img: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1400&q=85", caption: "Editorial Monograph Spreads", isWide: true },
-        { img: "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=1000&q=85", caption: "Studio Model Workshop", isWide: false },
-        { img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=85", caption: "Interactive Blueprint Viewer", isWide: false },
-        { img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1000&q=85", caption: "Architectural Detail Archive", isWide: false }
+        { img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85", tag: "PUBLICATION", title: "Hardcover Monograph", desc: "Grey cloth binding with debossed foil" },
+        { img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=85", tag: "BLUEPRINTS", title: "Architectural Folios", desc: "A0 technical scale drawing sheets" },
+        { img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=85", tag: "SIGNAGE", title: "Anodized Steel Plaque", desc: "CNC-milled spatial wayfinding system" },
+        { img: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=1000&q=85", tag: "MATERIALS", title: "Concrete & Travertine", desc: "Tactile architectural material archive" },
+        { img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85", tag: "STUDIO", title: "Zurich Model Archive", desc: "Physical scale models & research space" }
       ],
       deliverables: [
         "Complete Studio Brand Identity",
@@ -241,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
       quote: "The visual presence of the festival was breathtaking. ARGI created an aesthetic aura that defined the entire Kyoto art season.",
       quoteAuthor: "Kenjiro Takahashi",
       quoteRole: "Festival Director",
-      heroImage: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1600&q=85",
+      heroImage: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1600&q=85",
       heroCaption: "SILKSCREEN POSTER SUITE & KINETIC TYPOGRAPHY",
       spreadImg1: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1200&q=85",
       spreadCaption1: "01 / Citywide Billboard Campaign in Gion & Kyoto Station",
@@ -255,14 +255,14 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       typeHint: "Instrument Serif + Kanji Mono",
       typeSample: "“Cinema of Light, Shadow & Fleeting Memory.”",
-      interfaceImg: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1400&q=85",
+      interfaceImg: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=85",
       browserUrl: "https://komorebicinema.jp/schedule",
       gallery: [
-        { img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1000&q=85", caption: "Screening Program Book", isWide: false },
-        { img: "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=1400&q=85", caption: "Silkscreen Printing Workshop", isWide: true },
-        { img: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1000&q=85", caption: "Official Festival Tote & Pins", isWide: false },
-        { img: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=1000&q=85", caption: "Mobile Ticket Wallet Integration", isWide: false },
-        { img: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1000&q=85", caption: "Cinema Poster Archive", isWide: false }
+        { img: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=85", tag: "SILKSCREEN", title: "A0 Festival Poster Series", desc: "Fluorescent vermilion & black screenprints" },
+        { img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1000&q=85", tag: "ACCREDITATION", title: "VIP Pass & Lanyards", desc: "Holographic foil on heavy matte plastic" },
+        { img: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=85", tag: "PROJECTION", title: "Kyoto Temple Renders", desc: "Outdoor spatial light mapping layouts" },
+        { img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1000&q=85", tag: "CINEMA PRINT", title: "35mm Archival Film Proofs", desc: "High-contrast grain photography" },
+        { img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=85", tag: "PAVILION", title: "Night Screening Stage", desc: "Historic temple courtyard screening hub" }
       ],
       deliverables: [
         "Festival Identity & Logo System",
@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
       quote: "ARGI Studio pushed our publication into a work of collectible art. Every single page feels alive, provocative, and razor sharp.",
       quoteAuthor: "Sienna Callow",
       quoteRole: "Editor-in-Chief",
-      heroImage: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1600&q=85",
+      heroImage: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1600&q=85",
       heroCaption: "HOLOGRAPHIC FOIL ISSUE COVER & EDITORIAL SPREADS",
       spreadImg1: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1200&q=85",
       spreadCaption1: "01 / Custom Display Serif Ligatures & Column Grids",
@@ -308,14 +308,14 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       typeHint: "Braids Serif + Inter Display",
       typeSample: "“Critical Culture, Avant-Garde Form & Printed Matter.”",
-      interfaceImg: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=1400&q=85",
+      interfaceImg: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1400&q=85",
       browserUrl: "https://braidsmagazine.com/issue-04",
       gallery: [
-        { img: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1000&q=85", caption: "Holographic Foil Test Prints", isWide: false },
-        { img: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1400&q=85", caption: "Archival Double Page Spreads", isWide: true },
-        { img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=85", caption: "Custom Slipcase Packaging", isWide: false },
-        { img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=85", caption: "Digital Reading Tablet Edition", isWide: false },
-        { img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1000&q=85", caption: "Global Stockist Poster Campaign", isWide: false }
+        { img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=85", tag: "HARDCOVER", title: "Holographic Foil Cover", desc: "Silver foil stamped on 400gsm duplex board" },
+        { img: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1000&q=85", tag: "TYPOGRAPHY", title: "Custom Ligature Spreads", desc: "Asymmetrical 12-column editorial grids" },
+        { img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1000&q=85", tag: "SLIPCASE", title: "Custom Archival Box", desc: "Rigid board slipcase with debossed spine" },
+        { img: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1000&q=85", tag: "ESSAYS", title: "Critical Theory Proofs", desc: "Uncoated Munken paper stock testing" },
+        { img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=85", tag: "EXHIBITION", title: "Launch Monograph Event", desc: "London gallery book signing & launch party" }
       ],
       deliverables: [
         "Complete Publication Art Direction",
@@ -463,13 +463,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const csBrowserUrl = document.getElementById("csBrowserUrl");
   if (csBrowserUrl) csBrowserUrl.textContent = currentProject.browserUrl;
 
-  // Populate Multi-Photo Gallery Mosaic
+  // Populate Curated Bento Grid
   const csGalleryMosaic = document.getElementById("csGalleryMosaic");
   if (csGalleryMosaic && currentProject.gallery) {
-    csGalleryMosaic.innerHTML = currentProject.gallery.map(item => `
-      <div class="mosaic-card ${item.isWide ? 'is-wide' : ''}" data-lightbox>
-        <img src="${item.img}" alt="${item.caption}" class="mosaic-img" />
-        <div class="mosaic-badge">${item.caption}</div>
+    csGalleryMosaic.innerHTML = currentProject.gallery.map((item, idx) => `
+      <div class="bento-tile" data-lightbox>
+        <img src="${item.img}" alt="${item.title || item.caption}" class="bento-img" />
+        <div class="bento-overlay">
+          <div class="bento-top-meta">
+            <span class="bento-tag">${item.tag || `ARCHIVE // 0${idx + 1}`}</span>
+            <div class="bento-zoom-icon">↗</div>
+          </div>
+          <div class="bento-bottom-info">
+            <h4 class="bento-title">${item.title || item.caption}</h4>
+            <span class="bento-desc">${item.desc || 'Physical Studio Artifact & Craft'}</span>
+          </div>
+        </div>
       </div>
     `).join("");
   }
@@ -645,7 +654,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[data-lightbox]").forEach(el => {
     el.addEventListener("click", () => {
       const img = el.querySelector("img");
-      const caption = el.querySelector(".spread-caption, .mosaic-badge")?.textContent || img?.alt || "";
+      const bentoTitle = el.querySelector(".bento-title")?.textContent;
+      const bentoDesc = el.querySelector(".bento-desc")?.textContent;
+      const spreadCaption = el.querySelector(".spread-caption")?.textContent;
+      const caption = bentoTitle ? `${bentoTitle} — ${bentoDesc}` : (spreadCaption || img?.alt || "");
       if (img && img.src) {
         openLightbox(img.src, caption);
       }

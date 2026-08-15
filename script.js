@@ -423,45 +423,52 @@ document.addEventListener("DOMContentLoaded", () => {
   const indexPortalImg = document.getElementById("indexPortalImg");
 
   if (indexRows.length && indexHoverPortal && indexPortalImg) {
-    let portalTargetX = -9999;
-    let portalTargetY = -9999;
-    let portalCurrentX = -9999;
-    let portalCurrentY = -9999;
-    let isTracking = false;
+    if (indexHoverPortal.parentElement !== document.body) {
+      document.body.appendChild(indexHoverPortal);
+    }
+
+    let targetX = -9999;
+    let targetY = -9999;
+    let currentX = -9999;
+    let currentY = -9999;
+    let isHovering = false;
+
+    const calcPosition = (clientX, clientY) => {
+      let x = clientX + 35;
+      let y = clientY - 120;
+      const portalW = 360;
+      const portalH = 250;
+
+      if (x + portalW > window.innerWidth - 20) {
+        x = clientX - portalW - 35;
+      }
+      if (y < 20) {
+        y = 20;
+      }
+      if (y + portalH > window.innerHeight - 20) {
+        y = window.innerHeight - portalH - 20;
+      }
+
+      return { x, y };
+    };
 
     window.addEventListener("mousemove", (e) => {
-      let posX = e.clientX + 35;
-      let posY = e.clientY - 120;
-
-      // Smart viewport bounds checking
-      if (posX + 360 > window.innerWidth) {
-        posX = e.clientX - 375;
-      }
-      if (posY < 20) {
-        posY = 20;
-      }
-      if (posY + 260 > window.innerHeight) {
-        posY = window.innerHeight - 270;
-      }
-
-      portalTargetX = posX;
-      portalTargetY = posY;
-
-      if (!isTracking) {
-        portalCurrentX = portalTargetX;
-        portalCurrentY = portalTargetY;
-        isTracking = true;
-      }
-    });
+      const pos = calcPosition(e.clientX, e.clientY);
+      targetX = pos.x;
+      targetY = pos.y;
+    }, { passive: true });
 
     const updatePortalPosition = () => {
-      if (isTracking && portalTargetX !== -9999) {
-        portalCurrentX += (portalTargetX - portalCurrentX) * 0.18;
-        portalCurrentY += (portalTargetY - portalCurrentY) * 0.18;
-
-        indexHoverPortal.style.transform = `translate3d(${portalCurrentX}px, ${portalCurrentY}px, 0)`;
+      if (isHovering && targetX !== -9999) {
+        if (currentX === -9999) {
+          currentX = targetX;
+          currentY = targetY;
+        } else {
+          currentX += (targetX - currentX) * 0.22;
+          currentY += (targetY - currentY) * 0.22;
+        }
+        indexHoverPortal.style.transform = `translate3d(${currentX.toFixed(1)}px, ${currentY.toFixed(1)}px, 0)`;
       }
-
       requestAnimationFrame(updatePortalPosition);
     };
     requestAnimationFrame(updatePortalPosition);
@@ -471,17 +478,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const previewUrl = row.getAttribute("data-preview");
         if (previewUrl) {
           indexPortalImg.src = previewUrl;
-          indexHoverPortal.classList.add("is-visible");
 
-          if (!isTracking) {
-            portalCurrentX = e.clientX + 35;
-            portalCurrentY = e.clientY - 120;
-            isTracking = true;
-          }
+          const pos = calcPosition(e.clientX, e.clientY);
+          currentX = pos.x;
+          currentY = pos.y;
+          targetX = pos.x;
+          targetY = pos.y;
+
+          indexHoverPortal.style.transform = `translate3d(${currentX.toFixed(1)}px, ${currentY.toFixed(1)}px, 0)`;
+          indexHoverPortal.classList.add("is-visible");
+          isHovering = true;
         }
       });
 
       row.addEventListener("mouseleave", () => {
+        isHovering = false;
         indexHoverPortal.classList.remove("is-visible");
       });
     });

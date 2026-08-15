@@ -559,11 +559,6 @@
 
           </div>
 
-          <!-- FLOATING HOVER PREVIEW CURSOR PORTAL (FOR INDEX LIST) -->
-          <div class="index-floating-preview" id="indexHoverPortal">
-            <img src="" alt="Project Preview" id="indexPortalImg" />
-          </div>
-
           <!-- MOBILE / TABLET: SEE MORE PROJECTS TOGGLE (LIMIT 3 BY DEFAULT) -->
           <div class="portfolio-see-more-wrap" id="portfolioSeeMoreWrap">
             <button type="button" class="btn btn-secondary-dark btn-see-more" id="seeMoreProjectsBtn" aria-expanded="false">
@@ -1172,6 +1167,11 @@
       <path d="M12 19V5M5 12l7-7 7 7"/>
     </svg>
   </button>
+
+  <!-- FLOATING HOVER PREVIEW CURSOR PORTAL (FOR INDEX LIST - BODY LEVEL) -->
+  <div class="index-floating-preview" id="indexHoverPortal" aria-hidden="true">
+    <img src="" alt="Project Preview" id="indexPortalImg" />
+  </div>
 
   <!-- JavaScript -->
   <script src="script.js"></script>

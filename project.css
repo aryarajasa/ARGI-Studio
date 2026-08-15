@@ -255,21 +255,26 @@
 }
 
 /* ==========================================================================
-   2. HERO VISUAL SHOWCASE
+   2. FULL-BLEED 100VW HERO VISUAL SHOWCASE
    ========================================================================== */
 .cs-hero-media-wrap {
+  width: 100%;
   padding-bottom: 6rem;
+  overflow: hidden;
 }
 
 .cs-hero-image-frame {
   position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: 720px;
+  width: 100vw;
+  max-width: 100%;
+  height: clamp(480px, 80vh, 900px);
+  aspect-ratio: auto;
   overflow: hidden;
   background: #0c0d0e;
-  border-radius: var(--radius-lg);
+  border: none;
+  border-radius: 0px !important;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+  cursor: zoom-in;
 }
 
 .cs-hero-img {
@@ -277,30 +282,12 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 0px !important;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cs-hero-image-frame:hover .cs-hero-img {
   transform: scale(1.02);
-}
-
-.cs-media-overlay-badge {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 1.5rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(18, 19, 20, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 0.45rem 1rem;
-  border-radius: var(--radius-full);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.1em;
-  color: #ffffff;
 }
 
 .media-badge-icon {

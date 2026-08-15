@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
       quote: "ARGI Studio pushed our publication into a work of collectible art. Every single page feels alive, provocative, and razor sharp.",
       quoteAuthor: "Sienna Callow",
       quoteRole: "Editor-in-Chief",
-      heroImage: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1600&q=85",
+      heroImage: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=2000&q=85",
       heroCaption: "HOLOGRAPHIC FOIL ISSUE COVER & EDITORIAL SPREADS",
       spreadImg1: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1200&q=85",
       spreadCaption1: "01 / Custom Display Serif Ligatures & Column Grids",

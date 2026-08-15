@@ -6,8 +6,9 @@
   <title>Studio Journal — ARGI Studio | Dispatches, Exhibitions &amp; Critical Writings</title>
   <meta name="description" content="Read essays, critical writings, publication releases, and design discourse from ARGI Studio, an independent creative atelier in Bali, Indonesia." />
   
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <!-- Favicon (Adaptive Light/Dark SVG Monogram) -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" id="faviconTag" />
+  <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
 
   <!-- Typography: Google Fonts (Instrument Serif & Inter) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,43 +24,43 @@
   <!-- Top Reading Progress Indicator -->
   <div class="reading-progress-bar" id="readingProgressBar"></div>
 
-  <div class="page-wrapper">
-    
-    <!-- TOP FLOATING NAVBAR (MATCHING LANDING PAGE) -->
-    <header class="navbar-wrapper" id="navbar">
-      <div class="nav-container">
-        
-        <!-- Left: Brand Logo -->
-        <a href="index.html#top" class="nav-brand" aria-label="ARGI Studio Home">
-          <img src="assets/logo.png" alt="ARGI Studio Logo" class="nav-brand-logo" />
+  <!-- TOP FLOATING NAVBAR (BRAND LOGO LEFT + ACTIVE PILL CENTER + CTA RIGHT) -->
+  <header class="navbar-wrapper" id="navbar">
+    <div class="nav-container">
+      
+      <!-- Left: Brand Logo -->
+      <a href="index.html#top" class="nav-brand" aria-label="ARGI Studio Home">
+        <img src="assets/logo.png" alt="ARGI Studio Logo" class="nav-brand-logo" />
+      </a>
+
+      <!-- Center: Floating Pill Navigation -->
+      <nav class="nav-pill" id="navMenu">
+        <a href="index.html#mission" class="nav-link">Mission</a>
+        <a href="index.html#process" class="nav-link">Process</a>
+        <a href="index.html#projects" class="nav-link">Selected Work</a>
+        <a href="index.html#services" class="nav-link">Services</a>
+        <a href="index.html#journal" class="nav-link is-active">Journal</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Right: Action CTA & Mobile Toggle -->
+      <div class="nav-actions">
+        <a href="index.html#contact" class="btn btn-primary nav-cta" id="navCtaBtn">
+          <span>Commission Work</span>
+          <svg class="btn-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M3.33334 8H12.6667M12.6667 8L8.66668 4M12.6667 8L8.66668 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
-
-        <!-- Center: Floating Pill Navigation -->
-        <nav class="nav-pill" id="navMenu">
-          <a href="index.html#mission" class="nav-link">Mission</a>
-          <a href="index.html#process" class="nav-link">Process</a>
-          <a href="index.html#projects" class="nav-link">Selected Work</a>
-          <a href="index.html#services" class="nav-link">Services</a>
-          <a href="index.html#journal" class="nav-link is-active">Journal</a>
-          <a href="index.html#contact" class="nav-link">Contact</a>
-        </nav>
-
-        <!-- Right: Action CTA & Mobile Toggle -->
-        <div class="nav-actions">
-          <a href="index.html#contact" class="btn btn-primary nav-cta" id="navCtaBtn">
-            <span>Commission Work</span>
-            <svg class="btn-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none">
-              <path d="M3.33334 8H12.6667M12.6667 8L8.66668 4M12.6667 8L8.66668 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-          <button class="nav-toggle" id="navToggle" aria-label="Toggle mobile menu" aria-expanded="false">
-            <span class="line line-top"></span>
-            <span class="line line-bottom"></span>
-          </button>
-        </div>
-
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle mobile menu" aria-expanded="false">
+          <span class="line line-top"></span>
+          <span class="line line-bottom"></span>
+        </button>
       </div>
-    </header>
+
+    </div>
+  </header>
+
+  <div class="page-wrapper">
 
     <!-- MAIN ARTICLE CONTAINER -->
     <main class="article-main">
@@ -413,18 +414,20 @@
 
         <!-- Bottom Sub-Row: Real Time in Bali, Indonesia -->
         <div class="footer-bottom-bar">
-          <div class="footer-copyright">
-            <span>© 2026 ARGI Studio. All Rights Reserved.</span>
-          </div>
-          
-          <div class="footer-clock-box">
-            <span class="clock-indicator-dot"></span>
-            <span class="clock-label">ATELIER LOCAL TIME (BALI, ID):</span>
-            <span class="clock-time-val" id="baliLiveTime">12:00:00 WITA</span>
+          <div class="footer-legals">
+            <span class="copyright-text">© 2026 ARGI Studio. All rights reserved.</span>
+            <a href="#" class="legal-link">Colophon</a>
+            <a href="#" class="legal-link">Privacy Policy</a>
           </div>
 
-          <div class="footer-location-tag">
-            <span>8.4095° S, 115.1889° E</span>
+          <!-- Real-Time Bali Location & Clock -->
+          <div class="footer-utilities">
+            <div class="footer-location-badge">
+              <span class="location-pulse-dot"></span>
+              <span class="location-city">Bali, Indonesia</span>
+              <span class="utility-dot">•</span>
+              <span class="location-clock" id="baliLiveTime">12:00:00 WITA (UTC+8)</span>
+            </div>
           </div>
         </div>
 
@@ -444,6 +447,13 @@
       <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
   </div>
+
+  <!-- Floating Mobile Up Arrow Button -->
+  <button type="button" class="mobile-scroll-top-btn" id="mobileScrollTopBtn" aria-label="Scroll back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </button>
 
   <!-- JavaScript -->
   <script src="article.js"></script>

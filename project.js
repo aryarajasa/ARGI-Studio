@@ -691,11 +691,32 @@ document.addEventListener("DOMContentLoaded", () => {
       second: "2-digit",
       hour12: false
     };
-    footerClockEl.textContent = `${new Intl.DateTimeFormat("en-GB", options).format(now)} WITA`;
+    const timeString = new Intl.DateTimeFormat("en-GB", options).format(now);
+    footerClockEl.textContent = `${timeString} WITA (UTC+8)`;
   };
 
   updateClock();
   setInterval(updateClock, 1000);
+
+  // Adaptive Dark/Light Mode Favicon Switcher (Based on OS Preference)
+  const initFaviconThemeSwitcher = () => {
+    const faviconTag = document.getElementById("faviconTag");
+    if (!faviconTag) return;
+
+    const darkModeMatcher = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateFavicon = (e) => {
+      if (e.matches) {
+        faviconTag.href = "assets/favicon-dark.svg";
+      } else {
+        faviconTag.href = "assets/favicon.svg";
+      }
+    };
+
+    darkModeMatcher.addEventListener("change", updateFavicon);
+    updateFavicon(darkModeMatcher);
+  };
+
+  initFaviconThemeSwitcher();
 
   // Keyboard Arrow Navigation (Left = Previous, Right = Next)
   document.addEventListener("keydown", (e) => {

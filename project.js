@@ -523,6 +523,55 @@ document.addEventListener("DOMContentLoaded", () => {
   // 3. INTERACTIVE FEATURES & INTERACTIONS
   // =========================================================================
 
+  // Mobile Nav Drawer Toggle
+  const navMenu = document.getElementById("navMenu");
+  const navToggle = document.getElementById("navToggle");
+  const navLinks = document.querySelectorAll(".nav-pill .nav-link");
+
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", () => {
+      const isOpen = navMenu.classList.toggle("is-open");
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      const top = navToggle.querySelector(".line-top");
+      const bottom = navToggle.querySelector(".line-bottom");
+      if (top && bottom) {
+        if (isOpen) {
+          top.style.transform = "translateY(3.5px) rotate(45deg)";
+          bottom.style.transform = "translateY(-3.5px) rotate(-45deg)";
+        } else {
+          top.style.transform = "none";
+          bottom.style.transform = "none";
+        }
+      }
+    });
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        navMenu.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        const top = navToggle.querySelector(".line-top");
+        const bottom = navToggle.querySelector(".line-bottom");
+        if (top && bottom) {
+          top.style.transform = "none";
+          bottom.style.transform = "none";
+        }
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      if (navMenu.classList.contains("is-open") && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+        navMenu.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        const top = navToggle.querySelector(".line-top");
+        const bottom = navToggle.querySelector(".line-bottom");
+        if (top && bottom) {
+          top.style.transform = "none";
+          bottom.style.transform = "none";
+        }
+      }
+    });
+  }
+
   // Navbar Project Switcher Dropdown Toggle
   const navProjectPill = document.getElementById("navProjectPill");
   const projectPillHeader = document.getElementById("projectPillHeader");

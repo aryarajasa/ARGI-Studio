@@ -32,13 +32,13 @@
   --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
-  /* Spacing & Sharp 0px Architectural Radii (Except Buttons) */
+  /* Spacing & Subtle 2-3px Radii for Boxes / Cards (Except Images & Visuals) */
   --container-max-width: 1200px;
   --container-padding: 2rem;
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 3px;
+  --radius-xl: 3px;
   --radius-full: 9999px; /* Reserved for buttons, pills & circular CTAs */
 
   /* Transitions */

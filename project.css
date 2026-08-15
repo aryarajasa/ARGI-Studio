@@ -9,6 +9,10 @@
   min-height: 100vh;
 }
 
+.project-case-study-body .page-wrapper {
+  opacity: 1 !important;
+}
+
 .case-study-main {
   padding-top: 6.5rem;
 }

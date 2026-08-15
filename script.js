@@ -12,71 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const darkSection = document.querySelector('[data-theme="dark"]');
   const sections = document.querySelectorAll("section[id]");
 
-  // =========================================================================
-  // 0. PRIVATE ATELIER ACCESS PASSCODE GATE (CLIENT-SIDE LOCK)
-  // =========================================================================
-  const STUDIO_PASSKEYS = ["argi2026", "argi", "bali2026"]; // Configurable studio passcodes
-
-  const initPrivateAccessGate = () => {
-    const gate = document.getElementById("privateAccessGate");
-    const form = document.getElementById("privateGateForm");
-    const input = document.getElementById("gatePasscodeInput");
-    const statusMsg = document.getElementById("gateStatusMsg");
-    const gateCard = gate ? gate.querySelector(".private-gate-card") : null;
-
-    if (!gate) {
-      initSitePreloader();
-      return;
-    }
-
-    const isAlreadyAuthenticated = sessionStorage.getItem("argi_atelier_auth") === "granted";
-
-    if (isAlreadyAuthenticated) {
-      gate.classList.add("is-unlocked");
-      initSitePreloader();
-      return;
-    }
-
-    // Auto-focus input on initial visit
-    setTimeout(() => {
-      if (input) input.focus();
-    }, 300);
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const enteredKey = (input.value || "").trim().toLowerCase();
-
-      if (STUDIO_PASSKEYS.includes(enteredKey)) {
-        // Access Granted
-        sessionStorage.setItem("argi_atelier_auth", "granted");
-        if (statusMsg) {
-          statusMsg.className = "gate-status-msg is-success";
-          statusMsg.textContent = "Passkey Verified — Opening Atelier...";
-        }
-
-        setTimeout(() => {
-          gate.classList.add("is-unlocked");
-          initSitePreloader();
-        }, 350);
-      } else {
-        // Access Denied
-        if (statusMsg) {
-          statusMsg.className = "gate-status-msg";
-          statusMsg.textContent = "Invalid passkey. Please try again.";
-        }
-        if (gateCard) {
-          gateCard.classList.remove("shake-error");
-          void gateCard.offsetWidth; // Force reflow
-          gateCard.classList.add("shake-error");
-        }
-        if (input) {
-          input.value = "";
-          input.focus();
-        }
-      }
-    });
-  };
-
   // 1. AUTHENTIC ASCII LOGO RASTER MATRIX & SEAMLESS MORPH REVEAL
   const initSitePreloader = () => {
     const preloader = document.getElementById("sitePreloader");
@@ -289,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(tick);
   };
 
-  initPrivateAccessGate();
+  initSitePreloader();
 
   // 2. REAL-TIME BALI, INDONESIA CLOCK (UTC+8 / WITA) IN FOOTER
   const initBaliClock = () => {

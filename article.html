@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Studio Journal — ARGI Studio | Dispatches, Exhibitions &amp; Critical Writings</title>
+  <meta name="description" content="Read essays, critical writings, publication releases, and design discourse from ARGI Studio, an independent creative atelier in Bali, Indonesia." />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <!-- Typography: Google Fonts (Instrument Serif & Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="article.css" />
+</head>
+<body class="article-detail-body">
+
+  <!-- Top Reading Progress Indicator -->
+  <div class="reading-progress-bar" id="readingProgressBar"></div>
+
+  <div class="page-wrapper">
+    
+    <!-- TOP FLOATING NAVBAR (MATCHING LANDING PAGE) -->
+    <header class="navbar-wrapper" id="navbar">
+      <div class="nav-container">
+        
+        <!-- Left: Brand Logo -->
+        <a href="index.html#top" class="nav-brand" aria-label="ARGI Studio Home">
+          <img src="assets/logo.png" alt="ARGI Studio Logo" class="nav-brand-logo" />
+        </a>
+
+        <!-- Center: Floating Pill Navigation -->
+        <nav class="nav-pill" id="navMenu">
+          <a href="index.html#mission" class="nav-link">Mission</a>
+          <a href="index.html#process" class="nav-link">Process</a>
+          <a href="index.html#projects" class="nav-link">Selected Work</a>
+          <a href="index.html#services" class="nav-link">Services</a>
+          <a href="index.html#journal" class="nav-link is-active">Journal</a>
+          <a href="index.html#contact" class="nav-link">Contact</a>
+        </nav>
+
+        <!-- Right: Action CTA & Mobile Toggle -->
+        <div class="nav-actions">
+          <a href="index.html#contact" class="btn btn-primary nav-cta" id="navCtaBtn">
+            <span>Commission Work</span>
+            <svg class="btn-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M3.33334 8H12.6667M12.6667 8L8.66668 4M12.6667 8L8.66668 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle mobile menu" aria-expanded="false">
+            <span class="line line-top"></span>
+            <span class="line line-bottom"></span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- MAIN ARTICLE CONTAINER -->
+    <main class="article-main">
+
+      <!-- 1. ARTICLE HERO HEADER & METADATA -->
+      <section class="article-hero-section">
+        <div class="container-medium">
+          
+          <!-- Back Link Breadcrumb & Interactive Article Switcher -->
+          <div class="article-breadcrumb-row">
+            <a href="index.html#journal" class="article-back-link">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M12.6667 8H3.33334M3.33334 8L7.33334 4M3.33334 8L7.33334 12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Studio Journal</span>
+            </a>
+
+            <!-- Article Switcher Pill -->
+            <div class="article-switcher-pill" id="navArticlePill">
+              <div class="article-pill-header" id="articlePillHeader">
+                <span class="article-pill-dot"></span>
+                <span class="article-pill-text" id="navCurrentArticleName">01 / TOKYO ART BOOK FAIR</span>
+                <svg class="article-pill-chevron" width="12" height="12" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+
+              <!-- Dropdown Switcher Menu -->
+              <div class="article-switcher-dropdown" id="articleSwitcherDropdown">
+                <div class="dropdown-header">ALL DISPATCHES (4)</div>
+                <a href="article.html?id=01" class="dropdown-item" data-id="01">
+                  <span class="d-num">01</span>
+                  <span class="d-title">ARGI Monograph Vol. 02 Release</span>
+                  <span class="d-cat">Publication</span>
+                </a>
+                <a href="article.html?id=02" class="dropdown-item" data-id="02">
+                  <span class="d-num">02</span>
+                  <span class="d-title">Studio of the Month by Awwwards</span>
+                  <span class="d-cat">Honor</span>
+                </a>
+                <a href="article.html?id=03" class="dropdown-item" data-id="03">
+                  <span class="d-num">03</span>
+                  <span class="d-title">Sensory Identity for Milan Design Week</span>
+                  <span class="d-cat">Exhibition</span>
+                </a>
+                <a href="article.html?id=04" class="dropdown-item" data-id="04">
+                  <span class="d-num">04</span>
+                  <span class="d-title">Tactile Luxury vs Synthetic Noise</span>
+                  <span class="d-cat">Critical Essay</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category Pill & Read Meta -->
+          <div class="article-category-row">
+            <span class="article-category-tag" id="articleCategoryTag">Publication &amp; Print Matter</span>
+            <span class="article-meta-divider">•</span>
+            <span class="article-date-text" id="articleDateText">February 14, 2026</span>
+            <span class="article-meta-divider">•</span>
+            <span class="article-read-time" id="articleReadTime">5 Min Read</span>
+          </div>
+
+          <!-- Main Article Title -->
+          <h1 class="article-main-title" id="articleMainTitle">
+            ARGI Studio Monograph Vol. 02 Released at Tokyo Art Book Fair
+          </h1>
+
+          <!-- Article Lead Paragraph -->
+          <p class="article-lead-text" id="articleLeadText">
+            An in-depth retrospective on tactile materiality, Japanese bookbinding traditions, and 380 pages of studio archive printed on FSC-certified cotton paper.
+          </p>
+
+          <!-- Author Byline Bar -->
+          <div class="article-author-bar">
+            <div class="author-avatar-frame">
+              <img src="assets/logo.png" alt="ARGI Studio Author" class="author-avatar-img" id="articleAuthorAvatar" />
+            </div>
+            <div class="author-info">
+              <span class="author-name" id="articleAuthorName">Arya Rajasa</span>
+              <span class="author-role" id="articleAuthorRole">Founder &amp; Design Director • ARGI Studio</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 2. FULL-BLEED 100VW ARTICLE FEATURE IMAGE -->
+      <section class="article-feature-media-wrap">
+        <div class="article-feature-image-frame" id="articleFeatureFrame" data-lightbox>
+          <img src="" alt="Article Feature Photography" class="article-feature-img" id="articleFeatureImg" />
+        </div>
+      </section>
+
+      <!-- 3. EDITORIAL ARTICLE BODY (2-COLUMN READING LAYOUT) -->
+      <section class="article-content-section">
+        <div class="container-medium">
+          <div class="article-content-grid">
+            
+            <!-- Left Sticky Column: Table of Contents & Share -->
+            <aside class="article-sticky-sidebar">
+              
+              <div class="sidebar-box">
+                <span class="sidebar-label">TABLE OF CONTENTS</span>
+                <nav class="article-toc-nav" id="articleTocNav">
+                  <!-- Generated dynamically via JS -->
+                </nav>
+              </div>
+
+              <div class="sidebar-box sidebar-share-box">
+                <span class="sidebar-label">SHARE DISPATCH</span>
+                <div class="share-buttons-row">
+                  <button type="button" class="share-action-btn" id="shareCopyLinkBtn" title="Copy Link to Clipboard">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                    <span id="copyLinkText">Copy Link</span>
+                  </button>
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="share-action-btn" id="shareTwitterBtn" title="Share on X">
+                    <svg width="13" height="13" viewBox="0 0 20 19" fill="currentColor">
+                      <path d="M15.7508 0.449219H18.8175L12.1175 8.10755L20 18.5267H13.8283L8.995 12.2067L3.46333 18.5267H0.395L7.56167 10.3351L0 0.450052H6.32833L10.6975 6.22672L15.7508 0.449219ZM14.675 16.6917H16.3742L5.405 2.18839H3.58167L14.675 16.6917Z"/>
+                    </svg>
+                    <span>Post</span>
+                  </a>
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="share-action-btn" id="shareLinkedinBtn" title="Share on LinkedIn">
+                    <svg width="14" height="14" viewBox="0 0 20 21" fill="currentColor">
+                      <path d="M17.7773 0.488281C19.0046 0.488281 20 1.48364 20 2.71094V18.2656C20 19.4929 19.0046 20.4883 17.7773 20.4883H2.22266C0.995357 20.4883 0 19.4929 0 18.2656V2.71094C0 1.48364 0.995357 0.488281 2.22266 0.488281H17.7773ZM3.06641 17.71H6.04883V8.08105H3.06641V17.71ZM13.7197 7.78613C11.6763 7.78613 10.8164 9.37793 10.8164 9.37793V8.08105H7.95605V17.71H10.8164V12.6553C10.8164 11.3009 11.4395 10.4952 12.6328 10.4951C13.7298 10.4951 14.2568 11.2693 14.2568 12.6553V17.71H17.2246V11.6133C17.2246 9.03375 15.7621 7.78621 13.7197 7.78613ZM4.54395 3.26562C3.5697 3.26562 2.78027 4.06168 2.78027 5.04297C2.7804 6.02415 3.56978 6.81934 4.54395 6.81934C5.51798 6.81918 6.30651 6.02406 6.30664 5.04297C6.30664 4.06177 5.51806 3.26578 4.54395 3.26562Z"/>
+                    </svg>
+                    <span>Share</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Author Box -->
+              <div class="sidebar-box sidebar-bio-box">
+                <span class="sidebar-label">ABOUT ARGI STUDIO</span>
+                <p class="sidebar-bio-text">
+                  An independent creative atelier directing progressive visual identities, tactile publications, and resonant digital artifacts from Bali, Indonesia.
+                </p>
+                <a href="index.html#contact" class="sidebar-commission-link">Commission a project ↗</a>
+              </div>
+
+            </aside>
+
+            <!-- Right Main Reading Stream -->
+            <div class="article-essay-body" id="articleEssayBody">
+              <!-- Content rendered dynamically via JS -->
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. NEXT ARTICLE CALLOUT CARD -->
+      <section class="next-article-section">
+        <div class="container-medium">
+          <a href="article.html?id=02" class="next-article-card" id="nextArticleCard">
+            <div class="next-article-header">
+              <span class="next-label">NEXT DISPATCH</span>
+              <span class="next-article-id" id="nextArticleId">02</span>
+            </div>
+            
+            <div class="next-action-row">
+              <div>
+                <h3 class="next-article-title" id="nextArticleTitle">
+                  Recognized as Studio of the Month by Awwwards &amp; FWA
+                </h3>
+                <span class="next-article-cat" id="nextArticleCat">Studio Honors &amp; Philosophy</span>
+              </div>
+              <div class="next-arrow-circle">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- STANDARD SITE FOOTER (1:1 MATCHING LANDING PAGE) -->
+    <footer class="site-footer">
+      <div class="container-medium">
+        
+        <!-- Main Footer Grid -->
+        <div class="footer-main-grid">
+          
+          <!-- Brand & Bio Column -->
+          <div class="footer-brand-col">
+            <a href="index.html#top">
+              <img src="assets/logo.png" alt="ARGI Studio Logo" class="footer-brand-logo" />
+            </a>
+            <h4 class="footer-brand-title">Independent Creative Atelier</h4>
+            <p class="footer-brand-desc">Directing progressive visual languages, bespoke identities, and resonant digital artifacts from Bali, Indonesia.</p>
+            
+            <!-- Social Icons -->
+            <div class="footer-social-icons">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-circle-btn" aria-label="Instagram">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="social-circle-btn" aria-label="X">
+                <svg width="14" height="14" viewBox="0 0 20 19" fill="currentColor">
+                  <path d="M15.7508 0.449219H18.8175L12.1175 8.10755L20 18.5267H13.8283L8.995 12.2067L3.46333 18.5267H0.395L7.56167 10.3351L0 0.450052H6.32833L10.6975 6.22672L15.7508 0.449219ZM14.675 16.6917H16.3742L5.405 2.18839H3.58167L14.675 16.6917Z"/>
+                </svg>
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-circle-btn" aria-label="LinkedIn">
+                <svg width="14" height="14" viewBox="0 0 20 21" fill="currentColor">
+                  <path d="M17.7773 0.488281C19.0046 0.488281 20 1.48364 20 2.71094V18.2656C20 19.4929 19.0046 20.4883 17.7773 20.4883H2.22266C0.995357 20.4883 0 19.4929 0 18.2656V2.71094C0 1.48364 0.995357 0.488281 2.22266 0.488281H17.7773ZM3.06641 17.71H6.04883V8.08105H3.06641V17.71ZM13.7197 7.78613C11.6763 7.78613 10.8164 9.37793 10.8164 9.37793V8.08105H7.95605V17.71H10.8164V12.6553C10.8164 11.3009 11.4395 10.4952 12.6328 10.4951C13.7298 10.4951 14.2568 11.2693 14.2568 12.6553V17.71H17.2246V11.6133C17.2246 9.03375 15.7621 7.78621 13.7197 7.78613ZM4.54395 3.26562C3.5697 3.26562 2.78027 4.06168 2.78027 5.04297C2.7804 6.02415 3.56978 6.81934 4.54395 6.81934C5.51798 6.81918 6.30651 6.02406 6.30664 5.04297C6.30664 4.06177 5.51806 3.26578 4.54395 3.26562Z"/>
+                </svg>
+              </a>
+              <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="social-circle-btn" aria-label="Behance">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-4.108 0-5.625-3.08-5.625-5.918 0-3.328 1.954-6.082 5.642-6.082 3.652 0 5.166 2.684 5.166 5.627 0 .506-.057 1.055-.078 1.234h-8.081c.074 1.83 1.258 3.255 3.328 3.255 1.574 0 2.457-.693 2.871-1.637l1.878.521zm-7.986-3.834h5.276c-.074-1.523-.974-2.584-2.585-2.584-1.61 0-2.593 1.03-2.691 2.584zm-10.74 6.834h-5v-16h6.059c3.923 0 5.941 1.764 5.941 4.791 0 1.768-.888 3.218-2.399 3.905 1.865.65 2.899 2.274 2.899 4.397 0 3.513-2.615 4.907-7.5 4.907zm-2.091-9.619h2.955c1.785 0 3.004-.619 3.004-2.128 0-1.464-1.129-2.008-2.766-2.008h-3.193v4.136zm0 2.235v4.981h3.336c2.051 0 3.284-.668 3.284-2.428 0-1.896-1.373-2.553-3.359-2.553h-3.261z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Col 1: Navigation -->
+          <div class="footer-links-col">
+            <h5 class="footer-col-title">Navigation</h5>
+            <ul class="footer-links-list">
+              <li><a href="index.html#mission" class="footer-menu-link">About Atelier</a></li>
+              <li><a href="index.html#projects" class="footer-menu-link">Selected Work</a></li>
+              <li><a href="index.html#process" class="footer-menu-link">Methodology</a></li>
+              <li><a href="index.html#services" class="footer-menu-link">Studio Services</a></li>
+              <li><a href="index.html#journal" class="footer-menu-link">Studio Journal</a></li>
+              <li><a href="index.html#contact" class="footer-menu-link">Commission Form</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 2: Creative Disciplines -->
+          <div class="footer-links-col">
+            <h5 class="footer-col-title">Services</h5>
+            <ul class="footer-links-list">
+              <li><a href="index.html#services" class="footer-menu-link">Brand Identity Design</a></li>
+              <li><a href="index.html#services" class="footer-menu-link">Web Design &amp; Development</a></li>
+              <li><a href="index.html#services" class="footer-menu-link">Social Media &amp; Content</a></li>
+              <li><a href="index.html#services" class="footer-menu-link">Graphic Design &amp; Print</a></li>
+              <li><a href="index.html#services" class="footer-menu-link">Packaging Design</a></li>
+              <li><a href="index.html#journal" class="footer-menu-link">Exhibitions &amp; Books</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: From the Atelier -->
+          <div class="footer-links-col">
+            <h5 class="footer-col-title">Selected Archive</h5>
+            <ul class="footer-links-list">
+              <li><a href="project.html?id=01" class="footer-menu-link">Vivien's Haute Couture</a></li>
+              <li><a href="project.html?id=02" class="footer-menu-link">Aura Fragrance Studio</a></li>
+              <li><a href="project.html?id=03" class="footer-menu-link">Twyg Botanic Form</a></li>
+              <li><a href="project.html?id=04" class="footer-menu-link">Monolith Architecture</a></li>
+              <li><a href="project.html?id=05" class="footer-menu-link">Komorebi Cinema Festival</a></li>
+              <li><a href="project.html?id=06" class="footer-menu-link">Braids Magazine Issue 04</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Bottom Sub-Row: Real Time in Bali, Indonesia -->
+        <div class="footer-bottom-bar">
+          <div class="footer-copyright">
+            <span>© 2026 ARGI Studio. All Rights Reserved.</span>
+          </div>
+          
+          <div class="footer-clock-box">
+            <span class="clock-indicator-dot"></span>
+            <span class="clock-label">ATELIER LOCAL TIME (BALI, ID):</span>
+            <span class="clock-time-val" id="baliLiveTime">12:00:00 WITA</span>
+          </div>
+
+          <div class="footer-location-tag">
+            <span>8.4095° S, 115.1889° E</span>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- LIGHTBOX MODAL FOR FULL-RESOLUTION INSPECTION -->
+  <div class="lightbox-modal" id="lightboxModal" aria-hidden="true" role="dialog">
+    <div class="lightbox-overlay" id="lightboxOverlay"></div>
+    <div class="lightbox-container">
+      <button type="button" class="lightbox-close-btn" id="lightboxCloseBtn" aria-label="Close image inspection">✕</button>
+      <div class="lightbox-img-wrap">
+        <img src="" alt="Full resolution inspection" class="lightbox-img" id="lightboxImg" />
+      </div>
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="article.js"></script>
+</body>
+</html>

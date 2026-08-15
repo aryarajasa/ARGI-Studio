@@ -1048,7 +1048,7 @@ ${clientName}`
 
           setTimeout(() => {
             window.location.href = anchor.href;
-          }, 200);
+          }, 160);
         }
       } catch (err) {
         // Fallback for relative or unsupported URLs

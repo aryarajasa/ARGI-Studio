@@ -124,31 +124,28 @@ button {
 }
 
 /* ==========================================================================
-   EDITORIAL PAGE TRANSITION (SLIGHT BLUR LOAD ON PAGE SWITCH)
+   EDITORIAL PAGE TRANSITION (SLIGHT CRISP FADE ON PAGE SWITCH)
    ========================================================================== */
-@keyframes pageBlurIn {
+@keyframes pageFadeIn {
   0% {
     opacity: 0;
-    filter: blur(10px);
-    transform: translateY(6px);
+    transform: translateY(4px);
   }
   100% {
     opacity: 1;
-    filter: blur(0px);
     transform: translateY(0);
   }
 }
 
 .page-wrapper {
-  animation: pageBlurIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: opacity, filter, transform;
+  animation: pageFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
 }
 
 .page-wrapper.is-leaving {
   opacity: 0 !important;
-  filter: blur(10px) !important;
-  transform: translateY(-6px) !important;
-  transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), filter 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transform: translateY(-3px) !important;
+  transition: opacity 0.18s ease, transform 0.18s ease !important;
   pointer-events: none;
 }
 

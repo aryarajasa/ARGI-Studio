@@ -42,8 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       typeHint: "Instrument Serif + Inter",
       typeSample: "“Architecture of Elegance & Contemporary Restraint.”",
-      interfaceImg: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1400&q=85",
-      browserUrl: "https://viviens-couture.fr/flagship",
+      interfaceImg: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=85",
       gallery: [
         { img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85", tag: "MONOGRAPH", title: "Lookbook Editorial Spread", desc: "Gold foil stamp & tactile uncoated cotton stock" },
         { img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=85", tag: "PACKAGING", title: "Bespoke Packaging Suite", desc: "Custom structural rigid boxes & silk ribbons" },

@@ -615,78 +615,35 @@
 }
 
 /* ==========================================================================
-   6. WIDE DIGITAL INTERFACE / BROWSER MOCKUP
+   6. WIDE FULL-BLEED VISUAL SHOWCASE (CLEAN REGULAR IMAGE)
    ========================================================================== */
-.cs-interface-section {
+.cs-wide-showcase-section {
   padding-bottom: 6rem;
 }
 
-.interface-showcase-frame {
-  background: #121416;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.16);
-  border: none;
-}
-
-.browser-mockup-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.85rem 1.25rem;
-  background: rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.browser-dots {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.b-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.b-dot.red { background: #ff5f56; }
-.b-dot.yellow { background: #ffbd2e; }
-.b-dot.green { background: #27c93f; }
-
-.browser-address-bar {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.6);
-  background: rgba(0, 0, 0, 0.3);
-  padding: 0.35rem 2rem;
-  border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.browser-actions {
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 0.875rem;
-}
-
-.browser-mockup-body {
+.cs-wide-image-frame {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   max-height: 680px;
   overflow: hidden;
-  background: #000;
+  background: #0c0d0e;
+  border: none;
+  border-radius: 0px !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
   cursor: zoom-in;
 }
 
-.interface-img {
+.cs-wide-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s ease;
+  border-radius: 0px !important;
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.browser-mockup-body:hover .interface-img {
+.cs-wide-image-frame:hover .cs-wide-img {
   transform: scale(1.02);
 }
 

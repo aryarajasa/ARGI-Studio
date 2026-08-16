@@ -1563,16 +1563,10 @@ body.site-ready .page-wrapper {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
   padding: 1rem 0 3rem 0;
-  cursor: grab;
-  user-select: none;
 }
 
 .journal-slider-container::-webkit-scrollbar {
   display: none; /* Chrome/Safari */
-}
-
-.journal-slider-container:active {
-  cursor: grabbing;
 }
 
 .news-cards-grid {

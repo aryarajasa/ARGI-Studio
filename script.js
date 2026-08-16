@@ -504,80 +504,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextBtn = document.getElementById("journalNextBtn");
     if (!slider) return;
 
-    // 1. Mouse Wheel Scroll (Translates vertical mouse wheel into horizontal sliding)
-    slider.addEventListener("wheel", (e) => {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        e.preventDefault();
-        slider.scrollLeft += e.deltaY * 1.5;
+    // Arrow Button Navigation with calculated card step
+    const getScrollStep = () => {
+      const firstCard = slider.querySelector(".news-card");
+      if (firstCard) {
+        const style = window.getComputedStyle(slider.querySelector(".news-cards-grid"));
+        const gap = parseFloat(style.gap) || 32;
+        return firstCard.offsetWidth + gap;
       }
-    }, { passive: false });
+      return 412;
+    };
 
-    // 2. Drag to scroll with mouse
-    let isDown = false;
-    let startX = 0;
-    let scrollLeft = 0;
-
-    slider.addEventListener("mousedown", (e) => {
-      isDown = true;
-      slider.classList.add("active");
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    });
-
-    slider.addEventListener("mouseleave", () => {
-      isDown = false;
-    });
-
-    slider.addEventListener("mouseup", () => {
-      isDown = false;
-    });
-
-    slider.addEventListener("mousemove", (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - slider.offsetLeft;
-      const walk = (x - startX) * 1.8;
-      slider.scrollLeft = scrollLeft - walk;
-    });
-
-    // 3. Arrow Controls
     if (prevBtn) {
-      prevBtn.addEventListener("click", () => {
-        slider.scrollBy({ left: -400, behavior: "smooth" });
+      prevBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        slider.scrollBy({ left: -getScrollStep(), behavior: "smooth" });
       });
     }
 
     if (nextBtn) {
-      nextBtn.addEventListener("click", () => {
-        slider.scrollBy({ left: 400, behavior: "smooth" });
+      nextBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        slider.scrollBy({ left: getScrollStep(), behavior: "smooth" });
       });
     }
-
-    // 4. Subtle Auto-Slide / Looping (Pauses on hover/drag)
-    let autoScrollInterval = null;
-    const startAutoScroll = () => {
-      stopAutoScroll();
-      autoScrollInterval = setInterval(() => {
-        if (!isDown) {
-          if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
-            slider.scrollTo({ left: 0, behavior: "smooth" });
-          } else {
-            slider.scrollBy({ left: 1.2, behavior: "auto" });
-          }
-        }
-      }, 30);
-    };
-
-    const stopAutoScroll = () => {
-      if (autoScrollInterval) clearInterval(autoScrollInterval);
-    };
-
-    slider.addEventListener("mouseenter", stopAutoScroll);
-    slider.addEventListener("mouseleave", startAutoScroll);
-    slider.addEventListener("touchstart", stopAutoScroll, { passive: true });
-    slider.addEventListener("touchend", startAutoScroll, { passive: true });
-
-    startAutoScroll();
   };
 
   renderDynamicProjects();

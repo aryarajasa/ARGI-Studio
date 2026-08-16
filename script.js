@@ -460,22 +460,56 @@ document.addEventListener("DOMContentLoaded", () => {
       rows = Math.ceil(height / step);
       pixels = [];
 
+      // Generate random cluster anchor centers across the canvas
+      const clusterCenters = [
+        { x: width * 0.22, y: height * 0.18, r: 85 },
+        { x: width * 0.78, y: height * 0.25, r: 95 },
+        { x: width * 0.50, y: height * 0.50, r: 75 },
+        { x: width * 0.18, y: height * 0.78, r: 100 },
+        { x: width * 0.82, y: height * 0.82, r: 90 },
+        { x: width * 0.45, y: height * 0.12, r: 60 }
+      ];
+
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const x = c * step;
           const y = r * step;
-          // Dense, tight pixel matrix in idle state (constant ContraLabs digital weave)
-          const baseAlpha = Math.random() * 0.18 + 0.08;
-          
-          pixels.push({
-            x,
-            y,
-            alpha: baseAlpha,
-            targetAlpha: baseAlpha,
-            baseAlpha,
-            speed: 1.2 + Math.random() * 1.5,
-            phase: (r * 0.25 + c * 0.25) + Math.random() * Math.PI
-          });
+
+          // Check proximity to cluster centers (ContraLabs island patches)
+          let inCluster = false;
+          let clusterIntensity = 0;
+
+          for (let i = 0; i < clusterCenters.length; i++) {
+            const cc = clusterCenters[i];
+            const dx = x - cc.x;
+            const dy = y - cc.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < cc.r) {
+              inCluster = true;
+              clusterIntensity = Math.max(clusterIntensity, (1 - dist / cc.r));
+            }
+          }
+
+          // In cluster: dense, tight micro-pixels; Outside: mostly empty with rare stray pixels
+          const shouldSpawn = inCluster 
+            ? (Math.random() < 0.75) // Very dense within cluster
+            : (Math.random() < 0.04); // Sparsely empty outside
+
+          if (shouldSpawn) {
+            const baseAlpha = inCluster 
+              ? (0.15 + clusterIntensity * 0.35 + Math.random() * 0.15)
+              : (Math.random() * 0.12 + 0.04);
+
+            pixels.push({
+              x,
+              y,
+              alpha: baseAlpha,
+              targetAlpha: baseAlpha,
+              baseAlpha,
+              speed: 1.0 + Math.random() * 1.6,
+              phase: (r * 0.3 + c * 0.3) + Math.random() * Math.PI
+            });
+          }
         }
       }
     };

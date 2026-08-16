@@ -874,7 +874,7 @@ body.site-ready .page-wrapper {
   position: relative;
 }
 
-/* Thin dashed architectural side boundary lines framing the content (Active on light sections) */
+/* Continuous thin dashed architectural side boundary lines with wider editorial margin */
 .section:not(.section-datasets-dark) > .container-medium,
 .section-hero > .hero-center-content {
   position: relative;
@@ -887,17 +887,26 @@ body.site-ready .page-wrapper {
   top: 0;
   bottom: 0;
   width: 1px;
-  border-left: 1px dashed rgba(0, 0, 0, 0.13);
+  border-left: 1px dashed rgba(0, 0, 0, 0.15);
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
+/* Widened outer margin for dashed boundary line */
 .section:not(.section-datasets-dark) > .container-medium::before {
-  left: 0;
+  left: -20px;
 }
 
 .section:not(.section-datasets-dark) > .container-medium::after {
-  right: 0;
+  right: -20px;
+}
+
+/* Crisp solid straight horizontal border dividing sections */
+.section-process,
+.section-services,
+.section-news,
+.section-contact {
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
 /* --- SECTION 1: MISSION --- */

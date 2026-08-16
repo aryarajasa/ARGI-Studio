@@ -1556,7 +1556,7 @@ body.site-ready .page-wrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 0;
 }
 
 .service-card {

@@ -874,7 +874,7 @@ body.site-ready .page-wrapper {
   position: relative;
 }
 
-/* Continuous thin dashed architectural side boundary lines framing the entire content width without gaps */
+/* --- Continuous vertical dashed architectural boundary lines (Left & Right) --- */
 .section:not(.section-datasets-dark)::before,
 .section:not(.section-datasets-dark)::after {
   content: "";
@@ -893,7 +893,6 @@ body.site-ready .page-wrapper {
   z-index: 2;
 }
 
-/* Positioned at the container boundary with a balanced margin (-10px) */
 .section:not(.section-datasets-dark)::before {
   left: calc(50% - (var(--container-max-width) / 2) - 10px);
 }
@@ -911,38 +910,27 @@ body.site-ready .page-wrapper {
   }
 }
 
-/* Crisp solid straight horizontal border dividing sections - Aligned exactly between the vertical dashed lines */
-.section-process,
-.section-services,
-.section-news,
-.section-contact {
-  border-top: none !important;
+/* --- Clean solid straight horizontal border dividing sections - Exact width between dashed lines --- */
+.section-process > .container-medium,
+.section-services > .container-medium,
+.section-news > .container-medium,
+.section-contact > .container-medium {
   position: relative;
 }
 
-.section-process::before,
-.section-services::before,
-.section-news::before,
-.section-contact::before {
+.section-process > .container-medium::before,
+.section-services > .container-medium::before,
+.section-news > .container-medium::before,
+.section-contact > .container-medium::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: calc(50% - (var(--container-max-width) / 2) - 10px);
-  right: calc(50% - (var(--container-max-width) / 2) - 10px);
+  top: -7rem; /* Align perfectly with top edge of the section */
+  left: -10px;
+  right: -10px;
   height: 1px;
   background-color: rgba(0, 0, 0, 0.1);
   pointer-events: none;
   z-index: 3;
-}
-
-@media screen and (max-width: 1240px) {
-  .section-process::before,
-  .section-services::before,
-  .section-news::before,
-  .section-contact::before {
-    left: calc(var(--container-padding) - 10px);
-    right: calc(var(--container-padding) - 10px);
-  }
 }
 
 /* --- SECTION 1: MISSION --- */

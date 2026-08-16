@@ -764,7 +764,7 @@
         </div>
       </section>
 
-      <!-- SECTION 5: JOURNAL / NEWS -->
+      <!-- SECTION 5: JOURNAL / NEWS (SIDE CONTINUOUS SLIDER) -->
       <section id="journal" class="section section-news">
         <div class="container-medium">
           <div class="news-header-row">
@@ -778,11 +778,25 @@
               </div>
               <h2 class="section-title">Dispatches, exhibitions &amp; critical writings</h2>
             </div>
-            <a href="article.html?id=01" class="btn btn-outline">Read all articles</a>
+            <!-- Slider navigation arrows -->
+            <div class="journal-nav-arrows">
+              <button type="button" class="journal-arrow-btn prev" id="journalPrevBtn" aria-label="Previous article">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+              </button>
+              <button type="button" class="journal-arrow-btn next" id="journalNextBtn" aria-label="Next article">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
           </div>
+        </div>
 
-          <!-- Journal Cards Grid -->
-          <div class="news-cards-grid">
+        <!-- Infinite Side-Looping Slider Carousel (Scroll & Drag enabled) -->
+        <div class="journal-slider-container" id="journalSliderContainer">
+          <div class="news-cards-grid" id="newsCardsGrid">
             
             <!-- Journal 1 -->
             <a href="article.html?id=01" class="news-card" aria-label="Read Monograph Vol. 02 Release Article">

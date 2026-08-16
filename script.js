@@ -470,14 +470,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let articlesData = await getCloudArticles();
     if (!articlesData || Object.keys(articlesData).length === 0) return;
 
-    const journalGrid = document.querySelector(".news-editorial-grid");
+    const journalGrid = document.getElementById("newsCardsGrid") || document.querySelector(".news-cards-grid");
     if (journalGrid) {
       const articleKeys = Object.keys(articlesData).sort((a, b) => a.localeCompare(b));
+      
       journalGrid.innerHTML = articleKeys.map(id => {
         const a = articlesData[id];
         return `
-          <a href="article.html?id=${a.id}" class="news-item-card">
-            <div class="news-img-wrap">
+          <a href="article.html?id=${a.id}" class="news-card" aria-label="Read ${a.title}">
+            <div class="news-thumbnail-wrap">
               <img src="${a.featureImage || 'assets/logo.png'}" alt="${a.title}" class="news-img" loading="lazy" />
             </div>
             <div class="news-body">
@@ -491,7 +492,92 @@ document.addEventListener("DOMContentLoaded", () => {
           </a>
         `;
       }).join("");
+
+      // Initialize Interactive Slider Engine
+      initJournalSlider();
     }
+  };
+
+  const initJournalSlider = () => {
+    const slider = document.getElementById("journalSliderContainer");
+    const prevBtn = document.getElementById("journalPrevBtn");
+    const nextBtn = document.getElementById("journalNextBtn");
+    if (!slider) return;
+
+    // 1. Mouse Wheel Scroll (Translates vertical mouse wheel into horizontal sliding)
+    slider.addEventListener("wheel", (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        slider.scrollLeft += e.deltaY * 1.5;
+      }
+    }, { passive: false });
+
+    // 2. Drag to scroll with mouse
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    slider.addEventListener("mousedown", (e) => {
+      isDown = true;
+      slider.classList.add("active");
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener("mouseleave", () => {
+      isDown = false;
+    });
+
+    slider.addEventListener("mouseup", () => {
+      isDown = false;
+    });
+
+    slider.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 1.8;
+      slider.scrollLeft = scrollLeft - walk;
+    });
+
+    // 3. Arrow Controls
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => {
+        slider.scrollBy({ left: -400, behavior: "smooth" });
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        slider.scrollBy({ left: 400, behavior: "smooth" });
+      });
+    }
+
+    // 4. Subtle Auto-Slide / Looping (Pauses on hover/drag)
+    let autoScrollInterval = null;
+    const startAutoScroll = () => {
+      stopAutoScroll();
+      autoScrollInterval = setInterval(() => {
+        if (!isDown) {
+          if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
+            slider.scrollTo({ left: 0, behavior: "smooth" });
+          } else {
+            slider.scrollBy({ left: 1.2, behavior: "auto" });
+          }
+        }
+      }, 30);
+    };
+
+    const stopAutoScroll = () => {
+      if (autoScrollInterval) clearInterval(autoScrollInterval);
+    };
+
+    slider.addEventListener("mouseenter", stopAutoScroll);
+    slider.addEventListener("mouseleave", startAutoScroll);
+    slider.addEventListener("touchstart", stopAutoScroll, { passive: true });
+    slider.addEventListener("touchend", startAutoScroll, { passive: true });
+
+    startAutoScroll();
   };
 
   renderDynamicProjects();

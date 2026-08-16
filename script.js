@@ -459,15 +459,10 @@ document.addEventListener("DOMContentLoaded", () => {
       initIndexHoverPortal();
     }
 
-    // 3. Update Mobile 'See More' Count
-    if (seeMoreWrap && seeMoreBtnText) {
+    // 3. Update Mobile / Tablet 'See More' Count
+    if (seeMoreBtnText) {
       const extraCount = Math.max(0, projectKeys.length - 3);
-      if (extraCount > 0) {
-        seeMoreWrap.style.display = "flex";
-        seeMoreBtnText.textContent = `See More Works (${extraCount})`;
-      } else {
-        seeMoreWrap.style.display = "none";
-      }
+      seeMoreBtnText.textContent = `See More Works (${extraCount})`;
     }
   };
 

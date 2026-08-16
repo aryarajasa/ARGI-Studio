@@ -7,8 +7,8 @@
   /* Colors */
   --bg-hero: #f6f1eb;
   --bg-body: #ffffff;
-  --bg-card: #ffffff;
-  --bg-subtle: #f7f7f5;
+  --bg-card: #fbfbf9;
+  --bg-subtle: #f4f4f0;
   --bg-dark: #0c0d0e;
   --bg-dark-card: #141618;
   --bg-dark-card-border: rgba(255, 255, 255, 0.08);
@@ -98,23 +98,10 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--bg-hero);
+  background-color: var(--bg-body);
   color: var(--text-primary);
   line-height: 1.5;
   overflow-x: hidden;
-  transition: background-color 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-body.scrolled-past-hero {
-  background-color: #ffffff;
-}
-
-body.scrolled-past-hero .section-mission,
-body.scrolled-past-hero .section-process,
-body.scrolled-past-hero .section-services,
-body.scrolled-past-hero .section-news,
-body.scrolled-past-hero .section-contact {
-  background-color: #ffffff;
 }
 
 a {

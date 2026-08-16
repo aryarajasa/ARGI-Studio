@@ -488,10 +488,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const previewState = groupEl.querySelector(".dropzone-preview-state");
     const previewImg = groupEl.querySelector(".preview-img");
     const previewFilename = groupEl.querySelector(".preview-filename");
-    const fallbackInput = groupEl.querySelector(".url-fallback-input");
 
     if (hiddenInput) hiddenInput.value = mediaUrl || "";
-    if (fallbackInput) fallbackInput.value = mediaUrl || "";
 
     if (mediaUrl) {
       if (previewImg) {
@@ -514,16 +512,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const uploadMediaFile = async (file, groupEl) => {
     if (!file) return;
 
-    showToast(`Uploading ${file.name} to Cloud...`, "⏳");
+    showToast(`Uploading ${file.name} to Supabase CDN...`, "⏳");
 
-    // 1. Try Firebase Cloud Storage Upload (Super fast CDN)
+    // 1. Try Supabase Cloud Media Storage (100% Free CDN)
     try {
-      const cloudUrl = await uploadCloudMedia(file, "projects");
-      setMediaPreview(groupEl, cloudUrl, file.name);
-      showToast(`✓ Cloud Upload: ${file.name}`, "☁️");
-      return;
-    } catch (firebaseErr) {
-      console.warn("Firebase storage upload error, falling back to local:", firebaseErr);
+      const cloudUrl = await uploadCloudMedia(file, "media");
+      if (cloudUrl) {
+        setMediaPreview(groupEl, cloudUrl, file.name);
+        showToast(`✓ Cloud Upload: ${file.name}`, "⚡");
+        return;
+      }
+    } catch (supabaseErr) {
+      console.warn("Supabase storage upload error, falling back to local:", supabaseErr);
     }
 
     // 2. Fallback to Local Node.js server upload
@@ -555,7 +555,6 @@ document.addEventListener("DOMContentLoaded", () => {
     groups.forEach(group => {
       const dropzone = group.querySelector(".media-dropzone");
       const fileInput = group.querySelector(".media-file-input");
-      const fallbackInput = group.querySelector(".url-fallback-input");
       const changeBtn = group.querySelector(".dropzone-change-btn");
       const removeBtn = group.querySelector(".dropzone-remove-btn");
 
@@ -588,13 +587,6 @@ document.addEventListener("DOMContentLoaded", () => {
           if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
             uploadMediaFile(e.dataTransfer.files[0], group);
           }
-        });
-      }
-
-      if (fallbackInput) {
-        fallbackInput.addEventListener("input", (e) => {
-          const val = e.target.value.trim();
-          setMediaPreview(group, val, val.split("/").pop());
         });
       }
 

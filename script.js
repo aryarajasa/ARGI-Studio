@@ -464,10 +464,8 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let c = 0; c < cols; c++) {
           const x = c * step;
           const y = r * step;
-          // Organic cluster noise for natural pixel distribution (ContraLabs aesthetic)
-          const clusterNoise = Math.sin(c * 0.12) * Math.cos(r * 0.12);
-          const isBaseTwinkle = Math.random() < 0.14 + clusterNoise * 0.08;
-          const baseAlpha = isBaseTwinkle ? (Math.random() * 0.22 + 0.06) : 0;
+          // Dense, tight pixel matrix in idle state (constant ContraLabs digital weave)
+          const baseAlpha = Math.random() * 0.18 + 0.08;
           
           pixels.push({
             x,
@@ -475,7 +473,8 @@ document.addEventListener("DOMContentLoaded", () => {
             alpha: baseAlpha,
             targetAlpha: baseAlpha,
             baseAlpha,
-            phase: Math.random() * Math.PI * 2
+            speed: 1.2 + Math.random() * 1.5,
+            phase: (r * 0.25 + c * 0.25) + Math.random() * Math.PI
           });
         }
       }
@@ -505,15 +504,13 @@ document.addEventListener("DOMContentLoaded", () => {
     triggerPixelBurst = () => {
       const len = pixels.length;
       for (let i = 0; i < len; i++) {
-        if (Math.random() < 0.4) {
-          pixels[i].alpha = Math.random() * 0.75 + 0.25;
-        }
+        pixels[i].alpha = Math.random() * 0.65 + 0.35;
       }
     };
 
     let tick = 0;
     const render = () => {
-      tick += 0.035;
+      tick += 0.025;
       mouse.x += (mouse.targetX - mouse.x) * 0.22;
       mouse.y += (mouse.targetY - mouse.y) * 0.22;
 
@@ -526,11 +523,11 @@ document.addEventListener("DOMContentLoaded", () => {
       for (let i = 0; i < len; i++) {
         const p = pixels[i];
 
-        // Ambient undulating sparkle
-        const wave = Math.sin(tick * 1.8 + p.phase);
-        let desired = p.baseAlpha > 0 ? p.baseAlpha * (0.6 + 0.4 * wave) : 0;
+        // Constant dense, tight ambient shimmer in idle state
+        const wave = Math.sin(tick * p.speed + p.phase);
+        let desired = p.baseAlpha * (0.55 + 0.45 * wave);
 
-        // Interactive hover wave
+        // Interactive hover wave boost
         if (mouse.isHovered && mouse.x > 0 && mouse.y > 0) {
           const dx = p.x - mouse.x;
           const dy = p.y - mouse.y;
@@ -539,15 +536,15 @@ document.addEventListener("DOMContentLoaded", () => {
           if (distSq < hoverRadiusSq) {
             const dist = Math.sqrt(distSq);
             const proximity = 1 - dist / hoverRadius;
-            const hoverBoost = Math.pow(proximity, 1.4) * (0.65 + 0.35 * Math.sin(tick * 6 + p.phase));
+            const hoverBoost = Math.pow(proximity, 1.4) * (0.75 + 0.25 * Math.sin(tick * 8 + p.phase));
             desired = Math.max(desired, hoverBoost);
           }
         }
 
         // Smooth alpha interpolation
-        p.alpha += (desired - p.alpha) * 0.15;
+        p.alpha += (desired - p.alpha) * 0.18;
 
-        if (p.alpha > 0.02) {
+        if (p.alpha > 0.015) {
           ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha.toFixed(3)})`;
           ctx.fillRect(p.x, p.y, pixelSize, pixelSize);
         }

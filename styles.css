@@ -1178,21 +1178,32 @@ body.site-ready .page-wrapper {
   border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 0.3rem 0.4rem;
   border-radius: var(--radius-full);
+  user-select: none;
 }
 
 .view-btn {
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--text-white-muted);
-  padding: 0.35rem 0.95rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.45rem 1.15rem;
   border-radius: var(--radius-full);
-  transition: all var(--transition-fast);
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.view-btn:hover:not(.is-active) {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .view-btn.is-active {
-  background: #ffffff;
-  color: var(--text-primary);
+  background: #ffffff !important;
+  color: var(--text-primary) !important;
   font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 /* 1. Sharp 2-Column Editorial Gallery */

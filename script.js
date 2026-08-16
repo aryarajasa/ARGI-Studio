@@ -566,16 +566,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const portfolioIndexView = document.getElementById("portfolioIndexView");
 
   if (viewGalleryBtn && viewIndexBtn && portfolioGalleryView && portfolioIndexView) {
-    viewGalleryBtn.addEventListener("click", () => {
+    viewGalleryBtn.addEventListener("click", (e) => {
+      e.preventDefault();
       viewGalleryBtn.classList.add("is-active");
       viewIndexBtn.classList.remove("is-active");
       portfolioGalleryView.style.display = "grid";
       portfolioIndexView.style.display = "none";
     });
 
-    viewIndexBtn.addEventListener("click", () => {
+    viewIndexBtn.addEventListener("click", (e) => {
+      e.preventDefault();
       viewIndexBtn.classList.add("is-active");
-      viewIndexBtn.classList.remove("is-active");
+      viewGalleryBtn.classList.remove("is-active");
       portfolioGalleryView.style.display = "none";
       portfolioIndexView.style.display = "flex";
     });

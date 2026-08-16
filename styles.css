@@ -874,6 +874,32 @@ body.site-ready .page-wrapper {
   position: relative;
 }
 
+/* Thin dashed architectural side boundary lines framing the content (Active on light sections) */
+.section:not(.section-datasets-dark) > .container-medium,
+.section-hero > .hero-center-content {
+  position: relative;
+}
+
+.section:not(.section-datasets-dark) > .container-medium::before,
+.section:not(.section-datasets-dark) > .container-medium::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  border-left: 1px dashed rgba(0, 0, 0, 0.13);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.section:not(.section-datasets-dark) > .container-medium::before {
+  left: 0;
+}
+
+.section:not(.section-datasets-dark) > .container-medium::after {
+  right: 0;
+}
+
 /* --- SECTION 1: MISSION --- */
 .section-mission {
   padding-top: 6rem;

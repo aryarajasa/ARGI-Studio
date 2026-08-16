@@ -353,6 +353,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    // Dynamic On-Scroll Background Morph: Hero warm alabaster -> Section 1 crisp white
+    const scrollY = window.scrollY;
+    const heroEl = document.getElementById("top") || document.querySelector(".section-hero");
+    const missionEl = document.getElementById("mission");
+    
+    if (heroEl && missionEl) {
+      const heroHeight = heroEl.offsetHeight || window.innerHeight;
+      if (scrollY > heroHeight * 0.35) {
+        document.body.classList.add("scrolled-past-hero");
+      } else {
+        document.body.classList.remove("scrolled-past-hero");
+      }
+    }
+
     navLinks.forEach((link) => {
       const href = link.getAttribute("href");
       if (href && href.startsWith("#")) {

@@ -395,7 +395,157 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 6. PORTFOLIO VIEW SWITCHER (GALLERY VIEW VS INDEX TABLE)
+  // 6. DYNAMIC PORTFOLIO & JOURNAL RENDERING (FROM LIVE ATELIER DATABASE)
+  const renderDynamicProjects = async () => {
+    let projectsData = null;
+    try {
+      const localP = localStorage.getItem("argi_projects_data");
+      if (localP) {
+        projectsData = JSON.parse(localP);
+      } else {
+        const res = await fetch("/api/projects");
+        if (res.ok) {
+          projectsData = await res.json();
+        } else {
+          const staticRes = await fetch("data/projects.json");
+          if (staticRes.ok) projectsData = await staticRes.json();
+        }
+      }
+    } catch (e) {
+      try {
+        const staticRes = await fetch("data/projects.json");
+        if (staticRes.ok) projectsData = await staticRes.json();
+      } catch (err) {}
+    }
+
+    if (!projectsData || Object.keys(projectsData).length === 0) return;
+
+    const projectKeys = Object.keys(projectsData).sort((a, b) => a.localeCompare(b));
+    const portfolioGalleryView = document.getElementById("portfolioGalleryView");
+    const portfolioIndexView = document.getElementById("portfolioIndexView");
+    const seeMoreWrap = document.getElementById("portfolioSeeMoreWrap");
+    const seeMoreBtnText = document.getElementById("seeMoreBtnText");
+
+    // 1. Render Gallery Cards
+    if (portfolioGalleryView) {
+      portfolioGalleryView.innerHTML = projectKeys.map(id => {
+        const p = projectsData[id];
+        const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
+        const disciplines = p.disciplines || "Brand Identity";
+        const sectorOrYear = p.sector ? p.sector.split("•")[1] || p.sector : (p.year || "2026");
+
+        return `
+          <a href="project.html?id=${p.id}" class="gallery-item-sharp" aria-label="Explore ${titleFull} Case Study">
+            <div class="gallery-item-frame">
+              <img src="${p.heroImage || 'assets/logo.png'}" alt="${titleFull} Brand Identity System" class="gallery-img-sharp" loading="lazy" />
+              <div class="gallery-sharp-overlay">
+                <span class="explore-sharp-pill">Explore Case Study ↗</span>
+              </div>
+            </div>
+            <div class="gallery-item-caption">
+              <div class="caption-left">
+                <span class="project-id-num">${p.id}</span>
+                <h4 class="caption-project-name">${titleFull}</h4>
+              </div>
+              <div class="caption-right">
+                <span class="caption-discipline">${disciplines}</span>
+                <span class="caption-year">${sectorOrYear.trim()}</span>
+              </div>
+            </div>
+          </a>
+        `;
+      }).join("");
+    }
+
+    // 2. Render Index Table
+    if (portfolioIndexView) {
+      portfolioIndexView.innerHTML = projectKeys.map(id => {
+        const p = projectsData[id];
+        const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
+        const disciplines = p.disciplines || "Brand Identity";
+        const sector = p.sector || "Paris, France";
+        const year = p.year || "2026";
+
+        return `
+          <a href="project.html?id=${p.id}" class="index-row-item" data-preview="${p.heroImage || 'assets/logo.png'}">
+            <span class="index-col col-num">${p.id}</span>
+            <span class="index-col col-client">${titleFull}</span>
+            <span class="index-col col-discipline">${disciplines}</span>
+            <span class="index-col col-location">${sector}</span>
+            <span class="index-col col-year">${year}</span>
+            <span class="index-col col-link">Explore ↗</span>
+          </a>
+        `;
+      }).join("");
+
+      // Re-bind hover portal to new index rows
+      initIndexHoverPortal();
+    }
+
+    // 3. Update Mobile 'See More' Count
+    if (seeMoreWrap && seeMoreBtnText) {
+      const extraCount = Math.max(0, projectKeys.length - 3);
+      if (extraCount > 0) {
+        seeMoreWrap.style.display = "flex";
+        seeMoreBtnText.textContent = `See More Works (${extraCount})`;
+      } else {
+        seeMoreWrap.style.display = "none";
+      }
+    }
+  };
+
+  const renderDynamicArticles = async () => {
+    let articlesData = null;
+    try {
+      const localA = localStorage.getItem("argi_articles_data");
+      if (localA) {
+        articlesData = JSON.parse(localA);
+      } else {
+        const res = await fetch("/api/articles");
+        if (res.ok) {
+          articlesData = await res.json();
+        } else {
+          const staticRes = await fetch("data/articles.json");
+          if (staticRes.ok) articlesData = await staticRes.json();
+        }
+      }
+    } catch (e) {
+      try {
+        const staticRes = await fetch("data/articles.json");
+        if (staticRes.ok) articlesData = await staticRes.json();
+      } catch (err) {}
+    }
+
+    if (!articlesData || Object.keys(articlesData).length === 0) return;
+
+    const journalGrid = document.querySelector(".news-editorial-grid");
+    if (journalGrid) {
+      const articleKeys = Object.keys(articlesData).sort((a, b) => a.localeCompare(b));
+      journalGrid.innerHTML = articleKeys.map(id => {
+        const a = articlesData[id];
+        return `
+          <a href="article.html?id=${a.id}" class="news-item-card">
+            <div class="news-img-wrap">
+              <img src="${a.featureImage || 'assets/logo.png'}" alt="${a.title}" class="news-img" loading="lazy" />
+            </div>
+            <div class="news-body">
+              <h3 class="news-headline">${a.title}</h3>
+              <div class="news-meta">
+                <span class="news-date">${a.date || '2026'}</span>
+                <span class="news-dot">•</span>
+                <span class="news-tag">${a.category || 'Journal'}</span>
+              </div>
+            </div>
+          </a>
+        `;
+      }).join("");
+    }
+  };
+
+  renderDynamicProjects();
+  renderDynamicArticles();
+
+  // 7. PORTFOLIO VIEW SWITCHER (GALLERY VIEW VS INDEX TABLE)
   const viewGalleryBtn = document.getElementById("viewGalleryBtn");
   const viewIndexBtn = document.getElementById("viewIndexBtn");
   const portfolioGalleryView = document.getElementById("portfolioGalleryView");
@@ -411,18 +561,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     viewIndexBtn.addEventListener("click", () => {
       viewIndexBtn.classList.add("is-active");
-      viewGalleryBtn.classList.remove("is-active");
+      viewIndexBtn.classList.remove("is-active");
       portfolioGalleryView.style.display = "none";
       portfolioIndexView.style.display = "flex";
     });
   }
 
-  // 7. INDEX TABLE HOVER CURSOR PORTAL (GPU-ACCELERATED FLOATING MAIN IMAGE)
-  const indexRows = document.querySelectorAll(".index-row-item");
-  const indexHoverPortal = document.getElementById("indexHoverPortal");
-  const indexPortalImg = document.getElementById("indexPortalImg");
+  // 8. INDEX TABLE HOVER CURSOR PORTAL (GPU-ACCELERATED FLOATING MAIN IMAGE)
+  const initIndexHoverPortal = () => {
+    const indexRows = document.querySelectorAll(".index-row-item");
+    const indexHoverPortal = document.getElementById("indexHoverPortal");
+    const indexPortalImg = document.getElementById("indexPortalImg");
 
-  if (indexRows.length && indexHoverPortal && indexPortalImg) {
+    if (!indexRows.length || !indexHoverPortal || !indexPortalImg) return;
     if (indexHoverPortal.parentElement !== document.body) {
       document.body.appendChild(indexHoverPortal);
     }
@@ -496,7 +647,9 @@ document.addEventListener("DOMContentLoaded", () => {
         indexHoverPortal.classList.remove("is-visible");
       });
     });
-  }
+  };
+
+  initIndexHoverPortal();
 
   // 8. SMOOTH ANCHOR SCROLLING
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {

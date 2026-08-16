@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========================================================================
   // 1. COMPLETE CASE STUDY DATASET (6 ATELIER PROJECTS)
   // =========================================================================
-  const PROJECTS_DATA = {
+  const DEFAULT_PROJECTS_DATA = {
     "01": {
       id: "01",
       slug: "viviens-haute-couture",
@@ -328,6 +328,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Dynamic Database Resolution (Syncs with Admin CMS)
+  let PROJECTS_DATA = DEFAULT_PROJECTS_DATA;
+  try {
+    const localData = localStorage.getItem("argi_projects_data");
+    if (localData) {
+      const parsed = JSON.parse(localData);
+      if (parsed && Object.keys(parsed).length > 0) {
+        PROJECTS_DATA = parsed;
+      }
+    }
+  } catch (e) {}
+
   // =========================================================================
   // 2. QUERY PARAMETER ROUTING & DATA POPULATION
   // =========================================================================
@@ -336,12 +348,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let id = params.get("id") || "01";
     // Normalize id like '1' -> '01'
     if (id.length === 1) id = "0" + id;
-    return PROJECTS_DATA[id] ? id : "01";
+    return PROJECTS_DATA[id] ? id : Object.keys(PROJECTS_DATA)[0] || "01";
   };
 
   const currentProjectId = getProjectIdFromUrl();
-  const currentProject = PROJECTS_DATA[currentProjectId];
-  const nextProject = PROJECTS_DATA[currentProject.nextId];
+  const currentProject = PROJECTS_DATA[currentProjectId] || DEFAULT_PROJECTS_DATA["01"];
+  const nextProject = PROJECTS_DATA[currentProject.nextId] || currentProject;
 
   // Update Page Meta & Title
   document.title = `${currentProject.title} ${currentProject.titleAccent} — Case Study | ARGI Studio`;

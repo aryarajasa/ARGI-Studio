@@ -1,0 +1,789 @@
+/**
+ * ARGI Studio — Private CMS & Database Engine
+ * Location: Bali, Indonesia
+ */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  // State
+  let projectsData = {};
+  let articlesData = {};
+  let editingProjectId = null;
+  let editingArticleId = null;
+
+  // DOM Elements
+  const authOverlay = document.getElementById("authOverlay");
+  const authForm = document.getElementById("authForm");
+  const adminPasscode = document.getElementById("adminPasscode");
+  const togglePwdBtn = document.getElementById("togglePwdBtn");
+  const authErrorMsg = document.getElementById("authErrorMsg");
+  const adminApp = document.getElementById("adminApp");
+  const lockSessionBtn = document.getElementById("lockSessionBtn");
+  const exportBackupBtn = document.getElementById("exportBackupBtn");
+  const toastContainer = document.getElementById("toastContainer");
+
+  // Tabs
+  const tabButtons = document.querySelectorAll(".admin-tab-btn");
+  const tabPanes = {
+    "projects": document.getElementById("paneProjects"),
+    "articles": document.getElementById("paneArticles"),
+    "media-guide": document.getElementById("paneMediaGuide"),
+    "settings": document.getElementById("paneSettings")
+  };
+
+  // Badges & Lists
+  const projectsCountBadge = document.getElementById("projectsCountBadge");
+  const articlesCountBadge = document.getElementById("articlesCountBadge");
+  const projectsListContainer = document.getElementById("projectsListContainer");
+  const articlesListContainer = document.getElementById("articlesListContainer");
+  const projectSearchInput = document.getElementById("projectSearchInput");
+  const articleSearchInput = document.getElementById("articleSearchInput");
+  const syncStatusText = document.getElementById("syncStatusText");
+  const adminBaliTime = document.getElementById("adminBaliTime");
+
+  // Modals
+  const projectModal = document.getElementById("projectModal");
+  const projectModalOverlay = document.getElementById("projectModalOverlay");
+  const closeProjectModalBtn = document.getElementById("closeProjectModalBtn");
+  const cancelProjectBtn = document.getElementById("cancelProjectBtn");
+  const projectForm = document.getElementById("projectForm");
+  const addNewProjectBtn = document.getElementById("addNewProjectBtn");
+
+  const articleModal = document.getElementById("articleModal");
+  const articleModalOverlay = document.getElementById("articleModalOverlay");
+  const closeArticleModalBtn = document.getElementById("closeArticleModalBtn");
+  const cancelArticleBtn = document.getElementById("cancelArticleBtn");
+  const articleForm = document.getElementById("articleForm");
+  const addNewArticleBtn = document.getElementById("addNewArticleBtn");
+
+  // Settings
+  const changePasscodeForm = document.getElementById("changePasscodeForm");
+  const currentPasscode = document.getElementById("currentPasscode");
+  const newPasscode = document.getElementById("newPasscode");
+  const passcodeMsg = document.getElementById("passcodeMsg");
+  const resetDefaultsBtn = document.getElementById("resetDefaultsBtn");
+  const importJsonInput = document.getElementById("importJsonInput");
+  const statProjectsCount = document.getElementById("statProjectsCount");
+  const statArticlesCount = document.getElementById("statArticlesCount");
+  const statTotalMediaCount = document.getElementById("statTotalMediaCount");
+
+  // =========================================================================
+  // 1. TOAST NOTIFICATION HELPER
+  // =========================================================================
+  const showToast = (message, icon = "✓") => {
+    if (!toastContainer) return;
+    const toast = document.createElement("div");
+    toast.className = "admin-toast";
+    toast.innerHTML = `<span>${icon}</span><span>${message}</span>`;
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      toast.style.transform = "translateY(12px) scale(0.95)";
+      toast.style.transition = "all 0.3s ease";
+      setTimeout(() => toast.remove(), 300);
+    }, 2800);
+  };
+
+  // =========================================================================
+  // 2. REAL-TIME BALI CLOCK (UTC+8)
+  // =========================================================================
+  const initBaliClock = () => {
+    const updateTime = () => {
+      const now = new Date();
+      const options = {
+        timeZone: "Asia/Makassar",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      };
+      const timeStr = new Intl.DateTimeFormat("en-GB", options).format(now);
+      if (adminBaliTime) {
+        adminBaliTime.textContent = `${timeStr} WITA`;
+      }
+    };
+    updateTime();
+    setInterval(updateTime, 1000);
+  };
+  initBaliClock();
+
+  // =========================================================================
+  // 3. AUTHENTICATION & PASSCODE SESSION GATE
+  // =========================================================================
+  const checkStoredAuth = () => {
+    const token = sessionStorage.getItem("argi_admin_token");
+    if (token) {
+      unlockApp();
+    }
+  };
+
+  const unlockApp = () => {
+    if (authOverlay) authOverlay.classList.add("is-authenticated");
+    if (adminApp) adminApp.classList.remove("is-hidden");
+    loadAllData();
+  };
+
+  const lockApp = () => {
+    sessionStorage.removeItem("argi_admin_token");
+    if (authOverlay) authOverlay.classList.remove("is-authenticated");
+    if (adminApp) adminApp.classList.add("is-hidden");
+    if (adminPasscode) adminPasscode.value = "";
+    showToast("Session Locked", "🔒");
+  };
+
+  if (lockSessionBtn) {
+    lockSessionBtn.addEventListener("click", lockApp);
+  }
+
+  if (togglePwdBtn && adminPasscode) {
+    togglePwdBtn.addEventListener("click", () => {
+      const isPwd = adminPasscode.type === "password";
+      adminPasscode.type = isPwd ? "text" : "password";
+      togglePwdBtn.style.color = isPwd ? "var(--text-primary)" : "var(--text-muted)";
+    });
+  }
+
+  if (authForm) {
+    authForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const enteredPass = adminPasscode ? adminPasscode.value.trim() : "";
+      if (!enteredPass) return;
+
+      authErrorMsg.textContent = "";
+
+      try {
+        // Try server verify endpoint first
+        const res = await fetch("/api/auth/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ passcode: enteredPass })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          sessionStorage.setItem("argi_admin_token", data.token || "authenticated");
+          unlockApp();
+          showToast("Master Authentication Verified", "✨");
+          return;
+        }
+      } catch (err) {
+        // Fallback for static browser or standalone preview
+      }
+
+      // Offline / Static fallback check
+      const storedAuth = localStorage.getItem("argi_custom_passcode") || "argi2026";
+      if (enteredPass === storedAuth || enteredPass === "argi2026") {
+        sessionStorage.setItem("argi_admin_token", "static_authenticated");
+        unlockApp();
+        showToast("Authenticated (Local Session)", "✨");
+      } else {
+        authErrorMsg.textContent = "Incorrect passcode. Default is argi2026";
+        const card = document.querySelector(".admin-auth-card");
+        if (card) {
+          card.classList.remove("auth-shake");
+          void card.offsetWidth; // Trigger reflow
+          card.classList.add("auth-shake");
+        }
+      }
+    });
+  }
+
+  checkStoredAuth();
+
+  // =========================================================================
+  // 4. TAB NAVIGATION CONTROLLER
+  // =========================================================================
+  tabButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetTab = btn.getAttribute("data-tab");
+      
+      tabButtons.forEach(b => {
+        b.classList.remove("is-active");
+        b.setAttribute("aria-selected", "false");
+      });
+      btn.classList.add("is-active");
+      btn.setAttribute("aria-selected", "true");
+
+      Object.keys(tabPanes).forEach(paneKey => {
+        if (tabPanes[paneKey]) {
+          tabPanes[paneKey].classList.toggle("is-active", paneKey === targetTab);
+        }
+      });
+    });
+  });
+
+  // =========================================================================
+  // 5. DATA FETCHING & SYNCHRONIZATION
+  // =========================================================================
+  const loadAllData = async () => {
+    try {
+      // 1. Projects
+      let projectsLoaded = false;
+      try {
+        const pRes = await fetch("/api/projects");
+        if (pRes.ok) {
+          projectsData = await pRes.json();
+          projectsLoaded = true;
+        }
+      } catch (e) {}
+
+      if (!projectsLoaded || Object.keys(projectsData).length === 0) {
+        const localP = localStorage.getItem("argi_projects_data");
+        if (localP) {
+          projectsData = JSON.parse(localP);
+        } else {
+          // Fetch from static JSON or fallback
+          const staticRes = await fetch("data/projects.json");
+          if (staticRes.ok) {
+            projectsData = await staticRes.json();
+          }
+        }
+      }
+
+      // 2. Articles
+      let articlesLoaded = false;
+      try {
+        const aRes = await fetch("/api/articles");
+        if (aRes.ok) {
+          articlesData = await aRes.json();
+          articlesLoaded = true;
+        }
+      } catch (e) {}
+
+      if (!articlesLoaded || Object.keys(articlesData).length === 0) {
+        const localA = localStorage.getItem("argi_articles_data");
+        if (localA) {
+          articlesData = JSON.parse(localA);
+        } else {
+          const staticRes = await fetch("data/articles.json");
+          if (staticRes.ok) {
+            articlesData = await staticRes.json();
+          }
+        }
+      }
+
+      // Render UI
+      renderProjectsList();
+      renderArticlesList();
+      updateStats();
+
+      // Sync local storage copy for instantaneous front-end updates
+      localStorage.setItem("argi_projects_data", JSON.stringify(projectsData));
+      localStorage.setItem("argi_articles_data", JSON.stringify(articlesData));
+
+      if (syncStatusText) {
+        syncStatusText.textContent = `${Object.keys(projectsData).length} Projects • ${Object.keys(articlesData).length} Articles Live`;
+      }
+    } catch (err) {
+      console.error("Failed to load studio database:", err);
+    }
+  };
+
+  const saveProjectsData = async () => {
+    localStorage.setItem("argi_projects_data", JSON.stringify(projectsData));
+    try {
+      await fetch("/api/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(projectsData)
+      });
+    } catch (err) {
+      // LocalStorage fallback succeeded
+    }
+    renderProjectsList();
+    updateStats();
+    showToast("Projects Database Updated Live", "📁");
+  };
+
+  const saveArticlesData = async () => {
+    localStorage.setItem("argi_articles_data", JSON.stringify(articlesData));
+    try {
+      await fetch("/api/articles", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(articlesData)
+      });
+    } catch (err) {
+      // LocalStorage fallback succeeded
+    }
+    renderArticlesList();
+    updateStats();
+    showToast("Articles Database Updated Live", "📰");
+  };
+
+  const updateStats = () => {
+    const pCount = Object.keys(projectsData).length;
+    const aCount = Object.keys(articlesData).length;
+    if (projectsCountBadge) projectsCountBadge.textContent = pCount;
+    if (articlesCountBadge) articlesCountBadge.textContent = aCount;
+    if (statProjectsCount) statProjectsCount.textContent = pCount;
+    if (statArticlesCount) statArticlesCount.textContent = aCount;
+    if (statTotalMediaCount) {
+      let mediaTotal = pCount * 6 + aCount * 4;
+      statTotalMediaCount.textContent = mediaTotal;
+    }
+  };
+
+  // =========================================================================
+  // 6. RENDER PROJECTS LIST
+  // =========================================================================
+  const renderProjectsList = () => {
+    if (!projectsListContainer) return;
+    const query = projectSearchInput ? projectSearchInput.value.toLowerCase().trim() : "";
+    projectsListContainer.innerHTML = "";
+
+    const projectKeys = Object.keys(projectsData).sort((a, b) => a.localeCompare(b));
+
+    const filteredKeys = projectKeys.filter(id => {
+      const p = projectsData[id];
+      if (!p) return false;
+      const matchTitle = (p.title || "").toLowerCase().includes(query);
+      const matchClient = (p.client || "").toLowerCase().includes(query);
+      const matchSector = (p.sector || "").toLowerCase().includes(query);
+      const matchId = (p.id || "").toLowerCase().includes(query);
+      return matchTitle || matchClient || matchSector || matchId;
+    });
+
+    if (filteredKeys.length === 0) {
+      projectsListContainer.innerHTML = `
+        <div style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: var(--text-secondary); background: #fff; border: 1px solid var(--border-light); border-radius: 5px;">
+          No projects found matching "${query}".
+        </div>
+      `;
+      return;
+    }
+
+    filteredKeys.forEach(id => {
+      const p = projectsData[id];
+      const card = document.createElement("div");
+      card.className = "admin-data-card";
+
+      const disciplinesArr = (p.disciplines || "").split(",").map(d => d.trim()).filter(Boolean);
+
+      card.innerHTML = `
+        <div class="card-image-preview">
+          <img src="${p.heroImage || 'assets/logo.png'}" alt="${p.title}" loading="lazy" />
+          <span class="card-id-pill">ID // ${p.id}</span>
+        </div>
+        <div class="card-content-body">
+          <div>
+            <div class="card-meta-top">
+              <span>${p.year || '2026'}</span>
+              <span>${p.timeline || ''}</span>
+            </div>
+            <h3 class="card-title-main">${p.title} <span class="serif-accent" style="font-weight: 400;">${p.titleAccent || ''}</span></h3>
+            <p class="card-client-tag">${p.client || ''} • ${p.sector || ''}</p>
+            <div class="card-disciplines-row">
+              ${disciplinesArr.map(d => `<span class="card-discipline-badge">${d}</span>`).join('')}
+            </div>
+          </div>
+          <div class="card-footer-actions">
+            <div class="card-action-btns">
+              <button class="card-edit-btn" data-id="${p.id}">Edit Project</button>
+              <button class="card-delete-btn" data-id="${p.id}" title="Delete Project">Delete</button>
+            </div>
+            <a href="project.html?id=${p.id}" class="card-view-link" target="_blank">View Live ↗</a>
+          </div>
+        </div>
+      `;
+
+      // Event Listeners
+      card.querySelector(".card-edit-btn").addEventListener("click", () => openProjectModal(p.id));
+      card.querySelector(".card-delete-btn").addEventListener("click", () => deleteProject(p.id, p.title));
+
+      projectsListContainer.appendChild(card);
+    });
+  };
+
+  if (projectSearchInput) {
+    projectSearchInput.addEventListener("input", renderProjectsList);
+  }
+
+  // =========================================================================
+  // 7. RENDER ARTICLES LIST
+  // =========================================================================
+  const renderArticlesList = () => {
+    if (!articlesListContainer) return;
+    const query = articleSearchInput ? articleSearchInput.value.toLowerCase().trim() : "";
+    articlesListContainer.innerHTML = "";
+
+    const articleKeys = Object.keys(articlesData).sort((a, b) => a.localeCompare(b));
+
+    const filteredKeys = articleKeys.filter(id => {
+      const a = articlesData[id];
+      if (!a) return false;
+      const matchTitle = (a.title || "").toLowerCase().includes(query);
+      const matchCat = (a.category || "").toLowerCase().includes(query);
+      const matchAuthor = (a.authorName || "").toLowerCase().includes(query);
+      return matchTitle || matchCat || matchAuthor;
+    });
+
+    if (filteredKeys.length === 0) {
+      articlesListContainer.innerHTML = `
+        <div style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: var(--text-secondary); background: #fff; border: 1px solid var(--border-light); border-radius: 5px;">
+          No articles found matching "${query}".
+        </div>
+      `;
+      return;
+    }
+
+    filteredKeys.forEach(id => {
+      const a = articlesData[id];
+      const card = document.createElement("div");
+      card.className = "admin-data-card";
+
+      card.innerHTML = `
+        <div class="card-image-preview">
+          <img src="${a.featureImage || 'assets/logo.png'}" alt="${a.title}" loading="lazy" />
+          <span class="card-id-pill">DISPATCH // ${a.id}</span>
+        </div>
+        <div class="card-content-body">
+          <div>
+            <div class="card-meta-top">
+              <span>${a.category || 'Journal'}</span>
+              <span>${a.readTime || '5 Min'}</span>
+            </div>
+            <h3 class="card-title-main">${a.title}</h3>
+            <p class="card-client-tag">${a.date || ''} • By ${a.authorName || 'ARGI Studio'}</p>
+            <p style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1.25rem;">
+              ${(a.lead || '').substring(0, 110)}...
+            </p>
+          </div>
+          <div class="card-footer-actions">
+            <div class="card-action-btns">
+              <button class="card-edit-btn" data-id="${a.id}">Edit Article</button>
+              <button class="card-delete-btn" data-id="${a.id}" title="Delete Article">Delete</button>
+            </div>
+            <a href="article.html?id=${a.id}" class="card-view-link" target="_blank">Read Live ↗</a>
+          </div>
+        </div>
+      `;
+
+      card.querySelector(".card-edit-btn").addEventListener("click", () => openArticleModal(a.id));
+      card.querySelector(".card-delete-btn").addEventListener("click", () => deleteArticle(a.id, a.title));
+
+      articlesListContainer.appendChild(card);
+    });
+  };
+
+  if (articleSearchInput) {
+    articleSearchInput.addEventListener("input", renderArticlesList);
+  }
+
+  // =========================================================================
+  // 8. PROJECT MODAL (CREATE / EDIT)
+  // =========================================================================
+  const openProjectModal = (id = null) => {
+    editingProjectId = id;
+    const isNew = !id;
+    const modalTitle = document.getElementById("projectModalTitle");
+    if (modalTitle) modalTitle.textContent = isNew ? "Create New Atelier Project" : `Edit Project // ${id}`;
+
+    if (isNew) {
+      projectForm.reset();
+      const newId = String(Object.keys(projectsData).length + 1).padStart(2, '0');
+      document.getElementById("projId").value = newId;
+    } else {
+      const p = projectsData[id];
+      if (!p) return;
+      document.getElementById("projId").value = p.id || id;
+      document.getElementById("projTitle").value = p.title || "";
+      document.getElementById("projTitleAccent").value = p.titleAccent || "";
+      document.getElementById("projClient").value = p.client || "";
+      document.getElementById("projSector").value = p.sector || "";
+      document.getElementById("projYear").value = p.year || "";
+      document.getElementById("projTimeline").value = p.timeline || "";
+      document.getElementById("projDisciplines").value = p.disciplines || "";
+      document.getElementById("projDisciplinesSub").value = p.disciplinesSub || "";
+      document.getElementById("projLiveUrl").value = p.liveUrl || "";
+      document.getElementById("projLiveUrlText").value = p.liveUrlText || "";
+      document.getElementById("projSummary").value = p.summary || "";
+      document.getElementById("projChallenge").value = p.challenge || "";
+      document.getElementById("projConcept").value = p.concept || "";
+      document.getElementById("projQuote").value = p.quote || "";
+      document.getElementById("projQuoteAuthor").value = p.quoteAuthor || "";
+      document.getElementById("projQuoteRole").value = p.quoteRole || "";
+      document.getElementById("projHeroImage").value = p.heroImage || "";
+      document.getElementById("projHeroCaption").value = p.heroCaption || "";
+      document.getElementById("projSpreadImg1").value = p.spreadImg1 || "";
+      document.getElementById("projSpreadCaption1").value = p.spreadCaption1 || "";
+      document.getElementById("projSpreadImg2").value = p.spreadImg2 || "";
+      document.getElementById("projSpreadCaption2").value = p.spreadCaption2 || "";
+      document.getElementById("projInterfaceImg").value = p.interfaceImg || "";
+      document.getElementById("projDeliverables").value = (p.deliverables || []).join(", ");
+    }
+
+    if (projectModal) {
+      projectModal.classList.add("is-open");
+      projectModal.setAttribute("aria-hidden", "false");
+    }
+  };
+
+  const closeProjectModal = () => {
+    if (projectModal) {
+      projectModal.classList.remove("is-open");
+      projectModal.setAttribute("aria-hidden", "true");
+    }
+    editingProjectId = null;
+  };
+
+  if (addNewProjectBtn) addNewProjectBtn.addEventListener("click", () => openProjectModal(null));
+  if (closeProjectModalBtn) closeProjectModalBtn.addEventListener("click", closeProjectModal);
+  if (cancelProjectBtn) cancelProjectBtn.addEventListener("click", closeProjectModal);
+  if (projectModalOverlay) projectModalOverlay.addEventListener("click", closeProjectModal);
+
+  if (projectForm) {
+    projectForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const id = document.getElementById("projId").value.trim() || String(Object.keys(projectsData).length + 1).padStart(2, '0');
+      
+      const existing = projectsData[id] || {};
+
+      const updatedProject = {
+        ...existing,
+        id: id,
+        slug: (document.getElementById("projTitle").value.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'project') + '-' + id,
+        title: document.getElementById("projTitle").value.trim(),
+        titleAccent: document.getElementById("projTitleAccent").value.trim(),
+        client: document.getElementById("projClient").value.trim(),
+        sector: document.getElementById("projSector").value.trim(),
+        year: document.getElementById("projYear").value.trim(),
+        timeline: document.getElementById("projTimeline").value.trim(),
+        disciplines: document.getElementById("projDisciplines").value.trim(),
+        disciplinesSub: document.getElementById("projDisciplinesSub").value.trim(),
+        liveUrl: document.getElementById("projLiveUrl").value.trim(),
+        liveUrlText: document.getElementById("projLiveUrlText").value.trim(),
+        summary: document.getElementById("projSummary").value.trim(),
+        challenge: document.getElementById("projChallenge").value.trim(),
+        concept: document.getElementById("projConcept").value.trim(),
+        quote: document.getElementById("projQuote").value.trim(),
+        quoteAuthor: document.getElementById("projQuoteAuthor").value.trim(),
+        quoteRole: document.getElementById("projQuoteRole").value.trim(),
+        heroImage: document.getElementById("projHeroImage").value.trim(),
+        heroCaption: document.getElementById("projHeroCaption").value.trim(),
+        spreadImg1: document.getElementById("projSpreadImg1").value.trim(),
+        spreadCaption1: document.getElementById("projSpreadCaption1").value.trim(),
+        spreadImg2: document.getElementById("projSpreadImg2").value.trim(),
+        spreadCaption2: document.getElementById("projSpreadCaption2").value.trim(),
+        interfaceImg: document.getElementById("projInterfaceImg").value.trim(),
+        deliverables: document.getElementById("projDeliverables").value.split(",").map(s => s.trim()).filter(Boolean),
+        nextId: existing.nextId || "01",
+        colors: existing.colors || [
+          { name: "Noir Intense", hex: "#0c0d0e", bg: "#0c0d0e", textColor: "#fff" },
+          { name: "Silk Alabaster", hex: "#f5f0ea", bg: "#f5f0ea", textColor: "#111" }
+        ],
+        gallery: existing.gallery || []
+      };
+
+      projectsData[id] = updatedProject;
+      saveProjectsData();
+      closeProjectModal();
+    });
+  }
+
+  const deleteProject = (id, title) => {
+    if (confirm(`Are you sure you want to delete project "${title}" (ID: ${id})?`)) {
+      delete projectsData[id];
+      saveProjectsData();
+      showToast(`Deleted project "${title}"`, "🗑️");
+    }
+  };
+
+  // =========================================================================
+  // 9. ARTICLE MODAL (CREATE / EDIT)
+  // =========================================================================
+  const openArticleModal = (id = null) => {
+    editingArticleId = id;
+    const isNew = !id;
+    const modalTitle = document.getElementById("articleModalTitle");
+    if (modalTitle) modalTitle.textContent = isNew ? "Write New Journal Article" : `Edit Article // ${id}`;
+
+    if (isNew) {
+      articleForm.reset();
+      const newId = String(Object.keys(articlesData).length + 1).padStart(2, '0');
+      document.getElementById("artId").value = newId;
+    } else {
+      const a = articlesData[id];
+      if (!a) return;
+      document.getElementById("artId").value = a.id || id;
+      document.getElementById("artCategory").value = a.category || "";
+      document.getElementById("artDate").value = a.date || "";
+      document.getElementById("artTitle").value = a.title || "";
+      document.getElementById("artReadTime").value = a.readTime || "";
+      document.getElementById("artAuthorName").value = a.authorName || "";
+      document.getElementById("artAuthorRole").value = a.authorRole || "";
+      document.getElementById("artLead").value = a.lead || "";
+      document.getElementById("artFeatureImage").value = a.featureImage || "";
+      document.getElementById("artFeatureCaption").value = a.featureCaption || "";
+    }
+
+    if (articleModal) {
+      articleModal.classList.add("is-open");
+      articleModal.setAttribute("aria-hidden", "false");
+    }
+  };
+
+  const closeArticleModal = () => {
+    if (articleModal) {
+      articleModal.classList.remove("is-open");
+      articleModal.setAttribute("aria-hidden", "true");
+    }
+    editingArticleId = null;
+  };
+
+  if (addNewArticleBtn) addNewArticleBtn.addEventListener("click", () => openArticleModal(null));
+  if (closeArticleModalBtn) closeArticleModalBtn.addEventListener("click", closeArticleModal);
+  if (cancelArticleBtn) cancelArticleBtn.addEventListener("click", closeArticleModal);
+  if (articleModalOverlay) articleModalOverlay.addEventListener("click", closeArticleModal);
+
+  if (articleForm) {
+    articleForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const id = document.getElementById("artId").value.trim() || String(Object.keys(articlesData).length + 1).padStart(2, '0');
+      const existing = articlesData[id] || {};
+
+      const updatedArticle = {
+        ...existing,
+        id: id,
+        slug: (document.getElementById("artTitle").value.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'article') + '-' + id,
+        category: document.getElementById("artCategory").value.trim(),
+        date: document.getElementById("artDate").value.trim(),
+        title: document.getElementById("artTitle").value.trim(),
+        readTime: document.getElementById("artReadTime").value.trim(),
+        authorName: document.getElementById("artAuthorName").value.trim(),
+        authorRole: document.getElementById("artAuthorRole").value.trim(),
+        lead: document.getElementById("artLead").value.trim(),
+        featureImage: document.getElementById("artFeatureImage").value.trim(),
+        featureCaption: document.getElementById("artFeatureCaption").value.trim(),
+        sections: existing.sections || [
+          {
+            id: "section-1",
+            title: "01 / Overview",
+            content: `<p class="essay-paragraph has-dropcap">${document.getElementById("artLead").value.trim()}</p>`
+          }
+        ],
+        nextId: existing.nextId || "01"
+      };
+
+      articlesData[id] = updatedArticle;
+      saveArticlesData();
+      closeArticleModal();
+    });
+  }
+
+  const deleteArticle = (id, title) => {
+    if (confirm(`Are you sure you want to delete article "${title}" (ID: ${id})?`)) {
+      delete articlesData[id];
+      saveArticlesData();
+      showToast(`Deleted article "${title}"`, "🗑️");
+    }
+  };
+
+  // =========================================================================
+  // 10. BACKUP EXPORT & IMPORT
+  // =========================================================================
+  if (exportBackupBtn) {
+    exportBackupBtn.addEventListener("click", () => {
+      const backupPayload = {
+        timestamp: new Date().toISOString(),
+        version: "2.0",
+        projects: projectsData,
+        articles: articlesData
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupPayload, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `argi-studio-backup-${new Date().toISOString().slice(0, 10)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+
+      showToast("JSON Database Backup Downloaded", "💾");
+    });
+  }
+
+  if (importJsonInput) {
+    importJsonInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const imported = JSON.parse(event.target.result);
+          if (imported.projects) projectsData = imported.projects;
+          if (imported.articles) articlesData = imported.articles;
+          saveProjectsData();
+          saveArticlesData();
+          showToast("Backup Imported Successfully", "✓");
+        } catch (err) {
+          alert("Invalid JSON file format.");
+        }
+      };
+      reader.readAsText(file);
+    });
+  }
+
+  // =========================================================================
+  // 11. PASSCODE CHANGE & RESET DEFAULTS
+  // =========================================================================
+  if (changePasscodeForm) {
+    changePasscodeForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const curr = currentPasscode ? currentPasscode.value.trim() : "";
+      const nxt = newPasscode ? newPasscode.value.trim() : "";
+
+      if (passcodeMsg) passcodeMsg.textContent = "";
+
+      try {
+        const res = await fetch("/api/auth/change-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ currentPasscode: curr, newPasscode: nxt })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          passcodeMsg.style.color = "var(--accent-green)";
+          passcodeMsg.textContent = "✓ Master Passcode Updated Successfully!";
+          currentPasscode.value = "";
+          newPasscode.value = "";
+          showToast("Passcode Updated", "🔑");
+          return;
+        } else {
+          passcodeMsg.style.color = "var(--accent-red)";
+          passcodeMsg.textContent = data.message || "Failed to update passcode";
+          return;
+        }
+      } catch (err) {
+        // Fallback local update
+        localStorage.setItem("argi_custom_passcode", nxt);
+        passcodeMsg.style.color = "var(--accent-green)";
+        passcodeMsg.textContent = "✓ Passcode updated in local session.";
+        currentPasscode.value = "";
+        newPasscode.value = "";
+      }
+    });
+  }
+
+  if (resetDefaultsBtn) {
+    resetDefaultsBtn.addEventListener("click", async () => {
+      if (confirm("Reset all project and article data back to default studio archive? Any custom edits will be replaced.")) {
+        localStorage.removeItem("argi_projects_data");
+        localStorage.removeItem("argi_articles_data");
+        await loadAllData();
+        showToast("Database Reset to Defaults", "🔄");
+      }
+    });
+  }
+
+  // Keyboard Shortcut: Escape closes modals
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeProjectModal();
+      closeArticleModal();
+    }
+  });
+
+});

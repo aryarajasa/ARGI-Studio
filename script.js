@@ -1096,4 +1096,11 @@ ${clientName}`
   };
 
   initPageTransitions();
+
+  // 20. STUDIO ADMIN QUICK SHORTCUT (ALT + A / OPTION + A)
+  document.addEventListener("keydown", (e) => {
+    if (e.altKey && (e.key === "a" || e.key === "A")) {
+      window.location.href = "admin.html";
+    }
+  });
 });

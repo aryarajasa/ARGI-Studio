@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARGI Studio — Private Database & CMS Management</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" id="faviconTag" />
+  <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
+
+  <!-- Google Fonts: Instrument Serif, Inter, SFMono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- =========================================================================
+       1. SECURE PASSCODE ACCESS GATE
+       ========================================================================= -->
+  <div class="admin-auth-overlay" id="authOverlay">
+    <div class="admin-auth-card">
+      <div class="auth-brand-row">
+        <img src="assets/logo.png" alt="ARGI Studio Logo" class="auth-brand-logo" />
+        <span class="auth-badge">Private Atelier Database</span>
+      </div>
+
+      <h1 class="auth-title">
+        Studio Content<br />
+        <em class="serif-accent">Management System</em>
+      </h1>
+      <p class="auth-subtitle">
+        Enter your studio master passcode to manage atelier projects, editorial dispatches, and media assets.
+      </p>
+
+      <form class="auth-form" id="authForm">
+        <div class="auth-input-group">
+          <label for="adminPasscode" class="auth-input-label">Master Passcode</label>
+          <div class="auth-input-wrap">
+            <input 
+              type="password" 
+              id="adminPasscode" 
+              class="auth-input" 
+              placeholder="••••••••" 
+              autocomplete="current-password" 
+              required 
+            />
+            <button type="button" class="auth-toggle-pwd" id="togglePwdBtn" aria-label="Toggle password visibility">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+          <div class="auth-error-msg" id="authErrorMsg"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary auth-submit-btn" id="authSubmitBtn">
+          <span>Authenticate Session</span>
+          <svg class="btn-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M3.33334 8H12.6667M12.6667 8L8.66668 4M12.6667 8L8.66668 12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <div class="auth-footer-hint">
+          <span>💡 Studio Master Key: <code>argi2026</code></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       2. MAIN STUDIO CMS APPLICATION WORKSPACE
+       ========================================================================= -->
+  <div class="admin-app-wrapper is-hidden" id="adminApp">
+    
+    <!-- Top Admin Header -->
+    <header class="admin-topbar">
+      <div class="admin-topbar-left">
+        <a href="index.html" class="admin-brand-link" target="_blank" title="Open Live Site in New Tab">
+          <img src="assets/logo.png" alt="ARGI Studio Logo" class="admin-brand-logo" />
+        </a>
+        <div class="admin-brand-divider"></div>
+        <div class="admin-title-meta">
+          <span class="admin-system-tag">Database CMS v2.0</span>
+          <span class="admin-status-pill">
+            <span class="status-pulse-dot"></span>
+            <span id="syncStatusText">Synced with Live Site</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="admin-topbar-center">
+        <!-- Main Workspace Tabs Navigation -->
+        <nav class="admin-nav-tabs" role="tablist">
+          <button class="admin-tab-btn is-active" data-tab="projects" role="tab" aria-selected="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span>Projects</span>
+            <span class="tab-count-badge" id="projectsCountBadge">6</span>
+          </button>
+
+          <button class="admin-tab-btn" data-tab="articles" role="tab" aria-selected="false">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>Journal</span>
+            <span class="tab-count-badge" id="articlesCountBadge">4</span>
+          </button>
+
+          <button class="admin-tab-btn" data-tab="media-guide" role="tab" aria-selected="false">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span>Media Specs &amp; Sizes</span>
+          </button>
+
+          <button class="admin-tab-btn" data-tab="settings" role="tab" aria-selected="false">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <span>Settings</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="admin-topbar-right">
+        <div class="admin-clock-badge" id="adminBaliTime">00:00:00 WITA</div>
+        
+        <button class="btn btn-secondary admin-action-btn" id="exportBackupBtn" title="Download Complete JSON Backup">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Backup JSON</span>
+        </button>
+
+        <a href="index.html" class="btn btn-secondary admin-action-btn" target="_blank">
+          <span>Live Site ↗</span>
+        </a>
+
+        <button class="admin-lock-btn" id="lockSessionBtn" title="Lock &amp; Sign Out">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dynamic Content Body -->
+    <main class="admin-main-container">
+      
+      <!-- =====================================================================
+           TAB 1: PROJECTS DATABASE MANAGER
+           ===================================================================== -->
+      <section class="admin-tab-pane is-active" id="paneProjects">
+        
+        <!-- Controls Bar -->
+        <div class="pane-action-bar">
+          <div class="pane-title-wrap">
+            <h2 class="pane-heading">Atelier Projects Archive</h2>
+            <p class="pane-subheading">Manage all client case studies, visual assets, bento spreads, and typography specs.</p>
+          </div>
+
+          <div class="pane-controls-group">
+            <div class="admin-search-wrap">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="projectSearchInput" placeholder="Search projects by title, client, sector..." />
+            </div>
+
+            <button class="btn btn-primary" id="addNewProjectBtn">
+              <span>+ New Project</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Projects Grid Container -->
+        <div class="admin-cards-grid" id="projectsListContainer">
+          <!-- Dynamically Injected by admin.js -->
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           TAB 2: ARTICLES / JOURNAL DATABASE MANAGER
+           ===================================================================== -->
+      <section class="admin-tab-pane" id="paneArticles">
+        
+        <!-- Controls Bar -->
+        <div class="pane-action-bar">
+          <div class="pane-title-wrap">
+            <h2 class="pane-heading">Editorial Journal Dispatches</h2>
+            <p class="pane-subheading">Write, edit, and organize studio publications, critical essays, and exhibition monographs.</p>
+          </div>
+
+          <div class="pane-controls-group">
+            <div class="admin-search-wrap">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="articleSearchInput" placeholder="Search articles by title, category, author..." />
+            </div>
+
+            <button class="btn btn-primary" id="addNewArticleBtn">
+              <span>+ New Article</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Articles Grid Container -->
+        <div class="admin-cards-grid" id="articlesListContainer">
+          <!-- Dynamically Injected by admin.js -->
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           TAB 3: MEDIA SPECS & RECOMMENDED SIZES MASTER GUIDE
+           ===================================================================== -->
+      <section class="admin-tab-pane" id="paneMediaGuide">
+        
+        <div class="pane-action-bar">
+          <div class="pane-title-wrap">
+            <h2 class="pane-heading">Studio Media Asset Specifications</h2>
+            <p class="pane-subheading">Exact recommended dimensions, aspect ratios, optimal file formats, and weight budgets for flawless 60FPS performance.</p>
+          </div>
+
+          <div class="pane-controls-group">
+            <span class="guide-tag-pill">✨ Calibrated for 4K Retina &amp; Mobile</span>
+          </div>
+        </div>
+
+        <!-- Guidelines Grid -->
+        <div class="media-specs-grid">
+          
+          <!-- Spec Card 1: Full 100vw Hero Showcases -->
+          <div class="spec-card">
+            <div class="spec-card-header">
+              <div class="spec-type-tag">100VW HERO SHOWCASE</div>
+              <span class="spec-ratio-badge">16:9 / 21:9 Widescreen</span>
+            </div>
+            <h3 class="spec-title">Project &amp; Article Full-Bleed Hero</h3>
+            <p class="spec-desc">Used on the first full-width viewport showcase on case study pages and journal dispatches.</p>
+            <div class="spec-metrics-box">
+              <div class="metric-row">
+                <span class="metric-label">Recommended Resolution:</span>
+                <span class="metric-val highlight">2560 × 1440 px (Min 2000px width)</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Aspect Ratio:</span>
+                <span class="metric-val">16:9 or 21:9 Cinematic</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Recommended Format:</span>
+                <span class="metric-val">WebP / JPG (Quality 82–85)</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Target File Size:</span>
+                <span class="metric-val">&lt; 450 KB (Sub-second load)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Spec Card 2: 2-Column Gallery Cards -->
+          <div class="spec-card">
+            <div class="spec-card-header">
+              <div class="spec-type-tag">PORTFOLIO GALLERY</div>
+              <span class="spec-ratio-badge">4:3 Editorial Ratio</span>
+            </div>
+            <h3 class="spec-title">2-Column Case Study Cards</h3>
+            <p class="spec-desc">Canonical showcase images on the landing page editorial gallery and project headers.</p>
+            <div class="spec-metrics-box">
+              <div class="metric-row">
+                <span class="metric-label">Recommended Resolution:</span>
+                <span class="metric-val highlight">1600 × 1200 px</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Aspect Ratio:</span>
+                <span class="metric-val">4:3 Standard Frame</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Recommended Format:</span>
+                <span class="metric-val">WebP / JPG (Quality 85)</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Target File Size:</span>
+                <span class="metric-val">&lt; 300 KB</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Spec Card 3: 12-Column Asymmetrical Bento Tiles -->
+          <div class="spec-card">
+            <div class="spec-card-header">
+              <div class="spec-type-tag">VISUAL ARCHIVES</div>
+              <span class="spec-ratio-badge">4:3 &amp; 1:1 Mixed</span>
+            </div>
+            <h3 class="spec-title">Bento Grid Gallery Artifacts</h3>
+            <p class="spec-desc">Packaging mockups, stationery debossing details, and tactile macro shots in case studies.</p>
+            <div class="spec-metrics-box">
+              <div class="metric-row">
+                <span class="metric-label">Recommended Resolution:</span>
+                <span class="metric-val highlight">1200 × 900 px (or 1000 × 1000 px)</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Aspect Ratio:</span>
+                <span class="metric-val">4:3 Landscape or 1:1 Square</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Recommended Format:</span>
+                <span class="metric-val">WebP / JPG</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Target File Size:</span>
+                <span class="metric-val">&lt; 250 KB</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Spec Card 4: Hero Floating Stamps & Hover Portals -->
+          <div class="spec-card">
+            <div class="spec-card-header">
+              <div class="spec-type-tag">PARALLAX &amp; HOVER</div>
+              <span class="spec-ratio-badge">4:3 / 1:1 Compact</span>
+            </div>
+            <h3 class="spec-title">Hero Floating Stamps &amp; Index Portals</h3>
+            <p class="spec-desc">Lightweight visual elements scattered across the ASCII hero canvas and cursor hover portal.</p>
+            <div class="spec-metrics-box">
+              <div class="metric-row">
+                <span class="metric-label">Recommended Resolution:</span>
+                <span class="metric-val highlight">800 × 600 px (or 600 × 600 px)</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Aspect Ratio:</span>
+                <span class="metric-val">4:3 or 1:1</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Recommended Format:</span>
+                <span class="metric-val">WebP / JPG / PNG</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Target File Size:</span>
+                <span class="metric-val">&lt; 150 KB</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Spec Card 5: In-Article Comparison Spreads -->
+          <div class="spec-card">
+            <div class="spec-card-header">
+              <div class="spec-type-tag">ESSAY SPREADS</div>
+              <span class="spec-ratio-badge">16:10 / 4:3 Side-by-Side</span>
+            </div>
+            <h3 class="spec-title">2-Column Inline Editorial Photos</h3>
+            <p class="spec-desc">Material comparisons, print checks, binding proofs, and typography close-ups in articles.</p>
+            <div class="spec-metrics-box">
+              <div class="metric-row">
+                <span class="metric-label">Recommended Resolution:</span>
+                <span class="metric-val highlight">1200 × 900 px (or 1400 × 875 px)</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Aspect Ratio:</span>
+                <span class="metric-val">4:3 or 16:10</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Recommended Format:</span>
+                <span class="metric-val">WebP / JPG</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Target File Size:</span>
+                <span class="metric-val">&lt; 250 KB</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Spec Card 6: Autoplay Video Loops & GIFs -->
+          <div class="spec-card">
+            <div class="spec-card-header">
+              <div class="spec-type-tag">MOTION &amp; CINEMA</div>
+              <span class="spec-ratio-badge">MP4 Video Preferred</span>
+            </div>
+            <h3 class="spec-title">Kinetic Motion, Reels &amp; GIFs</h3>
+            <p class="spec-desc">Ambient video showcases, 3D rotating flacons, UI micro-interactions, and motion campaigns.</p>
+            <div class="spec-metrics-box">
+              <div class="metric-row">
+                <span class="metric-label">Recommended Resolution:</span>
+                <span class="metric-val highlight">1920 × 1080 px (1080p) or 1080 × 1080 px</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Frame Rate &amp; Audio:</span>
+                <span class="metric-val">24–30 FPS • Always Muted (No Audio)</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Recommended Format:</span>
+                <span class="metric-val">MP4 (H.264 / AAC) or WebM</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Target File Size:</span>
+                <span class="metric-val">&lt; 2.5 MB – 5 MB (Avoid heavy GIFs)</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           TAB 4: STUDIO SETTINGS & PASSCODE SECURITY
+           ===================================================================== -->
+      <section class="admin-tab-pane" id="paneSettings">
+        <div class="settings-container">
+          
+          <div class="settings-card">
+            <h3 class="settings-card-title">Atelier Passcode Management</h3>
+            <p class="settings-card-desc">Update your master passcode for administrative access to the ARGI Studio database.</p>
+
+            <form class="settings-form" id="changePasscodeForm">
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="currentPasscode" class="form-label">Current Passcode</label>
+                  <input type="password" id="currentPasscode" class="form-control" required />
+                </div>
+                <div class="form-group">
+                  <label for="newPasscode" class="form-label">New Passcode</label>
+                  <input type="password" id="newPasscode" class="form-control" placeholder="Min. 4 characters" required />
+                </div>
+              </div>
+              <div class="settings-btn-row">
+                <button type="submit" class="btn btn-primary">Update Master Passcode</button>
+                <div class="settings-msg" id="passcodeMsg"></div>
+              </div>
+            </form>
+          </div>
+
+          <div class="settings-card">
+            <h3 class="settings-card-title">Database Storage &amp; Persistence</h3>
+            <p class="settings-card-desc">Your database is automatically synced with server-side JSON and client-side storage.</p>
+            
+            <div class="storage-stats-grid">
+              <div class="stat-box">
+                <span class="stat-num" id="statProjectsCount">6</span>
+                <span class="stat-label">Active Projects</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-num" id="statArticlesCount">4</span>
+                <span class="stat-label">Journal Articles</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-num" id="statTotalMediaCount">42</span>
+                <span class="stat-label">Managed Media Assets</span>
+              </div>
+            </div>
+
+            <div class="settings-danger-row">
+              <button class="btn btn-secondary" id="resetDefaultsBtn">Reset to Default Atelier Data</button>
+              <label class="btn btn-secondary" for="importJsonInput" style="cursor: pointer;">
+                <span>Import JSON Backup</span>
+                <input type="file" id="importJsonInput" accept=".json" style="display: none;" />
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- =========================================================================
+       3. MODAL: EDIT / CREATE PROJECT
+       ========================================================================= -->
+  <div class="admin-modal" id="projectModal" aria-hidden="true">
+    <div class="admin-modal-overlay" id="projectModalOverlay"></div>
+    <div class="admin-modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-eyebrow" id="projectModalEyebrow">CASE STUDY BUILDER</span>
+          <h3 class="modal-title" id="projectModalTitle">Edit Project</h3>
+        </div>
+        <button class="modal-close-btn" id="closeProjectModalBtn" aria-label="Close modal">×</button>
+      </div>
+
+      <form class="modal-body-form" id="projectForm">
+        
+        <!-- Tab 1: Core Details -->
+        <fieldset class="form-section">
+          <legend class="section-legend">01. Core Identity &amp; Client Metadata</legend>
+          
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label">Project ID (e.g. 01) *</label>
+              <input type="text" id="projId" class="form-control" required placeholder="01" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Title (Main Name) *</label>
+              <input type="text" id="projTitle" class="form-control" required placeholder="Vivien's" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Title Accent (Serif) *</label>
+              <input type="text" id="projTitleAccent" class="form-control" required placeholder="Haute Couture" />
+            </div>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label">Client Name *</label>
+              <input type="text" id="projClient" class="form-control" required placeholder="Vivien's Haute Couture" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Sector &amp; Location *</label>
+              <input type="text" id="projSector" class="form-control" required placeholder="Luxury Fashion • Paris, FR" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Year &amp; Quarter *</label>
+              <input type="text" id="projYear" class="form-control" required placeholder="Q1 2026" />
+            </div>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label">Production Timeline</label>
+              <input type="text" id="projTimeline" class="form-control" placeholder="14 Weeks" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Disciplines (Main)</label>
+              <input type="text" id="projDisciplines" class="form-control" placeholder="Brand Identity, Packaging" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Disciplines (Sub)</label>
+              <input type="text" id="projDisciplinesSub" class="form-control" placeholder="Web Architecture & Art Direction" />
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Live External Website URL</label>
+              <input type="url" id="projLiveUrl" class="form-control" placeholder="https://viviens-couture.fr" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Live URL Button Text</label>
+              <input type="text" id="projLiveUrlText" class="form-control" placeholder="viviens-couture.fr ↗" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Tab 2: Editorial Copy -->
+        <fieldset class="form-section">
+          <legend class="section-legend">02. Strategic Case Study Narrative</legend>
+          
+          <div class="form-group">
+            <label class="form-label">Project Summary (Intro Lead)</label>
+            <textarea id="projSummary" class="form-control" rows="2" placeholder="A comprehensive brand repositioning..."></textarea>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">The Challenge (Strategic Problem)</label>
+              <textarea id="projChallenge" class="form-control" rows="3" placeholder="Vivien’s required a total visual reinvention..."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">The Concept &amp; Execution</label>
+              <textarea id="projConcept" class="form-control" rows="3" placeholder="We engineered an architectural typographic identity..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Client Endorsement / Pull Quote</label>
+            <textarea id="projQuote" class="form-control" rows="2" placeholder="ARGI Studio captured the exact balance..."></textarea>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Quote Author Name</label>
+              <input type="text" id="projQuoteAuthor" class="form-control" placeholder="Éléonore de Vivien" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Quote Author Role</label>
+              <input type="text" id="projQuoteRole" class="form-control" placeholder="Creative Director & Founder" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Tab 3: Visual & Media Showcase -->
+        <fieldset class="form-section">
+          <legend class="section-legend">03. Visual Assets &amp; Media Links</legend>
+          
+          <div class="form-group">
+            <div class="label-with-badge">
+              <label class="form-label">100vw Full-Bleed Hero Image URL *</label>
+              <span class="media-hint-badge">Recommended: 2560 × 1440 px • 16:9 • &lt;450KB</span>
+            </div>
+            <input type="url" id="projHeroImage" class="form-control" required placeholder="https://images.unsplash.com/..." />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Hero Image Caption Label</label>
+            <input type="text" id="projHeroCaption" class="form-control" placeholder="EDITORIAL LOOKBOOK & BESPOKE STATIONERY SYSTEM" />
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <div class="label-with-badge">
+                <label class="form-label">Spread Image 1 URL</label>
+                <span class="media-hint-badge">1200 × 900 px • 4:3</span>
+              </div>
+              <input type="url" id="projSpreadImg1" class="form-control" placeholder="https://..." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Spread 1 Caption</label>
+              <input type="text" id="projSpreadCaption1" class="form-control" placeholder="01 / Archival Lookbook..." />
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <div class="label-with-badge">
+                <label class="form-label">Spread Image 2 URL</label>
+                <span class="media-hint-badge">1200 × 900 px • 4:3</span>
+              </div>
+              <input type="url" id="projSpreadImg2" class="form-control" placeholder="https://..." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Spread 2 Caption</label>
+              <input type="text" id="projSpreadCaption2" class="form-control" placeholder="02 / Tactile Garment Tags..." />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="label-with-badge">
+              <label class="form-label">Digital Flagship UI Showcase URL</label>
+              <span class="media-hint-badge">1600 × 1000 px • 16:10</span>
+            </div>
+            <input type="url" id="projInterfaceImg" class="form-control" placeholder="https://..." />
+          </div>
+        </fieldset>
+
+        <!-- Tab 4: Deliverables -->
+        <fieldset class="form-section">
+          <legend class="section-legend">04. Deliverables Scope (Comma-separated)</legend>
+          <div class="form-group">
+            <textarea id="projDeliverables" class="form-control" rows="2" placeholder="Brand Strategy, Custom Wordmark, Packaging Suite, Shopify Flagship, Social Campaign"></textarea>
+          </div>
+        </fieldset>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelProjectBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Project to Database</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       4. MODAL: EDIT / CREATE ARTICLE
+       ========================================================================= -->
+  <div class="admin-modal" id="articleModal" aria-hidden="true">
+    <div class="admin-modal-overlay" id="articleModalOverlay"></div>
+    <div class="admin-modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-eyebrow" id="articleModalEyebrow">EDITORIAL DISPATCH BUILDER</span>
+          <h3 class="modal-title" id="articleModalTitle">Edit Journal Article</h3>
+        </div>
+        <button class="modal-close-btn" id="closeArticleModalBtn" aria-label="Close modal">×</button>
+      </div>
+
+      <form class="modal-body-form" id="articleForm">
+        
+        <fieldset class="form-section">
+          <legend class="section-legend">01. Article Header &amp; Metadata</legend>
+          
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label">Article ID (e.g. 01) *</label>
+              <input type="text" id="artId" class="form-control" required placeholder="01" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category *</label>
+              <input type="text" id="artCategory" class="form-control" required placeholder="Publication & Print Matter" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Publish Date *</label>
+              <input type="text" id="artDate" class="form-control" required placeholder="February 14, 2026" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Article Title Headline *</label>
+            <input type="text" id="artTitle" class="form-control" required placeholder="ARGI Studio Monograph Vol. 02 Released..." />
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label">Read Time Estimate</label>
+              <input type="text" id="artReadTime" class="form-control" placeholder="6 Min Read" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Author Name</label>
+              <input type="text" id="artAuthorName" class="form-control" placeholder="Arya Rajasa" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Author Role &amp; Atelier</label>
+              <input type="text" id="artAuthorRole" class="form-control" placeholder="Founder & Design Director • ARGI Studio" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Lead Introductory Paragraph *</label>
+            <textarea id="artLead" class="form-control" rows="2" required placeholder="An in-depth retrospective on tactile materiality..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <div class="label-with-badge">
+              <label class="form-label">100vw Feature Hero Image URL *</label>
+              <span class="media-hint-badge">Recommended: 2560 × 1440 px • 16:9 • &lt;450KB</span>
+            </div>
+            <input type="url" id="artFeatureImage" class="form-control" required placeholder="https://images.unsplash.com/..." />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Feature Image Caption</label>
+            <input type="text" id="artFeatureCaption" class="form-control" placeholder="ARGI Monograph Vol. 02 — Cloth-bound hardcover..." />
+          </div>
+        </fieldset>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelArticleBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Article to Database</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Notification Toast Container -->
+  <div class="admin-toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="admin.js"></script>
+</body>
+</html>

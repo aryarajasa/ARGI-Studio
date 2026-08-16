@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------------------------------------------------
   // 1. ARTICLES REPOSITORY (EDITORIAL DATABASE)
   // -------------------------------------------------------------------------
-  const ARTICLES_DATA = {
+  const DEFAULT_ARTICLES_DATA = {
     "01": {
       id: "01",
       slug: "monograph-vol-02-tokyo-art-book-fair",
@@ -339,13 +339,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Dynamic Database Resolution (Syncs with Admin CMS)
+  let ARTICLES_DATA = DEFAULT_ARTICLES_DATA;
+  try {
+    const localData = localStorage.getItem("argi_articles_data");
+    if (localData) {
+      const parsed = JSON.parse(localData);
+      if (parsed && Object.keys(parsed).length > 0) {
+        ARTICLES_DATA = parsed;
+      }
+    }
+  } catch (e) {}
+
   // -------------------------------------------------------------------------
   // 2. QUERY PARAMETER ROUTING & ARTICLE RESOLUTION
   // -------------------------------------------------------------------------
   const urlParams = new URLSearchParams(window.location.search);
   const articleId = urlParams.get("id") || "01";
-  const currentArticle = ARTICLES_DATA[articleId] || ARTICLES_DATA["01"];
-  const nextArticle = ARTICLES_DATA[currentArticle.nextId] || ARTICLES_DATA["01"];
+  const currentArticle = ARTICLES_DATA[articleId] || DEFAULT_ARTICLES_DATA["01"];
+  const nextArticle = ARTICLES_DATA[currentArticle.nextId] || currentArticle;
 
   // Update Page Title
   document.title = `${currentArticle.title} — ARGI Studio Journal`;

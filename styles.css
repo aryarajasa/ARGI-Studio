@@ -911,12 +911,38 @@ body.site-ready .page-wrapper {
   }
 }
 
-/* Crisp solid straight horizontal border dividing sections */
+/* Crisp solid straight horizontal border dividing sections - Aligned exactly between the vertical dashed lines */
 .section-process,
 .section-services,
 .section-news,
 .section-contact {
-  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-top: none !important;
+  position: relative;
+}
+
+.section-process::before,
+.section-services::before,
+.section-news::before,
+.section-contact::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(50% - (var(--container-max-width) / 2) - 10px);
+  right: calc(50% - (var(--container-max-width) / 2) - 10px);
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  z-index: 3;
+}
+
+@media screen and (max-width: 1240px) {
+  .section-process::before,
+  .section-services::before,
+  .section-news::before,
+  .section-contact::before {
+    left: calc(var(--container-padding) - 10px);
+    right: calc(var(--container-padding) - 10px);
+  }
 }
 
 /* --- SECTION 1: MISSION --- */

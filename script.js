@@ -1,4 +1,4 @@
-import { getCloudProjects, getCloudArticles, subscribeCloudProjects } from "./firebase-config.js";
+import { getCloudProjects, getCloudArticles } from "./supabase-config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // 1. SELECTORS & ELEMENTS

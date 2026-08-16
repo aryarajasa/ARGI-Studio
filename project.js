@@ -1,4 +1,4 @@
-import { getCloudProjects } from "./firebase-config.js";
+import { getCloudProjects } from "./supabase-config.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
 

@@ -1,4 +1,4 @@
-import { getCloudArticles } from "./firebase-config.js";
+import { getCloudArticles } from "./supabase-config.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
 

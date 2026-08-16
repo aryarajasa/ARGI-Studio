@@ -5,9 +5,8 @@ import {
   getCloudArticles, 
   saveCloudArticle, 
   deleteCloudArticle, 
-  uploadCloudMedia,
-  subscribeCloudProjects
-} from "./firebase-config.js";
+  uploadCloudMedia
+} from "./supabase-config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -237,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updateStats();
 
       if (syncStatusText) {
-        syncStatusText.textContent = `☁️ Firebase Live: ${Object.keys(projectsData).length} Projects • ${Object.keys(articlesData).length} Articles`;
+        syncStatusText.textContent = `⚡ Supabase Live: ${Object.keys(projectsData).length} Projects • ${Object.keys(articlesData).length} Articles`;
       }
     } catch (err) {
       console.error("Failed to load studio database:", err);

@@ -427,9 +427,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let width = 0;
     let height = 0;
     let dpr = 1;
-    const pixelSize = 4;   // Slightly larger, crisp ContraLabs pixels
-    const gap = 2;         // Tight 2px spacing
-    const step = pixelSize + gap; // 6px total grid pitch
+    const pixelSize = 3;   // Crisp 3px micro-pixels matching ContraLabs reference
+    const gap = 1.5;       // Tight 1.5px gap
+    const step = pixelSize + gap; // 4.5px total pitch
     let cols = 0;
     let rows = 0;
     let pixels = [];
@@ -440,6 +440,14 @@ document.addEventListener("DOMContentLoaded", () => {
       targetX: -1000,
       targetY: -1000,
       isHovered: false
+    };
+
+    // Smooth continuous 2D procedural noise for natural organic pixel clustering
+    const smoothNoise = (x, y) => {
+      const n1 = Math.sin(x * 0.015 + 1.2) * Math.cos(y * 0.015 + 0.8);
+      const n2 = Math.sin(x * 0.035 - y * 0.025) * 0.5;
+      const n3 = Math.cos(x * 0.008 + y * 0.01) * 0.3;
+      return (n1 + n2 + n3 + 1.8) / 3.6; // normalized 0 to 1
     };
 
     const resize = () => {
@@ -460,45 +468,23 @@ document.addEventListener("DOMContentLoaded", () => {
       rows = Math.ceil(height / step);
       pixels = [];
 
-      // Generate random cluster anchor centers across the canvas
-      const clusterCenters = [
-        { x: width * 0.22, y: height * 0.18, r: 85 },
-        { x: width * 0.78, y: height * 0.25, r: 95 },
-        { x: width * 0.50, y: height * 0.50, r: 75 },
-        { x: width * 0.18, y: height * 0.78, r: 100 },
-        { x: width * 0.82, y: height * 0.82, r: 90 },
-        { x: width * 0.45, y: height * 0.12, r: 60 }
-      ];
-
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const x = c * step;
           const y = r * step;
 
-          // Check proximity to cluster centers (ContraLabs island patches)
-          let inCluster = false;
-          let clusterIntensity = 0;
-
-          for (let i = 0; i < clusterCenters.length; i++) {
-            const cc = clusterCenters[i];
-            const dx = x - cc.x;
-            const dy = y - cc.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < cc.r) {
-              inCluster = true;
-              clusterIntensity = Math.max(clusterIntensity, (1 - dist / cc.r));
-            }
+          // Continuous natural noise field
+          const noiseVal = smoothNoise(x, y);
+          
+          // Smooth threshold: creates seamless organic islands with natural fade-out edges
+          let density = 0;
+          if (noiseVal > 0.48) {
+            // Smooth easing from threshold to peak
+            density = Math.min(1, Math.pow((noiseVal - 0.48) / 0.35, 1.8));
           }
 
-          // In cluster: dense, tight micro-pixels; Outside: mostly empty with rare stray pixels
-          const shouldSpawn = inCluster 
-            ? (Math.random() < 0.75) // Very dense within cluster
-            : (Math.random() < 0.04); // Sparsely empty outside
-
-          if (shouldSpawn) {
-            const baseAlpha = inCluster 
-              ? (0.15 + clusterIntensity * 0.35 + Math.random() * 0.15)
-              : (Math.random() * 0.12 + 0.04);
+          if (density > 0.02) {
+            const baseAlpha = density * 0.28 + (Math.random() * 0.08);
 
             pixels.push({
               x,
@@ -506,8 +492,9 @@ document.addEventListener("DOMContentLoaded", () => {
               alpha: baseAlpha,
               targetAlpha: baseAlpha,
               baseAlpha,
-              speed: 1.0 + Math.random() * 1.6,
-              phase: (r * 0.3 + c * 0.3) + Math.random() * Math.PI
+              density,
+              speed: 0.8 + Math.random() * 1.2,
+              phase: Math.random() * Math.PI * 2
             });
           }
         }
@@ -538,30 +525,30 @@ document.addEventListener("DOMContentLoaded", () => {
     triggerPixelBurst = () => {
       const len = pixels.length;
       for (let i = 0; i < len; i++) {
-        pixels[i].alpha = Math.random() * 0.65 + 0.35;
+        pixels[i].alpha = Math.min(1, pixels[i].baseAlpha * 2.5 + Math.random() * 0.4);
       }
     };
 
     let tick = 0;
     const render = () => {
-      tick += 0.025;
+      tick += 0.02;
       mouse.x += (mouse.targetX - mouse.x) * 0.22;
       mouse.y += (mouse.targetY - mouse.y) * 0.22;
 
       ctx.clearRect(0, 0, width, height);
 
-      const hoverRadius = 90;
+      const hoverRadius = 85;
       const hoverRadiusSq = hoverRadius * hoverRadius;
       const len = pixels.length;
 
       for (let i = 0; i < len; i++) {
         const p = pixels[i];
 
-        // Constant dense, tight ambient shimmer in idle state
+        // Organic harmonic idle shimmer
         const wave = Math.sin(tick * p.speed + p.phase);
-        let desired = p.baseAlpha * (0.55 + 0.45 * wave);
+        let desired = p.baseAlpha * (0.65 + 0.35 * wave);
 
-        // Interactive hover wave boost
+        // Interactive hover boost
         if (mouse.isHovered && mouse.x > 0 && mouse.y > 0) {
           const dx = p.x - mouse.x;
           const dy = p.y - mouse.y;
@@ -570,13 +557,13 @@ document.addEventListener("DOMContentLoaded", () => {
           if (distSq < hoverRadiusSq) {
             const dist = Math.sqrt(distSq);
             const proximity = 1 - dist / hoverRadius;
-            const hoverBoost = Math.pow(proximity, 1.4) * (0.75 + 0.25 * Math.sin(tick * 8 + p.phase));
+            const hoverBoost = Math.pow(proximity, 1.4) * (0.6 + 0.3 * Math.sin(tick * 6 + p.phase));
             desired = Math.max(desired, hoverBoost);
           }
         }
 
         // Smooth alpha interpolation
-        p.alpha += (desired - p.alpha) * 0.18;
+        p.alpha += (desired - p.alpha) * 0.15;
 
         if (p.alpha > 0.015) {
           ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha.toFixed(3)})`;

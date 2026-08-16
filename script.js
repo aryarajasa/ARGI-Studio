@@ -472,7 +472,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const journalGrid = document.getElementById("newsCardsGrid") || document.querySelector(".news-cards-grid");
     if (journalGrid) {
-      const articleKeys = Object.keys(articlesData).sort((a, b) => a.localeCompare(b));
+      // Limit to 3 showcase articles
+      const articleKeys = Object.keys(articlesData).sort((a, b) => a.localeCompare(b)).slice(0, 3);
       
       journalGrid.innerHTML = articleKeys.map(id => {
         const a = articlesData[id];

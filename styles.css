@@ -2730,14 +2730,16 @@ body.site-ready .page-wrapper {
 
   /* Journal / News */
   .news-header-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.25rem;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
   }
 
   .news-cards-grid {
-    grid-template-columns: 1fr;
-    gap: 1.75rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 
   /* Contact Workbench */

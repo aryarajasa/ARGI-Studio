@@ -377,28 +377,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Populate 4-Column Metadata
   const csMetaClient = document.getElementById("csMetaClient");
-  if (csMetaClient) csMetaClient.textContent = currentProject.client;
+  if (csMetaClient) csMetaClient.textContent = currentProject.client || "TBA";
 
   const csMetaSector = document.getElementById("csMetaSector");
-  if (csMetaSector) csMetaSector.textContent = currentProject.sector;
+  if (csMetaSector) csMetaSector.textContent = currentProject.sector || "TBA";
 
   const csMetaTimeline = document.getElementById("csMetaTimeline");
-  if (csMetaTimeline) csMetaTimeline.textContent = currentProject.timeline;
+  if (csMetaTimeline) csMetaTimeline.textContent = currentProject.timeline || "TBA";
 
   const csMetaYear = document.getElementById("csMetaYear");
-  if (csMetaYear) csMetaYear.textContent = currentProject.year;
+  if (csMetaYear) csMetaYear.textContent = currentProject.year || "TBA";
 
   const csMetaDisciplines = document.getElementById("csMetaDisciplines");
-  if (csMetaDisciplines) csMetaDisciplines.textContent = currentProject.disciplines;
+  if (csMetaDisciplines) csMetaDisciplines.textContent = currentProject.disciplines || "TBA";
 
   const csMetaDisciplinesSub = document.getElementById("csMetaDisciplinesSub");
-  if (csMetaDisciplinesSub) csMetaDisciplinesSub.textContent = currentProject.disciplinesSub;
+  if (csMetaDisciplinesSub) csMetaDisciplinesSub.textContent = currentProject.disciplinesSub || "";
 
+  // Live External Website URL & Button Text with automatic "TBA" Fallback
   const csMetaLiveUrl = document.getElementById("csMetaLiveUrl");
   const csMetaLiveText = document.getElementById("csMetaLiveText");
+  const csMetaLiveSub = document.getElementById("csMetaLiveSub");
+
+  const rawLiveUrl = (currentProject.liveUrl || "").trim();
+  const rawLiveText = (currentProject.liveUrlText || "").trim();
+
   if (csMetaLiveUrl && csMetaLiveText) {
-    csMetaLiveUrl.href = currentProject.liveUrl;
-    csMetaLiveText.textContent = currentProject.liveUrlText;
+    if (rawLiveUrl) {
+      csMetaLiveUrl.href = rawLiveUrl;
+      csMetaLiveUrl.style.pointerEvents = "auto";
+      csMetaLiveUrl.style.opacity = "1";
+      csMetaLiveUrl.style.cursor = "pointer";
+      csMetaLiveUrl.setAttribute("target", "_blank");
+      csMetaLiveUrl.setAttribute("rel", "noopener noreferrer");
+      csMetaLiveText.textContent = rawLiveText || rawLiveUrl.replace(/^https?:\/\//, '') + " ↗";
+      if (csMetaLiveSub) csMetaLiveSub.textContent = "Production Live";
+    } else {
+      csMetaLiveUrl.removeAttribute("href");
+      csMetaLiveUrl.style.pointerEvents = "none";
+      csMetaLiveUrl.style.cursor = "default";
+      csMetaLiveText.textContent = rawLiveText || "TBA";
+      if (csMetaLiveSub) csMetaLiveSub.textContent = "To Be Announced";
+    }
   }
 
   // Populate Hero Image Frame
@@ -472,7 +492,9 @@ document.addEventListener("DOMContentLoaded", () => {
     csInterfaceImg.alt = `${currentProject.title} Interface Showcase`;
   }
   const csBrowserUrl = document.getElementById("csBrowserUrl");
-  if (csBrowserUrl) csBrowserUrl.textContent = currentProject.browserUrl;
+  if (csBrowserUrl) {
+    csBrowserUrl.textContent = currentProject.liveUrl ? currentProject.liveUrl.replace(/^https?:\/\//, '').replace(/\/$/, '') : "TBA";
+  }
 
   // Populate Curated Bento Grid
   const csGalleryMosaic = document.getElementById("csGalleryMosaic");

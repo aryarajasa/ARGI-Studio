@@ -874,14 +874,9 @@ body.site-ready .page-wrapper {
   position: relative;
 }
 
-/* Continuous thin dashed architectural side boundary lines with wider editorial margin */
-.section:not(.section-datasets-dark) > .container-medium,
-.section-hero > .hero-center-content {
-  position: relative;
-}
-
-.section:not(.section-datasets-dark) > .container-medium::before,
-.section:not(.section-datasets-dark) > .container-medium::after {
+/* Continuous thin dashed architectural side boundary lines framing the entire content width without gaps */
+.section:not(.section-datasets-dark)::before,
+.section:not(.section-datasets-dark)::after {
   content: "";
   position: absolute;
   top: 0;
@@ -892,13 +887,22 @@ body.site-ready .page-wrapper {
   z-index: 2;
 }
 
-/* Widened outer margin for dashed boundary line */
-.section:not(.section-datasets-dark) > .container-medium::before {
-  left: -20px;
+/* Positioned exactly at the container boundary with a wider margin (-20px) */
+.section:not(.section-datasets-dark)::before {
+  left: calc(50% - (var(--container-max-width) / 2) - 20px);
 }
 
-.section:not(.section-datasets-dark) > .container-medium::after {
-  right: -20px;
+.section:not(.section-datasets-dark)::after {
+  right: calc(50% - (var(--container-max-width) / 2) - 20px);
+}
+
+@media screen and (max-width: 1240px) {
+  .section:not(.section-datasets-dark)::before {
+    left: calc(var(--container-padding) - 20px);
+  }
+  .section:not(.section-datasets-dark)::after {
+    right: calc(var(--container-padding) - 20px);
+  }
 }
 
 /* Crisp solid straight horizontal border dividing sections */

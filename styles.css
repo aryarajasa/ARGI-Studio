@@ -1865,8 +1865,6 @@ body.site-ready .page-wrapper {
   z-index: 2;
   display: block;
   width: 100%;
-  max-width: 860px;
-  margin: 0 auto;
   box-sizing: border-box;
 }
 

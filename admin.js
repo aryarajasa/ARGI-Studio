@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
         unlockApp();
         showToast("Authenticated (Local Session)", "✨");
       } else {
-        authErrorMsg.textContent = "Incorrect passcode. Default is argi2026";
+        authErrorMsg.textContent = "Incorrect studio passcode. Please try again.";
         const card = document.querySelector(".admin-auth-card");
         if (card) {
           card.classList.remove("auth-shake");

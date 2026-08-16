@@ -6,7 +6,7 @@
 :root {
   /* Colors */
   --bg-hero: #f6f1eb;
-  --bg-body: #f7f7f5;
+  --bg-body: #f6f1eb;
   --bg-card: #ffffff;
   --bg-subtle: #ede8e1;
   --bg-dark: #0c0d0e;
@@ -664,7 +664,7 @@ body.site-ready .page-wrapper {
 /* --- HERO SECTION (100VH FULL VIEWPORT WITH SHARP 0px RADIUS FLOATING CARDS) --- */
 .section-hero {
   position: relative;
-  background: linear-gradient(180deg, var(--bg-hero) 0%, var(--bg-hero) 70%, var(--bg-body) 100%);
+  background-color: var(--bg-hero);
   min-height: 100vh;
   height: 100vh;
   height: 100dvh;
@@ -675,19 +675,7 @@ body.site-ready .page-wrapper {
   padding: 0 var(--container-padding);
   overflow: hidden;
   box-sizing: border-box;
-}
-
-/* Seamless Bottom Gradient Fade into Section 1 */
-.section-hero::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 180px;
-  background: linear-gradient(to bottom, rgba(247, 247, 245, 0) 0%, var(--bg-body) 100%);
-  pointer-events: none;
-  z-index: 3;
+  transition: background-color 0.4s ease;
 }
 
 .hero-ascii-canvas {
@@ -697,8 +685,6 @@ body.site-ready .page-wrapper {
   height: 100%;
   pointer-events: none;
   z-index: 1;
-  mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
 }
 
 /* Scattered Floating Gallery with Sharp 0px Edges */

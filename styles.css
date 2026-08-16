@@ -6,9 +6,9 @@
 :root {
   /* Colors */
   --bg-hero: #f6f1eb;
-  --bg-body: #ffffff;
-  --bg-card: #fbfbf9;
-  --bg-subtle: #f4f4f0;
+  --bg-body: #f7f7f5;
+  --bg-card: #ffffff;
+  --bg-subtle: #ede8e1;
   --bg-dark: #0c0d0e;
   --bg-dark-card: #141618;
   --bg-dark-card-border: rgba(255, 255, 255, 0.08);

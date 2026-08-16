@@ -353,18 +353,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Dynamic On-Scroll Background Morph: Hero warm alabaster -> Section 1 crisp white
+    // Dynamic Continuous Background Morph: Hero warm alabaster (#f6f1eb) -> Pure White (#ffffff)
     const scrollY = window.scrollY;
     const heroEl = document.getElementById("top") || document.querySelector(".section-hero");
-    const missionEl = document.getElementById("mission");
     
-    if (heroEl && missionEl) {
-      const heroHeight = heroEl.offsetHeight || window.innerHeight;
-      if (scrollY > heroHeight * 0.35) {
-        document.body.classList.add("scrolled-past-hero");
-      } else {
-        document.body.classList.remove("scrolled-past-hero");
-      }
+    if (heroEl) {
+      const heroH = heroEl.offsetHeight || window.innerHeight;
+      // Calculate progress from 0 (top) to 1 (when scrolled halfway through hero)
+      const morphProgress = Math.min(Math.max(scrollY / (heroH * 0.55), 0), 1);
+      
+      // Interpolate from #f6f1eb (246, 241, 235) to #ffffff (255, 255, 255)
+      const r = Math.round(246 + (255 - 246) * morphProgress);
+      const g = Math.round(241 + (255 - 241) * morphProgress);
+      const b = Math.round(235 + (255 - 235) * morphProgress);
+      const currentColor = `rgb(${r}, ${g}, ${b})`;
+
+      heroEl.style.backgroundColor = currentColor;
     }
 
     navLinks.forEach((link) => {

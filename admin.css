@@ -203,10 +203,23 @@
 }
 
 .admin-app-wrapper.is-hidden {
-  display: none;
+  display: none !important;
 }
 
-/* Top Admin Bar */
+.btn.is-disabled {
+  opacity: 0.65;
+  cursor: not-allowed !important;
+  background: #ede8e1 !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-light) !important;
+  box-shadow: none !important;
+}
+
+.btn.is-disabled:hover {
+  transform: none !important;
+  border-color: var(--border-light) !important;
+}
+
 .admin-topbar {
   position: sticky;
   top: 0;

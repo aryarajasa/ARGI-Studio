@@ -5,7 +5,8 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // State
+  // State & Limits
+  const MAX_PROJECTS_LIMIT = 6;
   let projectsData = {};
   let articlesData = {};
   let editingProjectId = null;
@@ -315,13 +316,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateStats = () => {
     const pCount = Object.keys(projectsData).length;
     const aCount = Object.keys(articlesData).length;
-    if (projectsCountBadge) projectsCountBadge.textContent = pCount;
+    if (projectsCountBadge) {
+      projectsCountBadge.textContent = `${pCount}/${MAX_PROJECTS_LIMIT}`;
+    }
     if (articlesCountBadge) articlesCountBadge.textContent = aCount;
-    if (statProjectsCount) statProjectsCount.textContent = pCount;
+    if (statProjectsCount) statProjectsCount.textContent = `${pCount} / ${MAX_PROJECTS_LIMIT}`;
     if (statArticlesCount) statArticlesCount.textContent = aCount;
     if (statTotalMediaCount) {
       let mediaTotal = pCount * 6 + aCount * 4;
       statTotalMediaCount.textContent = mediaTotal;
+    }
+
+    // Enforce 6 Projects Max Limit on UI Button
+    if (addNewProjectBtn) {
+      if (pCount >= MAX_PROJECTS_LIMIT) {
+        addNewProjectBtn.classList.add("is-disabled");
+        addNewProjectBtn.innerHTML = `<span>🔒 Max Limit Reached (${MAX_PROJECTS_LIMIT}/${MAX_PROJECTS_LIMIT})</span>`;
+        addNewProjectBtn.title = `Maximum studio archive capacity reached (${MAX_PROJECTS_LIMIT} Projects). Edit or delete an existing project to add a new one.`;
+      } else {
+        addNewProjectBtn.classList.remove("is-disabled");
+        addNewProjectBtn.innerHTML = `<span>+ New Project (${pCount}/${MAX_PROJECTS_LIMIT})</span>`;
+        addNewProjectBtn.title = "Create a new atelier project";
+      }
     }
   };
 
@@ -477,6 +493,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const openProjectModal = (id = null) => {
     editingProjectId = id;
     const isNew = !id;
+
+    // Strict 6 Projects Max Limit Check
+    if (isNew && Object.keys(projectsData).length >= MAX_PROJECTS_LIMIT) {
+      showToast(`Archive limit reached (${MAX_PROJECTS_LIMIT} Projects). Edit or delete an existing project.`, "🔒");
+      return;
+    }
+
     const modalTitle = document.getElementById("projectModalTitle");
     if (modalTitle) modalTitle.textContent = isNew ? "Create New Atelier Project" : `Edit Project // ${id}`;
 
@@ -539,6 +562,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const id = document.getElementById("projId").value.trim() || String(Object.keys(projectsData).length + 1).padStart(2, '0');
       
       const existing = projectsData[id] || {};
+      const isNewProject = !existing.id && !projectsData[id];
+
+      if (isNewProject && Object.keys(projectsData).length >= MAX_PROJECTS_LIMIT) {
+        showToast(`Cannot create project: Maximum ${MAX_PROJECTS_LIMIT} projects allowed in archive.`, "⚠️");
+        return;
+      }
 
       const updatedProject = {
         ...existing,

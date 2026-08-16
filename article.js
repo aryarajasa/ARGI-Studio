@@ -365,13 +365,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     navCurrentArticleName.textContent = `${currentArticle.id} / ${currentArticle.title.substring(0, 24).toUpperCase()}`;
   }
 
-  // Active Dropdown Item
-  const dropdownItems = document.querySelectorAll(".article-switcher-dropdown .dropdown-item");
-  dropdownItems.forEach((item) => {
-    if (item.getAttribute("data-id") === currentArticle.id) {
-      item.classList.add("is-current");
-    }
-  });
+  // Populate Dropdown Switcher Menu with ALL Live Articles
+  const articleSwitcherDropdown = document.getElementById("articleSwitcherDropdown");
+  if (articleSwitcherDropdown) {
+    const allIds = Object.keys(ARTICLES_DATA).sort((a, b) => a.localeCompare(b));
+    articleSwitcherDropdown.innerHTML = `
+      <div class="dropdown-header">ALL DISPATCHES (${allIds.length})</div>
+      <div class="dropdown-scroll-track">
+        ${allIds.map(id => {
+          const a = ARTICLES_DATA[id];
+          const isCurrent = id === currentArticle.id;
+          return `
+            <a href="article.html?id=${a.id}" class="dropdown-item ${isCurrent ? 'is-current' : ''}" data-id="${a.id}">
+              <span class="d-num">${a.id}</span>
+              <span class="d-title">${a.title}</span>
+              <span class="d-cat">${a.category || 'Journal'}</span>
+            </a>
+          `;
+        }).join("")}
+      </div>
+    `;
+  }
 
   // Metadata
   const articleCategoryTag = document.getElementById("articleCategoryTag");

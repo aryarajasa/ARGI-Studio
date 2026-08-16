@@ -1,7 +1,4 @@
-/**
- * ARGI Studio - Independent Creative Atelier Scripts & Interactions
- * Location: Bali, Indonesia
- */
+import { getCloudProjects, getCloudArticles, subscribeCloudProjects } from "./firebase-config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // 1. SELECTORS & ELEMENTS
@@ -395,29 +392,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 6. DYNAMIC PORTFOLIO & JOURNAL RENDERING (FROM LIVE ATELIER DATABASE)
+  // 6. DYNAMIC PORTFOLIO & JOURNAL RENDERING (FROM FIREBASE CLOUD + LOCAL CACHE)
   const renderDynamicProjects = async () => {
-    let projectsData = null;
-    try {
-      const localP = localStorage.getItem("argi_projects_data");
-      if (localP) {
-        projectsData = JSON.parse(localP);
-      } else {
-        const res = await fetch("/api/projects");
-        if (res.ok) {
-          projectsData = await res.json();
-        } else {
-          const staticRes = await fetch("data/projects.json");
-          if (staticRes.ok) projectsData = await staticRes.json();
-        }
-      }
-    } catch (e) {
-      try {
-        const staticRes = await fetch("data/projects.json");
-        if (staticRes.ok) projectsData = await staticRes.json();
-      } catch (err) {}
-    }
-
+    let projectsData = await getCloudProjects();
     if (!projectsData || Object.keys(projectsData).length === 0) return;
 
     const projectKeys = Object.keys(projectsData).sort((a, b) => a.localeCompare(b));
@@ -495,27 +472,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const renderDynamicArticles = async () => {
-    let articlesData = null;
-    try {
-      const localA = localStorage.getItem("argi_articles_data");
-      if (localA) {
-        articlesData = JSON.parse(localA);
-      } else {
-        const res = await fetch("/api/articles");
-        if (res.ok) {
-          articlesData = await res.json();
-        } else {
-          const staticRes = await fetch("data/articles.json");
-          if (staticRes.ok) articlesData = await staticRes.json();
-        }
-      }
-    } catch (e) {
-      try {
-        const staticRes = await fetch("data/articles.json");
-        if (staticRes.ok) articlesData = await staticRes.json();
-      } catch (err) {}
-    }
-
+    let articlesData = await getCloudArticles();
     if (!articlesData || Object.keys(articlesData).length === 0) return;
 
     const journalGrid = document.querySelector(".news-editorial-grid");

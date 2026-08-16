@@ -1,9 +1,6 @@
-/**
- * ARGI Studio — Project Case Study Controller & Dynamic Data Engine
- * Location: Bali, Indonesia
- */
+import { getCloudProjects } from "./firebase-config.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
   // =========================================================================
   // 1. COMPLETE CASE STUDY DATASET (6 ATELIER PROJECTS)
@@ -328,15 +325,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Dynamic Database Resolution (Syncs with Admin CMS)
+  // Dynamic Database Resolution (Firebase Cloud + Local Fallback)
   let PROJECTS_DATA = DEFAULT_PROJECTS_DATA;
   try {
-    const localData = localStorage.getItem("argi_projects_data");
-    if (localData) {
-      const parsed = JSON.parse(localData);
-      if (parsed && Object.keys(parsed).length > 0) {
-        PROJECTS_DATA = parsed;
-      }
+    const cloudData = await getCloudProjects();
+    if (cloudData && Object.keys(cloudData).length > 0) {
+      PROJECTS_DATA = cloudData;
     }
   } catch (e) {}
 

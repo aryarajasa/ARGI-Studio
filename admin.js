@@ -1,7 +1,13 @@
-/**
- * ARGI Studio — Private CMS & Database Engine
- * Location: Bali, Indonesia
- */
+import { 
+  getCloudProjects, 
+  saveCloudProject, 
+  deleteCloudProject, 
+  getCloudArticles, 
+  saveCloudArticle, 
+  deleteCloudArticle, 
+  uploadCloudMedia,
+  subscribeCloudProjects
+} from "./firebase-config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -215,99 +221,84 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // =========================================================================
-  // 5. DATA FETCHING & SYNCHRONIZATION
+  // 5. DATA FETCHING & SYNCHRONIZATION (FIREBASE FIRESTORE CLOUD + LOCAL FALLBACK)
   // =========================================================================
   const loadAllData = async () => {
     try {
-      // 1. Projects
-      let projectsLoaded = false;
-      try {
-        const pRes = await fetch("/api/projects");
-        if (pRes.ok) {
-          projectsData = await pRes.json();
-          projectsLoaded = true;
-        }
-      } catch (e) {}
+      // 1. Fetch Projects from Firebase Cloud
+      projectsData = await getCloudProjects();
 
-      if (!projectsLoaded || Object.keys(projectsData).length === 0) {
-        const localP = localStorage.getItem("argi_projects_data");
-        if (localP) {
-          projectsData = JSON.parse(localP);
-        } else {
-          // Fetch from static JSON or fallback
-          const staticRes = await fetch("data/projects.json");
-          if (staticRes.ok) {
-            projectsData = await staticRes.json();
-          }
-        }
-      }
-
-      // 2. Articles
-      let articlesLoaded = false;
-      try {
-        const aRes = await fetch("/api/articles");
-        if (aRes.ok) {
-          articlesData = await aRes.json();
-          articlesLoaded = true;
-        }
-      } catch (e) {}
-
-      if (!articlesLoaded || Object.keys(articlesData).length === 0) {
-        const localA = localStorage.getItem("argi_articles_data");
-        if (localA) {
-          articlesData = JSON.parse(localA);
-        } else {
-          const staticRes = await fetch("data/articles.json");
-          if (staticRes.ok) {
-            articlesData = await staticRes.json();
-          }
-        }
-      }
+      // 2. Fetch Articles from Firebase Cloud
+      articlesData = await getCloudArticles();
 
       // Render UI
       renderProjectsList();
       renderArticlesList();
       updateStats();
 
-      // Sync local storage copy for instantaneous front-end updates
-      localStorage.setItem("argi_projects_data", JSON.stringify(projectsData));
-      localStorage.setItem("argi_articles_data", JSON.stringify(articlesData));
-
       if (syncStatusText) {
-        syncStatusText.textContent = `${Object.keys(projectsData).length} Projects • ${Object.keys(articlesData).length} Articles Live`;
+        syncStatusText.textContent = `☁️ Firebase Live: ${Object.keys(projectsData).length} Projects • ${Object.keys(articlesData).length} Articles`;
       }
     } catch (err) {
       console.error("Failed to load studio database:", err);
     }
   };
 
-  const saveProjectsData = async () => {
+  const saveProjectsData = async (targetId = null) => {
     localStorage.setItem("argi_projects_data", JSON.stringify(projectsData));
+    
+    // Save to Firebase Cloud
+    try {
+      if (targetId && projectsData[targetId]) {
+        await saveCloudProject(targetId, projectsData[targetId]);
+      } else {
+        for (const pid of Object.keys(projectsData)) {
+          await saveCloudProject(pid, projectsData[pid]);
+        }
+      }
+    } catch (err) {
+      console.warn("Cloud save fallback:", err);
+    }
+
+    // Save to local server if running
     try {
       await fetch("/api/projects", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(projectsData)
       });
-    } catch (err) {
-      // LocalStorage fallback succeeded
-    }
+    } catch (err) {}
+
     renderProjectsList();
     updateStats();
-    showToast("Projects Database Updated Live", "📁");
+    showToast("Projects Database Updated Live", "☁️");
   };
 
-  const saveArticlesData = async () => {
+  const saveArticlesData = async (targetId = null) => {
     localStorage.setItem("argi_articles_data", JSON.stringify(articlesData));
+
+    // Save to Firebase Cloud
+    try {
+      if (targetId && articlesData[targetId]) {
+        await saveCloudArticle(targetId, articlesData[targetId]);
+      } else {
+        for (const aid of Object.keys(articlesData)) {
+          await saveCloudArticle(aid, articlesData[aid]);
+        }
+      }
+    } catch (err) {
+      console.warn("Cloud save fallback:", err);
+    }
+
+    // Save to local server if running
     try {
       await fetch("/api/articles", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(articlesData)
       });
-    } catch (err) {
-      // LocalStorage fallback succeeded
-    }
+    } catch (err) {}
+
     renderArticlesList();
     updateStats();
     showToast("Articles Database Updated Live", "📰");
@@ -524,8 +515,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const uploadMediaFile = async (file, groupEl) => {
     if (!file) return;
 
-    showToast(`Uploading ${file.name}...`, "⏳");
+    showToast(`Uploading ${file.name} to Cloud...`, "⏳");
 
+    // 1. Try Firebase Cloud Storage Upload (Super fast CDN)
+    try {
+      const cloudUrl = await uploadCloudMedia(file, "projects");
+      setMediaPreview(groupEl, cloudUrl, file.name);
+      showToast(`✓ Cloud Upload: ${file.name}`, "☁️");
+      return;
+    } catch (firebaseErr) {
+      console.warn("Firebase storage upload error, falling back to local:", firebaseErr);
+    }
+
+    // 2. Fallback to Local Node.js server upload
     const reader = new FileReader();
     reader.onload = async (e) => {
       const dataUrl = e.target.result;
@@ -541,9 +543,7 @@ document.addEventListener("DOMContentLoaded", () => {
           showToast(`✓ Uploaded ${file.name}`, "✨");
           return;
         }
-      } catch (err) {
-        // Fallback for static/offline: use DataURL directly
-      }
+      } catch (err) {}
 
       setMediaPreview(groupEl, dataUrl, file.name);
       showToast(`✓ Loaded ${file.name}`, "✨");
@@ -791,9 +791,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const deleteProject = (id, title) => {
+  const deleteProject = async (id, title) => {
     if (confirm(`Are you sure you want to delete project "${title}" (ID: ${id})?`)) {
       delete projectsData[id];
+      try {
+        await deleteCloudProject(id);
+      } catch (e) {}
       saveProjectsData();
       showToast(`Deleted project "${title}"`, "🗑️");
     }
@@ -886,9 +889,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const deleteArticle = (id, title) => {
+  const deleteArticle = async (id, title) => {
     if (confirm(`Are you sure you want to delete article "${title}" (ID: ${id})?`)) {
       delete articlesData[id];
+      try {
+        await deleteCloudArticle(id);
+      } catch (e) {}
       saveArticlesData();
       showToast(`Deleted article "${title}"`, "🗑️");
     }

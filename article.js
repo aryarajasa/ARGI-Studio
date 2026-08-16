@@ -1,9 +1,6 @@
-/**
- * ARGI Studio — Article / Journal Detail Script
- * Location: Bali, Indonesia
- */
+import { getCloudArticles } from "./firebase-config.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
   // -------------------------------------------------------------------------
   // 1. ARTICLES REPOSITORY (EDITORIAL DATABASE)
@@ -339,15 +336,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Dynamic Database Resolution (Syncs with Admin CMS)
+  // Dynamic Database Resolution (Firebase Cloud + Local Fallback)
   let ARTICLES_DATA = DEFAULT_ARTICLES_DATA;
   try {
-    const localData = localStorage.getItem("argi_articles_data");
-    if (localData) {
-      const parsed = JSON.parse(localData);
-      if (parsed && Object.keys(parsed).length > 0) {
-        ARTICLES_DATA = parsed;
-      }
+    const cloudData = await getCloudArticles();
+    if (cloudData && Object.keys(cloudData).length > 0) {
+      ARTICLES_DATA = cloudData;
     }
   } catch (e) {}
 

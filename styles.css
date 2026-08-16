@@ -1697,19 +1697,14 @@ body.site-ready .page-wrapper {
 .workbench-layout {
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: 3.5rem;
-  align-items: stretch;
+  display: block;
   width: 100%;
-  min-width: 0;
+  max-width: 860px;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
-.workbench-main,
-.workbench-side-card {
-  min-width: 0;
-  max-width: 100%;
+.workbench-main {
   width: 100%;
   box-sizing: border-box;
 }

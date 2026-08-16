@@ -387,11 +387,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", handleScrollTheme, { passive: true });
   handleScrollTheme();
 
-  // 5. INTERACTIVE METHODOLOGY STEP VIEWER & CONTRALABS PIXEL MATRIX
+  // 5. INTERACTIVE METHODOLOGY STEP VIEWER
   const stepItems = document.querySelectorAll(".process-step-item");
   const artLayers = document.querySelectorAll(".process-art-layer");
-  const processStage = document.getElementById("processVisualStage");
-  const pixelCanvas = document.getElementById("processPixelCanvas");
 
   if (stepItems.length && artLayers.length) {
     stepItems.forEach((item) => {
@@ -408,176 +406,9 @@ document.addEventListener("DOMContentLoaded", () => {
             layer.classList.remove("is-active");
           }
         });
-
-        // Trigger burst of pixel activity on step transition
-        if (triggerPixelBurst) {
-          triggerPixelBurst();
-        }
       });
     });
   }
-
-  // --- CONTRALABS STYLE ANIMATED SMALL PIXELS ON PROCESS IMAGES ---
-  let triggerPixelBurst = null;
-  const initProcessPixelCanvas = () => {
-    if (!pixelCanvas || !processStage) return;
-    const ctx = pixelCanvas.getContext("2d");
-    if (!ctx) return;
-
-    let width = 0;
-    let height = 0;
-    let dpr = 1;
-    const pixelSize = 3;   // Crisp 3px micro-pixels matching ContraLabs reference
-    const gap = 1.5;       // Tight 1.5px gap
-    const step = pixelSize + gap; // 4.5px total pitch
-    let cols = 0;
-    let rows = 0;
-    let pixels = [];
-
-    const mouse = {
-      x: -1000,
-      y: -1000,
-      targetX: -1000,
-      targetY: -1000,
-      isHovered: false
-    };
-
-    // Smooth continuous 2D procedural noise for natural organic pixel clustering
-    const smoothNoise = (x, y) => {
-      const n1 = Math.sin(x * 0.015 + 1.2) * Math.cos(y * 0.015 + 0.8);
-      const n2 = Math.sin(x * 0.035 - y * 0.025) * 0.5;
-      const n3 = Math.cos(x * 0.008 + y * 0.01) * 0.3;
-      return (n1 + n2 + n3 + 1.8) / 3.6; // normalized 0 to 1
-    };
-
-    const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = processStage.getBoundingClientRect();
-      width = rect.width;
-      height = rect.height;
-
-      if (width === 0 || height === 0) return;
-
-      pixelCanvas.width = width * dpr;
-      pixelCanvas.height = height * dpr;
-      pixelCanvas.style.width = `${width}px`;
-      pixelCanvas.style.height = `${height}px`;
-      ctx.scale(dpr, dpr);
-
-      cols = Math.ceil(width / step);
-      rows = Math.ceil(height / step);
-      pixels = [];
-
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const x = c * step;
-          const y = r * step;
-
-          // Continuous natural noise field
-          const noiseVal = smoothNoise(x, y);
-          
-          // Smooth threshold: creates seamless organic islands with natural fade-out edges
-          let density = 0;
-          if (noiseVal > 0.48) {
-            // Smooth easing from threshold to peak
-            density = Math.min(1, Math.pow((noiseVal - 0.48) / 0.35, 1.8));
-          }
-
-          if (density > 0.02) {
-            const baseAlpha = density * 0.28 + (Math.random() * 0.08);
-
-            pixels.push({
-              x,
-              y,
-              alpha: baseAlpha,
-              targetAlpha: baseAlpha,
-              baseAlpha,
-              density,
-              speed: 0.8 + Math.random() * 1.2,
-              phase: Math.random() * Math.PI * 2
-            });
-          }
-        }
-      }
-    };
-
-    window.addEventListener("resize", resize);
-    resize();
-
-    // Mouse interactivity
-    processStage.addEventListener("mousemove", (e) => {
-      const rect = processStage.getBoundingClientRect();
-      mouse.targetX = e.clientX - rect.left;
-      mouse.targetY = e.clientY - rect.top;
-      mouse.isHovered = true;
-    });
-
-    processStage.addEventListener("mouseenter", () => {
-      mouse.isHovered = true;
-    });
-
-    processStage.addEventListener("mouseleave", () => {
-      mouse.targetX = -1000;
-      mouse.targetY = -1000;
-      mouse.isHovered = false;
-    });
-
-    triggerPixelBurst = () => {
-      const len = pixels.length;
-      for (let i = 0; i < len; i++) {
-        pixels[i].alpha = Math.min(1, pixels[i].baseAlpha * 2.5 + Math.random() * 0.4);
-      }
-    };
-
-    let tick = 0;
-    const render = () => {
-      tick += 0.02;
-      mouse.x += (mouse.targetX - mouse.x) * 0.22;
-      mouse.y += (mouse.targetY - mouse.y) * 0.22;
-
-      ctx.clearRect(0, 0, width, height);
-
-      const hoverRadius = 85;
-      const hoverRadiusSq = hoverRadius * hoverRadius;
-      const len = pixels.length;
-
-      for (let i = 0; i < len; i++) {
-        const p = pixels[i];
-
-        // Organic harmonic idle shimmer
-        const wave = Math.sin(tick * p.speed + p.phase);
-        let desired = p.baseAlpha * (0.65 + 0.35 * wave);
-
-        // Interactive hover boost
-        if (mouse.isHovered && mouse.x > 0 && mouse.y > 0) {
-          const dx = p.x - mouse.x;
-          const dy = p.y - mouse.y;
-          const distSq = dx * dx + dy * dy;
-
-          if (distSq < hoverRadiusSq) {
-            const dist = Math.sqrt(distSq);
-            const proximity = 1 - dist / hoverRadius;
-            const hoverBoost = Math.pow(proximity, 1.4) * (0.6 + 0.3 * Math.sin(tick * 6 + p.phase));
-            desired = Math.max(desired, hoverBoost);
-          }
-        }
-
-        // Smooth alpha interpolation
-        p.alpha += (desired - p.alpha) * 0.15;
-
-        if (p.alpha > 0.015) {
-          ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha.toFixed(3)})`;
-          ctx.fillRect(p.x, p.y, pixelSize, pixelSize);
-        }
-      }
-
-      requestAnimationFrame(render);
-    };
-
-    requestAnimationFrame(render);
-  };
-
-  initProcessPixelCanvas();
 
   // 6. DYNAMIC PORTFOLIO & JOURNAL RENDERING (FROM FIREBASE CLOUD + LOCAL CACHE)
   const renderDynamicProjects = async () => {

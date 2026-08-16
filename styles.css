@@ -882,7 +882,13 @@ body.site-ready .page-wrapper {
   top: 0;
   bottom: 0;
   width: 1px;
-  border-left: 1px dashed rgba(0, 0, 0, 0.15);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2) 0px,
+    rgba(0, 0, 0, 0.2) 6px,
+    transparent 6px,
+    transparent 16px
+  );
   pointer-events: none;
   z-index: 2;
 }

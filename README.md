@@ -1,16 +1,18 @@
-# ARGI Studio (`argi.©`)
+# ARGI Studio (`argi.©`) • v1.3
 
-Official website for **ARGI Studio**, an independent creative studio and art direction atelier based in Bali, Indonesia. We craft brand identities, digital flagships, tactile editorial publications, and progressive visual languages for visionary founders and cultural institutions worldwide.
+Official website and custom database CMS for **ARGI Studio**, an independent creative studio and art direction atelier based in Bali, Indonesia. We craft brand identities, digital flagships, tactile editorial publications, and progressive visual languages for visionary founders and cultural institutions worldwide.
 
 ---
 
 ## Overview
 
 - **Studio**: ARGI Studio (`argi.©`)
+- **Version**: `v1.3`
 - **Location**: Bali, Indonesia
 - **Disciplines**: Brand Identity Design, Web Design & Development, Social Media & Content, Graphic Design & Print
+- **Database & Media CDN**: Supabase PostgreSQL & Cloud Media Storage
 - **Contact**: `hello@argistudio.com`
-- **Tech Stack**: HTML5, Vanilla CSS3, Vanilla JavaScript (Zero external framework dependencies)
+- **Tech Stack**: HTML5, Vanilla CSS3, Vanilla JavaScript, Supabase JS v2
 
 ---
 

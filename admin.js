@@ -898,7 +898,7 @@ document.addEventListener("DOMContentLoaded", () => {
     exportBackupBtn.addEventListener("click", () => {
       const backupPayload = {
         timestamp: new Date().toISOString(),
-        version: "2.0",
+        version: "1.3",
         projects: projectsData,
         articles: articlesData
       };

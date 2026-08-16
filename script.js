@@ -471,64 +471,71 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!articlesData || Object.keys(articlesData).length === 0) return;
 
     const journalGrid = document.getElementById("newsCardsGrid") || document.querySelector(".news-cards-grid");
-    if (journalGrid) {
-      // Limit to 3 showcase articles
-      const articleKeys = Object.keys(articlesData).sort((a, b) => a.localeCompare(b)).slice(0, 3);
-      
-      journalGrid.innerHTML = articleKeys.map(id => {
-        const a = articlesData[id];
-        return `
-          <a href="article.html?id=${a.id}" class="news-card" aria-label="Read ${a.title}">
-            <div class="news-thumbnail-wrap">
-              <img src="${a.featureImage || 'assets/logo.png'}" alt="${a.title}" class="news-img" loading="lazy" />
-            </div>
-            <div class="news-body">
-              <h3 class="news-headline">${a.title}</h3>
-              <div class="news-meta">
-                <span class="news-date">${a.date || '2026'}</span>
-                <span class="news-dot">•</span>
-                <span class="news-tag">${a.category || 'Journal'}</span>
-              </div>
-            </div>
-          </a>
-        `;
-      }).join("");
-
-      // Initialize Interactive Slider Engine
-      initJournalSlider();
-    }
-  };
-
-  const initJournalSlider = () => {
-    const slider = document.getElementById("journalSliderContainer");
     const prevBtn = document.getElementById("journalPrevBtn");
     const nextBtn = document.getElementById("journalNextBtn");
-    if (!slider) return;
+    if (!journalGrid) return;
 
-    // Arrow Button Navigation with calculated card step
-    const getScrollStep = () => {
-      const firstCard = slider.querySelector(".news-card");
-      if (firstCard) {
-        const style = window.getComputedStyle(slider.querySelector(".news-cards-grid"));
-        const gap = parseFloat(style.gap) || 32;
-        return firstCard.offsetWidth + gap;
-      }
-      return 412;
+    const allArticleKeys = Object.keys(articlesData).sort((a, b) => a.localeCompare(b));
+    const pageSize = 3;
+    let currentPage = 0;
+    const totalPages = Math.ceil(allArticleKeys.length / pageSize);
+
+    const renderCurrentPage = (pageIdx, direction = 0) => {
+      const start = pageIdx * pageSize;
+      const currentKeys = allArticleKeys.slice(start, start + pageSize);
+
+      // Smooth fade transition
+      journalGrid.style.opacity = "0";
+      journalGrid.style.transform = direction > 0 ? "translateX(20px)" : direction < 0 ? "translateX(-20px)" : "none";
+      journalGrid.style.transition = "opacity 0.25s ease, transform 0.25s ease";
+
+      setTimeout(() => {
+        journalGrid.innerHTML = currentKeys.map(id => {
+          const a = articlesData[id];
+          return `
+            <a href="article.html?id=${a.id}" class="news-card" aria-label="Read ${a.title}">
+              <div class="news-thumbnail-wrap">
+                <img src="${a.featureImage || 'assets/logo.png'}" alt="${a.title}" class="news-img" loading="lazy" />
+              </div>
+              <div class="news-body">
+                <h3 class="news-headline">${a.title}</h3>
+                <div class="news-meta">
+                  <span class="news-date">${a.date || '2026'}</span>
+                  <span class="news-dot">•</span>
+                  <span class="news-tag">${a.category || 'Journal'}</span>
+                </div>
+              </div>
+            </a>
+          `;
+        }).join("");
+
+        journalGrid.style.opacity = "1";
+        journalGrid.style.transform = "translateX(0)";
+      }, 150);
+
+      // Update Arrow Buttons visual state (Looping enabled)
+      if (prevBtn) prevBtn.disabled = false;
+      if (nextBtn) nextBtn.disabled = false;
     };
 
     if (prevBtn) {
-      prevBtn.addEventListener("click", (e) => {
+      prevBtn.onclick = (e) => {
         e.preventDefault();
-        slider.scrollBy({ left: -getScrollStep(), behavior: "smooth" });
-      });
+        currentPage = (currentPage - 1 + totalPages) % totalPages;
+        renderCurrentPage(currentPage, -1);
+      };
     }
 
     if (nextBtn) {
-      nextBtn.addEventListener("click", (e) => {
+      nextBtn.onclick = (e) => {
         e.preventDefault();
-        slider.scrollBy({ left: getScrollStep(), behavior: "smooth" });
-      });
+        currentPage = (currentPage + 1) % totalPages;
+        renderCurrentPage(currentPage, 1);
+      };
     }
+
+    // Initial render
+    renderCurrentPage(0, 0);
   };
 
   renderDynamicProjects();

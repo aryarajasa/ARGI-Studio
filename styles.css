@@ -1570,13 +1570,11 @@ body.site-ready .page-wrapper {
 }
 
 .news-cards-grid {
-  display: flex;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  padding-left: max(1.5rem, calc((100vw - 1200px) / 2 + 1.5rem));
-  padding-right: max(1.5rem, calc((100vw - 1200px) / 2 + 1.5rem));
-  width: max-content;
-  will-change: transform;
+  width: 100%;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .news-card {
@@ -1586,10 +1584,7 @@ body.site-ready .page-wrapper {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  width: 380px;
-  min-width: 380px;
-  max-width: 380px;
-  flex-shrink: 0;
+  width: 100%;
   transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
@@ -1653,11 +1648,17 @@ body.site-ready .page-wrapper {
   color: var(--text-secondary);
 }
 
-@media screen and (max-width: 768px) {
-  .news-card {
-    width: 300px;
-    min-width: 300px;
-    max-width: 300px;
+@media screen and (max-width: 991px) {
+  .news-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .news-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
 

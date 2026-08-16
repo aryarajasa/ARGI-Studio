@@ -911,6 +911,13 @@ body.site-ready .page-wrapper {
 }
 
 /* --- Clean solid straight horizontal border dividing sections - Exact width between dashed lines --- */
+.section-process,
+.section-services,
+.section-news,
+.section-contact {
+  border-top: none !important;
+}
+
 .section-process > .container-medium,
 .section-services > .container-medium,
 .section-news > .container-medium,
@@ -924,9 +931,10 @@ body.site-ready .page-wrapper {
 .section-contact > .container-medium::before {
   content: "";
   position: absolute;
-  top: -7rem; /* Align perfectly with top edge of the section */
+  top: -7rem;
   left: -10px;
   right: -10px;
+  width: calc(100% + 20px);
   height: 1px;
   background-color: rgba(0, 0, 0, 0.1);
   pointer-events: none;
@@ -1529,7 +1537,6 @@ body.site-ready .page-wrapper {
    ========================================================================== */
 .section-services {
   background-color: var(--bg-body);
-  border-top: 1px solid var(--border-light-subtle);
 }
 
 .services-header-wrap {
@@ -1666,7 +1673,6 @@ body.site-ready .page-wrapper {
 /* --- SECTION 5: JOURNAL / NEWS (SIDE-LOOPING CONTINUOUS SLIDER) --- */
 .section-news {
   background-color: var(--bg-body);
-  border-top: 1px solid var(--border-light-subtle);
   overflow: hidden;
   position: relative;
 }

@@ -56,7 +56,11 @@
 
 html {
   font-size: 16px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -101,7 +105,10 @@ body {
   background-color: var(--bg-body);
   color: var(--text-primary);
   line-height: 1.5;
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
+  position: relative;
 }
 
 a {
@@ -218,8 +225,9 @@ button {
 /* ASCII Box & Solid Logo Morph Container */
 .preloader-ascii-box {
   position: relative;
-  width: min(85vw, 360px);
-  height: clamp(140px, 28vw, 190px);
+  width: 280px;
+  max-width: 82vw;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -255,8 +263,9 @@ button {
 }
 
 .preloader-logo-img {
-  height: clamp(90px, 18vw, 130px);
+  height: 90px;
   width: auto;
+  max-width: 80%;
   object-fit: contain;
   display: block;
   filter: invert(1) brightness(2);
@@ -904,10 +913,17 @@ body.site-ready .page-wrapper {
 
 @media screen and (max-width: 1240px) {
   .section:not(.section-datasets-dark)::before {
-    left: calc(var(--container-padding) - 10px);
+    left: max(0px, calc(var(--container-padding) - 10px));
   }
   .section:not(.section-datasets-dark)::after {
-    right: calc(var(--container-padding) - 10px);
+    right: max(0px, calc(var(--container-padding) - 10px));
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .section:not(.section-datasets-dark)::before,
+  .section:not(.section-datasets-dark)::after {
+    display: none; /* Hide vertical edge lines on mobile to avoid horizontal scrollbar overflows */
   }
 }
 

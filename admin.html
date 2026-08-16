@@ -598,14 +598,46 @@
 
         <!-- Tab 3: Visual & Media Showcase -->
         <fieldset class="form-section">
-          <legend class="section-legend">03. Visual Assets &amp; Media Links</legend>
+          <legend class="section-legend">03. Visual Assets &amp; Media Uploads</legend>
           
-          <div class="form-group">
+          <!-- Hero Image Upload -->
+          <div class="form-group media-upload-group" data-target="projHeroImage">
             <div class="label-with-badge">
-              <label class="form-label">100vw Full-Bleed Hero Image URL *</label>
+              <label class="form-label">100vw Full-Bleed Hero Visual *</label>
               <span class="media-hint-badge">Recommended: 2560 × 1440 px • 16:9 • &lt;450KB</span>
             </div>
-            <input type="url" id="projHeroImage" class="form-control" required placeholder="https://images.unsplash.com/..." />
+            
+            <div class="media-dropzone" id="dropzone-projHeroImage">
+              <div class="dropzone-empty-state">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <div class="dropzone-text">
+                  <strong>Click to upload media</strong> or drag &amp; drop
+                  <span class="dropzone-sub">Supports WebP, JPG, PNG, GIF, MP4 (Max 15MB)</span>
+                </div>
+              </div>
+              <div class="dropzone-preview-state is-hidden">
+                <div class="preview-media-frame">
+                  <img src="" alt="Hero Preview" class="preview-img" />
+                </div>
+                <div class="preview-media-info">
+                  <span class="preview-filename">image.webp</span>
+                  <div class="preview-action-row">
+                    <button type="button" class="dropzone-change-btn">Replace</button>
+                    <button type="button" class="dropzone-remove-btn">Remove</button>
+                  </div>
+                </div>
+              </div>
+              <input type="file" class="media-file-input" accept="image/*,video/mp4" />
+            </div>
+            <input type="hidden" id="projHeroImage" required />
+            <div class="url-fallback-row">
+              <span class="url-toggle-label">Or enter direct URL:</span>
+              <input type="url" class="form-control url-fallback-input" placeholder="https://..." />
+            </div>
           </div>
 
           <div class="form-group">
@@ -613,27 +645,83 @@
             <input type="text" id="projHeroCaption" class="form-control" placeholder="EDITORIAL LOOKBOOK & BESPOKE STATIONERY SYSTEM" />
           </div>
 
+          <!-- Spread Images 1 & 2 -->
           <div class="form-row-2">
-            <div class="form-group">
+            
+            <div class="form-group media-upload-group" data-target="projSpreadImg1">
               <div class="label-with-badge">
-                <label class="form-label">Spread Image 1 URL</label>
+                <label class="form-label">Spread Image 1 Visual</label>
                 <span class="media-hint-badge">1200 × 900 px • 4:3</span>
               </div>
-              <input type="url" id="projSpreadImg1" class="form-control" placeholder="https://..." />
+              <div class="media-dropzone" id="dropzone-projSpreadImg1">
+                <div class="dropzone-empty-state">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  <div class="dropzone-text"><strong>Upload Spread 1</strong></div>
+                </div>
+                <div class="dropzone-preview-state is-hidden">
+                  <div class="preview-media-frame">
+                    <img src="" alt="Spread 1 Preview" class="preview-img" />
+                  </div>
+                  <div class="preview-media-info">
+                    <span class="preview-filename">spread1.webp</span>
+                    <div class="preview-action-row">
+                      <button type="button" class="dropzone-change-btn">Replace</button>
+                      <button type="button" class="dropzone-remove-btn">Remove</button>
+                    </div>
+                  </div>
+                </div>
+                <input type="file" class="media-file-input" accept="image/*,video/mp4" />
+              </div>
+              <input type="hidden" id="projSpreadImg1" />
+              <div class="url-fallback-row">
+                <input type="url" class="form-control url-fallback-input" placeholder="Or paste direct image URL..." />
+              </div>
             </div>
-            <div class="form-group">
-              <label class="form-label">Spread 1 Caption</label>
-              <input type="text" id="projSpreadCaption1" class="form-control" placeholder="01 / Archival Lookbook..." />
+
+            <div class="form-group media-upload-group" data-target="projSpreadImg2">
+              <div class="label-with-badge">
+                <label class="form-label">Spread Image 2 Visual</label>
+                <span class="media-hint-badge">1200 × 900 px • 4:3</span>
+              </div>
+              <div class="media-dropzone" id="dropzone-projSpreadImg2">
+                <div class="dropzone-empty-state">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  <div class="dropzone-text"><strong>Upload Spread 2</strong></div>
+                </div>
+                <div class="dropzone-preview-state is-hidden">
+                  <div class="preview-media-frame">
+                    <img src="" alt="Spread 2 Preview" class="preview-img" />
+                  </div>
+                  <div class="preview-media-info">
+                    <span class="preview-filename">spread2.webp</span>
+                    <div class="preview-action-row">
+                      <button type="button" class="dropzone-change-btn">Replace</button>
+                      <button type="button" class="dropzone-remove-btn">Remove</button>
+                    </div>
+                  </div>
+                </div>
+                <input type="file" class="media-file-input" accept="image/*,video/mp4" />
+              </div>
+              <input type="hidden" id="projSpreadImg2" />
+              <div class="url-fallback-row">
+                <input type="url" class="form-control url-fallback-input" placeholder="Or paste direct image URL..." />
+              </div>
             </div>
+
           </div>
 
           <div class="form-row-2">
             <div class="form-group">
-              <div class="label-with-badge">
-                <label class="form-label">Spread Image 2 URL</label>
-                <span class="media-hint-badge">1200 × 900 px • 4:3</span>
-              </div>
-              <input type="url" id="projSpreadImg2" class="form-control" placeholder="https://..." />
+              <label class="form-label">Spread 1 Caption</label>
+              <input type="text" id="projSpreadCaption1" class="form-control" placeholder="01 / Archival Lookbook..." />
             </div>
             <div class="form-group">
               <label class="form-label">Spread 2 Caption</label>
@@ -641,12 +729,39 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <!-- Interface Image -->
+          <div class="form-group media-upload-group" data-target="projInterfaceImg">
             <div class="label-with-badge">
-              <label class="form-label">Digital Flagship UI Showcase URL</label>
+              <label class="form-label">Digital Flagship UI Showcase Visual</label>
               <span class="media-hint-badge">1600 × 1000 px • 16:10</span>
             </div>
-            <input type="url" id="projInterfaceImg" class="form-control" placeholder="https://..." />
+            <div class="media-dropzone" id="dropzone-projInterfaceImg">
+              <div class="dropzone-empty-state">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <div class="dropzone-text"><strong>Upload UI / Flagship Mockup</strong></div>
+              </div>
+              <div class="dropzone-preview-state is-hidden">
+                <div class="preview-media-frame">
+                  <img src="" alt="UI Preview" class="preview-img" />
+                </div>
+                <div class="preview-media-info">
+                  <span class="preview-filename">ui-preview.webp</span>
+                  <div class="preview-action-row">
+                    <button type="button" class="dropzone-change-btn">Replace</button>
+                    <button type="button" class="dropzone-remove-btn">Remove</button>
+                  </div>
+                </div>
+              </div>
+              <input type="file" class="media-file-input" accept="image/*,video/mp4" />
+            </div>
+            <input type="hidden" id="projInterfaceImg" />
+            <div class="url-fallback-row">
+              <input type="url" class="form-control url-fallback-input" placeholder="Or paste direct image URL..." />
+            </div>
           </div>
         </fieldset>
 
@@ -726,12 +841,43 @@
             <textarea id="artLead" class="form-control" rows="2" required placeholder="An in-depth retrospective on tactile materiality..."></textarea>
           </div>
 
-          <div class="form-group">
+          <!-- Feature Hero Image Upload -->
+          <div class="form-group media-upload-group" data-target="artFeatureImage">
             <div class="label-with-badge">
-              <label class="form-label">100vw Feature Hero Image URL *</label>
+              <label class="form-label">100vw Feature Hero Visual *</label>
               <span class="media-hint-badge">Recommended: 2560 × 1440 px • 16:9 • &lt;450KB</span>
             </div>
-            <input type="url" id="artFeatureImage" class="form-control" required placeholder="https://images.unsplash.com/..." />
+            <div class="media-dropzone" id="dropzone-artFeatureImage">
+              <div class="dropzone-empty-state">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <div class="dropzone-text">
+                  <strong>Click to upload feature image</strong> or drag &amp; drop
+                  <span class="dropzone-sub">Supports WebP, JPG, PNG, GIF (Max 15MB)</span>
+                </div>
+              </div>
+              <div class="dropzone-preview-state is-hidden">
+                <div class="preview-media-frame">
+                  <img src="" alt="Feature Preview" class="preview-img" />
+                </div>
+                <div class="preview-media-info">
+                  <span class="preview-filename">feature.webp</span>
+                  <div class="preview-action-row">
+                    <button type="button" class="dropzone-change-btn">Replace</button>
+                    <button type="button" class="dropzone-remove-btn">Remove</button>
+                  </div>
+                </div>
+              </div>
+              <input type="file" class="media-file-input" accept="image/*,video/mp4" />
+            </div>
+            <input type="hidden" id="artFeatureImage" required />
+            <div class="url-fallback-row">
+              <span class="url-toggle-label">Or enter direct URL:</span>
+              <input type="url" class="form-control url-fallback-input" placeholder="https://..." />
+            </div>
           </div>
 
           <div class="form-group">

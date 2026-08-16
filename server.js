@@ -5,13 +5,18 @@ const path = require('path');
 const PORT = 3000;
 const DIR = path.resolve(__dirname);
 const DATA_DIR = path.join(DIR, 'data');
+const UPLOADS_DIR = path.join(DIR, 'assets', 'uploads');
 const AUTH_FILE = path.join(DATA_DIR, 'auth.json');
 const PROJECTS_FILE = path.join(DATA_DIR, 'projects.json');
 const ARTICLES_FILE = path.join(DATA_DIR, 'articles.json');
 
-// Ensure data directory and auth config exist
+// Ensure data and uploads directories exist
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
 
 if (!fs.existsSync(AUTH_FILE)) {
@@ -108,7 +113,50 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 200, { success: true, message: 'Passcode updated successfully' });
       }
 
-      // 3. Projects API
+      // 3. Media Upload API
+      if (reqPath === '/api/upload' && req.method === 'POST') {
+        const body = await readRequestBody(req);
+        if (!body.data) {
+          return sendJson(res, 400, { success: false, message: 'No file data received' });
+        }
+
+        // Parse Data URL: data:image/png;base64,....
+        let base64Data = body.data;
+        let ext = '.png';
+        
+        if (base64Data.includes(';base64,')) {
+          const parts = base64Data.split(';base64,');
+          const mime = parts[0].replace('data:', '');
+          base64Data = parts[1];
+          
+          if (mime.includes('jpeg') || mime.includes('jpg')) ext = '.jpg';
+          else if (mime.includes('png')) ext = '.png';
+          else if (mime.includes('webp')) ext = '.webp';
+          else if (mime.includes('svg')) ext = '.svg';
+          else if (mime.includes('gif')) ext = '.gif';
+          else if (mime.includes('mp4')) ext = '.mp4';
+          else if (mime.includes('avif')) ext = '.avif';
+        }
+
+        const rawName = (body.filename || 'media').toLowerCase().replace(/[^a-z0-9_-]/g, '_');
+        const cleanName = path.parse(rawName).name || 'asset';
+        const finalFilename = `upload_${Date.now()}_${cleanName}${ext}`;
+        const targetPath = path.join(UPLOADS_DIR, finalFilename);
+
+        const buffer = Buffer.from(base64Data, 'base64');
+        fs.writeFileSync(targetPath, buffer);
+
+        const relativeUrl = `assets/uploads/${finalFilename}`;
+        return sendJson(res, 200, {
+          success: true,
+          url: relativeUrl,
+          filename: finalFilename,
+          size: buffer.length,
+          message: 'Media uploaded successfully'
+        });
+      }
+
+      // 4. Projects API
       if (reqPath === '/api/projects') {
         if (req.method === 'GET') {
           if (!fs.existsSync(PROJECTS_FILE)) {
@@ -125,7 +173,7 @@ const server = http.createServer(async (req, res) => {
         }
       }
 
-      // 4. Articles API
+      // 5. Articles API
       if (reqPath === '/api/articles') {
         if (req.method === 'GET') {
           if (!fs.existsSync(ARTICLES_FILE)) {

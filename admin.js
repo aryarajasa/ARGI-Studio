@@ -488,7 +488,139 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================================================================
-  // 8. PROJECT MODAL (CREATE / EDIT)
+  // 8. INTERACTIVE MEDIA DROPZONE & FILE UPLOAD ENGINE
+  // =========================================================================
+  const setMediaPreview = (groupEl, mediaUrl, filename = "") => {
+    if (!groupEl) return;
+    const targetId = groupEl.getAttribute("data-target");
+    const hiddenInput = document.getElementById(targetId);
+    const emptyState = groupEl.querySelector(".dropzone-empty-state");
+    const previewState = groupEl.querySelector(".dropzone-preview-state");
+    const previewImg = groupEl.querySelector(".preview-img");
+    const previewFilename = groupEl.querySelector(".preview-filename");
+    const fallbackInput = groupEl.querySelector(".url-fallback-input");
+
+    if (hiddenInput) hiddenInput.value = mediaUrl || "";
+    if (fallbackInput) fallbackInput.value = mediaUrl || "";
+
+    if (mediaUrl) {
+      if (previewImg) {
+        previewImg.src = mediaUrl;
+        previewImg.alt = filename || "Uploaded media preview";
+      }
+      if (previewFilename) {
+        const cleanName = filename || mediaUrl.split("/").pop().split("?")[0] || "media";
+        previewFilename.textContent = cleanName;
+      }
+      if (emptyState) emptyState.classList.add("is-hidden");
+      if (previewState) previewState.classList.remove("is-hidden");
+    } else {
+      if (emptyState) emptyState.classList.remove("is-hidden");
+      if (previewState) previewState.classList.add("is-hidden");
+      if (previewImg) previewImg.src = "";
+    }
+  };
+
+  const uploadMediaFile = async (file, groupEl) => {
+    if (!file) return;
+
+    showToast(`Uploading ${file.name}...`, "⏳");
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const dataUrl = e.target.result;
+      try {
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ filename: file.name, data: dataUrl })
+        });
+        if (res.ok) {
+          const result = await res.json();
+          setMediaPreview(groupEl, result.url, file.name);
+          showToast(`✓ Uploaded ${file.name}`, "✨");
+          return;
+        }
+      } catch (err) {
+        // Fallback for static/offline: use DataURL directly
+      }
+
+      setMediaPreview(groupEl, dataUrl, file.name);
+      showToast(`✓ Loaded ${file.name}`, "✨");
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const initMediaDropzones = () => {
+    const groups = document.querySelectorAll(".media-upload-group");
+    groups.forEach(group => {
+      const dropzone = group.querySelector(".media-dropzone");
+      const fileInput = group.querySelector(".media-file-input");
+      const fallbackInput = group.querySelector(".url-fallback-input");
+      const changeBtn = group.querySelector(".dropzone-change-btn");
+      const removeBtn = group.querySelector(".dropzone-remove-btn");
+
+      if (fileInput) {
+        fileInput.addEventListener("change", (e) => {
+          if (e.target.files && e.target.files[0]) {
+            uploadMediaFile(e.target.files[0], group);
+          }
+        });
+      }
+
+      if (dropzone) {
+        ["dragenter", "dragover"].forEach(eventName => {
+          dropzone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.add("is-dragover");
+          });
+        });
+
+        ["dragleave", "drop"].forEach(eventName => {
+          dropzone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.remove("is-dragover");
+          });
+        });
+
+        dropzone.addEventListener("drop", (e) => {
+          if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+            uploadMediaFile(e.dataTransfer.files[0], group);
+          }
+        });
+      }
+
+      if (fallbackInput) {
+        fallbackInput.addEventListener("input", (e) => {
+          const val = e.target.value.trim();
+          setMediaPreview(group, val, val.split("/").pop());
+        });
+      }
+
+      if (changeBtn && fileInput) {
+        changeBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          fileInput.click();
+        });
+      }
+
+      if (removeBtn) {
+        removeBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setMediaPreview(group, "");
+          if (fileInput) fileInput.value = "";
+          showToast("Media removed", "🗑️");
+        });
+      }
+    });
+  };
+
+  initMediaDropzones();
+
+  // =========================================================================
+  // 9. PROJECT MODAL (CREATE / EDIT)
   // =========================================================================
   const openProjectModal = (id = null) => {
     editingProjectId = id;
@@ -507,6 +639,9 @@ document.addEventListener("DOMContentLoaded", () => {
       projectForm.reset();
       const newId = String(Object.keys(projectsData).length + 1).padStart(2, '0');
       document.getElementById("projId").value = newId;
+
+      // Reset all dropzones to empty
+      document.querySelectorAll("#projectForm .media-upload-group").forEach(group => setMediaPreview(group, ""));
     } else {
       const p = projectsData[id];
       if (!p) return;
@@ -527,14 +662,16 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("projQuote").value = p.quote || "";
       document.getElementById("projQuoteAuthor").value = p.quoteAuthor || "";
       document.getElementById("projQuoteRole").value = p.quoteRole || "";
-      document.getElementById("projHeroImage").value = p.heroImage || "";
       document.getElementById("projHeroCaption").value = p.heroCaption || "";
-      document.getElementById("projSpreadImg1").value = p.spreadImg1 || "";
       document.getElementById("projSpreadCaption1").value = p.spreadCaption1 || "";
-      document.getElementById("projSpreadImg2").value = p.spreadImg2 || "";
       document.getElementById("projSpreadCaption2").value = p.spreadCaption2 || "";
-      document.getElementById("projInterfaceImg").value = p.interfaceImg || "";
       document.getElementById("projDeliverables").value = (p.deliverables || []).join(", ");
+
+      // Populate Media Upload Previews
+      setMediaPreview(document.querySelector('[data-target="projHeroImage"]'), p.heroImage, "hero-visual");
+      setMediaPreview(document.querySelector('[data-target="projSpreadImg1"]'), p.spreadImg1, "spread-1");
+      setMediaPreview(document.querySelector('[data-target="projSpreadImg2"]'), p.spreadImg2, "spread-2");
+      setMediaPreview(document.querySelector('[data-target="projInterfaceImg"]'), p.interfaceImg, "ui-showcase");
     }
 
     if (projectModal) {
@@ -569,6 +706,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      const heroImgVal = document.getElementById("projHeroImage").value.trim() || existing.heroImage || "assets/logo.png";
+
       const updatedProject = {
         ...existing,
         id: id,
@@ -589,7 +728,7 @@ document.addEventListener("DOMContentLoaded", () => {
         quote: document.getElementById("projQuote").value.trim(),
         quoteAuthor: document.getElementById("projQuoteAuthor").value.trim(),
         quoteRole: document.getElementById("projQuoteRole").value.trim(),
-        heroImage: document.getElementById("projHeroImage").value.trim(),
+        heroImage: heroImgVal,
         heroCaption: document.getElementById("projHeroCaption").value.trim(),
         spreadImg1: document.getElementById("projSpreadImg1").value.trim(),
         spreadCaption1: document.getElementById("projSpreadCaption1").value.trim(),
@@ -620,7 +759,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // =========================================================================
-  // 9. ARTICLE MODAL (CREATE / EDIT)
+  // 10. ARTICLE MODAL (CREATE / EDIT)
   // =========================================================================
   const openArticleModal = (id = null) => {
     editingArticleId = id;
@@ -632,6 +771,7 @@ document.addEventListener("DOMContentLoaded", () => {
       articleForm.reset();
       const newId = String(Object.keys(articlesData).length + 1).padStart(2, '0');
       document.getElementById("artId").value = newId;
+      document.querySelectorAll("#articleForm .media-upload-group").forEach(group => setMediaPreview(group, ""));
     } else {
       const a = articlesData[id];
       if (!a) return;
@@ -643,8 +783,10 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("artAuthorName").value = a.authorName || "";
       document.getElementById("artAuthorRole").value = a.authorRole || "";
       document.getElementById("artLead").value = a.lead || "";
-      document.getElementById("artFeatureImage").value = a.featureImage || "";
       document.getElementById("artFeatureCaption").value = a.featureCaption || "";
+
+      // Populate Feature Media Preview
+      setMediaPreview(document.querySelector('[data-target="artFeatureImage"]'), a.featureImage, "feature-visual");
     }
 
     if (articleModal) {
@@ -672,6 +814,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const id = document.getElementById("artId").value.trim() || String(Object.keys(articlesData).length + 1).padStart(2, '0');
       const existing = articlesData[id] || {};
 
+      const featureImgVal = document.getElementById("artFeatureImage").value.trim() || existing.featureImage || "assets/logo.png";
+
       const updatedArticle = {
         ...existing,
         id: id,
@@ -683,7 +827,7 @@ document.addEventListener("DOMContentLoaded", () => {
         authorName: document.getElementById("artAuthorName").value.trim(),
         authorRole: document.getElementById("artAuthorRole").value.trim(),
         lead: document.getElementById("artLead").value.trim(),
-        featureImage: document.getElementById("artFeatureImage").value.trim(),
+        featureImage: featureImgVal,
         featureCaption: document.getElementById("artFeatureCaption").value.trim(),
         sections: existing.sections || [
           {

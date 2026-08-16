@@ -884,30 +884,30 @@ body.site-ready .page-wrapper {
   width: 1px;
   background-image: repeating-linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.2) 0px,
-    rgba(0, 0, 0, 0.2) 6px,
-    transparent 6px,
-    transparent 16px
+    rgba(0, 0, 0, 0.16) 0px,
+    rgba(0, 0, 0, 0.16) 4px,
+    transparent 4px,
+    transparent 10px
   );
   pointer-events: none;
   z-index: 2;
 }
 
-/* Positioned exactly at the container boundary with a wider margin (-20px) */
+/* Positioned at the container boundary with a balanced margin (-10px) */
 .section:not(.section-datasets-dark)::before {
-  left: calc(50% - (var(--container-max-width) / 2) - 20px);
+  left: calc(50% - (var(--container-max-width) / 2) - 10px);
 }
 
 .section:not(.section-datasets-dark)::after {
-  right: calc(50% - (var(--container-max-width) / 2) - 20px);
+  right: calc(50% - (var(--container-max-width) / 2) - 10px);
 }
 
 @media screen and (max-width: 1240px) {
   .section:not(.section-datasets-dark)::before {
-    left: calc(var(--container-padding) - 20px);
+    left: calc(var(--container-padding) - 10px);
   }
   .section:not(.section-datasets-dark)::after {
-    right: calc(var(--container-padding) - 20px);
+    right: calc(var(--container-padding) - 10px);
   }
 }
 

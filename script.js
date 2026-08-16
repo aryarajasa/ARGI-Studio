@@ -427,9 +427,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let width = 0;
     let height = 0;
     let dpr = 1;
-    const pixelSize = 6; // 6px micro-square pixels
-    const gap = 3;       // 3px spacing between pixels
-    const step = pixelSize + gap;
+    const pixelSize = 2.5; // Fine, ultra-crisp micro-pixels matching reference
+    const gap = 1.5;       // Tight 1.5px spacing
+    const step = pixelSize + gap; // 4px total grid pitch
     let cols = 0;
     let rows = 0;
     let pixels = [];
@@ -464,15 +464,17 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let c = 0; c < cols; c++) {
           const x = c * step;
           const y = r * step;
-          // Random subtle ambient twinkle
-          const baseAlpha = Math.random() < 0.08 ? (Math.random() * 0.18 + 0.04) : 0;
+          // Organic cluster noise for natural pixel distribution (ContraLabs aesthetic)
+          const clusterNoise = Math.sin(c * 0.12) * Math.cos(r * 0.12);
+          const isBaseTwinkle = Math.random() < 0.14 + clusterNoise * 0.08;
+          const baseAlpha = isBaseTwinkle ? (Math.random() * 0.22 + 0.06) : 0;
+          
           pixels.push({
             x,
             y,
             alpha: baseAlpha,
             targetAlpha: baseAlpha,
             baseAlpha,
-            speed: 0.02 + Math.random() * 0.04,
             phase: Math.random() * Math.PI * 2
           });
         }
@@ -501,58 +503,53 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     triggerPixelBurst = () => {
-      for (let i = 0; i < pixels.length; i++) {
-        if (Math.random() < 0.35) {
-          pixels[i].targetAlpha = Math.random() * 0.65 + 0.2;
+      const len = pixels.length;
+      for (let i = 0; i < len; i++) {
+        if (Math.random() < 0.4) {
+          pixels[i].alpha = Math.random() * 0.75 + 0.25;
         }
       }
     };
 
     let tick = 0;
     const render = () => {
-      tick += 0.03;
-      mouse.x += (mouse.targetX - mouse.x) * 0.18;
-      mouse.y += (mouse.targetY - mouse.y) * 0.18;
+      tick += 0.035;
+      mouse.x += (mouse.targetX - mouse.x) * 0.22;
+      mouse.y += (mouse.targetY - mouse.y) * 0.22;
 
       ctx.clearRect(0, 0, width, height);
 
-      const hoverRadius = 80;
+      const hoverRadius = 90;
       const hoverRadiusSq = hoverRadius * hoverRadius;
+      const len = pixels.length;
 
-      for (let i = 0; i < pixels.length; i++) {
+      for (let i = 0; i < len; i++) {
         const p = pixels[i];
 
         // Ambient undulating sparkle
-        const wave = Math.sin(tick * 1.5 + p.phase);
+        const wave = Math.sin(tick * 1.8 + p.phase);
         let desired = p.baseAlpha > 0 ? p.baseAlpha * (0.6 + 0.4 * wave) : 0;
 
         // Interactive hover wave
         if (mouse.isHovered && mouse.x > 0 && mouse.y > 0) {
-          const dx = p.x + pixelSize / 2 - mouse.x;
-          const dy = p.y + pixelSize / 2 - mouse.y;
+          const dx = p.x - mouse.x;
+          const dy = p.y - mouse.y;
           const distSq = dx * dx + dy * dy;
 
           if (distSq < hoverRadiusSq) {
             const dist = Math.sqrt(distSq);
             const proximity = 1 - dist / hoverRadius;
-            // Shimmer intensity near cursor
-            const hoverBoost = Math.pow(proximity, 1.5) * (0.55 + 0.35 * Math.sin(tick * 5 + p.phase));
+            const hoverBoost = Math.pow(proximity, 1.4) * (0.65 + 0.35 * Math.sin(tick * 6 + p.phase));
             desired = Math.max(desired, hoverBoost);
           }
         }
 
         // Smooth alpha interpolation
-        p.alpha += (desired - p.alpha) * 0.12;
+        p.alpha += (desired - p.alpha) * 0.15;
 
-        if (p.alpha > 0.01) {
-          // Semi-transparent luminous pixel with crisp 1px borders (ContraLabs visual style)
+        if (p.alpha > 0.02) {
           ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha.toFixed(3)})`;
           ctx.fillRect(p.x, p.y, pixelSize, pixelSize);
-
-          if (p.alpha > 0.3) {
-            ctx.fillStyle = `rgba(18, 19, 20, ${(p.alpha * 0.45).toFixed(3)})`;
-            ctx.fillRect(p.x + 1, p.y + 1, pixelSize - 2, pixelSize - 2);
-          }
         }
       }
 

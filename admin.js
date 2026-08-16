@@ -672,6 +672,27 @@ document.addEventListener("DOMContentLoaded", () => {
       setMediaPreview(document.querySelector('[data-target="projSpreadImg1"]'), p.spreadImg1, "spread-1");
       setMediaPreview(document.querySelector('[data-target="projSpreadImg2"]'), p.spreadImg2, "spread-2");
       setMediaPreview(document.querySelector('[data-target="projInterfaceImg"]'), p.interfaceImg, "ui-showcase");
+
+      // Populate Curated Bento Visual Archives (5 Artifacts)
+      for (let i = 0; i < 5; i++) {
+        const item = (p.gallery && p.gallery[i]) ? p.gallery[i] : null;
+        const groupEl = document.querySelector(`[data-target="projBentoImg${i}"]`);
+        const tagInput = document.getElementById(`projBentoTag${i}`);
+        const titleInput = document.getElementById(`projBentoTitle${i}`);
+        const descInput = document.getElementById(`projBentoDesc${i}`);
+
+        if (item) {
+          setMediaPreview(groupEl, item.img, `artifact-0${i + 1}`);
+          if (tagInput) tagInput.value = item.tag || "";
+          if (titleInput) titleInput.value = item.title || "";
+          if (descInput) descInput.value = item.desc || "";
+        } else {
+          setMediaPreview(groupEl, "");
+          if (tagInput) tagInput.value = "";
+          if (titleInput) titleInput.value = "";
+          if (descInput) descInput.value = "";
+        }
+      }
     }
 
     if (projectModal) {
@@ -708,6 +729,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const heroImgVal = document.getElementById("projHeroImage").value.trim() || existing.heroImage || "assets/logo.png";
 
+      // Collect Bento Visual Archives (5 Artifacts)
+      const bentoGallery = [];
+      for (let i = 0; i < 5; i++) {
+        const imgVal = (document.getElementById(`projBentoImg${i}`)?.value || "").trim();
+        const tagVal = (document.getElementById(`projBentoTag${i}`)?.value || "").trim();
+        const titleVal = (document.getElementById(`projBentoTitle${i}`)?.value || "").trim();
+        const descVal = (document.getElementById(`projBentoDesc${i}`)?.value || "").trim();
+
+        if (imgVal || titleVal || tagVal) {
+          bentoGallery.push({
+            img: imgVal || (existing.gallery && existing.gallery[i]?.img) || "assets/logo.png",
+            tag: tagVal || `ARTIFACT 0${i + 1}`,
+            title: titleVal || `Physical Artifact 0${i + 1}`,
+            desc: descVal || "Physical Studio Artifact & Craft"
+          });
+        } else if (existing.gallery && existing.gallery[i]) {
+          bentoGallery.push(existing.gallery[i]);
+        }
+      }
+
       const updatedProject = {
         ...existing,
         id: id,
@@ -741,7 +782,7 @@ document.addEventListener("DOMContentLoaded", () => {
           { name: "Noir Intense", hex: "#0c0d0e", bg: "#0c0d0e", textColor: "#fff" },
           { name: "Silk Alabaster", hex: "#f5f0ea", bg: "#f5f0ea", textColor: "#111" }
         ],
-        gallery: existing.gallery || []
+        gallery: bentoGallery.length > 0 ? bentoGallery : (existing.gallery || [])
       };
 
       projectsData[id] = updatedProject;

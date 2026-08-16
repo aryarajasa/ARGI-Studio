@@ -25,20 +25,65 @@
     "spreadImg2": "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1200&q=85",
     "spreadCaption2": "02 / Tactile Garment Tags & Foil-Stamped Business Cards",
     "colors": [
-      { "name": "Noir Intense", "hex": "#0c0d0e", "bg": "#0c0d0e", "textColor": "#fff" },
-      { "name": "Silk Alabaster", "hex": "#f5f0ea", "bg": "#f5f0ea", "textColor": "#111" },
-      { "name": "Bleu Royal", "hex": "#2b4acb", "bg": "#2b4acb", "textColor": "#fff" },
-      { "name": "Gilt Accent", "hex": "#d4a373", "bg": "#d4a373", "textColor": "#111" }
+      {
+        "name": "Noir Intense",
+        "hex": "#0c0d0e",
+        "bg": "#0c0d0e",
+        "textColor": "#fff"
+      },
+      {
+        "name": "Silk Alabaster",
+        "hex": "#f5f0ea",
+        "bg": "#f5f0ea",
+        "textColor": "#111"
+      },
+      {
+        "name": "Bleu Royal",
+        "hex": "#2b4acb",
+        "bg": "#2b4acb",
+        "textColor": "#fff"
+      },
+      {
+        "name": "Gilt Accent",
+        "hex": "#d4a373",
+        "bg": "#d4a373",
+        "textColor": "#111"
+      }
     ],
     "typeHint": "Instrument Serif + Inter",
     "typeSample": "“Architecture of Elegance & Contemporary Restraint.”",
     "interfaceImg": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=85",
     "gallery": [
-      { "img": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85", "tag": "MONOGRAPH", "title": "Lookbook Editorial Spread", "desc": "Gold foil stamp & tactile uncoated cotton stock" },
-      { "img": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=85", "tag": "PACKAGING", "title": "Bespoke Packaging Suite", "desc": "Custom structural rigid boxes & silk ribbons" },
-      { "img": "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1000&q=85", "tag": "STATIONERY", "title": "Blind Embossed Cards", "desc": "Heavyweight 600gsm Colorplan duplex" },
-      { "img": "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1000&q=85", "tag": "TEXTILE", "title": "Monogram Silk Scarf", "desc": "Screen-printed archival silk twill" },
-      { "img": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=85", "tag": "ENVIRONMENTAL", "title": "Paris Flagship Storefront", "desc": "Cast brass letterforms & spatial signage" }
+      {
+        "img": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85",
+        "tag": "MONOGRAPH",
+        "title": "Lookbook Editorial Spread",
+        "desc": "Gold foil stamp & tactile uncoated cotton stock"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=85",
+        "tag": "PACKAGING",
+        "title": "Bespoke Packaging Suite",
+        "desc": "Custom structural rigid boxes & silk ribbons"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1000&q=85",
+        "tag": "STATIONERY",
+        "title": "Blind Embossed Cards",
+        "desc": "Heavyweight 600gsm Colorplan duplex"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1000&q=85",
+        "tag": "TEXTILE",
+        "title": "Monogram Silk Scarf",
+        "desc": "Screen-printed archival silk twill"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=85",
+        "tag": "ENVIRONMENTAL",
+        "title": "Paris Flagship Storefront",
+        "desc": "Cast brass letterforms & spatial signage"
+      }
     ],
     "deliverables": [
       "Brand Strategy & Positioning",
@@ -77,21 +122,66 @@
     "spreadImg2": "https://images.unsplash.com/photo-1608248597359-05d688cf41f8?auto=format&fit=crop&w=1200&q=85",
     "spreadCaption2": "02 / Molecular Note Formula Cards & Dropper Packaging",
     "colors": [
-      { "name": "Obsidian Amber", "hex": "#1f1813", "bg": "#1f1813", "textColor": "#fff" },
-      { "name": "Smoked Alabaster", "hex": "#ede7e0", "bg": "#ede7e0", "textColor": "#111" },
-      { "name": "Botanical Sage", "hex": "#839788", "bg": "#839788", "textColor": "#fff" },
-      { "name": "Warm Ochre", "hex": "#c98a4c", "bg": "#c98a4c", "textColor": "#fff" }
+      {
+        "name": "Obsidian Amber",
+        "hex": "#1f1813",
+        "bg": "#1f1813",
+        "textColor": "#fff"
+      },
+      {
+        "name": "Smoked Alabaster",
+        "hex": "#ede7e0",
+        "bg": "#ede7e0",
+        "textColor": "#111"
+      },
+      {
+        "name": "Botanical Sage",
+        "hex": "#839788",
+        "bg": "#839788",
+        "textColor": "#fff"
+      },
+      {
+        "name": "Warm Ochre",
+        "hex": "#c98a4c",
+        "bg": "#c98a4c",
+        "textColor": "#fff"
+      }
     ],
     "typeHint": "Instrument Serif + SFMono",
     "typeSample": "“Sensory Architecture & Distilled Botanical Form.”",
     "interfaceImg": "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?auto=format&fit=crop&w=1400&q=85",
     "browserUrl": "https://aurafragrance.co.uk/sensory-finder",
     "gallery": [
-      { "img": "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=85", "tag": "FLACON ARCHIVE", "title": "Heavyweight Amber Flacon", "desc": "Solid glass base & laser-etched metal cap" },
-      { "img": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=85", "tag": "FORMULATION", "title": "Botanical Scent Cards", "desc": "Printed on heavy cotton rag paper" },
-      { "img": "https://images.unsplash.com/photo-1608248597359-05d688cf41f8?auto=format&fit=crop&w=1000&q=85", "tag": "LABORATORY", "title": "Raw Extraction Glassware", "desc": "Organic essence distillation protocols" },
-      { "img": "https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=1000&q=85", "tag": "MONOGRAM", "title": "Tactile Wax Seal", "desc": "Custom seal stamp for numbered batches" },
-      { "img": "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?auto=format&fit=crop&w=1200&q=85", "tag": "SPATIAL", "title": "London Olfactory Chamber", "desc": "Atmospheric sensory flagship installation" }
+      {
+        "img": "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=85",
+        "tag": "FLACON ARCHIVE",
+        "title": "Heavyweight Amber Flacon",
+        "desc": "Solid glass base & laser-etched metal cap"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=85",
+        "tag": "FORMULATION",
+        "title": "Botanical Scent Cards",
+        "desc": "Printed on heavy cotton rag paper"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1608248597359-05d688cf41f8?auto=format&fit=crop&w=1000&q=85",
+        "tag": "LABORATORY",
+        "title": "Raw Extraction Glassware",
+        "desc": "Organic essence distillation protocols"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=1000&q=85",
+        "tag": "MONOGRAM",
+        "title": "Tactile Wax Seal",
+        "desc": "Custom seal stamp for numbered batches"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?auto=format&fit=crop&w=1200&q=85",
+        "tag": "SPATIAL",
+        "title": "London Olfactory Chamber",
+        "desc": "Atmospheric sensory flagship installation"
+      }
     ],
     "deliverables": [
       "Flacon Structural 3D Design",
@@ -129,21 +219,66 @@
     "spreadImg2": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=85",
     "spreadCaption2": "02 / High-Contrast Laboratory Flasks & Pump Bottles",
     "colors": [
-      { "name": "Forest Canopy", "hex": "#16302b", "bg": "#16302b", "textColor": "#fff" },
-      { "name": "Terracotta Clay", "hex": "#c85a38", "bg": "#c85a38", "textColor": "#fff" },
-      { "name": "Raw Ecru", "hex": "#f3ede2", "bg": "#f3ede2", "textColor": "#111" },
-      { "name": "Chlorophyll Yellow", "hex": "#dfd876", "bg": "#dfd876", "textColor": "#111" }
+      {
+        "name": "Forest Canopy",
+        "hex": "#16302b",
+        "bg": "#16302b",
+        "textColor": "#fff"
+      },
+      {
+        "name": "Terracotta Clay",
+        "hex": "#c85a38",
+        "bg": "#c85a38",
+        "textColor": "#fff"
+      },
+      {
+        "name": "Raw Ecru",
+        "hex": "#f3ede2",
+        "bg": "#f3ede2",
+        "textColor": "#111"
+      },
+      {
+        "name": "Chlorophyll Yellow",
+        "hex": "#dfd876",
+        "bg": "#dfd876",
+        "textColor": "#111"
+      }
     ],
     "typeHint": "Instrument Serif + Inter Tight",
     "typeSample": "“Living Flora & Circular Material Innovation.”",
     "interfaceImg": "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1400&q=85",
     "browserUrl": "https://twygbotanic.com/products/restorative-serum",
     "gallery": [
-      { "img": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=85", "tag": "MYCELIUM", "title": "Compostable Box Shells", "desc": "Grown agricultural mycelium structures" },
-      { "img": "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=1000&q=85", "tag": "BOTANICAL", "title": "Plant-Based Inks & Cards", "desc": "100% post-consumer seed paper print" },
-      { "img": "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1000&q=85", "tag": "CERAMIC", "title": "Handmade Ceramic Jars", "desc": "Refillable stoneware containers" },
-      { "img": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1000&q=85", "tag": "MICROSCOPY", "title": "Flora Cellular Macro", "desc": "Brand imagery shot under darkfield lens" },
-      { "img": "https://images.unsplash.com/photo-1463936575829-25148e1db1b8?auto=format&fit=crop&w=1200&q=85", "tag": "RETAIL", "title": "Greenhouse Flagship Space", "desc": "Living plant wall retail interior" }
+      {
+        "img": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=85",
+        "tag": "MYCELIUM",
+        "title": "Compostable Box Shells",
+        "desc": "Grown agricultural mycelium structures"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=1000&q=85",
+        "tag": "BOTANICAL",
+        "title": "Plant-Based Inks & Cards",
+        "desc": "100% post-consumer seed paper print"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1000&q=85",
+        "tag": "CERAMIC",
+        "title": "Handmade Ceramic Jars",
+        "desc": "Refillable stoneware containers"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1000&q=85",
+        "tag": "MICROSCOPY",
+        "title": "Flora Cellular Macro",
+        "desc": "Brand imagery shot under darkfield lens"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1463936575829-25148e1db1b8?auto=format&fit=crop&w=1200&q=85",
+        "tag": "RETAIL",
+        "title": "Greenhouse Flagship Space",
+        "desc": "Living plant wall retail interior"
+      }
     ],
     "deliverables": [
       "Complete Brand Identity Suite",
@@ -181,21 +316,66 @@
     "spreadImg2": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
     "spreadCaption2": "02 / 380-Page Swiss Linen Monograph Layouts",
     "colors": [
-      { "name": "Alpine Granite", "hex": "#181a1b", "bg": "#181a1b", "textColor": "#fff" },
-      { "name": "Cast Concrete", "hex": "#d8d8d6", "bg": "#d8d8d6", "textColor": "#111" },
-      { "name": "Pure Titanium", "hex": "#ffffff", "bg": "#ffffff", "textColor": "#111" },
-      { "name": "Safety Ochre", "hex": "#ff5e14", "bg": "#ff5e14", "textColor": "#fff" }
+      {
+        "name": "Alpine Granite",
+        "hex": "#181a1b",
+        "bg": "#181a1b",
+        "textColor": "#fff"
+      },
+      {
+        "name": "Cast Concrete",
+        "hex": "#d8d8d6",
+        "bg": "#d8d8d6",
+        "textColor": "#111"
+      },
+      {
+        "name": "Pure Titanium",
+        "hex": "#ffffff",
+        "bg": "#ffffff",
+        "textColor": "#111"
+      },
+      {
+        "name": "Safety Ochre",
+        "hex": "#ff5e14",
+        "bg": "#ff5e14",
+        "textColor": "#fff"
+      }
     ],
     "typeHint": "Inter + Instrument Serif",
     "typeSample": "“Monumental Silence, Heavy Concrete & Pure Geometry.”",
     "interfaceImg": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=85",
     "browserUrl": "https://monolith-arch.ch/projects/alps-pavilion",
     "gallery": [
-      { "img": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85", "tag": "PUBLICATION", "title": "Hardcover Monograph", "desc": "Grey cloth binding with debossed foil" },
-      { "img": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=85", "tag": "BLUEPRINTS", "title": "Architectural Folios", "desc": "A0 technical scale drawing sheets" },
-      { "img": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=85", "tag": "SIGNAGE", "title": "Anodized Steel Plaque", "desc": "CNC-milled spatial wayfinding system" },
-      { "img": "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=1000&q=85", "tag": "MATERIALS", "title": "Concrete & Travertine", "desc": "Tactile architectural material archive" },
-      { "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85", "tag": "STUDIO", "title": "Zurich Model Archive", "desc": "Physical scale models & research space" }
+      {
+        "img": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85",
+        "tag": "PUBLICATION",
+        "title": "Hardcover Monograph",
+        "desc": "Grey cloth binding with debossed foil"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=85",
+        "tag": "BLUEPRINTS",
+        "title": "Architectural Folios",
+        "desc": "A0 technical scale drawing sheets"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=85",
+        "tag": "SIGNAGE",
+        "title": "Anodized Steel Plaque",
+        "desc": "CNC-milled spatial wayfinding system"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=1000&q=85",
+        "tag": "MATERIALS",
+        "title": "Concrete & Travertine",
+        "desc": "Tactile architectural material archive"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85",
+        "tag": "STUDIO",
+        "title": "Zurich Model Archive",
+        "desc": "Physical scale models & research space"
+      }
     ],
     "deliverables": [
       "Complete Studio Brand Identity",
@@ -233,21 +413,66 @@
     "spreadImg2": "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1200&q=85",
     "spreadCaption2": "02 / Festival Passes, Foil Lanyards & Screening Guides",
     "colors": [
-      { "name": "Kyoto Night", "hex": "#0b0c10", "bg": "#0b0c10", "textColor": "#fff" },
-      { "name": "Crimson Cinnabar", "hex": "#e63946", "bg": "#e63946", "textColor": "#fff" },
-      { "name": "Paper Washi", "hex": "#f1ede6", "bg": "#f1ede6", "textColor": "#111" },
-      { "name": "Electric Indigo", "hex": "#3a56d4", "bg": "#3a56d4", "textColor": "#fff" }
+      {
+        "name": "Kyoto Night",
+        "hex": "#0b0c10",
+        "bg": "#0b0c10",
+        "textColor": "#fff"
+      },
+      {
+        "name": "Crimson Cinnabar",
+        "hex": "#e63946",
+        "bg": "#e63946",
+        "textColor": "#fff"
+      },
+      {
+        "name": "Paper Washi",
+        "hex": "#f1ede6",
+        "bg": "#f1ede6",
+        "textColor": "#111"
+      },
+      {
+        "name": "Electric Indigo",
+        "hex": "#3a56d4",
+        "bg": "#3a56d4",
+        "textColor": "#fff"
+      }
     ],
     "typeHint": "Instrument Serif + Kanji Mono",
     "typeSample": "“Cinema of Light, Shadow & Fleeting Memory.”",
     "interfaceImg": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=85",
     "browserUrl": "https://komorebicinema.jp/schedule",
     "gallery": [
-      { "img": "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=85", "tag": "SILKSCREEN", "title": "A0 Festival Poster Series", "desc": "Fluorescent vermilion & black screenprints" },
-      { "img": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1000&q=85", "tag": "ACCREDITATION", "title": "VIP Pass & Lanyards", "desc": "Holographic foil on heavy matte plastic" },
-      { "img": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=85", "tag": "PROJECTION", "title": "Kyoto Temple Renders", "desc": "Outdoor spatial light mapping layouts" },
-      { "img": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1000&q=85", "tag": "CINEMA PRINT", "title": "35mm Archival Film Proofs", "desc": "High-contrast grain photography" },
-      { "img": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=85", "tag": "PAVILION", "title": "Night Screening Stage", "desc": "Historic temple courtyard screening hub" }
+      {
+        "img": "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=85",
+        "tag": "SILKSCREEN",
+        "title": "A0 Festival Poster Series",
+        "desc": "Fluorescent vermilion & black screenprints"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1000&q=85",
+        "tag": "ACCREDITATION",
+        "title": "VIP Pass & Lanyards",
+        "desc": "Holographic foil on heavy matte plastic"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=85",
+        "tag": "PROJECTION",
+        "title": "Kyoto Temple Renders",
+        "desc": "Outdoor spatial light mapping layouts"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1000&q=85",
+        "tag": "CINEMA PRINT",
+        "title": "35mm Archival Film Proofs",
+        "desc": "High-contrast grain photography"
+      },
+      {
+        "img": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=85",
+        "tag": "PAVILION",
+        "title": "Night Screening Stage",
+        "desc": "Historic temple courtyard screening hub"
+      }
     ],
     "deliverables": [
       "Festival Identity & Logo System",
@@ -258,57 +483,5 @@
       "Merchandise & Ticket Pass Suite"
     ],
     "nextId": "06"
-  },
-  "06": {
-    "id": "06",
-    "slug": "braids-magazine-issue-04",
-    "title": "Braids Magazine",
-    "titleAccent": "Issue 04",
-    "client": "Braids Publishing",
-    "sector": "Independent Editorial Press • London / NYC",
-    "year": "Q1 2026",
-    "timeline": "12 Weeks",
-    "disciplines": "Editorial Print, Typography",
-    "disciplinesSub": "Digital Edition & Subscription Hub",
-    "liveUrl": "https://braidsmagazine.com",
-    "liveUrlText": "braidsmagazine.com ↗",
-    "summary": "Avant-garde editorial publication art direction, custom ligature typeface design, tactile holographic cover foil, and digital reader app.",
-    "challenge": "Braids Magazine is an international print monograph exploring contemporary fashion theory and critical culture. Issue 04 needed a complete typographic overhaul that challenged conventional editorial grids.",
-    "concept": "We designed a bespoke high-contrast ligature typeface and deployed asymmetrical 12-column dynamic layouts with extreme typographic scale contrast and tactile coated/uncoated paper stocks.",
-    "quote": "ARGI Studio pushed our publication into a work of collectible art. Every single page feels alive, provocative, and razor sharp.",
-    "quoteAuthor": "Sienna Callow",
-    "quoteRole": "Editor-in-Chief",
-    "heroImage": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=2000&q=85",
-    "heroCaption": "HOLOGRAPHIC FOIL ISSUE COVER & EDITORIAL SPREADS",
-    "spreadImg1": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1200&q=85",
-    "spreadCaption1": "01 / Custom Display Serif Ligatures & Column Grids",
-    "spreadImg2": "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1200&q=85",
-    "spreadCaption2": "02 / High-Gloss Fashion Feature & Essay Layouts",
-    "colors": [
-      { "name": "Editorial Carbon", "hex": "#111213", "bg": "#111213", "textColor": "#fff" },
-      { "name": "Bleached Newsprint", "hex": "#f6f4ef", "bg": "#f6f4ef", "textColor": "#111" },
-      { "name": "Acid Vermilion", "hex": "#e03e2d", "bg": "#e03e2d", "textColor": "#fff" },
-      { "name": "Silver Mylar", "hex": "#c0c4cc", "bg": "#c0c4cc", "textColor": "#111" }
-    ],
-    "typeHint": "Braids Serif + Inter Display",
-    "typeSample": "“Critical Culture, Avant-Garde Form & Printed Matter.”",
-    "interfaceImg": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1400&q=85",
-    "browserUrl": "https://braidsmagazine.com/issue-04",
-    "gallery": [
-      { "img": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=85", "tag": "HARDCOVER", "title": "Holographic Foil Cover", "desc": "Silver foil stamped on 400gsm duplex board" },
-      { "img": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1000&q=85", "tag": "TYPOGRAPHY", "title": "Custom Ligature Spreads", "desc": "Asymmetrical 12-column editorial grids" },
-      { "img": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1000&q=85", "tag": "SLIPCASE", "title": "Custom Archival Box", "desc": "Rigid board slipcase with debossed spine" },
-      { "img": "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1000&q=85", "tag": "ESSAYS", "title": "Critical Theory Proofs", "desc": "Uncoated Munken paper stock testing" },
-      { "img": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=85", "tag": "EXHIBITION", "title": "Launch Monograph Event", "desc": "London gallery book signing & launch party" }
-    ],
-    "deliverables": [
-      "Complete Publication Art Direction",
-      "Custom Editorial Ligature Typeface",
-      "240-Page Print Production R&D",
-      "Digital Reader Progressive Web App",
-      "Holographic Slipcase Packaging",
-      "Launch Exhibition & Book Signing"
-    ],
-    "nextId": "01"
   }
 }

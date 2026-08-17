@@ -468,26 +468,84 @@ document.addEventListener("DOMContentLoaded", async () => {
   const csSpreadCaption2 = document.getElementById("csSpreadCaption2");
   if (csSpreadCaption2) csSpreadCaption2.textContent = currentProject.spreadCaption2;
 
-  // Populate Interactive Color Palette Swatches
-  const csPaletteRow = document.getElementById("csPaletteRow");
-  if (csPaletteRow && currentProject.colors) {
-    csPaletteRow.innerHTML = currentProject.colors.map(color => `
-      <div class="swatch-item" data-hex="${color.hex}">
-        <div class="swatch-color-box" style="background-color: ${color.bg};">
-          <div class="swatch-copy-overlay">COPY</div>
-        </div>
-        <span class="swatch-name">${color.name}</span>
-        <span class="swatch-hex">${color.hex}</span>
-      </div>
-    `).join("");
+  // Populate Interactive Brand Artifacts (Color Tokens & Typographic Architecture)
+  const csArtifactsSection = document.getElementById("csArtifactsSection");
+  const csPaletteCard = document.getElementById("csPaletteCard");
+  const csTypographyCard = document.getElementById("csTypographyCard");
+  const csArtifactsDeckGrid = document.getElementById("csArtifactsDeckGrid");
+  const csArtifactsHeading = document.getElementById("csArtifactsHeading");
+
+  const colorsList = (currentProject.colors || []).filter(c => c && (c.name || c.hex));
+  const hasColors = colorsList.length > 0;
+
+  const hasTypography = Boolean(
+    (currentProject.typeHint && currentProject.typeHint.trim()) ||
+    (currentProject.typeLarge && currentProject.typeLarge.trim()) ||
+    (currentProject.typeSample && currentProject.typeSample.trim())
+  );
+
+  // 1. Handle Colors Card
+  if (csPaletteCard) {
+    if (hasColors) {
+      csPaletteCard.style.display = "flex";
+      const csPaletteRow = document.getElementById("csPaletteRow");
+      if (csPaletteRow) {
+        csPaletteRow.innerHTML = colorsList.map(color => `
+          <div class="swatch-item" data-hex="${color.hex}">
+            <div class="swatch-color-box" style="background-color: ${color.bg || color.hex};">
+              <div class="swatch-copy-overlay">COPY</div>
+            </div>
+            <span class="swatch-name">${color.name || 'Swatch'}</span>
+            <span class="swatch-hex">${color.hex || ''}</span>
+          </div>
+        `).join("");
+      }
+    } else {
+      csPaletteCard.style.display = "none";
+    }
   }
 
-  // Populate Type Specimen
-  const csTypeHint = document.getElementById("csTypeHint");
-  if (csTypeHint) csTypeHint.textContent = currentProject.typeHint;
+  // 2. Handle Typography Specimen Card
+  if (csTypographyCard) {
+    if (hasTypography) {
+      csTypographyCard.style.display = "flex";
+      const csTypeHint = document.getElementById("csTypeHint");
+      if (csTypeHint) csTypeHint.textContent = currentProject.typeHint || "Instrument Serif + Inter";
 
-  const csTypeSpecimenSample = document.getElementById("csTypeSpecimenSample");
-  if (csTypeSpecimenSample) csTypeSpecimenSample.textContent = currentProject.typeSample;
+      const csTypeSpecimenLarge = document.getElementById("csTypeSpecimenLarge");
+      if (csTypeSpecimenLarge) csTypeSpecimenLarge.textContent = currentProject.typeLarge || "Aa Bb Gg 01";
+
+      const csTypeSpecimenSample = document.getElementById("csTypeSpecimenSample");
+      if (csTypeSpecimenSample) csTypeSpecimenSample.textContent = currentProject.typeSample || "“Architecture of Elegance & Contemporary Restraint.”";
+    } else {
+      csTypographyCard.style.display = "none";
+    }
+  }
+
+  // 3. Handle Grid & Section Visibility
+  if (csArtifactsSection) {
+    if (!hasColors && !hasTypography) {
+      csArtifactsSection.style.display = "none";
+    } else {
+      csArtifactsSection.style.display = "block";
+      if (csArtifactsDeckGrid) {
+        if (hasColors && hasTypography) {
+          csArtifactsDeckGrid.style.gridTemplateColumns = "1fr 1fr";
+        } else {
+          csArtifactsDeckGrid.style.gridTemplateColumns = "1fr";
+        }
+      }
+      if (csArtifactsHeading) {
+        if (hasColors && hasTypography) {
+          csArtifactsHeading.textContent = "Color Tokens & Typographic Architecture";
+        } else if (hasColors) {
+          csArtifactsHeading.textContent = "Color Tokens & Chromatic System";
+        } else if (hasTypography) {
+          csArtifactsHeading.textContent = "Typographic Architecture";
+        }
+      }
+    }
+  }
 
   // Populate Interface Frame
   const csInterfaceImg = document.getElementById("csInterfaceImg");

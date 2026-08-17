@@ -684,6 +684,24 @@ document.addEventListener("DOMContentLoaded", () => {
           if (descInput) descInput.value = "";
         }
       }
+
+      // Populate Design Artifacts (Colors & Typography Architecture)
+      for (let i = 0; i < 4; i++) {
+        const colorItem = (p.colors && p.colors[i]) ? p.colors[i] : null;
+        const nameInput = document.getElementById(`projColorName${i}`);
+        const hexInput = document.getElementById(`projColorHex${i}`);
+        if (nameInput) nameInput.value = colorItem ? (colorItem.name || "") : "";
+        if (hexInput) hexInput.value = colorItem ? (colorItem.hex || "") : "";
+      }
+
+      const projTypeHint = document.getElementById("projTypeHint");
+      if (projTypeHint) projTypeHint.value = p.typeHint || "";
+
+      const projTypeLarge = document.getElementById("projTypeLarge");
+      if (projTypeLarge) projTypeLarge.value = p.typeLarge || "";
+
+      const projTypeSample = document.getElementById("projTypeSample");
+      if (projTypeSample) projTypeSample.value = p.typeSample || "";
     }
 
     if (projectModal) {
@@ -740,6 +758,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
+      // Collect Chromatic Tokens (Colors)
+      const collectedColors = [];
+      for (let i = 0; i < 4; i++) {
+        const nameVal = (document.getElementById(`projColorName${i}`)?.value || "").trim();
+        const hexVal = (document.getElementById(`projColorHex${i}`)?.value || "").trim();
+        if (nameVal || hexVal) {
+          collectedColors.push({
+            name: nameVal || "Color Swatch",
+            hex: hexVal || "#0c0d0e",
+            bg: hexVal || "#0c0d0e",
+            textColor: "#ffffff"
+          });
+        }
+      }
+
+      const typeHintVal = (document.getElementById("projTypeHint")?.value || "").trim();
+      const typeLargeVal = (document.getElementById("projTypeLarge")?.value || "").trim();
+      const typeSampleVal = (document.getElementById("projTypeSample")?.value || "").trim();
+
       const updatedProject = {
         ...existing,
         id: id,
@@ -769,10 +806,10 @@ document.addEventListener("DOMContentLoaded", () => {
         interfaceImg: document.getElementById("projInterfaceImg").value.trim(),
         deliverables: document.getElementById("projDeliverables").value.split(",").map(s => s.trim()).filter(Boolean),
         nextId: existing.nextId || "01",
-        colors: existing.colors || [
-          { name: "Noir Intense", hex: "#0c0d0e", bg: "#0c0d0e", textColor: "#fff" },
-          { name: "Silk Alabaster", hex: "#f5f0ea", bg: "#f5f0ea", textColor: "#111" }
-        ],
+        colors: collectedColors,
+        typeHint: typeHintVal,
+        typeLarge: typeLargeVal,
+        typeSample: typeSampleVal,
         gallery: bentoGallery.length > 0 ? bentoGallery : (existing.gallery || [])
       };
 

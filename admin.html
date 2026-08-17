@@ -1021,9 +1021,81 @@
           </div>
         </fieldset>
 
-        <!-- Tab 5: Deliverables -->
+        <!-- Tab 5: Design Artifacts (Color Tokens & Typographic Architecture) -->
         <fieldset class="form-section">
-          <legend class="section-legend">05. Deliverables Scope (Comma-separated)</legend>
+          <legend class="section-legend">05. Design Artifacts — Colors &amp; Typographic Architecture</legend>
+          <p class="form-section-intro">Configure the chromatic tokens and typography specimen displayed in Section 03 of the case study. Leave empty to automatically hide individual boxes or the entire section.</p>
+
+          <!-- Chromatic System (Color Palette Tokens) -->
+          <div style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-light-subtle);">
+            <div class="label-with-badge" style="margin-bottom: 0.85rem;">
+              <label class="form-label" style="font-weight: 600;">Chromatic Tokens (Up to 4 Swatches)</label>
+              <span class="media-hint-badge">Format: Color Name | Hex Code (e.g. Noir Intense | #0c0d0e)</span>
+            </div>
+            
+            <div class="form-row-2" style="margin-bottom: 0.75rem;">
+              <div class="form-group">
+                <label class="form-label">Color Swatch 1 (Name &amp; Hex)</label>
+                <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 0.5rem;">
+                  <input type="text" id="projColorName0" class="form-control" placeholder="e.g. Noir Intense" />
+                  <input type="text" id="projColorHex0" class="form-control" placeholder="#0c0d0e" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Color Swatch 2 (Name &amp; Hex)</label>
+                <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 0.5rem;">
+                  <input type="text" id="projColorName1" class="form-control" placeholder="e.g. Silk Alabaster" />
+                  <input type="text" id="projColorHex1" class="form-control" placeholder="#f5f0ea" />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label">Color Swatch 3 (Optional)</label>
+                <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 0.5rem;">
+                  <input type="text" id="projColorName2" class="form-control" placeholder="e.g. Ochre Gold" />
+                  <input type="text" id="projColorHex2" class="form-control" placeholder="#d4af37" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Color Swatch 4 (Optional)</label>
+                <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 0.5rem;">
+                  <input type="text" id="projColorName3" class="form-control" placeholder="e.g. Deep Cobalt" />
+                  <input type="text" id="projColorHex3" class="form-control" placeholder="#1e3a8a" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Type Architecture -->
+          <div>
+            <div class="label-with-badge" style="margin-bottom: 0.85rem;">
+              <label class="form-label" style="font-weight: 600;">Type Architecture Specimen</label>
+              <span class="media-hint-badge">Leave empty to remove Type Architecture box</span>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label">Type Pairing Hint / Names</label>
+                <input type="text" id="projTypeHint" class="form-control" placeholder="e.g. Instrument Serif + Inter" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Display Letterforms Glyphs</label>
+                <input type="text" id="projTypeLarge" class="form-control" placeholder="Aa Bb Gg 01" />
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 0.75rem;">
+              <label class="form-label">Type Specimen Quote / Sample Phrase</label>
+              <input type="text" id="projTypeSample" class="form-control" placeholder="“Architecture of Elegance &amp; Contemporary Restraint.”" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Tab 6: Deliverables -->
+        <fieldset class="form-section">
+          <legend class="section-legend">06. Deliverables Scope (Comma-separated)</legend>
           <div class="form-group">
             <textarea id="projDeliverables" class="form-control" rows="2" placeholder="Brand Strategy, Custom Wordmark, Packaging Suite, Shopify Flagship, Social Campaign"></textarea>
           </div>

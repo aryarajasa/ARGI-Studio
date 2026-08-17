@@ -425,21 +425,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   const csHeroCaption = document.getElementById("csHeroCaption");
   if (csHeroCaption) csHeroCaption.textContent = currentProject.heroCaption;
 
-  // Populate Narrative
+  // Populate Narrative & Conditional Pull Quote Box
   const csChallengeText = document.getElementById("csChallengeText");
-  if (csChallengeText) csChallengeText.textContent = currentProject.challenge;
+  if (csChallengeText) csChallengeText.textContent = currentProject.challenge || "";
 
   const csConceptText = document.getElementById("csConceptText");
-  if (csConceptText) csConceptText.textContent = currentProject.concept;
+  if (csConceptText) csConceptText.textContent = currentProject.concept || "";
 
-  const csQuoteText = document.getElementById("csQuoteText");
-  if (csQuoteText) csQuoteText.textContent = currentProject.quote;
+  const csPullQuoteCard = document.getElementById("csPullQuoteCard");
+  const rawQuote = (currentProject.quote || "").trim();
 
-  const csQuoteAuthor = document.getElementById("csQuoteAuthor");
-  if (csQuoteAuthor) csQuoteAuthor.textContent = currentProject.quoteAuthor;
+  if (csPullQuoteCard) {
+    if (rawQuote) {
+      csPullQuoteCard.style.display = "block";
+      const csQuoteText = document.getElementById("csQuoteText");
+      if (csQuoteText) csQuoteText.textContent = rawQuote;
 
-  const csQuoteRole = document.getElementById("csQuoteRole");
-  if (csQuoteRole) csQuoteRole.textContent = currentProject.quoteRole;
+      const csQuoteAuthor = document.getElementById("csQuoteAuthor");
+      if (csQuoteAuthor) csQuoteAuthor.textContent = (currentProject.quoteAuthor || "").trim();
+
+      const csQuoteRole = document.getElementById("csQuoteRole");
+      if (csQuoteRole) csQuoteRole.textContent = (currentProject.quoteRole || "").trim();
+    } else {
+      csPullQuoteCard.style.display = "none";
+    }
+  }
 
   // Populate Two-Column Spread Images
   const csSpreadImg1 = document.getElementById("csSpreadImg1");

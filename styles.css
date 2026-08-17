@@ -1133,7 +1133,7 @@ body.site-ready .page-wrapper {
   background-color: var(--bg-dark);
   color: var(--text-white);
   padding-top: 8rem;
-  padding-bottom: 8rem;
+  padding-bottom: 5.5rem;
 }
 
 .datasets-intro-text {
@@ -1489,7 +1489,7 @@ body.site-ready .page-wrapper {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  margin-bottom: 4rem;
+  margin-bottom: 0;
 }
 
 .cta-box-title {
@@ -1508,54 +1508,6 @@ body.site-ready .page-wrapper {
 
 .cta-box-desc {
   font-size: 0.9375rem;
-  line-height: 1.6;
-  color: var(--text-white-muted);
-}
-
-/* Works Steps Grid */
-.works-steps-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  border-top: 1px solid var(--bg-dark-card-border);
-  padding-top: 3.5rem;
-}
-
-.works-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
-.works-icon-circle {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-white);
-  margin-bottom: 0.5rem;
-}
-
-.works-title {
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  font-weight: 400;
-  color: var(--text-white);
-}
-
-.works-title em,
-.works-title i,
-.works-title .serif-accent {
-  font-style: italic;
-  color: var(--text-white-muted);
-}
-
-.works-desc {
-  font-size: 0.875rem;
   line-height: 1.6;
   color: var(--text-white-muted);
 }

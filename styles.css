@@ -1237,14 +1237,24 @@ body.site-ready .page-wrapper {
   cursor: pointer;
 }
 
+/* ==========================================================================
+   BESPOKE ATELIER EDITORIAL GALLERY HOVER INTERACTION
+   ========================================================================== */
 .gallery-item-frame {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3.1;
   overflow: hidden;
-  background: #141618;
+  background: #0d0e10;
   border-radius: 0px !important;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: border-color 0.45s ease, box-shadow 0.45s ease;
+}
+
+.gallery-item-sharp:hover .gallery-item-frame {
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
 
 .gallery-img-sharp {
@@ -1253,51 +1263,52 @@ body.site-ready .page-wrapper {
   object-fit: cover;
   display: block;
   border-radius: 0px !important;
-  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+  will-change: transform;
 }
 
 .gallery-item-sharp:hover .gallery-img-sharp {
-  transform: scale(1.04);
+  filter: brightness(0.92) contrast(1.05);
 }
 
-/* --- OPTION 1: FLUID LIQUID GLASS DISPLACEMENT & CHROMATIC DISPERSION --- */
+/* Velvety Noir Editorial Overlay with Soft Specular Ambient Light */
 .gallery-sharp-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(12, 13, 15, 0.48);
+  background: rgba(10, 11, 13, 0.52);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
   z-index: 4;
-  backdrop-filter: blur(4px) saturate(140%);
-  -webkit-backdrop-filter: blur(4px) saturate(140%);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
+/* Soft Cursor-Driven Specular Glow (Mimicking studio light moving across matte print) */
 .gallery-sharp-overlay::before {
   content: "";
   position: absolute;
-  inset: -20%;
-  width: 140%;
-  height: 140%;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
   background: radial-gradient(
-    circle 180px at var(--ripple-x, 50%) var(--ripple-y, 50%),
-    rgba(255, 255, 255, 0.28) 0%,
-    rgba(255, 255, 255, 0.12) 30%,
-    rgba(96, 165, 250, 0.08) 55%,
-    rgba(244, 63, 94, 0.06) 75%,
-    transparent 100%
+    circle 280px at var(--light-x, 50%) var(--light-y, 50%),
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.06) 40%,
+    transparent 75%
   );
-  mix-blend-mode: overlay;
+  mix-blend-mode: screen;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  will-change: transform;
 }
 
+/* Subtle Film Grain / Atmospheric Depth */
 .gallery-sharp-overlay::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 60%, rgba(0, 0, 0, 0.35) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%);
   pointer-events: none;
 }
 
@@ -1305,59 +1316,42 @@ body.site-ready .page-wrapper {
   opacity: 1;
 }
 
-/* Liquid Ripple Shockwave Wavefront */
+/* Remove deprecated lens ring */
 .gallery-lens-ring {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
-  box-shadow: 
-    0 0 35px rgba(255, 255, 255, 0.35),
-    inset 0 0 20px rgba(255, 255, 255, 0.2),
-    0 20px 45px rgba(0, 0, 0, 0.4);
-  pointer-events: none;
-  opacity: 0;
-  transform: translate3d(var(--ripple-x, 50%), var(--ripple-y, 50%), 0) translate(-50%, -50%) scale(0.6);
-  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-  z-index: 5;
+  display: none;
 }
 
-.gallery-item-sharp:hover .gallery-lens-ring {
-  opacity: 0.85;
-  transform: translate3d(var(--ripple-x, 50%), var(--ripple-y, 50%), 0) translate(-50%, -50%) scale(1.15);
-}
-
-/* Magnetic Following Floating Explore Button */
+/* Luxury Weighted Magnetic Floating Pill */
 .explore-sharp-pill {
   position: absolute;
   top: 0;
   left: 0;
-  background: rgba(255, 255, 255, 0.95);
-  color: var(--text-primary);
+  background: #ffffff;
+  color: #0c0d0e;
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
   font-weight: 600;
-  padding: 0.65rem 1.45rem;
+  letter-spacing: 0.01em;
+  padding: 0.7rem 1.55rem;
   border-radius: var(--radius-full);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.18),
+    0 18px 40px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   pointer-events: none;
   white-space: nowrap;
   opacity: 0;
-  transform: translate3d(var(--pill-x, 50%), var(--pill-y, 50%), 0) translate(-50%, -50%) scale(0.85);
-  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(var(--pill-x, 50%), var(--pill-y, 50%), 0) translate(-50%, -50%) rotate(var(--pill-rot, 0deg)) scale(0.85);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.08s ease-out;
   will-change: transform, opacity;
   z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
 }
 
 .gallery-item-sharp:hover .explore-sharp-pill {
   opacity: 1;
-  transform: translate3d(var(--pill-x, 50%), var(--pill-y, 50%), 0) translate(-50%, -50%) scale(1);
 }
 
 .gallery-item-caption {
@@ -1365,7 +1359,7 @@ body.site-ready .page-wrapper {
   align-items: flex-start;
   justify-content: space-between;
   gap: 1.5rem;
-  padding-top: 0.35rem;
+  padding-top: 0.5rem;
 }
 
 .caption-left {

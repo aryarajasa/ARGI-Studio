@@ -670,7 +670,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initIndexHoverPortal();
 
-  // 9. OPTION 1: FLUID LIQUID GLASS DISPLACEMENT & CHROMATIC DISPERSION
+  // 9. HIGH-END BESPOKE ATELIER GALLERY HOVER (PHYSICS LERP, TILT & LIGHT PARALLAX)
   const initGalleryHoverTracking = () => {
     const galleryItems = document.querySelectorAll(".gallery-item-sharp");
     galleryItems.forEach(item => {
@@ -680,28 +680,41 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!frame || !pill) return;
 
       let rect = frame.getBoundingClientRect();
-      let mouseX = rect.width / 2;
-      let mouseY = rect.height / 2;
-      let targetX = mouseX;
-      let targetY = mouseY;
+      let currentX = rect.width / 2;
+      let currentY = rect.height / 2;
+      let targetX = currentX;
+      let targetY = currentY;
+      let currentRot = 0;
+      let targetRot = 0;
+      let prevX = targetX;
       let isHovered = false;
       let rAF = null;
 
       const updatePosition = () => {
         if (!isHovered) return;
-        mouseX += (targetX - mouseX) * 0.15;
-        mouseY += (targetY - mouseY) * 0.15;
 
-        frame.style.setProperty("--ripple-x", `${mouseX.toFixed(1)}px`);
-        frame.style.setProperty("--ripple-y", `${mouseY.toFixed(1)}px`);
-        pill.style.setProperty("--pill-x", `${mouseX.toFixed(1)}px`);
-        pill.style.setProperty("--pill-y", `${mouseY.toFixed(1)}px`);
+        // Smooth spring interpolation (0.14 lerp factor)
+        currentX += (targetX - currentX) * 0.14;
+        currentY += (targetY - currentY) * 0.14;
 
-        // Subtle fluid liquid parallax drift on underlying artwork
+        // Calculate dynamic velocity tilt for physical organic momentum
+        const deltaX = targetX - prevX;
+        prevX = targetX;
+        targetRot = Math.max(Math.min(deltaX * 0.35, 12), -12); // clamp tilt between -12deg and +12deg
+        currentRot += (targetRot - currentRot) * 0.1;
+
+        // Set CSS custom properties on GPU compositing layer
+        frame.style.setProperty("--light-x", `${currentX.toFixed(1)}px`);
+        frame.style.setProperty("--light-y", `${currentY.toFixed(1)}px`);
+        pill.style.setProperty("--pill-x", `${currentX.toFixed(1)}px`);
+        pill.style.setProperty("--pill-y", `${currentY.toFixed(1)}px`);
+        pill.style.setProperty("--pill-rot", `${currentRot.toFixed(2)}deg`);
+
+        // Multi-plane cinematic image drift opposite to cursor
         if (img) {
-          const shiftX = ((mouseX - rect.width / 2) * 0.04).toFixed(1);
-          const shiftY = ((mouseY - rect.height / 2) * 0.04).toFixed(1);
-          img.style.transform = `scale(1.05) translate3d(${shiftX}px, ${shiftY}px, 0)`;
+          const shiftX = ((currentX - rect.width / 2) * -0.035).toFixed(1);
+          const shiftY = ((currentY - rect.height / 2) * -0.035).toFixed(1);
+          img.style.transform = `scale(1.06) translate3d(${shiftX}px, ${shiftY}px, 0)`;
         }
 
         rAF = requestAnimationFrame(updatePosition);
@@ -711,14 +724,18 @@ document.addEventListener("DOMContentLoaded", () => {
         rect = frame.getBoundingClientRect();
         targetX = e.clientX - rect.left;
         targetY = e.clientY - rect.top;
-        mouseX = targetX;
-        mouseY = targetY;
+        currentX = targetX;
+        currentY = targetY;
+        prevX = targetX;
+        currentRot = 0;
+        targetRot = 0;
         isHovered = true;
 
-        frame.style.setProperty("--ripple-x", `${mouseX.toFixed(1)}px`);
-        frame.style.setProperty("--ripple-y", `${mouseY.toFixed(1)}px`);
-        pill.style.setProperty("--pill-x", `${mouseX.toFixed(1)}px`);
-        pill.style.setProperty("--pill-y", `${mouseY.toFixed(1)}px`);
+        frame.style.setProperty("--light-x", `${currentX.toFixed(1)}px`);
+        frame.style.setProperty("--light-y", `${currentY.toFixed(1)}px`);
+        pill.style.setProperty("--pill-x", `${currentX.toFixed(1)}px`);
+        pill.style.setProperty("--pill-y", `${currentY.toFixed(1)}px`);
+        pill.style.setProperty("--pill-rot", "0deg");
 
         cancelAnimationFrame(rAF);
         rAF = requestAnimationFrame(updatePosition);
@@ -735,8 +752,9 @@ document.addEventListener("DOMContentLoaded", () => {
         cancelAnimationFrame(rAF);
         pill.style.setProperty("--pill-x", "50%");
         pill.style.setProperty("--pill-y", "50%");
-        frame.style.setProperty("--ripple-x", "50%");
-        frame.style.setProperty("--ripple-y", "50%");
+        pill.style.setProperty("--pill-rot", "0deg");
+        frame.style.setProperty("--light-x", "50%");
+        frame.style.setProperty("--light-y", "50%");
         if (img) img.style.transform = "";
       });
     });

@@ -1231,10 +1231,10 @@ ${clientName}`
     if (!canvas || !footer) return;
 
     const ctx = canvas.getContext("2d");
-    let width, height, dpr;
-    let cols, rows;
+    let width = 0, height = 0, dpr = 1;
+    let cols = 0, rows = 0;
     
-    // Exact tight grid spacing matching Good Fella
+    // Tight grid spacing for crisp ASCII fidelity matching Good Fella
     const gridSpacing = 8.5;
 
     const highDensityChars = ["@", "#", "%", "W", "M", "8", "&", "$", "B", "Q", "0", "O"];
@@ -1255,39 +1255,37 @@ ${clientName}`
     // Load authentic Good Fella footer Creation of Adam hand images
     const leftHandImg = new Image();
     const rightHandImg = new Image();
-    let loadedCount = 0;
 
     const onImageLoaded = () => {
-      loadedCount++;
-      if (loadedCount === 2) {
+      if (leftHandImg.complete && rightHandImg.complete) {
         resize();
       }
     };
 
     leftHandImg.onload = onImageLoaded;
     rightHandImg.onload = onImageLoaded;
-    leftHandImg.src = "assets/goodfella-adam-left.png";
-    rightHandImg.src = "assets/goodfella-god-right.png";
+    leftHandImg.src = "assets/adam-hand-crop.png";
+    rightHandImg.src = "assets/god-hand-crop.png";
 
     const drawImagesToOffscreen = (offCtx, w, h) => {
       offCtx.clearRect(0, 0, w, h);
 
-      // Sizing proportioned cleanly to footer height
-      const handH = Math.min(h * 0.92, 540);
+      // Responsive sizing: hands span ~46% of width or up to 560px width each
+      const leftW = Math.min(w * 0.46, 560);
+      const leftH = leftW / (807 / 390);
+      const leftX = 0;
+      const leftY = Math.max(10, h * 0.05);
 
-      // 1. Left Hand (Adam) - positioned at upper-left reaching downward-right
       if (leftHandImg.complete && leftHandImg.naturalWidth > 0) {
-        const leftW = handH * (807 / 1117);
-        const leftX = 0;
-        const leftY = 0;
         offCtx.drawImage(leftHandImg, leftX, leftY, leftW, leftH);
       }
 
-      // 2. Right Hand (God) - positioned at mid-right reaching downward-left
+      const rightW = Math.min(w * 0.46, 560);
+      const rightH = rightW / (829 / 440);
+      const rightX = w - rightW;
+      const rightY = Math.max(20, h * 0.12);
+
       if (rightHandImg.complete && rightHandImg.naturalWidth > 0) {
-        const rightW = handH * (829 / 1117);
-        const rightX = w - rightW;
-        const rightY = Math.max(0, h * 0.08);
         offCtx.drawImage(rightHandImg, rightX, rightY, rightW, rightH);
       }
     };
@@ -1304,6 +1302,7 @@ ${clientName}`
       canvas.height = height * dpr;
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
 
       cols = Math.floor(width / gridSpacing);
@@ -1339,16 +1338,16 @@ ${clientName}`
             if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height) {
               const idx = (pixelY * width + pixelX) * 4;
               const alpha = imgData[idx + 3] / 255;
-              const brightness = (imgData[idx] + imgData[idx + 1] + imgData[idx + 2]) / (3 * 255);
+              const brightness = (imgData[idx] * 0.299 + imgData[idx + 1] * 0.587 + imgData[idx + 2] * 0.114) / 255;
               intensity = alpha * brightness;
             }
           }
 
           if (intensity > 0.035) {
             let pool = lowDensityChars;
-            if (intensity > 0.48) {
+            if (intensity > 0.45) {
               pool = highDensityChars;
-            } else if (intensity > 0.20) {
+            } else if (intensity > 0.18) {
               pool = midDensityChars;
             }
 
@@ -1372,7 +1371,9 @@ ${clientName}`
     };
 
     window.addEventListener("resize", resize);
-    resize();
+    if (leftHandImg.complete && rightHandImg.complete) {
+      resize();
+    }
 
     // Mouse tracking on footer
     footer.addEventListener("mousemove", (e) => {
@@ -1416,7 +1417,7 @@ ${clientName}`
       mouse.x += (mouse.targetX - mouse.x) * 0.12;
       mouse.y += (mouse.targetY - mouse.y) * 0.12;
 
-      ctx.font = '8.5px "Space Mono", "Courier New", monospace';
+      ctx.font = '9.5px "Space Mono", "Courier New", monospace';
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
@@ -1457,20 +1458,17 @@ ${clientName}`
           node.char = node.pool[Math.floor(Math.random() * node.pool.length)];
         }
 
-        // Compute color: Light grey default, var(--text-primary) on hover
-        const baseAlpha = 0.28 + node.baseIntensity * 0.35;
-        const activeAlpha = Math.min(1.0, baseAlpha + node.activeIntensity * 0.65);
-
+        // Compute color: High-contrast visibility matching Good Fella
         if (isDarkMode) {
-          // Dark Mode: Muted slate-grey -> Bright Ivory White
-          const r = Math.round(150 + node.activeIntensity * 105);
-          const g = Math.round(150 + node.activeIntensity * 105);
-          const b = Math.round(150 + node.activeIntensity * 105);
-          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${activeAlpha})`;
+          // Dark Mode: crisp silver-slate default (alpha 0.50..0.85) -> pure ivory white on hover
+          const alpha = Math.min(1.0, 0.45 + node.baseIntensity * 0.45 + node.activeIntensity * 0.55);
+          const val = Math.round(190 + node.activeIntensity * 65);
+          ctx.fillStyle = `rgba(${val}, ${val}, ${val}, ${alpha})`;
         } else {
-          // Light Mode: Subtle light grey -> Deep obsidian black
-          const greyVal = Math.round(175 - node.activeIntensity * 160); // 175 -> 15 (near black)
-          ctx.fillStyle = `rgba(${greyVal}, ${greyVal}, ${greyVal}, ${activeAlpha})`;
+          // Light Mode: dark charcoal default (alpha 0.48..0.85) -> deep obsidian black on hover
+          const alpha = Math.min(1.0, 0.48 + node.baseIntensity * 0.45 + node.activeIntensity * 0.55);
+          const val = Math.round(50 - node.activeIntensity * 45); // 50 -> 5
+          ctx.fillStyle = `rgba(${val}, ${val}, ${val}, ${alpha})`;
         }
 
         ctx.fillText(node.char, node.x, node.y);

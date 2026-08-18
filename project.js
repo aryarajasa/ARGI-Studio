@@ -1080,42 +1080,40 @@ document.addEventListener("DOMContentLoaded", async () => {
       isHovered: false
     };
 
-    // Load authentic Good Fella hand images
-    const adamImg = new Image();
-    const godImg = new Image();
-    let imagesLoaded = 0;
+    // Load authentic Good Fella footer Creation of Adam image
+    const adamHandsImg = new Image();
+    let imageLoaded = false;
 
-    const onImageLoaded = () => {
-      imagesLoaded++;
-      if (imagesLoaded === 2) {
-        resize();
-      }
+    adamHandsImg.onload = () => {
+      imageLoaded = true;
+      resize();
     };
-
-    adamImg.onload = onImageLoaded;
-    godImg.onload = onImageLoaded;
-    adamImg.src = "assets/adam-hand.png";
-    godImg.src = "assets/god-hand.png";
+    adamHandsImg.src = "assets/adam-hands-footer.jpg";
 
     const drawImagesToOffscreen = (offCtx, w, h) => {
       offCtx.clearRect(0, 0, w, h);
+      if (!adamHandsImg.complete || adamHandsImg.naturalWidth === 0) return;
 
-      // Desired hand height relative to footer canvas
-      const handH = Math.min(h * 1.02, 540);
-      const handW = handH * (665 / 1071);
-      const handY = (h - handH) / 2 + 10;
+      const imgW = adamHandsImg.naturalWidth;
+      const imgH = adamHandsImg.naturalHeight;
+      const imgAspect = imgW / imgH; // 1920 / 1048
+      const canvasAspect = w / h;
 
-      // Position Left Hand (Adam) reaching toward center
-      const adamX = Math.max(0, (w * 0.47) - handW);
-      if (adamImg.complete && adamImg.naturalWidth > 0) {
-        offCtx.drawImage(adamImg, adamX, handY, handW, handH);
+      let drawW, drawH, drawX, drawY;
+
+      if (canvasAspect > imgAspect) {
+        drawW = w;
+        drawH = w / imgAspect;
+        drawX = 0;
+        drawY = (h - drawH) / 2;
+      } else {
+        drawH = Math.max(h, 480);
+        drawW = drawH * imgAspect;
+        drawX = (w - drawW) / 2;
+        drawY = (h - drawH) / 2;
       }
 
-      // Position Right Hand (God) pointing toward center
-      const godX = Math.min(w - handW, w * 0.53);
-      if (godImg.complete && godImg.naturalWidth > 0) {
-        offCtx.drawImage(godImg, godX, handY, handW, handH);
-      }
+      offCtx.drawImage(adamHandsImg, drawX, drawY, drawW, drawH);
     };
 
     const resize = () => {

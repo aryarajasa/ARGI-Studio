@@ -2624,12 +2624,12 @@ body.site-ready .page-wrapper {
   transform: translateX(3px);
 }
 
-/* 2. Giant Editorial Headline Across Max Width (Instrument Serif Font) */
+/* 2. Giant Editorial Headline Across Max Width (Instrument Serif Font - Center Aligned) */
 .footer-giant-title-wrap {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   user-select: none;
   padding: 2.5rem 0 1.75rem 0;
   border-top: 1px solid var(--border-light-subtle, rgba(0, 0, 0, 0.08));
@@ -2647,7 +2647,7 @@ body.site-ready .page-wrapper {
   color: var(--text-primary);
   margin: 0;
   width: 100%;
-  text-align: left;
+  text-align: center;
 }
 
 .footer-giant-title em {

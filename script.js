@@ -433,9 +433,9 @@ document.addEventListener("DOMContentLoaded", () => {
           <a href="project.html?id=${p.id}" class="gallery-item-sharp" aria-label="Explore ${titleFull} Case Study">
             <div class="gallery-item-frame">
               <img src="${p.heroImage || 'assets/logo.png'}" alt="${titleFull} Brand Identity System" class="gallery-img-sharp" loading="lazy" />
-              <div class="gallery-sharp-overlay">
-                <span class="explore-sharp-pill">Explore Case Study ↗</span>
-              </div>
+              <div class="gallery-sharp-overlay"></div>
+              <div class="gallery-lens-ring"></div>
+              <span class="explore-sharp-pill">Explore Case Study ↗</span>
             </div>
             <div class="gallery-item-caption">
               <div class="caption-left">
@@ -670,109 +670,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initIndexHoverPortal();
 
-  // 9. DYNAMIC CANVAS PIXELATION SHADER & MAGNETIC CURSOR TRACKER
+  // 9. OPTION 3: INTERACTIVE CURSOR SPOTLIGHT & DYNAMIC LENS REVEAL
   const initGalleryHoverTracking = () => {
     const galleryItems = document.querySelectorAll(".gallery-item-sharp");
     galleryItems.forEach(item => {
       const frame = item.querySelector(".gallery-item-frame");
-      const img = item.querySelector(".gallery-img-sharp");
       const pill = item.querySelector(".explore-sharp-pill");
-      if (!frame || !img || !pill) return;
-
-      // Ensure canvas element exists for real pixelation
-      let canvas = frame.querySelector(".gallery-pixel-canvas");
-      if (!canvas) {
-        canvas = document.createElement("canvas");
-        canvas.className = "gallery-pixel-canvas";
-        frame.insertBefore(canvas, frame.querySelector(".gallery-sharp-overlay") || pill);
-      }
-
-      const ctx = canvas.getContext("2d", { willReadFrequently: true });
-      let isHovered = false;
-      let rAF = null;
-      let imgObj = new Image();
-      imgObj.crossOrigin = "anonymous";
-      imgObj.src = img.src;
+      if (!frame || !pill) return;
 
       let rect = frame.getBoundingClientRect();
       let mouseX = rect.width / 2;
       let mouseY = rect.height / 2;
       let targetX = mouseX;
       let targetY = mouseY;
-
-      const resizeCanvas = () => {
-        rect = frame.getBoundingClientRect();
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
-        canvas.style.width = `${rect.width}px`;
-        canvas.style.height = `${rect.height}px`;
-      };
-
-      const renderPixelated = (cursorX, cursorY) => {
-        if (!imgObj.complete || imgObj.naturalWidth === 0) return;
-        const w = canvas.width;
-        const h = canvas.height;
-        if (w === 0 || h === 0) return;
-
-        // Pixelation block size (e.g., 10px blocks for crisp retro pixels)
-        const pixelSize = 10;
-        const numCols = Math.ceil(w / pixelSize);
-        const numRows = Math.ceil(h / pixelSize);
-
-        // Render low-res offscreen representation
-        ctx.imageSmoothingEnabled = false;
-        ctx.clearRect(0, 0, w, h);
-
-        // Draw downsampled
-        ctx.drawImage(imgObj, 0, 0, numCols, numRows);
-
-        // Draw upsampled (mosaic pixelation)
-        ctx.drawImage(canvas, 0, 0, numCols, numRows, 0, 0, w, h);
-
-        // Draw darker tinted overlay
-        ctx.fillStyle = "rgba(10, 12, 14, 0.42)";
-        ctx.fillRect(0, 0, w, h);
-
-        // Draw high-contrast grid scanline lines between pixels
-        ctx.strokeStyle = "rgba(0, 0, 0, 0.25)";
-        ctx.lineWidth = 1;
-        for (let x = 0; x <= w; x += pixelSize) {
-          ctx.beginPath();
-          ctx.moveTo(x, 0);
-          ctx.lineTo(x, h);
-          ctx.stroke();
-        }
-        for (let y = 0; y <= h; y += pixelSize) {
-          ctx.beginPath();
-          ctx.moveTo(0, y);
-          ctx.lineTo(w, y);
-          ctx.stroke();
-        }
-      };
+      let isHovered = false;
+      let rAF = null;
 
       const updatePosition = () => {
         if (!isHovered) return;
         mouseX += (targetX - mouseX) * 0.18;
         mouseY += (targetY - mouseY) * 0.18;
 
+        frame.style.setProperty("--spot-x", `${mouseX.toFixed(1)}px`);
+        frame.style.setProperty("--spot-y", `${mouseY.toFixed(1)}px`);
         pill.style.setProperty("--pill-x", `${mouseX.toFixed(1)}px`);
         pill.style.setProperty("--pill-y", `${mouseY.toFixed(1)}px`);
 
-        renderPixelated(mouseX, mouseY);
         rAF = requestAnimationFrame(updatePosition);
       };
 
       frame.addEventListener("mouseenter", (e) => {
-        resizeCanvas();
         rect = frame.getBoundingClientRect();
         targetX = e.clientX - rect.left;
         targetY = e.clientY - rect.top;
         mouseX = targetX;
         mouseY = targetY;
         isHovered = true;
-        canvas.classList.add("is-active");
 
+        frame.style.setProperty("--spot-x", `${mouseX.toFixed(1)}px`);
+        frame.style.setProperty("--spot-y", `${mouseY.toFixed(1)}px`);
         pill.style.setProperty("--pill-x", `${mouseX.toFixed(1)}px`);
         pill.style.setProperty("--pill-y", `${mouseY.toFixed(1)}px`);
 
@@ -789,9 +725,10 @@ document.addEventListener("DOMContentLoaded", () => {
       frame.addEventListener("mouseleave", () => {
         isHovered = false;
         cancelAnimationFrame(rAF);
-        canvas.classList.remove("is-active");
         pill.style.setProperty("--pill-x", "50%");
         pill.style.setProperty("--pill-y", "50%");
+        frame.style.setProperty("--spot-x", "50%");
+        frame.style.setProperty("--spot-y", "50%");
       });
     });
   };

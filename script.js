@@ -1270,20 +1270,22 @@ ${clientName}`
     const drawImagesToOffscreen = (offCtx, w, h) => {
       offCtx.clearRect(0, 0, w, h);
 
-      // Responsive sizing: hands span ~46% of width or up to 560px width each
-      const leftW = Math.min(w * 0.46, 560);
+      // Responsive sizing: hands span ~48% of width or up to 580px width each
+      const leftW = Math.min(w * 0.48, 580);
       const leftH = leftW / (807 / 390);
       const leftX = 0;
-      const leftY = Math.max(10, h * 0.05);
+      // Positioned lower, hovering right above the bottom headline
+      const leftY = Math.max(60, h * 0.22);
 
       if (leftHandImg.complete && leftHandImg.naturalWidth > 0) {
         offCtx.drawImage(leftHandImg, leftX, leftY, leftW, leftH);
       }
 
-      const rightW = Math.min(w * 0.46, 560);
+      const rightW = Math.min(w * 0.48, 580);
       const rightH = rightW / (829 / 440);
       const rightX = w - rightW;
-      const rightY = Math.max(20, h * 0.12);
+      // Right hand positioned slightly below left to meet gracefully above the headline
+      const rightY = Math.max(85, h * 0.28);
 
       if (rightHandImg.complete && rightHandImg.naturalWidth > 0) {
         offCtx.drawImage(rightHandImg, rightX, rightY, rightW, rightH);

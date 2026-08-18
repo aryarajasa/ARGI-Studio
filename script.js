@@ -433,9 +433,9 @@ document.addEventListener("DOMContentLoaded", () => {
           <a href="project.html?id=${p.id}" class="gallery-item-sharp" aria-label="Explore ${titleFull} Case Study">
             <div class="gallery-item-frame">
               <img src="${p.heroImage || 'assets/logo.png'}" alt="${titleFull} Brand Identity System" class="gallery-img-sharp" loading="lazy" />
-              <div class="gallery-sharp-overlay"></div>
-              <div class="gallery-lens-ring"></div>
-              <span class="explore-sharp-pill">Explore Case Study ↗</span>
+              <div class="gallery-sharp-overlay">
+                <span class="explore-sharp-pill">Explore Case Study <span class="pill-arrow">↗</span></span>
+              </div>
             </div>
             <div class="gallery-item-caption">
               <div class="caption-left">
@@ -450,9 +450,6 @@ document.addEventListener("DOMContentLoaded", () => {
           </a>
         `;
       }).join("");
-
-      // Re-bind magnetic cursor tracking to newly generated gallery cards
-      initGalleryHoverTracking();
     }
 
     // 2. Render Index Table
@@ -669,98 +666,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   initIndexHoverPortal();
-
-  // 9. HIGH-END BESPOKE ATELIER GALLERY HOVER (PHYSICS LERP, TILT & LIGHT PARALLAX)
-  const initGalleryHoverTracking = () => {
-    const galleryItems = document.querySelectorAll(".gallery-item-sharp");
-    galleryItems.forEach(item => {
-      const frame = item.querySelector(".gallery-item-frame");
-      const img = item.querySelector(".gallery-img-sharp");
-      const pill = item.querySelector(".explore-sharp-pill");
-      if (!frame || !pill) return;
-
-      let rect = frame.getBoundingClientRect();
-      let currentX = rect.width / 2;
-      let currentY = rect.height / 2;
-      let targetX = currentX;
-      let targetY = currentY;
-      let currentRot = 0;
-      let targetRot = 0;
-      let prevX = targetX;
-      let isHovered = false;
-      let rAF = null;
-
-      const updatePosition = () => {
-        if (!isHovered) return;
-
-        // Smooth spring interpolation (0.14 lerp factor)
-        currentX += (targetX - currentX) * 0.14;
-        currentY += (targetY - currentY) * 0.14;
-
-        // Calculate dynamic velocity tilt for physical organic momentum
-        const deltaX = targetX - prevX;
-        prevX = targetX;
-        targetRot = Math.max(Math.min(deltaX * 0.35, 12), -12); // clamp tilt between -12deg and +12deg
-        currentRot += (targetRot - currentRot) * 0.1;
-
-        // Set CSS custom properties on GPU compositing layer
-        frame.style.setProperty("--light-x", `${currentX.toFixed(1)}px`);
-        frame.style.setProperty("--light-y", `${currentY.toFixed(1)}px`);
-        pill.style.setProperty("--pill-x", `${currentX.toFixed(1)}px`);
-        pill.style.setProperty("--pill-y", `${currentY.toFixed(1)}px`);
-        pill.style.setProperty("--pill-rot", `${currentRot.toFixed(2)}deg`);
-
-        // Multi-plane cinematic image drift opposite to cursor
-        if (img) {
-          const shiftX = ((currentX - rect.width / 2) * -0.035).toFixed(1);
-          const shiftY = ((currentY - rect.height / 2) * -0.035).toFixed(1);
-          img.style.transform = `scale(1.06) translate3d(${shiftX}px, ${shiftY}px, 0)`;
-        }
-
-        rAF = requestAnimationFrame(updatePosition);
-      };
-
-      frame.addEventListener("mouseenter", (e) => {
-        rect = frame.getBoundingClientRect();
-        targetX = e.clientX - rect.left;
-        targetY = e.clientY - rect.top;
-        currentX = targetX;
-        currentY = targetY;
-        prevX = targetX;
-        currentRot = 0;
-        targetRot = 0;
-        isHovered = true;
-
-        frame.style.setProperty("--light-x", `${currentX.toFixed(1)}px`);
-        frame.style.setProperty("--light-y", `${currentY.toFixed(1)}px`);
-        pill.style.setProperty("--pill-x", `${currentX.toFixed(1)}px`);
-        pill.style.setProperty("--pill-y", `${currentY.toFixed(1)}px`);
-        pill.style.setProperty("--pill-rot", "0deg");
-
-        cancelAnimationFrame(rAF);
-        rAF = requestAnimationFrame(updatePosition);
-      });
-
-      frame.addEventListener("mousemove", (e) => {
-        rect = frame.getBoundingClientRect();
-        targetX = e.clientX - rect.left;
-        targetY = e.clientY - rect.top;
-      }, { passive: true });
-
-      frame.addEventListener("mouseleave", () => {
-        isHovered = false;
-        cancelAnimationFrame(rAF);
-        pill.style.setProperty("--pill-x", "50%");
-        pill.style.setProperty("--pill-y", "50%");
-        pill.style.setProperty("--pill-rot", "0deg");
-        frame.style.setProperty("--light-x", "50%");
-        frame.style.setProperty("--light-y", "50%");
-        if (img) img.style.transform = "";
-      });
-    });
-  };
-
-  initGalleryHoverTracking();
 
   // 8. SMOOTH ANCHOR SCROLLING
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {

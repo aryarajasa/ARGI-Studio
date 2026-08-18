@@ -1238,23 +1238,23 @@ body.site-ready .page-wrapper {
 }
 
 /* ==========================================================================
-   BESPOKE ATELIER EDITORIAL GALLERY HOVER INTERACTION
+   SOPHISTICATED ATELIER EDITORIAL GALLERY HOVER (QUIET LUXURY)
    ========================================================================== */
 .gallery-item-frame {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3.1;
   overflow: hidden;
-  background: #0d0e10;
+  background: #111214;
   border-radius: 0px !important;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  transition: border-color 0.45s ease, box-shadow 0.45s ease;
+  transition: border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .gallery-item-sharp:hover .gallery-item-frame {
   border-color: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4);
 }
 
 .gallery-img-sharp {
@@ -1263,97 +1263,80 @@ body.site-ready .page-wrapper {
   object-fit: cover;
   display: block;
   border-radius: 0px !important;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+  transition: transform 0.85s cubic-bezier(0.19, 1, 0.22, 1), filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
 }
 
 .gallery-item-sharp:hover .gallery-img-sharp {
-  filter: brightness(0.92) contrast(1.05);
+  transform: scale(1.035);
+  filter: brightness(0.92) contrast(1.04);
 }
 
-/* Velvety Noir Editorial Overlay with Soft Specular Ambient Light */
+/* Velvety Noir Editorial Overlay */
 .gallery-sharp-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(10, 11, 13, 0.52);
+  background: rgba(10, 12, 14, 0.42);
   opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-  z-index: 4;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
-}
-
-/* Soft Cursor-Driven Specular Glow (Mimicking studio light moving across matte print) */
-.gallery-sharp-overlay::before {
-  content: "";
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(
-    circle 280px at var(--light-x, 50%) var(--light-y, 50%),
-    rgba(255, 255, 255, 0.18) 0%,
-    rgba(255, 255, 255, 0.06) 40%,
-    transparent 75%
-  );
-  mix-blend-mode: screen;
-  pointer-events: none;
-  will-change: transform;
-}
-
-/* Subtle Film Grain / Atmospheric Depth */
-.gallery-sharp-overlay::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%);
-  pointer-events: none;
+  z-index: 4;
 }
 
 .gallery-item-sharp:hover .gallery-sharp-overlay {
   opacity: 1;
 }
 
-/* Remove deprecated lens ring */
-.gallery-lens-ring {
-  display: none;
-}
-
-/* Luxury Weighted Magnetic Floating Pill */
+/* Centered Luxury Editorial Badge */
 .explore-sharp-pill {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(10px) scale(0.96);
   background: #ffffff;
   color: #0c0d0e;
   font-family: var(--font-sans);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
-  padding: 0.7rem 1.55rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.45rem;
   border-radius: var(--radius-full);
   box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.18),
-    0 18px 40px rgba(0, 0, 0, 0.45);
+    0 4px 14px rgba(0, 0, 0, 0.15),
+    0 16px 36px rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.9);
   pointer-events: none;
   white-space: nowrap;
   opacity: 0;
-  transform: translate3d(var(--pill-x, 50%), var(--pill-y, 50%), 0) translate(-50%, -50%) rotate(var(--pill-rot, 0deg)) scale(0.85);
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.08s ease-out;
-  will-change: transform, opacity;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 10;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
+}
+
+.explore-sharp-pill .pill-arrow {
+  display: inline-block;
+  font-size: 0.875rem;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .gallery-item-sharp:hover .explore-sharp-pill {
   opacity: 1;
+  transform: translate(-50%, -50%) translateY(0) scale(1);
 }
 
+.gallery-item-sharp:hover .explore-sharp-pill .pill-arrow {
+  transform: translate(2px, -2px);
+}
+
+/* Editorial Typography & Metadata */
 .gallery-item-caption {
   display: flex;
   align-items: flex-start;
@@ -1373,6 +1356,11 @@ body.site-ready .page-wrapper {
   font-style: italic;
   font-size: 1.25rem;
   color: var(--text-white-subtle);
+  transition: color 0.35s ease;
+}
+
+.gallery-item-sharp:hover .project-id-num {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .caption-project-name {
@@ -1381,7 +1369,7 @@ body.site-ready .page-wrapper {
   font-weight: 400;
   letter-spacing: -0.015em;
   color: #ffffff;
-  transition: color var(--transition-fast);
+  transition: color 0.35s ease, transform 0.35s ease;
 }
 
 .caption-project-name em,
@@ -1392,7 +1380,7 @@ body.site-ready .page-wrapper {
 }
 
 .gallery-item-sharp:hover .caption-project-name {
-  color: #93c5fd;
+  color: #ffffff;
 }
 
 .caption-right {

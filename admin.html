@@ -1210,6 +1210,165 @@
           </div>
         </fieldset>
 
+        <!-- Fieldset 02: Chapter 01 -->
+        <fieldset class="form-section">
+          <legend class="section-legend">02. Chapter 01 (Opening Essay &amp; Core Narrative)</legend>
+          
+          <div class="form-group">
+            <label class="form-label">Chapter 01 Section Title *</label>
+            <input type="text" id="artSec1Title" class="form-control" required placeholder="01 / The Weight of Printed Matter" />
+          </div>
+
+          <div class="form-group">
+            <div class="label-with-badge">
+              <label class="form-label">Chapter 01 Essay Paragraphs *</label>
+              <span class="media-hint-badge">Separate paragraphs with double Enter / Line breaks</span>
+            </div>
+            <textarea id="artSec1Body" class="form-control" rows="5" required placeholder="In an era dominated by hyper-accelerated digital feeds..."></textarea>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Chapter 01 Editorial Pull Quote (Optional)</label>
+              <input type="text" id="artSec1Quote" class="form-control" placeholder="“A book is not simply a container for images...”" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pull Quote Citation / Author</label>
+              <input type="text" id="artSec1Cite" class="form-control" placeholder="Arya Rajasa, Tokyo Art Book Fair Keynote" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Fieldset 03: Chapter 02 -->
+        <fieldset class="form-section">
+          <legend class="section-legend">03. Chapter 02 (Deep Dive &amp; Visual Spread)</legend>
+          
+          <div class="form-group">
+            <label class="form-label">Chapter 02 Section Title</label>
+            <input type="text" id="artSec2Title" class="form-control" placeholder="02 / Typography &amp; Asymmetrical Grids" />
+          </div>
+
+          <div class="form-group">
+            <div class="label-with-badge">
+              <label class="form-label">Chapter 02 Essay Paragraphs</label>
+              <span class="media-hint-badge">Separate paragraphs with double Enter</span>
+            </div>
+            <textarea id="artSec2Body" class="form-control" rows="5" placeholder="Every spread within the monograph adheres to an asymmetrical grid..."></textarea>
+          </div>
+
+          <!-- Section 2 Inline Image Upload -->
+          <div class="form-group media-upload-group" data-target="artSec2Img">
+            <div class="label-with-badge">
+              <label class="form-label">Chapter 02 Inline Visual (Optional)</label>
+              <span class="media-hint-badge">Recommended: 1400 × 900 px • 16:10</span>
+            </div>
+            <div class="media-dropzone" id="dropzone-artSec2Img">
+              <div class="dropzone-empty-state">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <div class="dropzone-text"><strong>Upload Inline Visual</strong> or drag &amp; drop</div>
+              </div>
+              <div class="dropzone-preview-state is-hidden">
+                <div class="preview-media-frame">
+                  <img src="" alt="Inline Preview" class="preview-img" />
+                </div>
+                <div class="preview-media-info">
+                  <span class="preview-filename">inline-visual.webp</span>
+                  <div class="preview-action-row">
+                    <button type="button" class="dropzone-change-btn">Replace</button>
+                    <button type="button" class="dropzone-remove-btn">Remove</button>
+                  </div>
+                </div>
+              </div>
+              <input type="file" class="media-file-input" accept="image/*,video/mp4" />
+            </div>
+            <input type="hidden" id="artSec2Img" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Chapter 02 Visual Caption</label>
+            <input type="text" id="artSec2Caption" class="form-control" placeholder="Fig. 1.2 — Smyth-sewn lay-flat binding detail." />
+          </div>
+        </fieldset>
+
+        <!-- Fieldset 04: Chapter 03 -->
+        <fieldset class="form-section">
+          <legend class="section-legend">04. Chapter 03 (Craftsmanship &amp; Materiality)</legend>
+          
+          <div class="form-group">
+            <label class="form-label">Chapter 03 Section Title</label>
+            <input type="text" id="artSec3Title" class="form-control" placeholder="03 / Generational Kyoto Craftsmanship" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Chapter 03 Essay Paragraphs</label>
+            <textarea id="artSec3Body" class="form-control" rows="5" placeholder="Our collaboration took us to a multi-generational paper studio..."></textarea>
+          </div>
+
+          <!-- Section 3 Inline Image Upload -->
+          <div class="form-group media-upload-group" data-target="artSec3Img">
+            <div class="label-with-badge">
+              <label class="form-label">Chapter 03 Inline Visual (Optional)</label>
+              <span class="media-hint-badge">Recommended: 1400 × 900 px • 16:10</span>
+            </div>
+            <div class="media-dropzone" id="dropzone-artSec3Img">
+              <div class="dropzone-empty-state">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <div class="dropzone-text"><strong>Upload Inline Visual</strong> or drag &amp; drop</div>
+              </div>
+              <div class="dropzone-preview-state is-hidden">
+                <div class="preview-media-frame">
+                  <img src="" alt="Inline Preview" class="preview-img" />
+                </div>
+                <div class="preview-media-info">
+                  <span class="preview-filename">inline-visual.webp</span>
+                  <div class="preview-action-row">
+                    <button type="button" class="dropzone-change-btn">Replace</button>
+                    <button type="button" class="dropzone-remove-btn">Remove</button>
+                  </div>
+                </div>
+              </div>
+              <input type="file" class="media-file-input" accept="image/*,video/mp4" />
+            </div>
+            <input type="hidden" id="artSec3Img" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Chapter 03 Visual Caption</label>
+            <input type="text" id="artSec3Caption" class="form-control" placeholder="Fig. 1.3 — Material proofs and swatches..." />
+          </div>
+        </fieldset>
+
+        <!-- Fieldset 05: Chapter 04 -->
+        <fieldset class="form-section">
+          <legend class="section-legend">05. Chapter 04 (Exhibition &amp; Key Specifications)</legend>
+          
+          <div class="form-group">
+            <label class="form-label">Chapter 04 Section Title</label>
+            <input type="text" id="artSec4Title" class="form-control" placeholder="04 / The Tokyo Exhibition &amp; Global Reception" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Chapter 04 Essay Paragraphs</label>
+            <textarea id="artSec4Body" class="form-control" rows="5" placeholder="The Tokyo Art Book Fair took place at MOT..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <div class="label-with-badge">
+              <label class="form-label">Publication Specs / Key Bullet Points (Optional)</label>
+              <span class="media-hint-badge">One bullet item per line</span>
+            </div>
+            <textarea id="artSec4Specs" class="form-control" rows="3" placeholder="Extent: 380 Pages, Hardcover Lay-Flat Binding&#10;Paper Stock: 180gsm Fedrigoni Tintoretto Cotton&#10;Print Method: 5-Color Offset with Metallic Foil"></textarea>
+          </div>
+        </fieldset>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" id="cancelArticleBtn">Cancel</button>
           <button type="submit" class="btn btn-primary">Save Article to Database</button>

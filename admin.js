@@ -831,8 +831,83 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // =========================================================================
-  // 10. ARTICLE MODAL (CREATE / EDIT)
+  // 10. ARTICLE MODAL (CREATE / EDIT WITH CHAPTER SECTIONS)
   // =========================================================================
+  const extractTextParagraphs = (html) => {
+    if (!html) return "";
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    tempDiv.querySelectorAll(".article-pull-quote, .article-inline-image-frame, .article-inline-grid, .article-image-caption, .article-grid-caption, .article-key-points-box").forEach(el => el.remove());
+    const pTags = Array.from(tempDiv.querySelectorAll("p"));
+    if (pTags.length > 0) {
+      return pTags.map(p => p.textContent.trim()).filter(Boolean).join("\n\n");
+    }
+    return tempDiv.textContent.trim();
+  };
+
+  const extractQuote = (html) => {
+    if (!html) return { quote: "", cite: "" };
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    const quoteEl = tempDiv.querySelector(".pull-quote-text");
+    const citeEl = tempDiv.querySelector(".pull-quote-citation");
+    return {
+      quote: quoteEl ? quoteEl.textContent.replace(/^[“”"']|[“”"']$/g, '').trim() : "",
+      cite: citeEl ? citeEl.textContent.replace(/^—\s*/, '').trim() : ""
+    };
+  };
+
+  const extractImage = (html) => {
+    if (!html) return { img: "", caption: "" };
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    const imgEl = tempDiv.querySelector(".article-inline-img, .article-grid-img");
+    const capEl = tempDiv.querySelector(".article-image-caption, .article-grid-caption");
+    return {
+      img: imgEl ? imgEl.getAttribute("src") || "" : "",
+      caption: capEl ? capEl.textContent.trim() : ""
+    };
+  };
+
+  const extractSpecs = (html) => {
+    if (!html) return "";
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    const liEls = Array.from(tempDiv.querySelectorAll(".key-points-list li"));
+    if (liEls.length > 0) {
+      return liEls.map(li => li.textContent.trim()).join("\n");
+    }
+    return "";
+  };
+
+  const formatSectionHtml = (bodyText, quoteText, quoteCite, imgUrl, imgCaption, specsText, isFirst = false) => {
+    let html = "";
+    if (bodyText) {
+      const paras = bodyText.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+      paras.forEach((p, idx) => {
+        const dropcapClass = (isFirst && idx === 0) ? " has-dropcap" : "";
+        html += `\n<p class="essay-paragraph${dropcapClass}">\n  ${p}\n</p>`;
+      });
+    }
+
+    if (quoteText) {
+      html += `\n<div class="article-pull-quote">\n  <p class="pull-quote-text">\n    “${quoteText}”\n  </p>\n  ${quoteCite ? `<span class="pull-quote-citation">— ${quoteCite}</span>\n` : ""}</div>`;
+    }
+
+    if (imgUrl) {
+      html += `\n<div class="article-inline-image-frame" data-lightbox>\n  <img src="${imgUrl}" alt="${imgCaption || 'Article Visual'}" class="article-inline-img" />\n  ${imgCaption ? `<div class="article-image-caption">${imgCaption}</div>\n` : ""}</div>`;
+    }
+
+    if (specsText) {
+      const lines = specsText.split(/\n/).map(l => l.trim()).filter(Boolean);
+      if (lines.length > 0) {
+        html += `\n<div class="article-key-points-box">\n  <h4 class="key-points-title">Publication Specifications:</h4>\n  <ul class="key-points-list">\n    ${lines.map(l => `<li>${l}</li>`).join("\n    ")}\n  </ul>\n</div>`;
+      }
+    }
+
+    return html.trim();
+  };
+
   const openArticleModal = (id = null) => {
     editingArticleId = id;
     const isNew = !id;
@@ -859,6 +934,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Populate Feature Media Preview
       setMediaPreview(document.querySelector('[data-target="artFeatureImage"]'), a.featureImage, "feature-visual");
+
+      // Populate Chapter 01
+      const sec1 = (a.sections && a.sections[0]) || {};
+      document.getElementById("artSec1Title").value = sec1.title || "01 / Overview";
+      document.getElementById("artSec1Body").value = extractTextParagraphs(sec1.content || "");
+      const q1 = extractQuote(sec1.content || "");
+      document.getElementById("artSec1Quote").value = q1.quote;
+      document.getElementById("artSec1Cite").value = q1.cite;
+
+      // Populate Chapter 02
+      const sec2 = (a.sections && a.sections[1]) || {};
+      document.getElementById("artSec2Title").value = sec2.title || "";
+      document.getElementById("artSec2Body").value = extractTextParagraphs(sec2.content || "");
+      const img2 = extractImage(sec2.content || "");
+      document.getElementById("artSec2Caption").value = img2.caption;
+      setMediaPreview(document.querySelector('[data-target="artSec2Img"]'), img2.img, "sec2-visual");
+
+      // Populate Chapter 03
+      const sec3 = (a.sections && a.sections[2]) || {};
+      document.getElementById("artSec3Title").value = sec3.title || "";
+      document.getElementById("artSec3Body").value = extractTextParagraphs(sec3.content || "");
+      const img3 = extractImage(sec3.content || "");
+      document.getElementById("artSec3Caption").value = img3.caption;
+      setMediaPreview(document.querySelector('[data-target="artSec3Img"]'), img3.img, "sec3-visual");
+
+      // Populate Chapter 04
+      const sec4 = (a.sections && a.sections[3]) || {};
+      document.getElementById("artSec4Title").value = sec4.title || "";
+      document.getElementById("artSec4Body").value = extractTextParagraphs(sec4.content || "");
+      document.getElementById("artSec4Specs").value = extractSpecs(sec4.content || "");
     }
 
     if (articleModal) {
@@ -888,6 +993,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const featureImgVal = document.getElementById("artFeatureImage").value.trim() || existing.featureImage || "assets/logo.png";
 
+      // Collect Sections
+      const collectedSections = [];
+
+      // Section 1
+      const sec1Title = document.getElementById("artSec1Title").value.trim() || "01 / Overview";
+      const sec1Body = document.getElementById("artSec1Body").value.trim();
+      const sec1Quote = document.getElementById("artSec1Quote").value.trim();
+      const sec1Cite = document.getElementById("artSec1Cite").value.trim();
+      if (sec1Body || sec1Title) {
+        collectedSections.push({
+          id: "chapter-01",
+          title: sec1Title,
+          content: formatSectionHtml(sec1Body, sec1Quote, sec1Cite, null, null, null, true)
+        });
+      }
+
+      // Section 2
+      const sec2Title = document.getElementById("artSec2Title").value.trim();
+      const sec2Body = document.getElementById("artSec2Body").value.trim();
+      const sec2Img = document.getElementById("artSec2Img").value.trim();
+      const sec2Caption = document.getElementById("artSec2Caption").value.trim();
+      if (sec2Title || sec2Body || sec2Img) {
+        collectedSections.push({
+          id: "chapter-02",
+          title: sec2Title || "02 / Narrative",
+          content: formatSectionHtml(sec2Body, null, null, sec2Img, sec2Caption, null, false)
+        });
+      }
+
+      // Section 3
+      const sec3Title = document.getElementById("artSec3Title").value.trim();
+      const sec3Body = document.getElementById("artSec3Body").value.trim();
+      const sec3Img = document.getElementById("artSec3Img").value.trim();
+      const sec3Caption = document.getElementById("artSec3Caption").value.trim();
+      if (sec3Title || sec3Body || sec3Img) {
+        collectedSections.push({
+          id: "chapter-03",
+          title: sec3Title || "03 / Craftsmanship",
+          content: formatSectionHtml(sec3Body, null, null, sec3Img, sec3Caption, null, false)
+        });
+      }
+
+      // Section 4
+      const sec4Title = document.getElementById("artSec4Title").value.trim();
+      const sec4Body = document.getElementById("artSec4Body").value.trim();
+      const sec4Specs = document.getElementById("artSec4Specs").value.trim();
+      if (sec4Title || sec4Body || sec4Specs) {
+        collectedSections.push({
+          id: "chapter-04",
+          title: sec4Title || "04 / Specifications",
+          content: formatSectionHtml(sec4Body, null, null, null, null, sec4Specs, false)
+        });
+      }
+
       const updatedArticle = {
         ...existing,
         id: id,
@@ -901,13 +1060,7 @@ document.addEventListener("DOMContentLoaded", () => {
         lead: document.getElementById("artLead").value.trim(),
         featureImage: featureImgVal,
         featureCaption: document.getElementById("artFeatureCaption").value.trim(),
-        sections: existing.sections || [
-          {
-            id: "section-1",
-            title: "01 / Overview",
-            content: `<p class="essay-paragraph has-dropcap">${document.getElementById("artLead").value.trim()}</p>`
-          }
-        ],
+        sections: collectedSections.length > 0 ? collectedSections : (existing.sections || []),
         nextId: existing.nextId || "01"
       };
 

@@ -1,0 +1,18 @@
+﻿# ARGI Studio — Creative Studio Bali (Robots.txt)
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /project.html
+Allow: /article.html
+Allow: /assets/
+Allow: /data/
+
+# Disallow Private Administrative Control Panel & Internal Scripts
+Disallow: /admin.html
+Disallow: /admin.js
+Disallow: /admin.css
+Disallow: /server.js
+Disallow: /data/auth.json
+
+# XML Sitemap
+Sitemap: https://argistudio.com/sitemap.xml

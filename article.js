@@ -418,7 +418,75 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Title & Lead
+  // Title & Lead + Dynamic SEO Metadata
+  const articleTitle = currentArticle.title || "Studio Dispatch";
+  document.title = `${articleTitle} — Studio Journal | ARGI Studio — Creative Studio Bali`;
+
+  const pageDesc = document.getElementById("pageDescription");
+  const metaDescription = (currentArticle.lead || `Read ${articleTitle} from ARGI Studio, an independent brand and web design agency in Bali, Indonesia.`).slice(0, 200);
+  if (pageDesc) pageDesc.content = metaDescription;
+
+  const currentUrl = `https://argistudio.com/article.html?id=${currentArticle.id}`;
+  const featImgUrl = currentArticle.featureImage || "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=85";
+
+  // Dynamic Open Graph & Twitter Cards
+  const ogTitle = document.getElementById("ogTitle");
+  if (ogTitle) ogTitle.content = `${articleTitle} — Studio Journal | ARGI Studio`;
+
+  const ogDescription = document.getElementById("ogDescription");
+  if (ogDescription) ogDescription.content = metaDescription;
+
+  const ogImage = document.getElementById("ogImage");
+  if (ogImage) ogImage.content = featImgUrl;
+
+  const ogUrl = document.getElementById("ogUrl");
+  if (ogUrl) ogUrl.content = currentUrl;
+
+  const canonicalUrl = document.getElementById("canonicalUrl");
+  if (canonicalUrl) canonicalUrl.href = currentUrl;
+
+  const twitterTitle = document.getElementById("twitterTitle");
+  if (twitterTitle) twitterTitle.content = `${articleTitle} — Studio Journal | ARGI Studio`;
+
+  const twitterDescription = document.getElementById("twitterDescription");
+  if (twitterDescription) twitterDescription.content = metaDescription;
+
+  const twitterImage = document.getElementById("twitterImage");
+  if (twitterImage) twitterImage.content = featImgUrl;
+
+  // Dynamic Schema.org JSON-LD Structured Data for BlogPosting
+  const articleSchema = document.getElementById("articleSchema");
+  if (articleSchema) {
+    articleSchema.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": articleTitle,
+      "description": metaDescription,
+      "image": featImgUrl,
+      "url": currentUrl,
+      "datePublished": currentArticle.date || "2026-01-01",
+      "dateModified": new Date().toISOString().split("T")[0],
+      "author": {
+        "@type": "Person",
+        "name": currentArticle.authorName || "ARGI Editorial Team",
+        "jobTitle": currentArticle.authorRole || "Creative Director"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ARGI Studio",
+        "url": "https://argistudio.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://argistudio.com/assets/logo.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": currentUrl
+      }
+    });
+  }
+
   const articleMainTitle = document.getElementById("articleMainTitle");
   if (articleMainTitle) articleMainTitle.textContent = currentArticle.title || "Untitled Dispatch";
 

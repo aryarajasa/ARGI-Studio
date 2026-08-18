@@ -349,10 +349,78 @@ document.addEventListener("DOMContentLoaded", async () => {
   const currentProject = PROJECTS_DATA[currentProjectId] || DEFAULT_PROJECTS_DATA["01"];
   const nextProject = PROJECTS_DATA[currentProject.nextId] || currentProject;
 
-  // Update Page Meta & Title
-  document.title = `${currentProject.title} ${currentProject.titleAccent} — Case Study | ARGI Studio`;
+  // Update Dynamic Page Meta, Title & Rich OpenGraph / Twitter Cards
+  const fullTitle = `${currentProject.title} ${currentProject.titleAccent || ''}`.trim();
+  document.title = `${fullTitle} — Case Study | ARGI Studio — Creative Studio Bali`;
+  
   const pageDesc = document.getElementById("pageDescription");
-  if (pageDesc) pageDesc.content = `${currentProject.summary} Designed by ARGI Studio, Bali.`;
+  const metaDescription = `${currentProject.summary || 'Brand Identity, Web Design & Packaging Case Study by ARGI Studio, Bali.'}`;
+  if (pageDesc) pageDesc.content = metaDescription;
+
+  const currentUrl = `https://argistudio.com/project.html?id=${currentProject.id}`;
+  const heroImgUrl = currentProject.heroImage || "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85";
+
+  // Dynamic Open Graph & Twitter Cards
+  const ogTitle = document.getElementById("ogTitle");
+  if (ogTitle) ogTitle.content = `${fullTitle} — Case Study | ARGI Studio`;
+
+  const ogDescription = document.getElementById("ogDescription");
+  if (ogDescription) ogDescription.content = metaDescription;
+
+  const ogImage = document.getElementById("ogImage");
+  if (ogImage) ogImage.content = heroImgUrl;
+
+  const ogUrl = document.getElementById("ogUrl");
+  if (ogUrl) ogUrl.content = currentUrl;
+
+  const canonicalUrl = document.getElementById("canonicalUrl");
+  if (canonicalUrl) canonicalUrl.href = currentUrl;
+
+  const twitterTitle = document.getElementById("twitterTitle");
+  if (twitterTitle) twitterTitle.content = `${fullTitle} — Case Study | ARGI Studio`;
+
+  const twitterDescription = document.getElementById("twitterDescription");
+  if (twitterDescription) twitterDescription.content = metaDescription;
+
+  const twitterImage = document.getElementById("twitterImage");
+  if (twitterImage) twitterImage.content = heroImgUrl;
+
+  // Dynamic Schema.org JSON-LD Structured Data
+  const projectSchema = document.getElementById("projectSchema");
+  if (projectSchema) {
+    projectSchema.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "name": `${fullTitle} Case Study`,
+      "headline": `${fullTitle} — ${currentProject.disciplines || 'Brand Identity & Web Design'}`,
+      "author": {
+        "@type": "Organization",
+        "name": "ARGI Studio",
+        "url": "https://argistudio.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ARGI Studio",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://argistudio.com/assets/logo.png"
+        }
+      },
+      "description": metaDescription,
+      "image": heroImgUrl,
+      "url": currentUrl,
+      "dateCreated": currentProject.year || "2026",
+      "provider": {
+        "@type": "Organization",
+        "name": "ARGI Studio",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Bali",
+          "addressCountry": "ID"
+        }
+      }
+    });
+  }
 
   // Populate Hero Content
   const csTitle = document.getElementById("csTitle");

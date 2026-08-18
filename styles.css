@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ARGI Studio - Design System & Stylesheet (Creative Atelier Edition)
+   ARGI Studio - Design System & Stylesheet (Creative Studio Edition)
    ========================================================================== */
 
 /* --- CSS Variables & Design Tokens --- */
@@ -68,7 +68,7 @@ html {
   scrollbar-color: rgba(18, 19, 20, 0.28) transparent;
 }
 
-/* --- CUSTOM ATELIER MINIMALIST SCROLLBAR --- */
+/* --- CUSTOM STUDIO MINIMALIST SCROLLBAR --- */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -164,7 +164,7 @@ button {
 }
 
 /* ==========================================================================
-   MINIMALIST ATELIER INTRO PRELOADER & DUAL SHUTTER REVEAL
+   MINIMALIST STUDIO INTRO PRELOADER & DUAL SHUTTER REVEAL
    ========================================================================== */
 .site-preloader {
   position: fixed;
@@ -1238,7 +1238,7 @@ body.site-ready .page-wrapper {
 }
 
 /* ==========================================================================
-   SOPHISTICATED ATELIER EDITORIAL GALLERY HOVER (QUIET LUXURY)
+   SOPHISTICATED STUDIO EDITORIAL GALLERY HOVER (QUIET LUXURY)
    ========================================================================== */
 .gallery-item-frame {
   position: relative;
@@ -2039,7 +2039,7 @@ body.site-ready .page-wrapper {
   box-sizing: border-box;
 }
 
-/* Right Side: Studio Atelier Capacity & Sprint Roadmap Card */
+/* Right Side: Studio Capacity & Sprint Roadmap Card */
 .workbench-side-card {
   background: var(--bg-dark-card);
   border: 1px solid var(--bg-dark-card-border);
@@ -2257,7 +2257,7 @@ body.site-ready .page-wrapper {
 }
 
 /* ==========================================================================
-   INTERACTIVE COMMISSION EMAIL BRIEF MODAL (HIGH-FASHION ATELIER POPUP)
+   INTERACTIVE COMMISSION EMAIL BRIEF MODAL (HIGH-FASHION STUDIO POPUP)
    ========================================================================== */
 .modal-backdrop {
   position: fixed;

@@ -3,7 +3,7 @@ import { getCloudProjects } from "./supabase-config.js";
 document.addEventListener("DOMContentLoaded", async () => {
 
   // =========================================================================
-  // 1. COMPLETE CASE STUDY DATASET (6 ATELIER PROJECTS)
+  // 1. COMPLETE CASE STUDY DATASET (6 STUDIO PROJECTS)
   // =========================================================================
   const DEFAULT_PROJECTS_DATA = {
     "01": {
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       disciplinesSub: "Flagship Web & 3D Spatial Renders",
       liveUrl: "https://aurafragrance.co.uk",
       liveUrlText: "aurafragrance.co.uk ↗",
-      summary: "Olfactory identity, weighted flacon packaging structures, tactile unboxing rituals, and an ambient sensory web platform for an avant-garde perfume atelier.",
+      summary: "Olfactory identity, weighted flacon packaging structures, tactile unboxing rituals, and an ambient sensory web platform for an avant-garde perfume brand.",
       challenge: "Aura needed to communicate the invisible art of scent through visual and tactile media. The objective was to avoid clichéd luxury tropes and create an ethereal, grounding identity celebrating raw organic botanicals and molecular perfumery.",
       concept: "We developed a sensory design system based on translucent glass substrates, blind debossing, and a muted earth-smoke palette. The digital flagship leverages ambient soundscapes and generative scent notes visualization.",
       quote: "The packaging ARGI created feels sacred in your hands. Our direct-to-consumer launch sold out within 48 hours purely based on the visual and sensory storytelling.",

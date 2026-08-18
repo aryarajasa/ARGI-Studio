@@ -326,7 +326,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         addNewProjectBtn.classList.remove("is-disabled");
         addNewProjectBtn.innerHTML = `<span>+ New Project (${pCount}/${MAX_PROJECTS_LIMIT})</span>`;
-        addNewProjectBtn.title = "Create a new atelier project";
+        addNewProjectBtn.title = "Create a new studio project";
       }
     }
   };
@@ -624,7 +624,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const modalTitle = document.getElementById("projectModalTitle");
-    if (modalTitle) modalTitle.textContent = isNew ? "Create New Atelier Project" : `Edit Project // ${id}`;
+    if (modalTitle) modalTitle.textContent = isNew ? "Create New Studio Project" : `Edit Project // ${id}`;
 
     if (isNew) {
       projectForm.reset();

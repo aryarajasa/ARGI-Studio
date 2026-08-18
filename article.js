@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           title: "03 / Generational Kyoto Craftsmanship",
           content: `
             <p class="essay-paragraph">
-              Our collaboration took us to a multi-generational paper atelier in Kyoto's historic craft district. Together with artisans who have produced handmade washi for over two centuries, we developed custom fibrous endpapers embedded with subtle charcoal filaments.
+              Our collaboration took us to a multi-generational paper studio in Kyoto's historic craft district. Together with artisans who have produced handmade washi for over two centuries, we developed custom fibrous endpapers embedded with subtle charcoal filaments.
             </p>
             <div class="article-inline-image-frame" data-lightbox>
               <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1400&q=85" alt="Kyoto Print Workshop & Paper Archive" class="article-inline-img" />
@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               <span class="pull-quote-citation">— Studio Design Manifesto, 2026</span>
             </div>
             <p class="essay-paragraph">
-              Every project we architect is treated not as a disposable website, but as a digital flagship atelier with the permanence of physical architecture.
+              Every project we architect is treated not as a disposable website, but as a digital flagship studio with the permanence of physical architecture.
             </p>
           `
         },
@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           title: "03 / Looking Ahead to 2026",
           content: `
             <p class="essay-paragraph">
-              We want to thank the international jury members, our daring clients who trust our aesthetic direction, and our close-knit atelier in Bali. We have several groundbreaking global commissions launching in the coming months—spanning fragrance ateliers, sustainable architectural archives, and Tokyo cinema retrospectives.
+              We want to thank the international jury members, our daring clients who trust our aesthetic direction, and our close-knit studio in Bali. We have several groundbreaking global commissions launching in the coming months—spanning fragrance brands, sustainable architectural archives, and Tokyo cinema retrospectives.
             </p>
           `
         }
@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <div class="article-grid-caption">Fig. 4.1 &amp; 4.2 — Left: Deep blind deboss on 600gsm duplex stock. Right: Solid weighted amber glass flacon for Aura Fragrance.</div>
 
             <p class="essay-paragraph">
-              When a luxury fashion house or an artisanal perfume atelier invests in tactile unboxing rituals, they are creating a physical synaptic anchor that algorithmic ads can never replicate.
+              When a luxury fashion house or an artisanal perfume brand invests in tactile unboxing rituals, they are creating a physical synaptic anchor that algorithmic ads can never replicate.
             </p>
           `
         },

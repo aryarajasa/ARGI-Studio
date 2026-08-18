@@ -1237,8 +1237,8 @@ ${clientName}`
     // Exact tight grid spacing matching Good Fella
     const gridSpacing = 8.5;
 
-    const highDensityChars = ["@", "#", "%", "W", "M", "8", "&", "$", "B"];
-    const midDensityChars = ["a", "r", "g", "i", "s", "t", "u", "d", "o", "+", "*", "=", "x", "z", "v"];
+    const highDensityChars = ["@", "#", "%", "W", "M", "8", "&", "$", "B", "Q", "0", "O"];
+    const midDensityChars = ["a", "r", "g", "i", "s", "t", "u", "d", "o", "+", "*", "=", "x", "z", "v", "/", "\\", "|", "[", "]", "{", "}", "(", ")", "1", "l", "I", "j", "f"];
     const lowDensityChars = ["·", ":", ".", "'", "-", "~", "^", "`", ",", ";"];
 
     let gridNodes = [];
@@ -1252,40 +1252,44 @@ ${clientName}`
       isHovered: false
     };
 
-    // Load authentic Good Fella footer Creation of Adam image
-    const adamHandsImg = new Image();
-    let imageLoaded = false;
+    // Load authentic Good Fella footer Creation of Adam hand images
+    const leftHandImg = new Image();
+    const rightHandImg = new Image();
+    let loadedCount = 0;
 
-    adamHandsImg.onload = () => {
-      imageLoaded = true;
-      resize();
+    const onImageLoaded = () => {
+      loadedCount++;
+      if (loadedCount === 2) {
+        resize();
+      }
     };
-    adamHandsImg.src = "assets/adam-hands-footer.jpg";
+
+    leftHandImg.onload = onImageLoaded;
+    rightHandImg.onload = onImageLoaded;
+    leftHandImg.src = "assets/goodfella-adam-left.png";
+    rightHandImg.src = "assets/goodfella-god-right.png";
 
     const drawImagesToOffscreen = (offCtx, w, h) => {
       offCtx.clearRect(0, 0, w, h);
-      if (!adamHandsImg.complete || adamHandsImg.naturalWidth === 0) return;
 
-      const imgW = adamHandsImg.naturalWidth;
-      const imgH = adamHandsImg.naturalHeight;
-      const imgAspect = imgW / imgH; // 1920 / 1048
-      const canvasAspect = w / h;
+      // Sizing proportioned cleanly to footer height
+      const handH = Math.min(h * 0.92, 540);
 
-      let drawW, drawH, drawX, drawY;
-
-      if (canvasAspect > imgAspect) {
-        drawW = w;
-        drawH = w / imgAspect;
-        drawX = 0;
-        drawY = (h - drawH) / 2;
-      } else {
-        drawH = Math.max(h, 480);
-        drawW = drawH * imgAspect;
-        drawX = (w - drawW) / 2;
-        drawY = (h - drawH) / 2;
+      // 1. Left Hand (Adam) - positioned at upper-left reaching downward-right
+      if (leftHandImg.complete && leftHandImg.naturalWidth > 0) {
+        const leftW = handH * (807 / 1117);
+        const leftX = 0;
+        const leftY = 0;
+        offCtx.drawImage(leftHandImg, leftX, leftY, leftW, leftH);
       }
 
-      offCtx.drawImage(adamHandsImg, drawX, drawY, drawW, drawH);
+      // 2. Right Hand (God) - positioned at mid-right reaching downward-left
+      if (rightHandImg.complete && rightHandImg.naturalWidth > 0) {
+        const rightW = handH * (829 / 1117);
+        const rightX = w - rightW;
+        const rightY = Math.max(0, h * 0.08);
+        offCtx.drawImage(rightHandImg, rightX, rightY, rightW, rightH);
+      }
     };
 
     const resize = () => {

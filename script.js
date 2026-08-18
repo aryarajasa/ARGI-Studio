@@ -450,6 +450,9 @@ document.addEventListener("DOMContentLoaded", () => {
           </a>
         `;
       }).join("");
+
+      // Re-bind magnetic cursor tracking to newly generated gallery cards
+      initGalleryHoverTracking();
     }
 
     // 2. Render Index Table
@@ -666,6 +669,72 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   initIndexHoverPortal();
+
+  // 9. GALLERY CARDS MAGNETIC CURSOR TRACKER (EXPLORE PILL & PIXEL GRID MOVEMENT)
+  const initGalleryHoverTracking = () => {
+    const galleryItems = document.querySelectorAll(".gallery-item-sharp");
+    galleryItems.forEach(item => {
+      const frame = item.querySelector(".gallery-item-frame");
+      const pill = item.querySelector(".explore-sharp-pill");
+      if (!frame || !pill) return;
+
+      let rect = frame.getBoundingClientRect();
+      let mouseX = rect.width / 2;
+      let mouseY = rect.height / 2;
+      let targetX = mouseX;
+      let targetY = mouseY;
+      let isHovered = false;
+      let rAF = null;
+
+      const updatePosition = () => {
+        if (!isHovered) return;
+        mouseX += (targetX - mouseX) * 0.16;
+        mouseY += (targetY - mouseY) * 0.16;
+
+        pill.style.setProperty("--pill-x", `${mouseX.toFixed(1)}px`);
+        pill.style.setProperty("--pill-y", `${mouseY.toFixed(1)}px`);
+
+        // Shift the micro-pixel raster slightly with the cursor for dynamic parallax
+        const gridShiftX = ((mouseX - rect.width / 2) * 0.08).toFixed(1);
+        const gridShiftY = ((mouseY - rect.height / 2) * 0.08).toFixed(1);
+        frame.style.setProperty("--mouse-grid-x", `${gridShiftX}px`);
+        frame.style.setProperty("--mouse-grid-y", `${gridShiftY}px`);
+
+        rAF = requestAnimationFrame(updatePosition);
+      };
+
+      frame.addEventListener("mouseenter", (e) => {
+        rect = frame.getBoundingClientRect();
+        targetX = e.clientX - rect.left;
+        targetY = e.clientY - rect.top;
+        mouseX = targetX;
+        mouseY = targetY;
+        isHovered = true;
+        pill.style.setProperty("--pill-x", `${mouseX.toFixed(1)}px`);
+        pill.style.setProperty("--pill-y", `${mouseY.toFixed(1)}px`);
+        cancelAnimationFrame(rAF);
+        rAF = requestAnimationFrame(updatePosition);
+      });
+
+      frame.addEventListener("mousemove", (e) => {
+        rect = frame.getBoundingClientRect();
+        targetX = e.clientX - rect.left;
+        targetY = e.clientY - rect.top;
+      }, { passive: true });
+
+      frame.addEventListener("mouseleave", () => {
+        isHovered = false;
+        cancelAnimationFrame(rAF);
+        // Reset smoothly back to center
+        pill.style.setProperty("--pill-x", "50%");
+        pill.style.setProperty("--pill-y", "50%");
+        frame.style.setProperty("--mouse-grid-x", "0px");
+        frame.style.setProperty("--mouse-grid-y", "0px");
+      });
+    });
+  };
+
+  initGalleryHoverTracking();
 
   // 8. SMOOTH ANCHOR SCROLLING
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {

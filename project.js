@@ -426,15 +426,35 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (csHeroCaption) csHeroCaption.textContent = currentProject.heroCaption;
 
   // Populate Narrative & Conditional Pull Quote Box
+  const csNarrativeSection = document.querySelector(".cs-narrative-section");
   const csChallengeText = document.getElementById("csChallengeText");
-  if (csChallengeText) csChallengeText.textContent = currentProject.challenge || "";
-
   const csConceptText = document.getElementById("csConceptText");
-  if (csConceptText) csConceptText.textContent = currentProject.concept || "";
+  const challengeBlock = csChallengeText ? csChallengeText.closest(".narrative-block") : null;
+  const conceptBlock = csConceptText ? csConceptText.closest(".narrative-block") : null;
 
-  const csPullQuoteCard = document.getElementById("csPullQuoteCard");
+  const rawChallenge = (currentProject.challenge || "").trim();
+  const rawConcept = (currentProject.concept || "").trim();
   const rawQuote = (currentProject.quote || "").trim();
 
+  if (challengeBlock) {
+    if (rawChallenge) {
+      challengeBlock.style.display = "block";
+      csChallengeText.textContent = rawChallenge;
+    } else {
+      challengeBlock.style.display = "none";
+    }
+  }
+
+  if (conceptBlock) {
+    if (rawConcept) {
+      conceptBlock.style.display = "block";
+      csConceptText.textContent = rawConcept;
+    } else {
+      conceptBlock.style.display = "none";
+    }
+  }
+
+  const csPullQuoteCard = document.getElementById("csPullQuoteCard");
   if (csPullQuoteCard) {
     if (rawQuote) {
       csPullQuoteCard.style.display = "block";
@@ -451,22 +471,77 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Populate Two-Column Spread Images
-  const csSpreadImg1 = document.getElementById("csSpreadImg1");
-  if (csSpreadImg1) {
-    csSpreadImg1.src = currentProject.spreadImg1;
-    csSpreadImg1.alt = currentProject.spreadCaption1;
+  if (csNarrativeSection && !rawChallenge && !rawConcept && !rawQuote) {
+    csNarrativeSection.style.display = "none";
   }
-  const csSpreadCaption1 = document.getElementById("csSpreadCaption1");
-  if (csSpreadCaption1) csSpreadCaption1.textContent = currentProject.spreadCaption1;
 
+  // Populate Two-Column Spread Images (Remove section if empty, adapt if 1 image)
+  const csSpreadSection = document.querySelector(".cs-visual-spread-section");
+  const csSpreadImg1 = document.getElementById("csSpreadImg1");
+  const csSpreadCaption1 = document.getElementById("csSpreadCaption1");
   const csSpreadImg2 = document.getElementById("csSpreadImg2");
-  if (csSpreadImg2) {
-    csSpreadImg2.src = currentProject.spreadImg2;
-    csSpreadImg2.alt = currentProject.spreadCaption2;
-  }
   const csSpreadCaption2 = document.getElementById("csSpreadCaption2");
-  if (csSpreadCaption2) csSpreadCaption2.textContent = currentProject.spreadCaption2;
+  const spreadItem1 = csSpreadImg1 ? csSpreadImg1.closest(".spread-item") : null;
+  const spreadItem2 = csSpreadImg2 ? csSpreadImg2.closest(".spread-item") : null;
+
+  const s1 = (currentProject.spreadImg1 || "").trim();
+  const s2 = (currentProject.spreadImg2 || "").trim();
+
+  if (csSpreadSection) {
+    if (!s1 && !s2) {
+      csSpreadSection.style.display = "none";
+    } else {
+      csSpreadSection.style.display = "block";
+      
+      if (s1 && spreadItem1) {
+        spreadItem1.style.display = "block";
+        csSpreadImg1.src = s1;
+        csSpreadImg1.alt = currentProject.spreadCaption1 || "Spread Visual 1";
+        if (csSpreadCaption1) {
+          if (currentProject.spreadCaption1 && currentProject.spreadCaption1.trim()) {
+            csSpreadCaption1.style.display = "block";
+            csSpreadCaption1.textContent = currentProject.spreadCaption1;
+          } else {
+            csSpreadCaption1.style.display = "none";
+          }
+        }
+      } else if (spreadItem1) {
+        spreadItem1.style.display = "none";
+      }
+
+      if (s2 && spreadItem2) {
+        spreadItem2.style.display = "block";
+        csSpreadImg2.src = s2;
+        csSpreadImg2.alt = currentProject.spreadCaption2 || "Spread Visual 2";
+        if (csSpreadCaption2) {
+          if (currentProject.spreadCaption2 && currentProject.spreadCaption2.trim()) {
+            csSpreadCaption2.style.display = "block";
+            csSpreadCaption2.textContent = currentProject.spreadCaption2;
+          } else {
+            csSpreadCaption2.style.display = "none";
+          }
+        }
+      } else if (spreadItem2) {
+        spreadItem2.style.display = "none";
+      }
+
+      // If only 1 spread image exists, make grid 1 column
+      const twoColGrid = document.getElementById("csTwoColGrid");
+      if (twoColGrid) {
+        if (s1 && !s2 && spreadItem1) {
+          spreadItem1.style.gridColumn = "1 / -1";
+          twoColGrid.style.gridTemplateColumns = "1fr";
+        } else if (!s1 && s2 && spreadItem2) {
+          spreadItem2.style.gridColumn = "1 / -1";
+          twoColGrid.style.gridTemplateColumns = "1fr";
+        } else {
+          twoColGrid.style.gridTemplateColumns = "";
+          if (spreadItem1) spreadItem1.style.gridColumn = "";
+          if (spreadItem2) spreadItem2.style.gridColumn = "";
+        }
+      }
+    }
+  }
 
   // Populate Interactive Brand Artifacts (Color Tokens & Typographic Architecture)
   const csArtifactsSection = document.getElementById("csArtifactsSection");
@@ -547,46 +622,68 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Populate Interface Frame
+  // Populate Interface Frame (Remove section if empty)
+  const csInterfaceSection = document.querySelector(".cs-wide-showcase-section");
   const csInterfaceImg = document.getElementById("csInterfaceImg");
-  if (csInterfaceImg) {
-    csInterfaceImg.src = currentProject.interfaceImg;
-    csInterfaceImg.alt = `${currentProject.title} Interface Showcase`;
-  }
-  const csBrowserUrl = document.getElementById("csBrowserUrl");
-  if (csBrowserUrl) {
-    csBrowserUrl.textContent = currentProject.liveUrl ? currentProject.liveUrl.replace(/^https?:\/\//, '').replace(/\/$/, '') : "TBA";
+  const rawInterfaceImg = (currentProject.interfaceImg || "").trim();
+
+  if (csInterfaceSection) {
+    if (rawInterfaceImg) {
+      csInterfaceSection.style.display = "block";
+      if (csInterfaceImg) {
+        csInterfaceImg.src = rawInterfaceImg;
+        csInterfaceImg.alt = `${currentProject.title} Interface Showcase`;
+      }
+    } else {
+      csInterfaceSection.style.display = "none";
+    }
   }
 
-  // Populate Curated Bento Grid
+  // Populate Curated Bento Grid (Remove section if empty)
+  const csGallerySection = document.querySelector(".cs-gallery-bento-section");
   const csGalleryMosaic = document.getElementById("csGalleryMosaic");
-  if (csGalleryMosaic && currentProject.gallery) {
-    csGalleryMosaic.innerHTML = currentProject.gallery.map((item, idx) => `
-      <div class="bento-tile" data-lightbox>
-        <img src="${item.img}" alt="${item.title || item.caption}" class="bento-img" />
-        <div class="bento-overlay">
-          <div class="bento-top-meta">
-            <span class="bento-tag">${item.tag || `ARCHIVE // 0${idx + 1}`}</span>
-            <div class="bento-zoom-icon">↗</div>
-          </div>
-          <div class="bento-bottom-info">
-            <h4 class="bento-title">${item.title || item.caption}</h4>
-            <span class="bento-desc">${item.desc || 'Physical Studio Artifact & Craft'}</span>
+  const validGallery = (currentProject.gallery || []).filter(item => item && item.img && item.img.trim());
+
+  if (csGallerySection) {
+    if (validGallery.length > 0 && csGalleryMosaic) {
+      csGallerySection.style.display = "block";
+      csGalleryMosaic.innerHTML = validGallery.map((item, idx) => `
+        <div class="bento-tile" data-lightbox>
+          <img src="${item.img}" alt="${item.title || item.caption || 'Gallery Image'}" class="bento-img" />
+          <div class="bento-overlay">
+            <div class="bento-top-meta">
+              <span class="bento-tag">${item.tag || `ARCHIVE // 0${idx + 1}`}</span>
+              <div class="bento-zoom-icon">↗</div>
+            </div>
+            <div class="bento-bottom-info">
+              <h4 class="bento-title">${item.title || item.caption || 'Visual Artifact'}</h4>
+              <span class="bento-desc">${item.desc || 'Physical Studio Artifact & Craft'}</span>
+            </div>
           </div>
         </div>
-      </div>
-    `).join("");
+      `).join("");
+    } else {
+      csGallerySection.style.display = "none";
+    }
   }
 
-  // Populate Deliverables Scope
+  // Populate Deliverables Scope (Remove section if empty)
+  const csDeliverablesSection = document.querySelector(".cs-deliverables-section");
   const csDeliverablesList = document.getElementById("csDeliverablesList");
-  if (csDeliverablesList && currentProject.deliverables) {
-    csDeliverablesList.innerHTML = currentProject.deliverables.map(del => `
-      <div class="deliverable-chip">
-        <span class="deliverable-chip-icon">✦</span>
-        <span>${del}</span>
-      </div>
-    `).join("");
+  const validDeliverables = (currentProject.deliverables || []).filter(del => del && del.trim());
+
+  if (csDeliverablesSection) {
+    if (validDeliverables.length > 0 && csDeliverablesList) {
+      csDeliverablesSection.style.display = "block";
+      csDeliverablesList.innerHTML = validDeliverables.map(del => `
+        <div class="deliverable-chip">
+          <span class="deliverable-chip-icon">✦</span>
+          <span>${del}</span>
+        </div>
+      `).join("");
+    } else {
+      csDeliverablesSection.style.display = "none";
+    }
   }
 
   // Populate Next Project Full-Width Hero Card

@@ -389,69 +389,152 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Metadata
   const articleCategoryTag = document.getElementById("articleCategoryTag");
-  if (articleCategoryTag) articleCategoryTag.textContent = currentArticle.category;
+  if (articleCategoryTag) {
+    if (currentArticle.category && currentArticle.category.trim()) {
+      articleCategoryTag.style.display = "inline-flex";
+      articleCategoryTag.textContent = currentArticle.category;
+    } else {
+      articleCategoryTag.style.display = "none";
+    }
+  }
 
   const articleDateText = document.getElementById("articleDateText");
-  if (articleDateText) articleDateText.textContent = currentArticle.date;
+  if (articleDateText) {
+    if (currentArticle.date && currentArticle.date.trim()) {
+      articleDateText.style.display = "inline";
+      articleDateText.textContent = currentArticle.date;
+    } else {
+      articleDateText.style.display = "none";
+    }
+  }
 
   const articleReadTime = document.getElementById("articleReadTime");
-  if (articleReadTime) articleReadTime.textContent = currentArticle.readTime;
+  if (articleReadTime) {
+    if (currentArticle.readTime && currentArticle.readTime.trim()) {
+      articleReadTime.style.display = "inline";
+      articleReadTime.textContent = currentArticle.readTime;
+    } else {
+      articleReadTime.style.display = "none";
+    }
+  }
 
   // Title & Lead
   const articleMainTitle = document.getElementById("articleMainTitle");
-  if (articleMainTitle) articleMainTitle.textContent = currentArticle.title;
+  if (articleMainTitle) articleMainTitle.textContent = currentArticle.title || "Untitled Dispatch";
 
   const articleLeadText = document.getElementById("articleLeadText");
-  if (articleLeadText) articleLeadText.textContent = currentArticle.lead;
-
-  // Author Byline
-  const articleAuthorName = document.getElementById("articleAuthorName");
-  if (articleAuthorName) articleAuthorName.textContent = currentArticle.authorName;
-
-  const articleAuthorRole = document.getElementById("articleAuthorRole");
-  if (articleAuthorRole) articleAuthorRole.textContent = currentArticle.authorRole;
-
-  // Feature 100vw Image
-  const articleFeatureImg = document.getElementById("articleFeatureImg");
-  if (articleFeatureImg) {
-    articleFeatureImg.src = currentArticle.featureImage;
-    articleFeatureImg.alt = currentArticle.featureCaption || currentArticle.title;
+  if (articleLeadText) {
+    if (currentArticle.lead && currentArticle.lead.trim()) {
+      articleLeadText.style.display = "block";
+      articleLeadText.textContent = currentArticle.lead;
+    } else {
+      articleLeadText.style.display = "none";
+    }
   }
 
-  // Render Table of Contents (TOC)
+  // Author Byline (Hide entire bar if empty)
+  const authorBar = document.querySelector(".article-author-bar");
+  const articleAuthorName = document.getElementById("articleAuthorName");
+  const articleAuthorRole = document.getElementById("articleAuthorRole");
+  const hasAuthorName = Boolean(currentArticle.authorName && currentArticle.authorName.trim());
+  const hasAuthorRole = Boolean(currentArticle.authorRole && currentArticle.authorRole.trim());
+
+  if (authorBar) {
+    if (!hasAuthorName && !hasAuthorRole) {
+      authorBar.style.display = "none";
+    } else {
+      authorBar.style.display = "flex";
+      if (articleAuthorName) {
+        if (hasAuthorName) {
+          articleAuthorName.style.display = "block";
+          articleAuthorName.textContent = currentArticle.authorName;
+        } else {
+          articleAuthorName.style.display = "none";
+        }
+      }
+      if (articleAuthorRole) {
+        if (hasAuthorRole) {
+          articleAuthorRole.style.display = "block";
+          articleAuthorRole.textContent = currentArticle.authorRole;
+        } else {
+          articleAuthorRole.style.display = "none";
+        }
+      }
+    }
+  }
+
+  // Feature 100vw Image (Hide section if empty)
+  const featureMediaWrap = document.querySelector(".article-feature-media-wrap");
+  const articleFeatureImg = document.getElementById("articleFeatureImg");
+  const rawFeatureImg = (currentArticle.featureImage || "").trim();
+
+  if (featureMediaWrap) {
+    if (rawFeatureImg && rawFeatureImg !== "assets/logo.png") {
+      featureMediaWrap.style.display = "block";
+      if (articleFeatureImg) {
+        articleFeatureImg.src = rawFeatureImg;
+        articleFeatureImg.alt = currentArticle.featureCaption || currentArticle.title || "Feature Visual";
+      }
+    } else {
+      featureMediaWrap.style.display = "none";
+    }
+  }
+
+  // Filter only valid, non-empty sections
+  const validSections = (currentArticle.sections || []).filter(sec => sec && (sec.title || sec.content));
+
+  // Render Table of Contents (TOC - hide if <= 1 section)
   const articleTocNav = document.getElementById("articleTocNav");
-  if (articleTocNav && currentArticle.sections) {
-    articleTocNav.innerHTML = currentArticle.sections.map((sec, idx) => `
-      <a href="#${sec.id}" class="toc-link ${idx === 0 ? "is-active" : ""}" data-target="${sec.id}">
-        ${sec.title}
-      </a>
-    `).join("");
+  const tocBox = articleTocNav ? articleTocNav.closest(".sidebar-box") : null;
+
+  if (tocBox) {
+    if (validSections.length <= 1) {
+      tocBox.style.display = "none";
+    } else {
+      tocBox.style.display = "block";
+      if (articleTocNav) {
+        articleTocNav.innerHTML = validSections.map((sec, idx) => `
+          <a href="#${sec.id || `section-${idx+1}`}" class="toc-link ${idx === 0 ? "is-active" : ""}" data-target="${sec.id || `section-${idx+1}`}">
+            ${sec.title || `0${idx+1} / Chapter`}
+          </a>
+        `).join("");
+      }
+    }
   }
 
   // Render Essay Body
   const articleEssayBody = document.getElementById("articleEssayBody");
-  if (articleEssayBody && currentArticle.sections) {
-    articleEssayBody.innerHTML = currentArticle.sections.map((sec) => `
-      <section class="essay-section-block" id="${sec.id}">
-        <h2 class="essay-subheading">${sec.title}</h2>
-        <div class="essay-section-content">
-          ${sec.content}
-        </div>
-      </section>
-    `).join("");
+  if (articleEssayBody) {
+    if (validSections.length > 0) {
+      articleEssayBody.innerHTML = validSections.map((sec, idx) => `
+        <section class="essay-section-block" id="${sec.id || `section-${idx+1}`}">
+          ${sec.title ? `<h2 class="essay-subheading">${sec.title}</h2>` : ""}
+          <div class="essay-section-content">
+            ${sec.content || ""}
+          </div>
+        </section>
+      `).join("");
+    } else {
+      articleEssayBody.innerHTML = `<p class="essay-paragraph">${currentArticle.lead || 'Dispatch in editorial production.'}</p>`;
+    }
   }
 
-  // Populate Next Article Card
+  // Populate Next Article Card (Hide if no next article)
   const nextArticleCard = document.getElementById("nextArticleCard");
   const nextArticleId = document.getElementById("nextArticleId");
   const nextArticleTitle = document.getElementById("nextArticleTitle");
   const nextArticleCat = document.getElementById("nextArticleCat");
 
-  if (nextArticleCard && nextArticle) {
-    nextArticleCard.href = `article.html?id=${nextArticle.id}`;
-    if (nextArticleId) nextArticleId.textContent = nextArticle.id;
-    if (nextArticleTitle) nextArticleTitle.textContent = nextArticle.title;
-    if (nextArticleCat) nextArticleCat.textContent = nextArticle.category;
+  if (nextArticleCard) {
+    if (nextArticle && nextArticle.id !== currentArticle.id) {
+      nextArticleCard.style.display = "block";
+      nextArticleCard.href = `article.html?id=${nextArticle.id}`;
+      if (nextArticleId) nextArticleId.textContent = nextArticle.id;
+      if (nextArticleTitle) nextArticleTitle.textContent = nextArticle.title;
+      if (nextArticleCat) nextArticleCat.textContent = nextArticle.category;
+    } else {
+      nextArticleCard.style.display = "none";
+    }
   }
 
   // -------------------------------------------------------------------------

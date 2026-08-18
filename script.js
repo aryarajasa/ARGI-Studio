@@ -482,6 +482,51 @@ document.addEventListener("DOMContentLoaded", () => {
       const extraCount = Math.max(0, projectKeys.length - 3);
       seeMoreBtnText.textContent = `See More Works (${extraCount})`;
     }
+
+    // 4. Dynamically Populate Hero Floating Cards from Portfolio Database
+    const heroFloatingCards = document.querySelectorAll("#heroGallery .floating-card");
+    if (heroFloatingCards.length > 0) {
+      // Gather authentic visual artifacts across all projects in the database
+      const visualPool = [];
+      projectKeys.forEach(id => {
+        const p = projectsData[id];
+        if (!p) return;
+        if (p.heroImage && p.heroImage.trim() && p.heroImage !== "assets/logo.png") {
+          visualPool.push({ img: p.heroImage, title: p.title, id: p.id, tag: "IDENTITY" });
+        }
+        if (p.spreadImg1 && p.spreadImg1.trim()) {
+          visualPool.push({ img: p.spreadImg1, title: p.title, id: p.id, tag: "EDITORIAL" });
+        }
+        if (p.spreadImg2 && p.spreadImg2.trim()) {
+          visualPool.push({ img: p.spreadImg2, title: p.title, id: p.id, tag: "PACKAGING" });
+        }
+        if (p.interfaceImg && p.interfaceImg.trim()) {
+          visualPool.push({ img: p.interfaceImg, title: p.title, id: p.id, tag: "DIGITAL" });
+        }
+        if (Array.isArray(p.gallery)) {
+          p.gallery.forEach(g => {
+            if (g && g.img && g.img.trim()) {
+              visualPool.push({ img: g.img, title: g.title || p.title, id: p.id, tag: g.tag || "ARCHIVE" });
+            }
+          });
+        }
+      });
+
+      if (visualPool.length > 0) {
+        heroFloatingCards.forEach((card, idx) => {
+          const item = visualPool[idx % visualPool.length];
+          const imgEl = card.querySelector(".floating-img");
+          if (imgEl && item) {
+            imgEl.src = item.img;
+            imgEl.alt = `${item.title} — Portfolio Artifact`;
+          }
+          const captionEl = card.querySelector(".floating-caption");
+          if (captionEl && item) {
+            captionEl.textContent = `— ${item.tag || 'EDITORIAL'}`;
+          }
+        });
+      }
+    }
   };
 
   const renderDynamicArticles = async () => {

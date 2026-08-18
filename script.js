@@ -527,6 +527,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
     }
+
+    // 5. Dynamically Populate Footer Selected Archive from Portfolio Database
+    const footerArchiveList = document.getElementById("footerArchiveList");
+    if (footerArchiveList) {
+      footerArchiveList.innerHTML = projectKeys.map(id => {
+        const p = projectsData[id];
+        const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
+        return `<li><a href="project.html?id=${p.id}" class="footer-menu-link">${titleFull}</a></li>`;
+      }).join("");
+    }
   };
 
   const renderDynamicArticles = async () => {

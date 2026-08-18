@@ -1,4 +1,4 @@
-import { getCloudArticles } from "./supabase-config.js";
+import { getCloudArticles, getCloudProjects } from "./supabase-config.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -603,6 +603,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       nextArticleCard.style.display = "none";
     }
+  }
+
+  // Populate Footer Selected Archive from Portfolio Database
+  const footerArchiveList = document.getElementById("footerArchiveList");
+  if (footerArchiveList) {
+    getCloudProjects().then((projectsData) => {
+      if (projectsData && Object.keys(projectsData).length > 0) {
+        const projectKeys = Object.keys(projectsData).sort((a, b) => a.localeCompare(b));
+        footerArchiveList.innerHTML = projectKeys.map((id) => {
+          const p = projectsData[id];
+          const titleFull = `${p.title} ${p.titleAccent || ""}`.trim();
+          return `<li><a href="project.html?id=${p.id}" class="footer-menu-link">${titleFull}</a></li>`;
+        }).join("");
+      }
+    });
   }
 
   // -------------------------------------------------------------------------

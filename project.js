@@ -788,6 +788,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  // Populate Footer Selected Archive from Portfolio Database
+  const footerArchiveList = document.getElementById("footerArchiveList");
+  if (footerArchiveList) {
+    const projectKeys = Object.keys(PROJECTS_DATA).sort((a, b) => a.localeCompare(b));
+    footerArchiveList.innerHTML = projectKeys.map(id => {
+      const p = PROJECTS_DATA[id];
+      const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
+      return `<li><a href="project.html?id=${p.id}" class="footer-menu-link">${titleFull}</a></li>`;
+    }).join("");
+  }
+
   // =========================================================================
   // 3. INTERACTIVE FEATURES & INTERACTIONS
   // =========================================================================

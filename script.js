@@ -670,11 +670,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initIndexHoverPortal();
 
-  // 9. OPTION 3: INTERACTIVE CURSOR SPOTLIGHT & DYNAMIC LENS REVEAL
+  // 9. OPTION 1: FLUID LIQUID GLASS DISPLACEMENT & CHROMATIC DISPERSION
   const initGalleryHoverTracking = () => {
     const galleryItems = document.querySelectorAll(".gallery-item-sharp");
     galleryItems.forEach(item => {
       const frame = item.querySelector(".gallery-item-frame");
+      const img = item.querySelector(".gallery-img-sharp");
       const pill = item.querySelector(".explore-sharp-pill");
       if (!frame || !pill) return;
 
@@ -688,13 +689,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const updatePosition = () => {
         if (!isHovered) return;
-        mouseX += (targetX - mouseX) * 0.18;
-        mouseY += (targetY - mouseY) * 0.18;
+        mouseX += (targetX - mouseX) * 0.15;
+        mouseY += (targetY - mouseY) * 0.15;
 
-        frame.style.setProperty("--spot-x", `${mouseX.toFixed(1)}px`);
-        frame.style.setProperty("--spot-y", `${mouseY.toFixed(1)}px`);
+        frame.style.setProperty("--ripple-x", `${mouseX.toFixed(1)}px`);
+        frame.style.setProperty("--ripple-y", `${mouseY.toFixed(1)}px`);
         pill.style.setProperty("--pill-x", `${mouseX.toFixed(1)}px`);
         pill.style.setProperty("--pill-y", `${mouseY.toFixed(1)}px`);
+
+        // Subtle fluid liquid parallax drift on underlying artwork
+        if (img) {
+          const shiftX = ((mouseX - rect.width / 2) * 0.04).toFixed(1);
+          const shiftY = ((mouseY - rect.height / 2) * 0.04).toFixed(1);
+          img.style.transform = `scale(1.05) translate3d(${shiftX}px, ${shiftY}px, 0)`;
+        }
 
         rAF = requestAnimationFrame(updatePosition);
       };
@@ -707,8 +715,8 @@ document.addEventListener("DOMContentLoaded", () => {
         mouseY = targetY;
         isHovered = true;
 
-        frame.style.setProperty("--spot-x", `${mouseX.toFixed(1)}px`);
-        frame.style.setProperty("--spot-y", `${mouseY.toFixed(1)}px`);
+        frame.style.setProperty("--ripple-x", `${mouseX.toFixed(1)}px`);
+        frame.style.setProperty("--ripple-y", `${mouseY.toFixed(1)}px`);
         pill.style.setProperty("--pill-x", `${mouseX.toFixed(1)}px`);
         pill.style.setProperty("--pill-y", `${mouseY.toFixed(1)}px`);
 
@@ -727,8 +735,9 @@ document.addEventListener("DOMContentLoaded", () => {
         cancelAnimationFrame(rAF);
         pill.style.setProperty("--pill-x", "50%");
         pill.style.setProperty("--pill-y", "50%");
-        frame.style.setProperty("--spot-x", "50%");
-        frame.style.setProperty("--spot-y", "50%");
+        frame.style.setProperty("--ripple-x", "50%");
+        frame.style.setProperty("--ripple-y", "50%");
+        if (img) img.style.transform = "";
       });
     });
   };

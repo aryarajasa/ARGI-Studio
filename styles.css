@@ -1260,62 +1260,75 @@ body.site-ready .page-wrapper {
   transform: scale(1.04);
 }
 
-/* --- OPTION 3: INTERACTIVE CURSOR SPOTLIGHT & DYNAMIC LENS REVEAL --- */
+/* --- OPTION 1: FLUID LIQUID GLASS DISPLACEMENT & CHROMATIC DISPERSION --- */
 .gallery-sharp-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(8, 9, 10, 0.72);
+  background: rgba(12, 13, 15, 0.48);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
   z-index: 4;
-  /* Dynamic Cursor Radial Cutout: illuminates the exact spot of the cursor */
-  -webkit-mask-image: radial-gradient(
-    circle 130px at var(--spot-x, 50%) var(--spot-y, 50%),
-    transparent 0%,
-    transparent 55%,
-    rgba(0, 0, 0, 0.45) 85%,
-    black 100%
+  backdrop-filter: blur(4px) saturate(140%);
+  -webkit-backdrop-filter: blur(4px) saturate(140%);
+}
+
+.gallery-sharp-overlay::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(
+    circle 180px at var(--ripple-x, 50%) var(--ripple-y, 50%),
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.12) 30%,
+    rgba(96, 165, 250, 0.08) 55%,
+    rgba(244, 63, 94, 0.06) 75%,
+    transparent 100%
   );
-  mask-image: radial-gradient(
-    circle 130px at var(--spot-x, 50%) var(--spot-y, 50%),
-    transparent 0%,
-    transparent 55%,
-    rgba(0, 0, 0, 0.45) 85%,
-    black 100%
-  );
-  will-change: mask-image, -webkit-mask-image;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-sharp-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 60%, rgba(0, 0, 0, 0.35) 100%);
+  pointer-events: none;
 }
 
 .gallery-item-sharp:hover .gallery-sharp-overlay {
   opacity: 1;
 }
 
-/* Dynamic Spotlight Lens Glass Ring */
+/* Liquid Ripple Shockwave Wavefront */
 .gallery-lens-ring {
   position: absolute;
   top: 0;
   left: 0;
-  width: 250px;
-  height: 250px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   box-shadow: 
-    0 0 0 1px rgba(0, 0, 0, 0.5),
-    inset 0 0 25px rgba(255, 255, 255, 0.08),
-    0 15px 40px rgba(0, 0, 0, 0.55);
+    0 0 35px rgba(255, 255, 255, 0.35),
+    inset 0 0 20px rgba(255, 255, 255, 0.2),
+    0 20px 45px rgba(0, 0, 0, 0.4);
   pointer-events: none;
   opacity: 0;
-  transform: translate3d(var(--spot-x, 50%), var(--spot-y, 50%), 0) translate(-50%, -50%) scale(0.85);
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.12s ease-out;
+  transform: translate3d(var(--ripple-x, 50%), var(--ripple-y, 50%), 0) translate(-50%, -50%) scale(0.6);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
   z-index: 5;
 }
 
 .gallery-item-sharp:hover .gallery-lens-ring {
-  opacity: 1;
-  transform: translate3d(var(--spot-x, 50%), var(--spot-y, 50%), 0) translate(-50%, -50%) scale(1);
+  opacity: 0.85;
+  transform: translate3d(var(--ripple-x, 50%), var(--ripple-y, 50%), 0) translate(-50%, -50%) scale(1.15);
 }
 
 /* Magnetic Following Floating Explore Button */
@@ -1323,13 +1336,16 @@ body.site-ready .page-wrapper {
   position: absolute;
   top: 0;
   left: 0;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.95);
   color: var(--text-primary);
   font-size: 0.8125rem;
   font-weight: 600;
   padding: 0.65rem 1.45rem;
   border-radius: var(--radius-full);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   pointer-events: none;
   white-space: nowrap;
   opacity: 0;

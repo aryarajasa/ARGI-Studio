@@ -1050,6 +1050,305 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   };
 
+  // =========================================================================
+  // CREATION OF ADAM INTERACTIVE ASCII CANVAS ENGINE (FOOTER)
+  // =========================================================================
+  const initFooterAdamAscii = () => {
+    const canvas = document.getElementById("footerAsciiCanvas");
+    const footer = document.getElementById("siteFooter");
+    if (!canvas || !footer) return;
+
+    const ctx = canvas.getContext("2d");
+    let width, height, dpr;
+    let cols, rows;
+    const gridSpacing = 13;
+
+    const highDensityChars = ["@", "#", "%", "W", "M", "8", "&", "$", "B"];
+    const midDensityChars = ["a", "r", "g", "i", "s", "t", "u", "d", "o", "+", "*", "=", "x"];
+    const lowDensityChars = ["·", ":", ".", "'", "-", "~", "^", "`", ",", ";"];
+
+    let gridNodes = [];
+
+    const mouse = {
+      x: -1000,
+      y: -1000,
+      targetX: -1000,
+      targetY: -1000,
+      radius: 150,
+      isHovered: false
+    };
+
+    const drawAdamHandsMask = (offCtx, w, h) => {
+      offCtx.clearRect(0, 0, w, h);
+      
+      const cY = h * 0.52;
+      const scaleX = Math.min(1.2, Math.max(0.65, w / 1200));
+      const scaleY = Math.min(1.2, Math.max(0.65, h / 450));
+
+      const adamGrad = offCtx.createLinearGradient(0, cY, w * 0.47, cY);
+      adamGrad.addColorStop(0, "rgba(255, 255, 255, 0.4)");
+      adamGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.85)");
+      adamGrad.addColorStop(1, "rgba(255, 255, 255, 1.0)");
+
+      const godGrad = offCtx.createLinearGradient(w, cY, w * 0.53, cY);
+      godGrad.addColorStop(0, "rgba(255, 255, 255, 0.35)");
+      godGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.85)");
+      godGrad.addColorStop(1, "rgba(255, 255, 255, 1.0)");
+
+      offCtx.lineCap = "round";
+      offCtx.lineJoin = "round";
+
+      // 1. ADAM'S HAND (LEFT SIDE)
+      offCtx.save();
+      offCtx.fillStyle = adamGrad;
+      offCtx.strokeStyle = "rgba(255, 255, 255, 0.9)";
+
+      offCtx.beginPath();
+      offCtx.moveTo(0, cY + 30 * scaleY);
+      offCtx.bezierCurveTo(w * 0.12, cY + 20 * scaleY, w * 0.22, cY - 15 * scaleY, w * 0.30, cY - 25 * scaleY);
+      offCtx.bezierCurveTo(w * 0.31, cY - 45 * scaleY, w * 0.34, cY - 50 * scaleY, w * 0.35, cY - 35 * scaleY);
+      offCtx.bezierCurveTo(w * 0.36, cY - 30 * scaleY, w * 0.38, cY - 28 * scaleY, w * 0.40, cY - 22 * scaleY);
+      offCtx.bezierCurveTo(w * 0.43, cY - 16 * scaleY, w * 0.455, cY - 8 * scaleY, w * 0.468, cY - 4 * scaleY);
+      offCtx.arc(w * 0.468, cY - 1 * scaleY, 4 * scaleY, -Math.PI / 2, Math.PI / 2);
+      offCtx.bezierCurveTo(w * 0.445, cY + 5 * scaleY, w * 0.415, cY + 2 * scaleY, w * 0.385, cY + 8 * scaleY);
+      offCtx.bezierCurveTo(w * 0.395, cY + 26 * scaleY, w * 0.38, cY + 45 * scaleY, w * 0.34, cY + 40 * scaleY);
+      offCtx.bezierCurveTo(w * 0.32, cY + 46 * scaleY, w * 0.28, cY + 48 * scaleY, w * 0.25, cY + 40 * scaleY);
+      offCtx.bezierCurveTo(w * 0.18, cY + 65 * scaleY, w * 0.08, cY + 85 * scaleY, 0, cY + 95 * scaleY);
+      offCtx.closePath();
+      offCtx.fill();
+
+      offCtx.lineWidth = 2.5 * scaleY;
+      offCtx.beginPath();
+      offCtx.moveTo(w * 0.24, cY + 8 * scaleY);
+      offCtx.bezierCurveTo(w * 0.32, cY - 10 * scaleY, w * 0.38, cY - 15 * scaleY, w * 0.45, cY - 4 * scaleY);
+      offCtx.stroke();
+
+      offCtx.beginPath();
+      offCtx.moveTo(w * 0.33, cY + 8 * scaleY);
+      offCtx.bezierCurveTo(w * 0.37, cY + 18 * scaleY, w * 0.37, cY + 32 * scaleY, w * 0.34, cY + 36 * scaleY);
+      offCtx.stroke();
+      offCtx.restore();
+
+      // 2. GOD'S HAND (RIGHT SIDE)
+      offCtx.save();
+      offCtx.fillStyle = godGrad;
+      offCtx.strokeStyle = "rgba(255, 255, 255, 0.9)";
+
+      offCtx.beginPath();
+      offCtx.moveTo(w, cY - 70 * scaleY);
+      offCtx.bezierCurveTo(w * 0.88, cY - 60 * scaleY, w * 0.78, cY - 45 * scaleY, w * 0.68, cY - 32 * scaleY);
+      offCtx.bezierCurveTo(w * 0.64, cY - 26 * scaleY, w * 0.60, cY - 20 * scaleY, w * 0.57, cY - 14 * scaleY);
+      offCtx.bezierCurveTo(w * 0.555, cY - 10 * scaleY, w * 0.542, cY - 6 * scaleY, w * 0.532, cY - 3 * scaleY);
+      offCtx.arc(w * 0.532, cY, 4.5 * scaleY, -Math.PI / 2, Math.PI / 2);
+      offCtx.bezierCurveTo(w * 0.548, cY + 5 * scaleY, w * 0.565, cY + 8 * scaleY, w * 0.585, cY + 6 * scaleY);
+      offCtx.bezierCurveTo(w * 0.57, cY + 18 * scaleY, w * 0.555, cY + 28 * scaleY, w * 0.575, cY + 30 * scaleY);
+      offCtx.bezierCurveTo(w * 0.595, cY + 28 * scaleY, w * 0.615, cY + 18 * scaleY, w * 0.625, cY + 14 * scaleY);
+      offCtx.bezierCurveTo(w * 0.645, cY + 25 * scaleY, w * 0.665, cY + 38 * scaleY, w * 0.695, cY + 28 * scaleY);
+      offCtx.bezierCurveTo(w * 0.705, cY + 38 * scaleY, w * 0.735, cY + 36 * scaleY, w * 0.745, cY + 25 * scaleY);
+      offCtx.bezierCurveTo(w * 0.82, cY + 50 * scaleY, w * 0.90, cY + 75 * scaleY, w, cY + 95 * scaleY);
+      offCtx.closePath();
+      offCtx.fill();
+
+      offCtx.lineWidth = 2.5 * scaleY;
+      offCtx.beginPath();
+      offCtx.moveTo(w * 0.74, cY - 15 * scaleY);
+      offCtx.bezierCurveTo(w * 0.67, cY - 8 * scaleY, w * 0.61, cY - 4 * scaleY, w * 0.545, cY - 2 * scaleY);
+      offCtx.stroke();
+
+      offCtx.beginPath();
+      offCtx.moveTo(w * 0.64, cY + 2 * scaleY);
+      offCtx.bezierCurveTo(w * 0.60, cY + 10 * scaleY, w * 0.58, cY + 20 * scaleY, w * 0.57, cY + 26 * scaleY);
+      offCtx.stroke();
+
+      offCtx.lineWidth = 1.5 * scaleY;
+      offCtx.strokeStyle = "rgba(255, 255, 255, 0.4)";
+      offCtx.beginPath();
+      offCtx.moveTo(w * 0.85, cY - 75 * scaleY);
+      offCtx.bezierCurveTo(w * 0.75, cY - 55 * scaleY, w * 0.70, cY - 15 * scaleY, w * 0.66, cY + 45 * scaleY);
+      offCtx.stroke();
+      offCtx.restore();
+    };
+
+    const resize = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = footer.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.scale(dpr, dpr);
+
+      cols = Math.floor(width / gridSpacing);
+      rows = Math.floor(height / gridSpacing);
+
+      const offCanvas = document.createElement("canvas");
+      offCanvas.width = width;
+      offCanvas.height = height;
+      const offCtx = offCanvas.getContext("2d");
+
+      drawAdamHandsMask(offCtx, width, height);
+
+      let imgData;
+      try {
+        imgData = offCtx.getImageData(0, 0, width, height).data;
+      } catch (e) {
+        imgData = null;
+      }
+
+      gridNodes = [];
+      const offsetX = (width - cols * gridSpacing) / 2;
+      const offsetY = (height - rows * gridSpacing) / 2;
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const originX = offsetX + c * gridSpacing + gridSpacing / 2;
+          const originY = offsetY + r * gridSpacing + gridSpacing / 2;
+
+          let intensity = 0;
+          if (imgData) {
+            const pixelX = Math.floor(originX);
+            const pixelY = Math.floor(originY);
+            if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height) {
+              const idx = (pixelY * width + pixelX) * 4;
+              const alpha = imgData[idx + 3] / 255;
+              const brightness = (imgData[idx] + imgData[idx + 1] + imgData[idx + 2]) / (3 * 255);
+              intensity = alpha * brightness;
+            }
+          }
+
+          if (intensity > 0.04) {
+            let pool = lowDensityChars;
+            if (intensity > 0.58) {
+              pool = highDensityChars;
+            } else if (intensity > 0.25) {
+              pool = midDensityChars;
+            }
+
+            const initialChar = pool[Math.floor(Math.random() * pool.length)];
+
+            gridNodes.push({
+              originX,
+              originY,
+              x: originX,
+              y: originY,
+              char: initialChar,
+              pool,
+              baseIntensity: intensity,
+              activeIntensity: 0,
+              typeTick: Math.floor(Math.random() * 60),
+              ambientInterval: 50 + Math.floor(Math.random() * 90)
+            });
+          }
+        }
+      }
+    };
+
+    window.addEventListener("resize", resize);
+    resize();
+
+    footer.addEventListener("mousemove", (e) => {
+      const rect = footer.getBoundingClientRect();
+      mouse.targetX = e.clientX - rect.left;
+      mouse.targetY = e.clientY - rect.top;
+      mouse.isHovered = true;
+    });
+
+    footer.addEventListener("mouseenter", () => {
+      mouse.isHovered = true;
+    });
+
+    footer.addEventListener("mouseleave", () => {
+      mouse.targetX = -1000;
+      mouse.targetY = -1000;
+      mouse.isHovered = false;
+    });
+
+    footer.addEventListener("touchmove", (e) => {
+      if (e.touches.length > 0) {
+        const rect = footer.getBoundingClientRect();
+        mouse.targetX = e.touches[0].clientX - rect.left;
+        mouse.targetY = e.touches[0].clientY - rect.top;
+        mouse.isHovered = true;
+      }
+    }, { passive: true });
+
+    footer.addEventListener("touchend", () => {
+      mouse.targetX = -1000;
+      mouse.targetY = -1000;
+      mouse.isHovered = false;
+    });
+
+    let animFrameId;
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      mouse.x += (mouse.targetX - mouse.x) * 0.12;
+      mouse.y += (mouse.targetY - mouse.y) * 0.12;
+
+      ctx.font = '11px "Space Mono", monospace';
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const isDarkMode = document.documentElement.getAttribute("data-theme") === "dark";
+
+      for (let i = 0; i < gridNodes.length; i++) {
+        const node = gridNodes[i];
+
+        const dx = node.originX - mouse.x;
+        const dy = node.originY - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        let targetActive = 0;
+        if (mouse.isHovered && dist < mouse.radius) {
+          targetActive = Math.pow(1 - dist / mouse.radius, 1.5);
+          
+          const pushAngle = Math.atan2(dy, dx);
+          const pushForce = targetActive * 3.5;
+          node.x += (node.originX + Math.cos(pushAngle) * pushForce - node.x) * 0.1;
+          node.y += (node.originY + Math.sin(pushAngle) * pushForce - node.y) * 0.1;
+        } else {
+          node.x += (node.originX - node.x) * 0.08;
+          node.y += (node.originY - node.y) * 0.08;
+        }
+
+        node.activeIntensity += (targetActive - node.activeIntensity) * 0.14;
+
+        node.typeTick++;
+        if (node.activeIntensity > 0.1) {
+          if (node.typeTick % 6 === 0) {
+            node.char = node.pool[Math.floor(Math.random() * node.pool.length)];
+          }
+        } else if (node.typeTick % node.ambientInterval === 0) {
+          node.char = node.pool[Math.floor(Math.random() * node.pool.length)];
+        }
+
+        const baseAlpha = 0.22 + node.baseIntensity * 0.28;
+        const activeAlpha = Math.min(1.0, baseAlpha + node.activeIntensity * 0.65);
+
+        if (isDarkMode) {
+          const r = Math.round(150 + node.activeIntensity * 105);
+          const g = Math.round(150 + node.activeIntensity * 105);
+          const b = Math.round(150 + node.activeIntensity * 105);
+          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${activeAlpha})`;
+        } else {
+          const greyVal = Math.round(175 - node.activeIntensity * 160);
+          ctx.fillStyle = `rgba(${greyVal}, ${greyVal}, ${greyVal}, ${activeAlpha})`;
+        }
+
+        ctx.fillText(node.char, node.x, node.y);
+      }
+
+      animFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+  };
+
+  initFooterAdamAscii();
+
   initPageTransitions();
 
 });

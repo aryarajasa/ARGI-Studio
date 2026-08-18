@@ -947,16 +947,20 @@
 
     </main>
 
-    <!-- CLEAN MULTI-COLUMN FOOTER (CREATIVE STUDIO SITEMAP & BALI REAL-TIME CLOCK) -->
+    <!-- EDITORIAL CREATIVE FOOTER (CREATION OF ADAM ASCII, TOP SPLIT GRID & GIANT LOGO) -->
     <footer class="site-footer" id="siteFooter">
-      <div class="container-medium">
-        <div class="footer-columns-grid">
+      <!-- Interactive ASCII Creation of Adam Canvas Background -->
+      <canvas id="footerAsciiCanvas" class="footer-ascii-canvas"></canvas>
+
+      <div class="container-medium footer-inner-wrap">
+        
+        <!-- 1. TOP SPLIT GRID -->
+        <div class="footer-top-grid">
           
-          <!-- Left Info Column with Logo -->
-          <div class="footer-info-col">
-            <img src="assets/logo.png" alt="ARGI Studio Logo" class="footer-brand-logo" />
-            <h4 class="footer-brand-title">Crafting Identities That Last</h4>
-            <p class="footer-brand-desc">Directing progressive visual languages, bespoke identities, and resonant digital artifacts from Bali, Indonesia.</p>
+          <!-- Left Hero Block: Headline, Subheadline & Socials -->
+          <div class="footer-hero-block">
+            <h3 class="footer-headline">Crafting Identities<br><em class="serif-accent">That Last</em></h3>
+            <p class="footer-subheadline">Directing progressive visual languages, bespoke identities, and resonant digital artifacts from Bali, Indonesia.</p>
             
             <!-- Social Icons -->
             <div class="footer-social-icons">
@@ -985,39 +989,51 @@
             </div>
           </div>
 
-          <!-- Col 2: Selected Archive (Connected to Portfolio Database) -->
-          <div class="footer-links-col">
-            <h5 class="footer-col-title">Selected Archive</h5>
-            <ul class="footer-links-list" id="footerArchiveList">
-              <li><a href="project.html?id=01" class="footer-menu-link">Vivien's Haute Couture</a></li>
-              <li><a href="project.html?id=02" class="footer-menu-link">Aura Fragrance Studio</a></li>
-              <li><a href="project.html?id=03" class="footer-menu-link">Twyg Regenerative Botanic</a></li>
-              <li><a href="project.html?id=04" class="footer-menu-link">Monolith Architecture Studio</a></li>
-              <li><a href="project.html?id=05" class="footer-menu-link">Komorebi Cinema Festival</a></li>
-              <li><a href="project.html?id=06" class="footer-menu-link">Braids Magazine &amp; Typography</a></li>
-            </ul>
-          </div>
+          <!-- Right Links Group: Navigation & Selected Work -->
+          <div class="footer-links-group">
+            
+            <!-- Navigation Column -->
+            <div class="footer-nav-col">
+              <h5 class="footer-col-title">Navigation</h5>
+              <ul class="footer-links-list">
+                <li><a href="#mission" class="footer-menu-link">About Studio</a></li>
+                <li><a href="#projects" class="footer-menu-link">Selected Work</a></li>
+                <li><a href="#process" class="footer-menu-link">Methodology</a></li>
+                <li><a href="#services" class="footer-menu-link">Studio Services</a></li>
+                <li><a href="#journal" class="footer-menu-link">Studio Journal</a></li>
+                <li><a href="#contact" class="footer-menu-link">Commission Form</a></li>
+              </ul>
+            </div>
 
-          <!-- Col 3: Navigation (Moved to the Right) -->
-          <div class="footer-links-col">
-            <h5 class="footer-col-title">Navigation</h5>
-            <ul class="footer-links-list">
-              <li><a href="#mission" class="footer-menu-link">About Studio</a></li>
-              <li><a href="#projects" class="footer-menu-link">Selected Work</a></li>
-              <li><a href="#process" class="footer-menu-link">Methodology</a></li>
-              <li><a href="#services" class="footer-menu-link">Studio Services</a></li>
-              <li><a href="#journal" class="footer-menu-link">Studio Journal</a></li>
-              <li><a href="#contact" class="footer-menu-link">Commission Form</a></li>
-            </ul>
+            <!-- Selected Work / Archive Column (Connected to Portfolio Database) -->
+            <div class="footer-nav-col">
+              <h5 class="footer-col-title">Selected Work</h5>
+              <ul class="footer-links-list" id="footerArchiveList">
+                <li><a href="project.html?id=01" class="footer-menu-link">Vivien's Haute Couture</a></li>
+                <li><a href="project.html?id=02" class="footer-menu-link">Aura Fragrance Studio</a></li>
+                <li><a href="project.html?id=03" class="footer-menu-link">Twyg Regenerative Botanic</a></li>
+                <li><a href="project.html?id=04" class="footer-menu-link">Monolith Architecture Studio</a></li>
+                <li><a href="project.html?id=05" class="footer-menu-link">Komorebi Cinema Festival</a></li>
+                <li><a href="project.html?id=06" class="footer-menu-link">Braids Magazine &amp; Typography</a></li>
+              </ul>
+            </div>
+
           </div>
 
         </div>
 
-        <!-- Bottom Sub-Row: Real Time in Bali, Indonesia -->
+        <!-- 2. GIANT SVG WORDMARK ACROSS MAX WIDTH -->
+        <div class="footer-giant-logo-wrap" aria-hidden="true">
+          <svg class="footer-giant-wordmark" viewBox="0 0 1000 240" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <text x="50%" y="68%" text-anchor="middle" dominant-baseline="central" font-family="'Instrument Serif', serif" font-weight="700" font-size="280" letter-spacing="-0.03em">argi.</text>
+          </svg>
+        </div>
+
+        <!-- 3. BOTTOM BAR: COPYRIGHT & LOCATION/LIVE TIME -->
         <div class="footer-bottom-bar">
           <div class="footer-legals">
             <span class="copyright-text">© 2026 ARGI Studio. All rights reserved.</span>
-            <span class="version-tag" style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted); padding: 0.15rem 0.45rem; border: 1px solid var(--border-light); border-radius: 3px;">v1.3</span>
+            <span class="version-tag" style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted); padding: 0.15rem 0.45rem; border: 1px solid var(--border-light); border-radius: 3px;">v1.4</span>
           </div>
 
           <!-- Real-Time Bali Location & Clock -->
@@ -1026,7 +1042,7 @@
               <span class="location-pulse-dot"></span>
               <span class="location-city">Bali, Indonesia</span>
               <span class="utility-dot">•</span>
-              <span class="location-clock" id="baliLiveTime">21:35:00 WITA (UTC+8)</span>
+              <span class="location-clock" id="baliLiveTime">00:00:00 WITA (UTC+8)</span>
             </div>
           </div>
         </div>

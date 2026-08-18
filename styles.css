@@ -2479,83 +2479,118 @@ body.site-ready .page-wrapper {
 }
 
 /* ==========================================================================
-   CLEAN MULTI-COLUMN FOOTER (CREATIVE STUDIO SITEMAP & BALI REAL-TIME CLOCK)
+   EDITORIAL CREATIVE FOOTER (CREATION OF ADAM ASCII, TOP SPLIT GRID & GIANT LOGO)
    ========================================================================== */
 .site-footer {
-  background: #ffffff;
+  position: relative;
+  background: var(--bg-body, #ffffff);
   color: var(--text-primary);
   border-top: 1px solid var(--border-light);
-  padding-top: 5rem;
-  padding-bottom: 4rem;
+  padding-top: 5.5rem;
+  padding-bottom: 2.5rem;
+  overflow: hidden;
 }
 
-.footer-columns-grid,
-.footer-main-grid {
-  display: grid;
-  grid-template-columns: 1.8fr 1.2fr 1fr;
-  gap: 4rem;
-  margin-bottom: 4.5rem;
+/* Creation of Adam Interactive ASCII Canvas Background */
+.footer-ascii-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.9;
 }
 
-.footer-info-col,
-.footer-brand-col {
+.footer-inner-wrap {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
+  gap: 3.5rem;
 }
 
-.footer-brand-logo {
-  height: 38px;
-  width: auto;
-  display: block;
-  object-fit: contain;
-  margin-bottom: 1.25rem;
+/* 1. Top Split Grid: Left Headline/Socials & Right Navigation/Selected Work */
+.footer-top-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1.65fr;
+  gap: 4.5rem;
+  align-items: start;
 }
 
-.footer-brand-title {
-  font-size: 1.15rem;
-  font-weight: 600;
+.footer-hero-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.footer-headline {
+  font-size: clamp(2.25rem, 4.2vw, 3.25rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  font-weight: 500;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  margin: 0;
 }
 
-.footer-brand-desc {
+.footer-subheadline {
   font-size: 0.9375rem;
+  line-height: 1.6;
   color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
+  max-width: 440px;
+  margin: 0;
 }
 
 .footer-social-icons {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  margin-top: 0.5rem;
 }
 
 .social-circle-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background: var(--bg-body);
   border: 1px solid var(--border-light);
   color: var(--text-secondary);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: all var(--transition-fast);
 }
 
 .social-circle-btn:hover {
   background: var(--text-primary);
-  color: #ffffff;
+  color: var(--bg-body, #ffffff);
   transform: translateY(-2px);
   border-color: var(--text-primary);
 }
 
+/* Right Column: Navigation & Selected Work */
+.footer-links-group {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 3rem;
+}
+
+.footer-nav-col {
+  display: flex;
+  flex-direction: column;
+}
+
 .footer-col-title {
-  font-size: 0.9375rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 1.35rem;
 }
 
 .footer-links-list {
@@ -2563,6 +2598,8 @@ body.site-ready .page-wrapper {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  padding: 0;
+  margin: 0;
 }
 
 .footer-menu-link {
@@ -2570,78 +2607,95 @@ body.site-ready .page-wrapper {
   color: var(--text-secondary);
   transition: color var(--transition-fast), transform var(--transition-fast);
   display: inline-block;
+  line-height: 1.4;
 }
 
 .footer-menu-link:hover {
   color: var(--text-primary);
-  transform: translateX(2px);
+  transform: translateX(3px);
 }
 
-/* Footer Bottom Bar with Real-Time Bali Location Badge */
+/* 2. Giant SVG Wordmark / Logo Across Max Width */
+.footer-giant-logo-wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light-subtle, rgba(0, 0, 0, 0.06));
+}
+
+.footer-giant-wordmark {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 240px;
+  color: var(--text-primary);
+  opacity: 0.95;
+  display: block;
+}
+
+/* 3. Bottom Sub-Bar: Copyright & Location/Time */
 .footer-bottom-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border-light-subtle);
-  font-size: 0.8125rem;
-  color: var(--text-muted);
+  padding-top: 1.25rem;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .footer-legals {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
-.legal-link {
-  color: var(--text-secondary);
-}
-
-.legal-link:hover {
-  color: var(--text-primary);
+.copyright-text {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
 }
 
 .footer-utilities {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
 }
 
 .footer-location-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.6rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
   background: var(--bg-body);
   border: 1px solid var(--border-light);
-  padding: 0.45rem 1rem;
-  border-radius: var(--radius-full);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.location-pulse-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-green);
-  box-shadow: 0 0 8px var(--accent-green);
-  animation: pulseDot 2s infinite ease-in-out;
-}
-
-.location-city {
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.location-clock {
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   color: var(--text-secondary);
-  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+.location-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulseEmerald 2s infinite;
+}
+
+@keyframes pulseEmerald {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.location-clock {
+  font-weight: 500;
+  color: var(--text-primary);
 }
 
 /* --- PORTFOLIO SEE MORE & MOBILE BACK-TO-TOP BUTTONS --- */
@@ -2976,15 +3030,14 @@ body.site-ready .page-wrapper {
   }
 
   /* Footer */
-  .footer-columns-grid,
-  .footer-main-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
   }
 
-  .footer-info-col,
-  .footer-brand-col {
-    grid-column: 1 / -1;
+  .footer-links-group {
+    grid-template-columns: 1fr 1.2fr;
+    gap: 2.5rem;
   }
 
   /* Modal */
@@ -3445,19 +3498,26 @@ body.site-ready .page-wrapper {
 
   /* Footer */
   .site-footer {
-    padding-top: 3.5rem;
-    padding-bottom: 2.5rem;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
   }
 
-  .footer-columns-grid,
-  .footer-main-grid {
+  .footer-inner-wrap {
+    gap: 2.5rem;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .footer-links-group {
     grid-template-columns: 1fr;
     gap: 2rem;
-    margin-bottom: 3rem;
   }
 
-  .footer-brand-logo {
-    height: 32px;
+  .footer-giant-wordmark {
+    max-height: 120px;
   }
 
   .footer-bottom-bar {

@@ -941,22 +941,32 @@ e.preventDefault();
     const drawImagesToOffscreen = (offCtx, w, h) => {
       offCtx.clearRect(0, 0, w, h);
 
-      // Responsive sizing: hands span ~48% of width or up to 580px width each
-      const leftW = Math.min(w * 0.48, 580);
+      // Responsive sizing: hands span ~48% of width or up to 600px width each
+      const leftW = Math.min(w * 0.48, 600);
       const leftH = leftW / (807 / 390);
+      const rightW = Math.min(w * 0.48, 600);
+      const rightH = rightW / (829 / 440);
+
+      // Calculate vertical alignment with the headline (.footer-giant-title-wrap)
+      const titleWrap = footer.querySelector(".footer-giant-title-wrap");
+      let titleMidY = h * 0.62;
+      if (titleWrap) {
+        const footerRect = footer.getBoundingClientRect();
+        const titleRect = titleWrap.getBoundingClientRect();
+        if (footerRect.height > 0 && titleRect.height > 0) {
+          titleMidY = (titleRect.top - footerRect.top) + titleRect.height * 0.5;
+        }
+      }
+
       const leftX = 0;
-      // Positioned lower, hovering right above the bottom headline
-      const leftY = Math.max(60, h * 0.22);
+      const leftY = Math.max(0, titleMidY - leftH * 0.55);
+
+      const rightX = w - rightW;
+      const rightY = Math.max(0, titleMidY - rightH * 0.45);
 
       if (leftHandImg.complete && leftHandImg.naturalWidth > 0) {
         offCtx.drawImage(leftHandImg, leftX, leftY, leftW, leftH);
       }
-
-      const rightW = Math.min(w * 0.48, 580);
-      const rightH = rightW / (829 / 440);
-      const rightX = w - rightW;
-      // Right hand positioned slightly below left to meet gracefully above the headline
-      const rightY = Math.max(85, h * 0.28);
 
       if (rightHandImg.complete && rightHandImg.naturalWidth > 0) {
         offCtx.drawImage(rightHandImg, rightX, rightY, rightW, rightH);
@@ -1131,17 +1141,17 @@ e.preventDefault();
           node.char = node.pool[Math.floor(Math.random() * node.pool.length)];
         }
 
-        // Compute color: High-contrast visibility matching Good Fella
+        // Compute color: Light grey default, var(--text-primary) on hover
         if (isDarkMode) {
-          // Dark Mode: crisp silver-slate default (alpha 0.50..0.85) -> pure ivory white on hover
-          const alpha = Math.min(1.0, 0.45 + node.baseIntensity * 0.45 + node.activeIntensity * 0.55);
-          const val = Math.round(190 + node.activeIntensity * 65);
-          ctx.fillStyle = `rgba(${val}, ${val}, ${val}, ${alpha})`;
+          // Dark Mode: Subtle light grey default -> var(--text-primary) ivory white on hover
+          const greyVal = Math.round(145 + node.activeIntensity * 110); // 145 -> 255 (white)
+          const alpha = Math.min(1.0, 0.40 + node.baseIntensity * 0.30 + node.activeIntensity * 0.45);
+          ctx.fillStyle = `rgba(${greyVal}, ${greyVal}, ${greyVal}, ${alpha})`;
         } else {
-          // Light Mode: dark charcoal default (alpha 0.48..0.85) -> deep obsidian black on hover
-          const alpha = Math.min(1.0, 0.48 + node.baseIntensity * 0.45 + node.activeIntensity * 0.55);
-          const val = Math.round(50 - node.activeIntensity * 45); // 50 -> 5
-          ctx.fillStyle = `rgba(${val}, ${val}, ${val}, ${alpha})`;
+          // Light Mode: Subtle light grey default -> var(--text-primary) deep obsidian black on hover
+          const greyVal = Math.round(175 - node.activeIntensity * 160); // 175 -> 15 (near black)
+          const alpha = Math.min(1.0, 0.42 + node.baseIntensity * 0.30 + node.activeIntensity * 0.45);
+          ctx.fillStyle = `rgba(${greyVal}, ${greyVal}, ${greyVal}, ${alpha})`;
         }
 
         ctx.fillText(node.char, node.x, node.y);

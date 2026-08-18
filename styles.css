@@ -2615,26 +2615,32 @@ body.site-ready .page-wrapper {
   transform: translateX(3px);
 }
 
-/* 2. Giant SVG Wordmark / Logo Across Max Width */
+/* 2. Giant Brand Logo Across Max Width (Matching Reference) */
 .footer-giant-logo-wrap {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   user-select: none;
-  padding-top: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-light-subtle, rgba(0, 0, 0, 0.06));
+  padding: 1.75rem 0 1rem 0;
+  border-top: 1px solid var(--border-light-subtle, rgba(0, 0, 0, 0.08));
+  border-bottom: 1px solid var(--border-light-subtle, rgba(0, 0, 0, 0.08));
+  margin: 0.5rem 0;
 }
 
-.footer-giant-wordmark {
+.footer-giant-logo-img {
   width: 100%;
   max-width: 100%;
-  height: auto;
-  max-height: 240px;
-  color: var(--text-primary);
-  opacity: 0.95;
+  height: clamp(140px, 22vw, 290px);
+  object-fit: contain;
+  object-position: center;
   display: block;
+  filter: none;
+  transition: filter var(--transition-fast), transform var(--transition-medium);
+}
+
+[data-theme="dark"] .footer-giant-logo-img {
+  filter: invert(1) brightness(2);
 }
 
 /* 3. Bottom Sub-Bar: Copyright & Location/Time */

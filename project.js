@@ -1061,10 +1061,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const ctx = canvas.getContext("2d");
     let width, height, dpr;
     let cols, rows;
-    const gridSpacing = 13;
+    
+    // Tighter grid spacing for high-resolution ASCII fidelity
+    const gridSpacing = 8;
 
     const highDensityChars = ["@", "#", "%", "W", "M", "8", "&", "$", "B"];
-    const midDensityChars = ["a", "r", "g", "i", "s", "t", "u", "d", "o", "+", "*", "=", "x"];
+    const midDensityChars = ["a", "r", "g", "i", "s", "t", "u", "d", "o", "+", "*", "=", "x", "z"];
     const lowDensityChars = ["·", ":", ".", "'", "-", "~", "^", "`", ",", ";"];
 
     let gridNodes = [];
@@ -1074,97 +1076,155 @@ document.addEventListener("DOMContentLoaded", async () => {
       y: -1000,
       targetX: -1000,
       targetY: -1000,
-      radius: 150,
+      radius: 160,
       isHovered: false
     };
 
+    // Master Vector Routine: Authentic Michelangelo "Creation of Adam" Hands
     const drawAdamHandsMask = (offCtx, w, h) => {
       offCtx.clearRect(0, 0, w, h);
       
-      const cY = h * 0.52;
-      const scaleX = Math.min(1.2, Math.max(0.65, w / 1200));
-      const scaleY = Math.min(1.2, Math.max(0.65, h / 450));
-
-      const adamGrad = offCtx.createLinearGradient(0, cY, w * 0.47, cY);
-      adamGrad.addColorStop(0, "rgba(255, 255, 255, 0.4)");
-      adamGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.85)");
-      adamGrad.addColorStop(1, "rgba(255, 255, 255, 1.0)");
-
-      const godGrad = offCtx.createLinearGradient(w, cY, w * 0.53, cY);
-      godGrad.addColorStop(0, "rgba(255, 255, 255, 0.35)");
-      godGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.85)");
-      godGrad.addColorStop(1, "rgba(255, 255, 255, 1.0)");
+      const cY = h * 0.46;
+      const scale = Math.min(1.25, Math.max(0.65, w / 1200));
 
       offCtx.lineCap = "round";
       offCtx.lineJoin = "round";
 
-      // 1. ADAM'S HAND (LEFT SIDE)
+      // -------------------------------------------------------------
+      // 1. ADAM (LEFT HAND & FOREARM) - Languid, Longing Outstretched Reach
+      // -------------------------------------------------------------
       offCtx.save();
+      
+      // Adam Muscle Gradient
+      const adamGrad = offCtx.createLinearGradient(0, cY, w * 0.46, cY);
+      adamGrad.addColorStop(0, "rgba(255, 255, 255, 0.4)");
+      adamGrad.addColorStop(0.45, "rgba(255, 255, 255, 0.85)");
+      adamGrad.addColorStop(1, "rgba(255, 255, 255, 1.0)");
       offCtx.fillStyle = adamGrad;
-      offCtx.strokeStyle = "rgba(255, 255, 255, 0.9)";
+      offCtx.strokeStyle = "rgba(255, 255, 255, 0.95)";
 
+      // Full Anatomical Silhouette of Adam's Arm & Hand
       offCtx.beginPath();
-      offCtx.moveTo(0, cY + 30 * scaleY);
-      offCtx.bezierCurveTo(w * 0.12, cY + 20 * scaleY, w * 0.22, cY - 15 * scaleY, w * 0.30, cY - 25 * scaleY);
-      offCtx.bezierCurveTo(w * 0.31, cY - 45 * scaleY, w * 0.34, cY - 50 * scaleY, w * 0.35, cY - 35 * scaleY);
-      offCtx.bezierCurveTo(w * 0.36, cY - 30 * scaleY, w * 0.38, cY - 28 * scaleY, w * 0.40, cY - 22 * scaleY);
-      offCtx.bezierCurveTo(w * 0.43, cY - 16 * scaleY, w * 0.455, cY - 8 * scaleY, w * 0.468, cY - 4 * scaleY);
-      offCtx.arc(w * 0.468, cY - 1 * scaleY, 4 * scaleY, -Math.PI / 2, Math.PI / 2);
-      offCtx.bezierCurveTo(w * 0.445, cY + 5 * scaleY, w * 0.415, cY + 2 * scaleY, w * 0.385, cY + 8 * scaleY);
-      offCtx.bezierCurveTo(w * 0.395, cY + 26 * scaleY, w * 0.38, cY + 45 * scaleY, w * 0.34, cY + 40 * scaleY);
-      offCtx.bezierCurveTo(w * 0.32, cY + 46 * scaleY, w * 0.28, cY + 48 * scaleY, w * 0.25, cY + 40 * scaleY);
-      offCtx.bezierCurveTo(w * 0.18, cY + 65 * scaleY, w * 0.08, cY + 85 * scaleY, 0, cY + 95 * scaleY);
+      // Forearm top entry
+      offCtx.moveTo(0, cY + 35 * scale);
+      offCtx.bezierCurveTo(w * 0.08, cY + 28 * scale, w * 0.15, cY + 8 * scale, w * 0.22, cY - 10 * scale);
+      // Wrist flexure into thumb
+      offCtx.bezierCurveTo(w * 0.25, cY - 18 * scale, w * 0.27, cY - 22 * scale, w * 0.29, cY - 18 * scale);
+      // Relaxed Thumb extending upward
+      offCtx.bezierCurveTo(w * 0.30, cY - 38 * scale, w * 0.32, cY - 52 * scale, w * 0.34, cY - 45 * scale);
+      offCtx.bezierCurveTo(w * 0.35, cY - 32 * scale, w * 0.34, cY - 20 * scale, w * 0.36, cY - 18 * scale);
+      // Metacarpal bridge & Index knuckle
+      offCtx.bezierCurveTo(w * 0.37, cY - 22 * scale, w * 0.39, cY - 20 * scale, w * 0.40, cY - 15 * scale);
+      // Outstretched Index Finger (Graceful downward droop at distal joint)
+      offCtx.bezierCurveTo(w * 0.425, cY - 10 * scale, w * 0.442, cY - 4 * scale, w * 0.455, cY + 2 * scale);
+      // Index fingertip rounded arc
+      offCtx.arc(w * 0.455, cY + 5 * scale, 3.5 * scale, -Math.PI / 2, Math.PI / 2);
+      // Index bottom contour returning
+      offCtx.bezierCurveTo(w * 0.44, cY + 11 * scale, w * 0.415, cY + 4 * scale, w * 0.39, cY + 3 * scale);
+      // Middle finger curled under
+      offCtx.bezierCurveTo(w * 0.395, cY + 18 * scale, w * 0.38, cY + 32 * scale, w * 0.35, cY + 30 * scale);
+      // Ring finger curled
+      offCtx.bezierCurveTo(w * 0.34, cY + 38 * scale, w * 0.32, cY + 44 * scale, w * 0.29, cY + 40 * scale);
+      // Pinky finger curled
+      offCtx.bezierCurveTo(w * 0.28, cY + 46 * scale, w * 0.26, cY + 48 * scale, w * 0.24, cY + 42 * scale);
+      // Forearm underside sweeping back to left edge
+      offCtx.bezierCurveTo(w * 0.18, cY + 68 * scale, w * 0.08, cY + 95 * scale, 0, cY + 110 * scale);
       offCtx.closePath();
       offCtx.fill();
 
-      offCtx.lineWidth = 2.5 * scaleY;
+      // Tendon & anatomical muscular accent strokes
+      offCtx.lineWidth = 2 * scale;
       offCtx.beginPath();
-      offCtx.moveTo(w * 0.24, cY + 8 * scaleY);
-      offCtx.bezierCurveTo(w * 0.32, cY - 10 * scaleY, w * 0.38, cY - 15 * scaleY, w * 0.45, cY - 4 * scaleY);
+      // Brachioradialis tendon to wrist
+      offCtx.moveTo(w * 0.12, cY + 35 * scale);
+      offCtx.bezierCurveTo(w * 0.20, cY + 10 * scale, w * 0.28, cY - 5 * scale, w * 0.38, cY - 14 * scale);
+      offCtx.stroke();
+
+      // Extensor tendon to index finger
+      offCtx.beginPath();
+      offCtx.moveTo(w * 0.34, cY - 14 * scale);
+      offCtx.bezierCurveTo(w * 0.38, cY - 15 * scale, w * 0.41, cY - 8 * scale, w * 0.445, cY + 1 * scale);
+      offCtx.stroke();
+
+      // Knuckle shadow crease & finger segments
+      offCtx.beginPath();
+      offCtx.moveTo(w * 0.36, cY - 5 * scale);
+      offCtx.bezierCurveTo(w * 0.38, cY + 10 * scale, w * 0.37, cY + 22 * scale, w * 0.34, cY + 25 * scale);
       offCtx.stroke();
 
       offCtx.beginPath();
-      offCtx.moveTo(w * 0.33, cY + 8 * scaleY);
-      offCtx.bezierCurveTo(w * 0.37, cY + 18 * scaleY, w * 0.37, cY + 32 * scaleY, w * 0.34, cY + 36 * scaleY);
+      offCtx.moveTo(w * 0.32, cY + 12 * scale);
+      offCtx.bezierCurveTo(w * 0.33, cY + 24 * scale, w * 0.31, cY + 34 * scale, w * 0.28, cY + 36 * scale);
       offCtx.stroke();
       offCtx.restore();
 
-      // 2. GOD'S HAND (RIGHT SIDE)
+      // -------------------------------------------------------------
+      // 2. GOD / THE CREATOR (RIGHT HAND & CELESTIAL CLOAK) - Authoritative Power
+      // -------------------------------------------------------------
       offCtx.save();
+      
+      const godGrad = offCtx.createLinearGradient(w, cY, w * 0.50, cY);
+      godGrad.addColorStop(0, "rgba(255, 255, 255, 0.4)");
+      godGrad.addColorStop(0.45, "rgba(255, 255, 255, 0.88)");
+      godGrad.addColorStop(1, "rgba(255, 255, 255, 1.0)");
       offCtx.fillStyle = godGrad;
-      offCtx.strokeStyle = "rgba(255, 255, 255, 0.9)";
+      offCtx.strokeStyle = "rgba(255, 255, 255, 0.95)";
 
+      // Divine Mantle & Arm Silhouette
       offCtx.beginPath();
-      offCtx.moveTo(w, cY - 70 * scaleY);
-      offCtx.bezierCurveTo(w * 0.88, cY - 60 * scaleY, w * 0.78, cY - 45 * scaleY, w * 0.68, cY - 32 * scaleY);
-      offCtx.bezierCurveTo(w * 0.64, cY - 26 * scaleY, w * 0.60, cY - 20 * scaleY, w * 0.57, cY - 14 * scaleY);
-      offCtx.bezierCurveTo(w * 0.555, cY - 10 * scaleY, w * 0.542, cY - 6 * scaleY, w * 0.532, cY - 3 * scaleY);
-      offCtx.arc(w * 0.532, cY, 4.5 * scaleY, -Math.PI / 2, Math.PI / 2);
-      offCtx.bezierCurveTo(w * 0.548, cY + 5 * scaleY, w * 0.565, cY + 8 * scaleY, w * 0.585, cY + 6 * scaleY);
-      offCtx.bezierCurveTo(w * 0.57, cY + 18 * scaleY, w * 0.555, cY + 28 * scaleY, w * 0.575, cY + 30 * scaleY);
-      offCtx.bezierCurveTo(w * 0.595, cY + 28 * scaleY, w * 0.615, cY + 18 * scaleY, w * 0.625, cY + 14 * scaleY);
-      offCtx.bezierCurveTo(w * 0.645, cY + 25 * scaleY, w * 0.665, cY + 38 * scaleY, w * 0.695, cY + 28 * scaleY);
-      offCtx.bezierCurveTo(w * 0.705, cY + 38 * scaleY, w * 0.735, cY + 36 * scaleY, w * 0.745, cY + 25 * scaleY);
-      offCtx.bezierCurveTo(w * 0.82, cY + 50 * scaleY, w * 0.90, cY + 75 * scaleY, w, cY + 95 * scaleY);
+      // Outer drapery top
+      offCtx.moveTo(w, cY - 110 * scale);
+      offCtx.bezierCurveTo(w * 0.88, cY - 95 * scale, w * 0.78, cY - 70 * scale, w * 0.68, cY - 45 * scale);
+      // Forearm top & powerful arched wrist
+      offCtx.bezierCurveTo(w * 0.64, cY - 35 * scale, w * 0.60, cY - 26 * scale, w * 0.57, cY - 20 * scale);
+      // Outstretched commanding index finger (horizontal direct vector)
+      offCtx.bezierCurveTo(w * 0.545, cY - 14 * scale, w * 0.525, cY - 8 * scale, w * 0.508, cY - 2 * scale);
+      // Index fingertip rounded arc
+      offCtx.arc(w * 0.508, cY + 1 * scale, 3.5 * scale, -Math.PI / 2, Math.PI / 2);
+      // Index bottom edge returning to knuckle
+      offCtx.bezierCurveTo(w * 0.525, cY + 8 * scale, w * 0.548, cY + 6 * scale, w * 0.565, cY + 3 * scale);
+      // Extended thumb pointing down-left
+      offCtx.bezierCurveTo(w * 0.552, cY + 14 * scale, w * 0.538, cY + 24 * scale, w * 0.545, cY + 28 * scale);
+      offCtx.bezierCurveTo(w * 0.565, cY + 28 * scale, w * 0.582, cY + 18 * scale, w * 0.592, cY + 12 * scale);
+      // Folded middle, ring, pinky fingers in perspective
+      offCtx.bezierCurveTo(w * 0.615, cY + 22 * scale, w * 0.635, cY + 34 * scale, w * 0.665, cY + 26 * scale);
+      offCtx.bezierCurveTo(w * 0.678, cY + 35 * scale, w * 0.705, cY + 32 * scale, w * 0.715, cY + 22 * scale);
+      // Arm underside & billowing celestial cloak
+      offCtx.bezierCurveTo(w * 0.78, cY + 45 * scale, w * 0.88, cY + 80 * scale, w, cY + 115 * scale);
       offCtx.closePath();
       offCtx.fill();
 
-      offCtx.lineWidth = 2.5 * scaleY;
+      // God's muscular contour lines, tendons & energetic aura
+      offCtx.lineWidth = 2 * scale;
       offCtx.beginPath();
-      offCtx.moveTo(w * 0.74, cY - 15 * scaleY);
-      offCtx.bezierCurveTo(w * 0.67, cY - 8 * scaleY, w * 0.61, cY - 4 * scaleY, w * 0.545, cY - 2 * scaleY);
+      // Arm tendon line to index
+      offCtx.moveTo(w * 0.75, cY - 25 * scale);
+      offCtx.bezierCurveTo(w * 0.67, cY - 14 * scale, w * 0.59, cY - 10 * scale, w * 0.518, cY - 1 * scale);
+      offCtx.stroke();
+
+      // Thumb muscle ridge
+      offCtx.beginPath();
+      offCtx.moveTo(w * 0.61, cY - 2 * scale);
+      offCtx.bezierCurveTo(w * 0.58, cY + 8 * scale, w * 0.56, cY + 18 * scale, w * 0.55, cY + 24 * scale);
+      offCtx.stroke();
+
+      // Folded knuckles
+      offCtx.beginPath();
+      offCtx.moveTo(w * 0.60, cY + 6 * scale);
+      offCtx.bezierCurveTo(w * 0.63, cY + 16 * scale, w * 0.65, cY + 24 * scale, w * 0.64, cY + 30 * scale);
+      offCtx.stroke();
+
+      // Celestial vortex aura swirls
+      offCtx.lineWidth = 1.5 * scale;
+      offCtx.strokeStyle = "rgba(255, 255, 255, 0.45)";
+      offCtx.beginPath();
+      offCtx.moveTo(w * 0.90, cY - 90 * scale);
+      offCtx.bezierCurveTo(w * 0.78, cY - 65 * scale, w * 0.72, cY - 20 * scale, w * 0.68, cY + 45 * scale);
       offCtx.stroke();
 
       offCtx.beginPath();
-      offCtx.moveTo(w * 0.64, cY + 2 * scaleY);
-      offCtx.bezierCurveTo(w * 0.60, cY + 10 * scaleY, w * 0.58, cY + 20 * scaleY, w * 0.57, cY + 26 * scaleY);
-      offCtx.stroke();
-
-      offCtx.lineWidth = 1.5 * scaleY;
-      offCtx.strokeStyle = "rgba(255, 255, 255, 0.4)";
-      offCtx.beginPath();
-      offCtx.moveTo(w * 0.85, cY - 75 * scaleY);
-      offCtx.bezierCurveTo(w * 0.75, cY - 55 * scaleY, w * 0.70, cY - 15 * scaleY, w * 0.66, cY + 45 * scaleY);
+      offCtx.moveTo(w * 0.84, cY - 110 * scale);
+      offCtx.bezierCurveTo(w * 0.74, cY - 75 * scale, w * 0.68, cY - 30 * scale, w * 0.65, cY + 35 * scale);
       offCtx.stroke();
       offCtx.restore();
     };
@@ -1184,6 +1244,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       cols = Math.floor(width / gridSpacing);
       rows = Math.floor(height / gridSpacing);
 
+      // Create offscreen mask
       const offCanvas = document.createElement("canvas");
       offCanvas.width = width;
       offCanvas.height = height;
@@ -1219,11 +1280,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
           }
 
-          if (intensity > 0.04) {
+          if (intensity > 0.035) {
             let pool = lowDensityChars;
-            if (intensity > 0.58) {
+            if (intensity > 0.52) {
               pool = highDensityChars;
-            } else if (intensity > 0.25) {
+            } else if (intensity > 0.22) {
               pool = midDensityChars;
             }
 
@@ -1239,7 +1300,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               baseIntensity: intensity,
               activeIntensity: 0,
               typeTick: Math.floor(Math.random() * 60),
-              ambientInterval: 50 + Math.floor(Math.random() * 90)
+              ambientInterval: 45 + Math.floor(Math.random() * 80)
             });
           }
         }
@@ -1249,6 +1310,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.addEventListener("resize", resize);
     resize();
 
+    // Mouse tracking on footer
     footer.addEventListener("mousemove", (e) => {
       const rect = footer.getBoundingClientRect();
       mouse.targetX = e.clientX - rect.left;
@@ -1266,6 +1328,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       mouse.isHovered = false;
     });
 
+    // Touch support for tablets/mobile
     footer.addEventListener("touchmove", (e) => {
       if (e.touches.length > 0) {
         const rect = footer.getBoundingClientRect();
@@ -1285,10 +1348,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
+      // Smooth mouse lerp
       mouse.x += (mouse.targetX - mouse.x) * 0.12;
       mouse.y += (mouse.targetY - mouse.y) * 0.12;
 
-      ctx.font = '11px "Space Mono", monospace';
+      ctx.font = '8.5px "Space Mono", "Courier New", monospace';
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
@@ -1297,44 +1361,51 @@ document.addEventListener("DOMContentLoaded", async () => {
       for (let i = 0; i < gridNodes.length; i++) {
         const node = gridNodes[i];
 
+        // Calculate distance from mouse
         const dx = node.originX - mouse.x;
         const dy = node.originY - mouse.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         let targetActive = 0;
         if (mouse.isHovered && dist < mouse.radius) {
-          targetActive = Math.pow(1 - dist / mouse.radius, 1.5);
+          targetActive = Math.pow(1 - dist / mouse.radius, 1.4);
           
+          // Magnetic slight drift on hover
           const pushAngle = Math.atan2(dy, dx);
           const pushForce = targetActive * 3.5;
-          node.x += (node.originX + Math.cos(pushAngle) * pushForce - node.x) * 0.1;
-          node.y += (node.originY + Math.sin(pushAngle) * pushForce - node.y) * 0.1;
+          node.x += (node.originX + Math.cos(pushAngle) * pushForce - node.x) * 0.12;
+          node.y += (node.originY + Math.sin(pushAngle) * pushForce - node.y) * 0.12;
         } else {
           node.x += (node.originX - node.x) * 0.08;
           node.y += (node.originY - node.y) * 0.08;
         }
 
-        node.activeIntensity += (targetActive - node.activeIntensity) * 0.14;
+        // Smooth transition to active hover state
+        node.activeIntensity += (targetActive - node.activeIntensity) * 0.15;
 
+        // Scramble characters on hover or slow ambient cycle
         node.typeTick++;
         if (node.activeIntensity > 0.1) {
-          if (node.typeTick % 6 === 0) {
+          if (node.typeTick % 5 === 0) {
             node.char = node.pool[Math.floor(Math.random() * node.pool.length)];
           }
         } else if (node.typeTick % node.ambientInterval === 0) {
           node.char = node.pool[Math.floor(Math.random() * node.pool.length)];
         }
 
-        const baseAlpha = 0.22 + node.baseIntensity * 0.28;
+        // Compute color: Light grey default, var(--text-primary) on hover
+        const baseAlpha = 0.28 + node.baseIntensity * 0.35;
         const activeAlpha = Math.min(1.0, baseAlpha + node.activeIntensity * 0.65);
 
         if (isDarkMode) {
+          // Dark Mode: Muted slate-grey -> Bright Ivory White
           const r = Math.round(150 + node.activeIntensity * 105);
           const g = Math.round(150 + node.activeIntensity * 105);
           const b = Math.round(150 + node.activeIntensity * 105);
           ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${activeAlpha})`;
         } else {
-          const greyVal = Math.round(175 - node.activeIntensity * 160);
+          // Light Mode: Subtle light grey -> Deep obsidian black
+          const greyVal = Math.round(175 - node.activeIntensity * 160); // 175 -> 15 (near black)
           ctx.fillStyle = `rgba(${greyVal}, ${greyVal}, ${greyVal}, ${activeAlpha})`;
         }
 

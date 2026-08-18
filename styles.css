@@ -2511,7 +2511,7 @@ body.site-ready .page-wrapper {
   gap: 3.5rem;
 }
 
-/* 1. Top Split Grid: Left Headline/Socials & Right Navigation/Selected Work */
+/* 1. Top Split Grid: Left SVG Logo/Bio/Socials & Right Navigation/Selected Work */
 .footer-top-grid {
   display: grid;
   grid-template-columns: 1.35fr 1.65fr;
@@ -2522,16 +2522,25 @@ body.site-ready .page-wrapper {
 .footer-hero-block {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.15rem;
 }
 
-.footer-headline {
-  font-size: clamp(2.25rem, 4.2vw, 3.25rem);
-  line-height: 1.06;
-  letter-spacing: -0.035em;
-  font-weight: 500;
-  color: var(--text-primary);
-  margin: 0;
+.footer-brand-logo-wrap {
+  margin-bottom: 0.25rem;
+}
+
+.footer-brand-logo-img {
+  height: 38px;
+  width: auto;
+  max-width: 170px;
+  object-fit: contain;
+  display: block;
+  filter: none;
+  transition: filter var(--transition-fast), opacity var(--transition-fast);
+}
+
+[data-theme="dark"] .footer-brand-logo-img {
+  filter: invert(1) brightness(2);
 }
 
 .footer-subheadline {
@@ -2546,7 +2555,7 @@ body.site-ready .page-wrapper {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-top: 0.5rem;
+  margin-top: 0.35rem;
 }
 
 .social-circle-btn {
@@ -2615,32 +2624,35 @@ body.site-ready .page-wrapper {
   transform: translateX(3px);
 }
 
-/* 2. Giant Brand Logo Across Max Width (Matching Reference) */
-.footer-giant-logo-wrap {
+/* 2. Giant Editorial Headline Across Max Width (Instrument Serif Font) */
+.footer-giant-title-wrap {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   user-select: none;
-  padding: 1.75rem 0 1rem 0;
+  padding: 2.5rem 0 1.75rem 0;
   border-top: 1px solid var(--border-light-subtle, rgba(0, 0, 0, 0.08));
   border-bottom: 1px solid var(--border-light-subtle, rgba(0, 0, 0, 0.08));
   margin: 0.5rem 0;
+  overflow: hidden;
 }
 
-.footer-giant-logo-img {
+.footer-giant-title {
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(2.75rem, 7.2vw, 7.25rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin: 0;
   width: 100%;
-  max-width: 100%;
-  height: clamp(140px, 22vw, 290px);
-  object-fit: contain;
-  object-position: center;
-  display: block;
-  filter: none;
-  transition: filter var(--transition-fast), transform var(--transition-medium);
+  text-align: left;
 }
 
-[data-theme="dark"] .footer-giant-logo-img {
-  filter: invert(1) brightness(2);
+.footer-giant-title em {
+  font-style: italic;
+  font-family: inherit;
 }
 
 /* 3. Bottom Sub-Bar: Copyright & Location/Time */

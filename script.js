@@ -1223,7 +1223,7 @@ ${clientName}`
 
   // =========================================================================
   // =========================================================================
-  // CREATION OF ADAM INTERACTIVE ASCII CANVAS ENGINE (FOOTER)
+  // GOOD FELLA CREATION OF ADAM INTERACTIVE ASCII CANVAS ENGINE (FOOTER)
   // =========================================================================
   const initFooterAdamAscii = () => {
     const canvas = document.getElementById("footerAsciiCanvas");
@@ -1234,11 +1234,11 @@ ${clientName}`
     let width, height, dpr;
     let cols, rows;
     
-    // Tighter grid spacing for high-resolution ASCII fidelity
-    const gridSpacing = 8;
+    // Exact tight grid spacing matching Good Fella
+    const gridSpacing = 8.5;
 
     const highDensityChars = ["@", "#", "%", "W", "M", "8", "&", "$", "B"];
-    const midDensityChars = ["a", "r", "g", "i", "s", "t", "u", "d", "o", "+", "*", "=", "x", "z"];
+    const midDensityChars = ["a", "r", "g", "i", "s", "t", "u", "d", "o", "+", "*", "=", "x", "z", "v"];
     const lowDensityChars = ["·", ":", ".", "'", "-", "~", "^", "`", ",", ";"];
 
     let gridNodes = [];
@@ -1252,153 +1252,42 @@ ${clientName}`
       isHovered: false
     };
 
-    // Master Vector Routine: Authentic Michelangelo "Creation of Adam" Hands
-    const drawAdamHandsMask = (offCtx, w, h) => {
+    // Load authentic Good Fella hand images
+    const adamImg = new Image();
+    const godImg = new Image();
+    let imagesLoaded = 0;
+
+    const onImageLoaded = () => {
+      imagesLoaded++;
+      if (imagesLoaded === 2) {
+        resize();
+      }
+    };
+
+    adamImg.onload = onImageLoaded;
+    godImg.onload = onImageLoaded;
+    adamImg.src = "assets/adam-hand.png";
+    godImg.src = "assets/god-hand.png";
+
+    const drawImagesToOffscreen = (offCtx, w, h) => {
       offCtx.clearRect(0, 0, w, h);
-      
-      const cY = h * 0.46;
-      const scale = Math.min(1.25, Math.max(0.65, w / 1200));
 
-      offCtx.lineCap = "round";
-      offCtx.lineJoin = "round";
+      // Desired hand height relative to footer canvas
+      const handH = Math.min(h * 1.02, 540);
+      const handW = handH * (665 / 1071);
+      const handY = (h - handH) / 2 + 10;
 
-      // -------------------------------------------------------------
-      // 1. ADAM (LEFT HAND & FOREARM) - Languid, Longing Outstretched Reach
-      // -------------------------------------------------------------
-      offCtx.save();
-      
-      // Adam Muscle Gradient
-      const adamGrad = offCtx.createLinearGradient(0, cY, w * 0.46, cY);
-      adamGrad.addColorStop(0, "rgba(255, 255, 255, 0.4)");
-      adamGrad.addColorStop(0.45, "rgba(255, 255, 255, 0.85)");
-      adamGrad.addColorStop(1, "rgba(255, 255, 255, 1.0)");
-      offCtx.fillStyle = adamGrad;
-      offCtx.strokeStyle = "rgba(255, 255, 255, 0.95)";
+      // Position Left Hand (Adam) reaching toward center
+      const adamX = Math.max(0, (w * 0.47) - handW);
+      if (adamImg.complete && adamImg.naturalWidth > 0) {
+        offCtx.drawImage(adamImg, adamX, handY, handW, handH);
+      }
 
-      // Full Anatomical Silhouette of Adam's Arm & Hand
-      offCtx.beginPath();
-      // Forearm top entry
-      offCtx.moveTo(0, cY + 35 * scale);
-      offCtx.bezierCurveTo(w * 0.08, cY + 28 * scale, w * 0.15, cY + 8 * scale, w * 0.22, cY - 10 * scale);
-      // Wrist flexure into thumb
-      offCtx.bezierCurveTo(w * 0.25, cY - 18 * scale, w * 0.27, cY - 22 * scale, w * 0.29, cY - 18 * scale);
-      // Relaxed Thumb extending upward
-      offCtx.bezierCurveTo(w * 0.30, cY - 38 * scale, w * 0.32, cY - 52 * scale, w * 0.34, cY - 45 * scale);
-      offCtx.bezierCurveTo(w * 0.35, cY - 32 * scale, w * 0.34, cY - 20 * scale, w * 0.36, cY - 18 * scale);
-      // Metacarpal bridge & Index knuckle
-      offCtx.bezierCurveTo(w * 0.37, cY - 22 * scale, w * 0.39, cY - 20 * scale, w * 0.40, cY - 15 * scale);
-      // Outstretched Index Finger (Graceful downward droop at distal joint)
-      offCtx.bezierCurveTo(w * 0.425, cY - 10 * scale, w * 0.442, cY - 4 * scale, w * 0.455, cY + 2 * scale);
-      // Index fingertip rounded arc
-      offCtx.arc(w * 0.455, cY + 5 * scale, 3.5 * scale, -Math.PI / 2, Math.PI / 2);
-      // Index bottom contour returning
-      offCtx.bezierCurveTo(w * 0.44, cY + 11 * scale, w * 0.415, cY + 4 * scale, w * 0.39, cY + 3 * scale);
-      // Middle finger curled under
-      offCtx.bezierCurveTo(w * 0.395, cY + 18 * scale, w * 0.38, cY + 32 * scale, w * 0.35, cY + 30 * scale);
-      // Ring finger curled
-      offCtx.bezierCurveTo(w * 0.34, cY + 38 * scale, w * 0.32, cY + 44 * scale, w * 0.29, cY + 40 * scale);
-      // Pinky finger curled
-      offCtx.bezierCurveTo(w * 0.28, cY + 46 * scale, w * 0.26, cY + 48 * scale, w * 0.24, cY + 42 * scale);
-      // Forearm underside sweeping back to left edge
-      offCtx.bezierCurveTo(w * 0.18, cY + 68 * scale, w * 0.08, cY + 95 * scale, 0, cY + 110 * scale);
-      offCtx.closePath();
-      offCtx.fill();
-
-      // Tendon & anatomical muscular accent strokes
-      offCtx.lineWidth = 2 * scale;
-      offCtx.beginPath();
-      // Brachioradialis tendon to wrist
-      offCtx.moveTo(w * 0.12, cY + 35 * scale);
-      offCtx.bezierCurveTo(w * 0.20, cY + 10 * scale, w * 0.28, cY - 5 * scale, w * 0.38, cY - 14 * scale);
-      offCtx.stroke();
-
-      // Extensor tendon to index finger
-      offCtx.beginPath();
-      offCtx.moveTo(w * 0.34, cY - 14 * scale);
-      offCtx.bezierCurveTo(w * 0.38, cY - 15 * scale, w * 0.41, cY - 8 * scale, w * 0.445, cY + 1 * scale);
-      offCtx.stroke();
-
-      // Knuckle shadow crease & finger segments
-      offCtx.beginPath();
-      offCtx.moveTo(w * 0.36, cY - 5 * scale);
-      offCtx.bezierCurveTo(w * 0.38, cY + 10 * scale, w * 0.37, cY + 22 * scale, w * 0.34, cY + 25 * scale);
-      offCtx.stroke();
-
-      offCtx.beginPath();
-      offCtx.moveTo(w * 0.32, cY + 12 * scale);
-      offCtx.bezierCurveTo(w * 0.33, cY + 24 * scale, w * 0.31, cY + 34 * scale, w * 0.28, cY + 36 * scale);
-      offCtx.stroke();
-      offCtx.restore();
-
-      // -------------------------------------------------------------
-      // 2. GOD / THE CREATOR (RIGHT HAND & CELESTIAL CLOAK) - Authoritative Power
-      // -------------------------------------------------------------
-      offCtx.save();
-      
-      const godGrad = offCtx.createLinearGradient(w, cY, w * 0.50, cY);
-      godGrad.addColorStop(0, "rgba(255, 255, 255, 0.4)");
-      godGrad.addColorStop(0.45, "rgba(255, 255, 255, 0.88)");
-      godGrad.addColorStop(1, "rgba(255, 255, 255, 1.0)");
-      offCtx.fillStyle = godGrad;
-      offCtx.strokeStyle = "rgba(255, 255, 255, 0.95)";
-
-      // Divine Mantle & Arm Silhouette
-      offCtx.beginPath();
-      // Outer drapery top
-      offCtx.moveTo(w, cY - 110 * scale);
-      offCtx.bezierCurveTo(w * 0.88, cY - 95 * scale, w * 0.78, cY - 70 * scale, w * 0.68, cY - 45 * scale);
-      // Forearm top & powerful arched wrist
-      offCtx.bezierCurveTo(w * 0.64, cY - 35 * scale, w * 0.60, cY - 26 * scale, w * 0.57, cY - 20 * scale);
-      // Outstretched commanding index finger (horizontal direct vector)
-      offCtx.bezierCurveTo(w * 0.545, cY - 14 * scale, w * 0.525, cY - 8 * scale, w * 0.508, cY - 2 * scale);
-      // Index fingertip rounded arc
-      offCtx.arc(w * 0.508, cY + 1 * scale, 3.5 * scale, -Math.PI / 2, Math.PI / 2);
-      // Index bottom edge returning to knuckle
-      offCtx.bezierCurveTo(w * 0.525, cY + 8 * scale, w * 0.548, cY + 6 * scale, w * 0.565, cY + 3 * scale);
-      // Extended thumb pointing down-left
-      offCtx.bezierCurveTo(w * 0.552, cY + 14 * scale, w * 0.538, cY + 24 * scale, w * 0.545, cY + 28 * scale);
-      offCtx.bezierCurveTo(w * 0.565, cY + 28 * scale, w * 0.582, cY + 18 * scale, w * 0.592, cY + 12 * scale);
-      // Folded middle, ring, pinky fingers in perspective
-      offCtx.bezierCurveTo(w * 0.615, cY + 22 * scale, w * 0.635, cY + 34 * scale, w * 0.665, cY + 26 * scale);
-      offCtx.bezierCurveTo(w * 0.678, cY + 35 * scale, w * 0.705, cY + 32 * scale, w * 0.715, cY + 22 * scale);
-      // Arm underside & billowing celestial cloak
-      offCtx.bezierCurveTo(w * 0.78, cY + 45 * scale, w * 0.88, cY + 80 * scale, w, cY + 115 * scale);
-      offCtx.closePath();
-      offCtx.fill();
-
-      // God's muscular contour lines, tendons & energetic aura
-      offCtx.lineWidth = 2 * scale;
-      offCtx.beginPath();
-      // Arm tendon line to index
-      offCtx.moveTo(w * 0.75, cY - 25 * scale);
-      offCtx.bezierCurveTo(w * 0.67, cY - 14 * scale, w * 0.59, cY - 10 * scale, w * 0.518, cY - 1 * scale);
-      offCtx.stroke();
-
-      // Thumb muscle ridge
-      offCtx.beginPath();
-      offCtx.moveTo(w * 0.61, cY - 2 * scale);
-      offCtx.bezierCurveTo(w * 0.58, cY + 8 * scale, w * 0.56, cY + 18 * scale, w * 0.55, cY + 24 * scale);
-      offCtx.stroke();
-
-      // Folded knuckles
-      offCtx.beginPath();
-      offCtx.moveTo(w * 0.60, cY + 6 * scale);
-      offCtx.bezierCurveTo(w * 0.63, cY + 16 * scale, w * 0.65, cY + 24 * scale, w * 0.64, cY + 30 * scale);
-      offCtx.stroke();
-
-      // Celestial vortex aura swirls
-      offCtx.lineWidth = 1.5 * scale;
-      offCtx.strokeStyle = "rgba(255, 255, 255, 0.45)";
-      offCtx.beginPath();
-      offCtx.moveTo(w * 0.90, cY - 90 * scale);
-      offCtx.bezierCurveTo(w * 0.78, cY - 65 * scale, w * 0.72, cY - 20 * scale, w * 0.68, cY + 45 * scale);
-      offCtx.stroke();
-
-      offCtx.beginPath();
-      offCtx.moveTo(w * 0.84, cY - 110 * scale);
-      offCtx.bezierCurveTo(w * 0.74, cY - 75 * scale, w * 0.68, cY - 30 * scale, w * 0.65, cY + 35 * scale);
-      offCtx.stroke();
-      offCtx.restore();
+      // Position Right Hand (God) pointing toward center
+      const godX = Math.min(w - handW, w * 0.53);
+      if (godImg.complete && godImg.naturalWidth > 0) {
+        offCtx.drawImage(godImg, godX, handY, handW, handH);
+      }
     };
 
     const resize = () => {
@@ -1406,6 +1295,8 @@ ${clientName}`
       const rect = footer.getBoundingClientRect();
       width = rect.width;
       height = rect.height;
+
+      if (width <= 0 || height <= 0) return;
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -1416,13 +1307,12 @@ ${clientName}`
       cols = Math.floor(width / gridSpacing);
       rows = Math.floor(height / gridSpacing);
 
-      // Create offscreen mask
       const offCanvas = document.createElement("canvas");
       offCanvas.width = width;
       offCanvas.height = height;
       const offCtx = offCanvas.getContext("2d");
 
-      drawAdamHandsMask(offCtx, width, height);
+      drawImagesToOffscreen(offCtx, width, height);
 
       let imgData;
       try {
@@ -1454,9 +1344,9 @@ ${clientName}`
 
           if (intensity > 0.035) {
             let pool = lowDensityChars;
-            if (intensity > 0.52) {
+            if (intensity > 0.48) {
               pool = highDensityChars;
-            } else if (intensity > 0.22) {
+            } else if (intensity > 0.20) {
               pool = midDensityChars;
             }
 

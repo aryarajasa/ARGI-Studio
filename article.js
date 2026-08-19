@@ -1,6 +1,6 @@
 import { getCloudArticles, getCloudProjects } from "./supabase-config.js";
 
-document.addEventListener("DOMContentLoaded", async () => {
+const initArticlePage = async () => {
 
   // -------------------------------------------------------------------------
   // 1. ARTICLES REPOSITORY (EDITORIAL DATABASE)
@@ -682,17 +682,6 @@ e.preventDefault();
     const leftHandImg = new Image();
     const rightHandImg = new Image();
 
-    const onImageLoaded = () => {
-      if (leftHandImg.complete && rightHandImg.complete) {
-        resize();
-      }
-    };
-
-    leftHandImg.onload = onImageLoaded;
-    rightHandImg.onload = onImageLoaded;
-    leftHandImg.src = "assets/adam-hand-crop.png";
-    rightHandImg.src = "assets/god-hand-crop.png";
-
     const drawImagesToOffscreen = (offCtx, w, h) => {
       offCtx.clearRect(0, 0, w, h);
 
@@ -808,7 +797,22 @@ e.preventDefault();
       }
     };
 
+    const onImageLoaded = () => {
+      if (leftHandImg.complete && rightHandImg.complete) {
+        resize();
+      }
+    };
+
+    leftHandImg.onload = onImageLoaded;
+    rightHandImg.onload = onImageLoaded;
+    leftHandImg.src = "assets/adam-hand-crop.png";
+    rightHandImg.src = "assets/god-hand-crop.png";
+
     window.addEventListener("resize", resize);
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(() => resize());
+      ro.observe(footer);
+    }
     if (leftHandImg.complete && rightHandImg.complete) {
       resize();
     }
@@ -1045,4 +1049,10 @@ ${clientName}`;
     }
   });
 
-});
+};
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initArticlePage);
+} else {
+  initArticlePage();
+}

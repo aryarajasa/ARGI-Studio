@@ -1,6 +1,6 @@
 import { getCloudProjects, getCloudArticles } from "./supabase-config.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+const initLandingPage = () => {
   // 1. SELECTORS & ELEMENTS
   const navbar = document.getElementById("navbar");
   const navMenu = document.getElementById("navMenu");
@@ -1256,17 +1256,6 @@ ${clientName}`
     const leftHandImg = new Image();
     const rightHandImg = new Image();
 
-    const onImageLoaded = () => {
-      if (leftHandImg.complete && rightHandImg.complete) {
-        resize();
-      }
-    };
-
-    leftHandImg.onload = onImageLoaded;
-    rightHandImg.onload = onImageLoaded;
-    leftHandImg.src = "assets/adam-hand-crop.png";
-    rightHandImg.src = "assets/god-hand-crop.png";
-
     const drawImagesToOffscreen = (offCtx, w, h) => {
       offCtx.clearRect(0, 0, w, h);
 
@@ -1382,7 +1371,22 @@ ${clientName}`
       }
     };
 
+    const onImageLoaded = () => {
+      if (leftHandImg.complete && rightHandImg.complete) {
+        resize();
+      }
+    };
+
+    leftHandImg.onload = onImageLoaded;
+    rightHandImg.onload = onImageLoaded;
+    leftHandImg.src = "assets/adam-hand-crop.png";
+    rightHandImg.src = "assets/god-hand-crop.png";
+
     window.addEventListener("resize", resize);
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(() => resize());
+      ro.observe(footer);
+    }
     if (leftHandImg.complete && rightHandImg.complete) {
       resize();
     }
@@ -1600,4 +1604,10 @@ ${clientName}`
       window.location.href = "admin.html";
     }
   });
-});
+};
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initLandingPage);
+} else {
+  initLandingPage();
+}

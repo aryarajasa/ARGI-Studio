@@ -350,9 +350,12 @@
 
     </main>
 
-    <!-- CLEAN MULTI-COLUMN FOOTER (MATCHING LANDING PAGE & CASE STUDY) -->
+    <!-- EDITORIAL CREATIVE FOOTER (CREATION OF ADAM ASCII, TOP SPLIT GRID & GIANT LOGO) -->
     <footer class="site-footer" id="siteFooter">
-      <div class="container-medium">
+      <!-- Interactive ASCII Creation of Adam Canvas Background -->
+      <canvas id="footerAsciiCanvas" class="footer-ascii-canvas"></canvas>
+
+      <div class="container-medium footer-inner-wrap">
         
         <!-- 1. TOP SPLIT GRID -->
         <div class="footer-top-grid">
@@ -449,6 +452,86 @@
 
       </div>
     </footer>
+
+    <!-- INTERACTIVE COMMISSION EMAIL BRIEF MODAL -->
+    <div class="modal-backdrop" id="commissionModal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal-card">
+        
+        <!-- Modal Top Bar -->
+        <div class="modal-header">
+          <div class="modal-header-meta">
+            <span class="modal-badge">Direct Studio Commission Brief</span>
+            <h3 class="modal-title">Initiate Collaboration with <em class="serif-accent">ARGI Studio</em></h3>
+          </div>
+          <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">✕</button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          
+          <div class="modal-form-grid">
+            <!-- Client Name / Organization -->
+            <div class="form-group">
+              <label for="modalClientName" class="form-label">Your Name or Brand / Organization</label>
+              <input type="text" id="modalClientName" class="form-input" placeholder="e.g., Vivien Studio / Founder Name" />
+            </div>
+
+            <!-- Client Contact Email -->
+            <div class="form-group">
+              <label for="modalClientEmail" class="form-label">Your Direct Email</label>
+              <input type="email" id="modalClientEmail" class="form-input" placeholder="e.g., founder@domain.com" />
+            </div>
+          </div>
+
+          <!-- Active Scope Chips inside Modal -->
+          <div class="form-group">
+            <label class="form-label">Selected Creative Disciplines</label>
+            <div class="modal-chips-row" id="modalChipsRow">
+              <span class="modal-chip">Brand Identity Design</span>
+              <span class="modal-chip">Web Design &amp; Development</span>
+            </div>
+          </div>
+
+          <!-- Inquiries & Goals Textarea -->
+          <div class="form-group">
+            <label for="modalInquiryDetails" class="form-label">Project Inquiries, Vision &amp; Goals</label>
+            <textarea id="modalInquiryDetails" class="form-textarea" rows="3" placeholder="Tell us about your brand challenge, key deliverables, target launch timeframe, or aesthetic direction..."></textarea>
+          </div>
+
+          <!-- Live Generated Email Brief Preview -->
+          <div class="form-group">
+            <div class="preview-header-row">
+              <label class="form-label">Generated Email Template</label>
+              <span class="preview-hint">Auto-formatted for hello@argistudio.com</span>
+            </div>
+            <div class="brief-preview-box">
+              <pre class="brief-pre-text" id="briefPreText"></pre>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Modal Actions -->
+        <div class="modal-footer">
+          <div class="modal-footer-left">
+            <button type="button" class="btn btn-outline" id="modalCopyBriefBtn">
+              <span id="modalCopyBriefText">📋 Copy Template</span>
+            </button>
+          </div>
+          <div class="modal-footer-right">
+            <a href="#" class="btn btn-primary btn-animated" id="modalSendEmailBtn">
+              <span class="btn-text">Open in Email Client</span>
+              <span class="btn-icon-circle">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M3.33334 8H12.6667M12.6667 8L8.66668 4M12.6667 8L8.66668 12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
   </div>
 

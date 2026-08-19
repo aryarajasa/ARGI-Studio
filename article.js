@@ -922,9 +922,120 @@ e.preventDefault();
 
   initPageTransitions();
 
+  // -------------------------------------------------------------------------
+  // 12. COMMISSION BRIEF MODAL INTERACTION
+  // -------------------------------------------------------------------------
+  const commissionModal = document.getElementById("commissionModal");
+  const modalCloseBtn = document.getElementById("modalCloseBtn");
+  const modalClientName = document.getElementById("modalClientName");
+  const modalClientEmail = document.getElementById("modalClientEmail");
+  const modalInquiryDetails = document.getElementById("modalInquiryDetails");
+  const briefPreText = document.getElementById("briefPreText");
+  const modalCopyBriefBtn = document.getElementById("modalCopyBriefBtn");
+  const modalCopyBriefText = document.getElementById("modalCopyBriefText");
+  const modalSendEmailBtn = document.getElementById("modalSendEmailBtn");
+
+  const generateEmailTemplate = () => {
+    const clientName = modalClientName && modalClientName.value.trim() ? modalClientName.value.trim() : "[Your Brand / Name]";
+    const clientEmail = modalClientEmail && modalClientEmail.value.trim() ? modalClientEmail.value.trim() : "[your-email@domain.com]";
+    const details = modalInquiryDetails && modalInquiryDetails.value.trim()
+      ? modalInquiryDetails.value.trim()
+      : "[Briefly describe your brand ambitions, key deliverables, and target timeframe...]";
+
+    const briefText = `To: hello@argistudio.com
+Subject: Studio Commission Inquiry — ${clientName}
+
+Dear ARGI Studio Team,
+
+We would like to commission ARGI Studio for creative collaboration:
+• Brand Identity & Strategic Visual Direction
+• Web Design & Development
+
+---
+Brand / Organization: ${clientName}
+Direct Contact: ${clientEmail}
+Location / Studio Base: Bali / Global Remote
+
+Project Vision & Inquiries:
+${details}
+
+Looking forward to architecting our brand's next chapter with you.
+
+Best regards,
+${clientName}`;
+
+    if (briefPreText) briefPreText.textContent = briefText;
+
+    if (modalSendEmailBtn) {
+      const subject = encodeURIComponent(`Studio Commission Inquiry — ${clientName}`);
+      const body = encodeURIComponent(briefText);
+      modalSendEmailBtn.href = `mailto:hello@argistudio.com?subject=${subject}&body=${body}`;
+    }
+  };
+
+  const openCommissionModal = () => {
+    if (!commissionModal) return;
+    generateEmailTemplate();
+    commissionModal.classList.add("is-open");
+    commissionModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeCommissionModal = () => {
+    if (!commissionModal) return;
+    commissionModal.classList.remove("is-open");
+    commissionModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  };
+
+  const navCtaBtn = document.getElementById("navCtaBtn");
+  if (navCtaBtn) {
+    navCtaBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openCommissionModal();
+    });
+  }
+
+  // Open modal for Commission Form footer link
+  document.querySelectorAll('a[href$="#contact"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      openCommissionModal();
+    });
+  });
+
+  if (modalCloseBtn) modalCloseBtn.addEventListener("click", closeCommissionModal);
+  if (commissionModal) {
+    commissionModal.addEventListener("click", (e) => {
+      if (e.target === commissionModal) closeCommissionModal();
+    });
+  }
+
+  [modalClientName, modalClientEmail, modalInquiryDetails].forEach((input) => {
+    if (input) input.addEventListener("input", generateEmailTemplate);
+  });
+
+  if (modalCopyBriefBtn && modalCopyBriefText) {
+    modalCopyBriefBtn.addEventListener("click", () => {
+      if (!briefPreText) return;
+      navigator.clipboard.writeText(briefPreText.textContent).then(() => {
+        modalCopyBriefText.textContent = "✓ Template Copied!";
+        modalCopyBriefBtn.style.borderColor = "var(--text-primary)";
+        setTimeout(() => {
+          modalCopyBriefText.textContent = "📋 Copy Template";
+          modalCopyBriefBtn.style.borderColor = "";
+        }, 2200);
+      });
+    });
+  }
+
   // Keyboard Arrow Navigation (Right = Next Article)
   document.addEventListener("keydown", (e) => {
     if (lightboxModal && lightboxModal.classList.contains("is-open")) return;
+    if (commissionModal && commissionModal.classList.contains("is-open")) {
+      if (e.key === "Escape") closeCommissionModal();
+      return;
+    }
     if (e.key === "ArrowRight") {
       const pageWrapper = document.querySelector(".page-wrapper");
       if (pageWrapper) pageWrapper.classList.add("is-leaving");

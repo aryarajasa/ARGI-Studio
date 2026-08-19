@@ -3,12 +3,22 @@
  * Project URL: https://ttxpfodgbdgholcunqpl.supabase.co
  */
 
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
 export const SUPABASE_URL = "https://ttxpfodgbdgholcunqpl.supabase.co";
 export const SUPABASE_ANON_KEY = "sb_publishable_lD5wg8_LdXu0x4myBB32LA_TdydxJrj";
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let _supabaseClient = null;
+
+export async function getSupabaseClient() {
+  if (_supabaseClient) return _supabaseClient;
+  try {
+    const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
+    _supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    return _supabaseClient;
+  } catch (err) {
+    console.warn("Supabase CDN client skipped, using local fallbacks:", err);
+    return null;
+  }
+}
 
 /**
  * Fetch all projects from Supabase (with multi-tier fallback)
@@ -16,17 +26,20 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 export async function getCloudProjects() {
   // 1. Try Supabase Cloud Database first
   try {
-    const { data, error } = await supabase
-      .from("projects")
-      .select("*");
+    const supabase = await getSupabaseClient();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("projects")
+        .select("*");
 
-    if (!error && data && data.length > 0) {
-      const projectsMap = {};
-      data.forEach(item => {
-        projectsMap[item.id] = item.data || item;
-      });
-      localStorage.setItem("argi_projects_data", JSON.stringify(projectsMap));
-      return projectsMap;
+      if (!error && data && data.length > 0) {
+        const projectsMap = {};
+        data.forEach(item => {
+          projectsMap[item.id] = item.data || item;
+        });
+        localStorage.setItem("argi_projects_data", JSON.stringify(projectsMap));
+        return projectsMap;
+      }
     }
   } catch (err) {
     console.warn("Supabase projects read fallback:", err);
@@ -71,24 +84,27 @@ export async function getCloudProjects() {
  */
 export async function saveCloudProject(id, projectData) {
   try {
-    const { error } = await supabase
-      .from("projects")
-      .upsert({
-        id: id,
-        slug: projectData.slug || id,
-        title: projectData.title || "Project",
-        data: projectData,
-        updated_at: new Date().toISOString()
-      }, { onConflict: "id" });
+    const supabase = await getSupabaseClient();
+    if (supabase) {
+      const { error } = await supabase
+        .from("projects")
+        .upsert({
+          id: id,
+          slug: projectData.slug || id,
+          title: projectData.title || "Project",
+          data: projectData,
+          updated_at: new Date().toISOString()
+        }, { onConflict: "id" });
 
-    if (error) {
-      console.warn("Supabase save project error:", error);
+      if (error) {
+        console.warn("Supabase save project error:", error);
+      }
+      return true;
     }
-    return true;
   } catch (err) {
     console.error("Failed to save project to Supabase:", err);
-    return false;
   }
+  return false;
 }
 
 /**
@@ -96,17 +112,20 @@ export async function saveCloudProject(id, projectData) {
  */
 export async function deleteCloudProject(id) {
   try {
-    const { error } = await supabase
-      .from("projects")
-      .delete()
-      .eq("id", id);
+    const supabase = await getSupabaseClient();
+    if (supabase) {
+      const { error } = await supabase
+        .from("projects")
+        .delete()
+        .eq("id", id);
 
-    if (error) console.warn("Supabase delete project error:", error);
-    return true;
+      if (error) console.warn("Supabase delete project error:", error);
+      return true;
+    }
   } catch (err) {
     console.error("Failed to delete project from Supabase:", err);
-    return false;
   }
+  return false;
 }
 
 /**
@@ -115,17 +134,20 @@ export async function deleteCloudProject(id) {
 export async function getCloudArticles() {
   // 1. Try Supabase Cloud Database first
   try {
-    const { data, error } = await supabase
-      .from("articles")
-      .select("*");
+    const supabase = await getSupabaseClient();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("articles")
+        .select("*");
 
-    if (!error && data && data.length > 0) {
-      const articlesMap = {};
-      data.forEach(item => {
-        articlesMap[item.id] = item.data || item;
-      });
-      localStorage.setItem("argi_articles_data", JSON.stringify(articlesMap));
-      return articlesMap;
+      if (!error && data && data.length > 0) {
+        const articlesMap = {};
+        data.forEach(item => {
+          articlesMap[item.id] = item.data || item;
+        });
+        localStorage.setItem("argi_articles_data", JSON.stringify(articlesMap));
+        return articlesMap;
+      }
     }
   } catch (err) {
     console.warn("Supabase articles read fallback:", err);
@@ -170,22 +192,25 @@ export async function getCloudArticles() {
  */
 export async function saveCloudArticle(id, articleData) {
   try {
-    const { error } = await supabase
-      .from("articles")
-      .upsert({
-        id: id,
-        slug: articleData.slug || id,
-        title: articleData.title || "Article",
-        data: articleData,
-        updated_at: new Date().toISOString()
-      }, { onConflict: "id" });
+    const supabase = await getSupabaseClient();
+    if (supabase) {
+      const { error } = await supabase
+        .from("articles")
+        .upsert({
+          id: id,
+          slug: articleData.slug || id,
+          title: articleData.title || "Article",
+          data: articleData,
+          updated_at: new Date().toISOString()
+        }, { onConflict: "id" });
 
-    if (error) console.warn("Supabase save article error:", error);
-    return true;
+      if (error) console.warn("Supabase save article error:", error);
+      return true;
+    }
   } catch (err) {
     console.error("Failed to save article to Supabase:", err);
-    return false;
   }
+  return false;
 }
 
 /**
@@ -193,17 +218,20 @@ export async function saveCloudArticle(id, articleData) {
  */
 export async function deleteCloudArticle(id) {
   try {
-    const { error } = await supabase
-      .from("articles")
-      .delete()
-      .eq("id", id);
+    const supabase = await getSupabaseClient();
+    if (supabase) {
+      const { error } = await supabase
+        .from("articles")
+        .delete()
+        .eq("id", id);
 
-    if (error) console.warn("Supabase delete article error:", error);
-    return true;
+      if (error) console.warn("Supabase delete article error:", error);
+      return true;
+    }
   } catch (err) {
     console.error("Failed to delete article from Supabase:", err);
-    return false;
   }
+  return false;
 }
 
 /**
@@ -211,27 +239,30 @@ export async function deleteCloudArticle(id) {
  */
 export async function uploadCloudMedia(file, bucket = "media") {
   try {
-    const timestamp = Date.now();
-    const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-    const filePath = `uploads/${timestamp}_${cleanName}`;
+    const supabase = await getSupabaseClient();
+    if (supabase) {
+      const timestamp = Date.now();
+      const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const filePath = `uploads/${timestamp}_${cleanName}`;
 
-    const { data, error } = await supabase.storage
-      .from(bucket)
-      .upload(filePath, file, {
-        cacheControl: "3600",
-        upsert: true
-      });
+      const { data, error } = await supabase.storage
+        .from(bucket)
+        .upload(filePath, file, {
+          cacheControl: "3600",
+          upsert: true
+        });
 
-    if (error) {
-      throw error;
+      if (error) {
+        throw error;
+      }
+
+      // Get Public CDN URL
+      const { data: publicUrlData } = supabase.storage
+        .from(bucket)
+        .getPublicUrl(filePath);
+
+      return publicUrlData.publicUrl;
     }
-
-    // Get Public CDN URL
-    const { data: publicUrlData } = supabase.storage
-      .from(bucket)
-      .getPublicUrl(filePath);
-
-    return publicUrlData.publicUrl;
   } catch (err) {
     console.warn("Supabase Storage upload fallback:", err);
     throw err;

@@ -327,12 +327,14 @@ const initProjectPage = async () => {
 
   // Dynamic Database Resolution (Firebase Cloud + Local Fallback)
   let PROJECTS_DATA = DEFAULT_PROJECTS_DATA;
-  try {
-    const cloudData = await getCloudProjects();
-    if (cloudData && Object.keys(cloudData).length > 0) {
-      PROJECTS_DATA = cloudData;
-    }
-  } catch (e) {}
+  const localProjects = localStorage.getItem("argi_projects_data");
+  if (localProjects) {
+    try {
+      const parsed = JSON.parse(localProjects);
+      if (parsed && Object.keys(parsed).length > 0) PROJECTS_DATA = parsed;
+    } catch(e) {}
+  }
+  getCloudProjects().catch(() => {});
 
   // =========================================================================
   // 2. QUERY PARAMETER ROUTING & DATA POPULATION
@@ -1200,9 +1202,7 @@ const initProjectPage = async () => {
     };
 
     const onImageLoaded = () => {
-      if (leftHandImg.complete && rightHandImg.complete) {
-        resize();
-      }
+      resize();
     };
 
     leftHandImg.onload = onImageLoaded;
@@ -1215,9 +1215,7 @@ const initProjectPage = async () => {
       const ro = new ResizeObserver(() => resize());
       ro.observe(footer);
     }
-    if (leftHandImg.complete && rightHandImg.complete) {
-      resize();
-    }
+    resize();
 
     // Mouse tracking on footer
     footer.addEventListener("mousemove", (e) => {

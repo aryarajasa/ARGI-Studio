@@ -93,12 +93,14 @@ const initArticlePage = async () => {
 
   // Dynamic Database Resolution (Supabase Cloud + API + Static Fallback)
   let ARTICLES_DATA = DEFAULT_ARTICLES_DATA;
-  try {
-    const cloudData = await getCloudArticles();
-    if (cloudData && Object.keys(cloudData).length > 0) {
-      ARTICLES_DATA = cloudData;
-    }
-  } catch (e) {}
+  const localArticles = localStorage.getItem("argi_articles_data");
+  if (localArticles) {
+    try {
+      const parsed = JSON.parse(localArticles);
+      if (parsed && Object.keys(parsed).length > 0) ARTICLES_DATA = parsed;
+    } catch(e) {}
+  }
+  getCloudArticles().catch(() => {});
 
   // -------------------------------------------------------------------------
   // 2. QUERY PARAMETER ROUTING & ARTICLE RESOLUTION
@@ -798,9 +800,7 @@ e.preventDefault();
     };
 
     const onImageLoaded = () => {
-      if (leftHandImg.complete && rightHandImg.complete) {
-        resize();
-      }
+      resize();
     };
 
     leftHandImg.onload = onImageLoaded;
@@ -813,9 +813,7 @@ e.preventDefault();
       const ro = new ResizeObserver(() => resize());
       ro.observe(footer);
     }
-    if (leftHandImg.complete && rightHandImg.complete) {
-      resize();
-    }
+    resize();
 
     // Mouse tracking on footer
     footer.addEventListener("mousemove", (e) => {

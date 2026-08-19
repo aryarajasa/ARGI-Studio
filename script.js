@@ -1372,9 +1372,7 @@ ${clientName}`
     };
 
     const onImageLoaded = () => {
-      if (leftHandImg.complete && rightHandImg.complete) {
-        resize();
-      }
+      resize();
     };
 
     leftHandImg.onload = onImageLoaded;
@@ -1387,9 +1385,7 @@ ${clientName}`
       const ro = new ResizeObserver(() => resize());
       ro.observe(footer);
     }
-    if (leftHandImg.complete && rightHandImg.complete) {
-      resize();
-    }
+    resize();
 
     // Mouse tracking on footer
     footer.addEventListener("mousemove", (e) => {

@@ -2467,6 +2467,42 @@ body.site-ready .page-wrapper {
   margin: 0;
 }
 
+/* Modal Status Alerts */
+.modal-status-box {
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  transition: all var(--transition-fast);
+}
+
+.modal-status-box.is-success {
+  background: rgba(16, 185, 129, 0.12);
+  color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.modal-status-box.is-error {
+  background: rgba(239, 68, 68, 0.12);
+  color: #991b1b;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.modal-status-box.is-loading {
+  background: rgba(48, 98, 212, 0.1);
+  color: var(--accent-blue);
+  border: 1px solid rgba(48, 98, 212, 0.3);
+}
+
+.btn-animated.is-loading {
+  opacity: 0.75;
+  pointer-events: none;
+  cursor: wait;
+}
+
 /* Modal Footer */
 .modal-footer {
   display: flex;

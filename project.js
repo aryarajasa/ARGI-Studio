@@ -1419,6 +1419,104 @@ ${clientName}`;
     if (input) input.addEventListener("input", generateEmailTemplate);
   });
 
+  const modalSubmitInquiryBtn = document.getElementById("modalSubmitInquiryBtn");
+  const modalSubmitBtnText = document.getElementById("modalSubmitBtnText");
+  const modalStatusBox = document.getElementById("modalStatusBox");
+
+  const sendCommissionBrief = async () => {
+    const clientName = (modalClientName && modalClientName.value.trim()) || "";
+    const clientEmail = (modalClientEmail && modalClientEmail.value.trim()) || "";
+    const details = (modalInquiryDetails && modalInquiryDetails.value.trim()) || "";
+
+    if (!modalStatusBox) return;
+
+    if (!clientName) {
+      modalStatusBox.style.display = "flex";
+      modalStatusBox.className = "modal-status-box is-error";
+      modalStatusBox.textContent = "Please enter your Name or Brand / Organization.";
+      if (modalClientName) modalClientName.focus();
+      return;
+    }
+
+    if (!clientEmail || !clientEmail.includes("@")) {
+      modalStatusBox.style.display = "flex";
+      modalStatusBox.className = "modal-status-box is-error";
+      modalStatusBox.textContent = "Please provide a valid direct contact email.";
+      if (modalClientEmail) modalClientEmail.focus();
+      return;
+    }
+
+    // Set Loading State
+    modalStatusBox.style.display = "flex";
+    modalStatusBox.className = "modal-status-box is-loading";
+    modalStatusBox.textContent = "Transmitting commission brief to hello@argistudio.com...";
+
+    if (modalSubmitInquiryBtn) modalSubmitInquiryBtn.classList.add("is-loading");
+    if (modalSubmitBtnText) modalSubmitBtnText.textContent = "Transmitting...";
+
+    const briefPayload = {
+      name: clientName,
+      email: clientEmail,
+      disciplines: ["Brand Identity Design", "Web Design & Development"],
+      message: details || "Studio Commission Inquiry",
+      _subject: `Studio Commission Inquiry — ${clientName}`,
+      _replyto: clientEmail,
+      _template: "table"
+    };
+
+    let emailSent = false;
+
+    // 1. Send via FormSubmit to hello@argistudio.com
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/hello@argistudio.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(briefPayload)
+      });
+      if (res.ok) {
+        emailSent = true;
+      }
+    } catch (err) {
+      console.warn("Direct transmission fallback:", err);
+    }
+
+    // 2. Also log to Local Server /api/inquiries
+    try {
+      await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(briefPayload)
+      });
+    } catch (e) {}
+
+    if (modalSubmitInquiryBtn) modalSubmitInquiryBtn.classList.remove("is-loading");
+
+    if (emailSent) {
+      modalStatusBox.className = "modal-status-box is-success";
+      modalStatusBox.innerHTML = `✓ Commission brief sent to <strong>hello@argistudio.com</strong>! Our partners will respond within 24–48h.`;
+      if (modalSubmitBtnText) modalSubmitBtnText.textContent = "✓ Brief Sent!";
+      if (modalSubmitInquiryBtn) modalSubmitInquiryBtn.style.background = "#10b981";
+      setTimeout(() => {
+        if (modalSubmitBtnText) modalSubmitBtnText.textContent = "Send Commission Brief";
+        if (modalSubmitInquiryBtn) modalSubmitInquiryBtn.style.background = "";
+      }, 5000);
+    } else {
+      // Fallback: Open prefilled mail client
+      modalStatusBox.className = "modal-status-box is-success";
+      modalStatusBox.innerHTML = `Inquiry logged! Opening mail client to dispatch to <strong>hello@argistudio.com</strong>...`;
+      const mailtoUrl = `mailto:hello@argistudio.com?subject=${encodeURIComponent(`Studio Commission Inquiry — ${clientName}`)}&body=${encodeURIComponent(briefPreText ? briefPreText.textContent : details)}`;
+      window.location.href = mailtoUrl;
+      if (modalSubmitBtnText) modalSubmitBtnText.textContent = "Send Commission Brief";
+    }
+  };
+
+  if (modalSubmitInquiryBtn) {
+    modalSubmitInquiryBtn.addEventListener("click", sendCommissionBrief);
+  }
+
   if (modalCopyBriefBtn && modalCopyBriefText) {
     modalCopyBriefBtn.addEventListener("click", () => {
       if (!briefPreText) return;

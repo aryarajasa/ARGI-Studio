@@ -9,6 +9,7 @@ const UPLOADS_DIR = path.join(DIR, 'assets', 'uploads');
 const AUTH_FILE = path.join(DATA_DIR, 'auth.json');
 const PROJECTS_FILE = path.join(DATA_DIR, 'projects.json');
 const ARTICLES_FILE = path.join(DATA_DIR, 'articles.json');
+const INQUIRIES_FILE = path.join(DATA_DIR, 'inquiries.json');
 
 // Ensure data and uploads directories exist
 if (!fs.existsSync(DATA_DIR)) {
@@ -21,6 +22,10 @@ if (!fs.existsSync(UPLOADS_DIR)) {
 
 if (!fs.existsSync(AUTH_FILE)) {
   fs.writeFileSync(AUTH_FILE, JSON.stringify({ passcode: "argi2026", updatedAt: new Date().toISOString() }, null, 2));
+}
+
+if (!fs.existsSync(INQUIRIES_FILE)) {
+  fs.writeFileSync(INQUIRIES_FILE, JSON.stringify([], null, 2));
 }
 
 const MIME_TYPES = {
@@ -187,6 +192,34 @@ const server = http.createServer(async (req, res) => {
           const body = await readRequestBody(req);
           fs.writeFileSync(ARTICLES_FILE, JSON.stringify(body, null, 2), 'utf-8');
           return sendJson(res, 200, { success: true, message: 'Articles saved successfully', count: Object.keys(body).length });
+        }
+      }
+
+      // 6. Inquiries API
+      if (reqPath === '/api/inquiries') {
+        if (req.method === 'GET') {
+          if (!fs.existsSync(INQUIRIES_FILE)) {
+            return sendJson(res, 200, []);
+          }
+          const inquiries = JSON.parse(fs.readFileSync(INQUIRIES_FILE, 'utf-8'));
+          return sendJson(res, 200, inquiries);
+        }
+
+        if (req.method === 'POST') {
+          const body = await readRequestBody(req);
+          const inquiries = fs.existsSync(INQUIRIES_FILE) ? JSON.parse(fs.readFileSync(INQUIRIES_FILE, 'utf-8')) : [];
+          const newInquiry = {
+            id: 'inq_' + Date.now(),
+            date: new Date().toISOString(),
+            clientName: body.name || body.clientName || 'Anonymous',
+            clientEmail: body.email || body.clientEmail || '',
+            disciplines: body.disciplines || [],
+            details: body.details || body.message || '',
+            status: 'new'
+          };
+          inquiries.unshift(newInquiry);
+          fs.writeFileSync(INQUIRIES_FILE, JSON.stringify(inquiries, null, 2), 'utf-8');
+          return sendJson(res, 200, { success: true, message: 'Inquiry received and logged', inquiry: newInquiry });
         }
       }
 

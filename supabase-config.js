@@ -11,9 +11,10 @@ export const SUPABASE_ANON_KEY = "sb_publishable_lD5wg8_LdXu0x4myBB32LA_TdydxJrj
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /**
- * Fetch all projects from Supabase (with local fallback)
+ * Fetch all projects from Supabase (with multi-tier fallback)
  */
 export async function getCloudProjects() {
+  // 1. Try Supabase Cloud Database first
   try {
     const { data, error } = await supabase
       .from("projects")
@@ -31,13 +32,37 @@ export async function getCloudProjects() {
     console.warn("Supabase projects read fallback:", err);
   }
 
-  // Local fallback
-  const local = localStorage.getItem("argi_projects_data");
-  if (local) return JSON.parse(local);
+  // 2. Try Local Server API
+  try {
+    const apiRes = await fetch("/api/projects");
+    if (apiRes.ok) {
+      const apiData = await apiRes.json();
+      if (apiData && Object.keys(apiData).length > 0) {
+        localStorage.setItem("argi_projects_data", JSON.stringify(apiData));
+        return apiData;
+      }
+    }
+  } catch (e) {}
+
+  // 3. Try Static JSON file
   try {
     const staticRes = await fetch("data/projects.json");
-    if (staticRes.ok) return await staticRes.json();
+    if (staticRes.ok) {
+      const staticData = await staticRes.json();
+      if (staticData && Object.keys(staticData).length > 0) {
+        localStorage.setItem("argi_projects_data", JSON.stringify(staticData));
+        return staticData;
+      }
+    }
   } catch (err) {}
+
+  // 4. LocalStorage Fallback
+  const local = localStorage.getItem("argi_projects_data");
+  if (local) {
+    try {
+      return JSON.parse(local);
+    } catch (e) {}
+  }
   return {};
 }
 
@@ -85,9 +110,10 @@ export async function deleteCloudProject(id) {
 }
 
 /**
- * Fetch all articles from Supabase (with local fallback)
+ * Fetch all articles from Supabase (with multi-tier fallback)
  */
 export async function getCloudArticles() {
+  // 1. Try Supabase Cloud Database first
   try {
     const { data, error } = await supabase
       .from("articles")
@@ -105,13 +131,37 @@ export async function getCloudArticles() {
     console.warn("Supabase articles read fallback:", err);
   }
 
-  // Local fallback
-  const local = localStorage.getItem("argi_articles_data");
-  if (local) return JSON.parse(local);
+  // 2. Try Local Server API
+  try {
+    const apiRes = await fetch("/api/articles");
+    if (apiRes.ok) {
+      const apiData = await apiRes.json();
+      if (apiData && Object.keys(apiData).length > 0) {
+        localStorage.setItem("argi_articles_data", JSON.stringify(apiData));
+        return apiData;
+      }
+    }
+  } catch (e) {}
+
+  // 3. Try Static JSON file
   try {
     const staticRes = await fetch("data/articles.json");
-    if (staticRes.ok) return await staticRes.json();
+    if (staticRes.ok) {
+      const staticData = await staticRes.json();
+      if (staticData && Object.keys(staticData).length > 0) {
+        localStorage.setItem("argi_articles_data", JSON.stringify(staticData));
+        return staticData;
+      }
+    }
   } catch (err) {}
+
+  // 4. LocalStorage Fallback
+  const local = localStorage.getItem("argi_articles_data");
+  if (local) {
+    try {
+      return JSON.parse(local);
+    } catch (e) {}
+  }
   return {};
 }
 

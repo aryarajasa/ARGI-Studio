@@ -8,335 +8,90 @@ document.addEventListener("DOMContentLoaded", async () => {
   const DEFAULT_ARTICLES_DATA = {
     "01": {
       id: "01",
-      slug: "monograph-vol-02-tokyo-art-book-fair",
-      title: "ARGI Studio Monograph Vol. 02 Released at Tokyo Art Book Fair",
-      category: "Publication & Print Matter",
-      date: "February 14, 2026",
+      slug: "argi-studio-vol-01-released-worldwide-01",
+      title: "ARGI Studio Vol. 01 Released Worldwide",
+      category: "Publication",
+      date: "August 18, 2026",
       readTime: "6 Min Read",
       authorName: "Arya Rajasa",
       authorRole: "Founder & Design Director • ARGI Studio",
       authorAvatar: "assets/logo.png",
-      lead: "An in-depth retrospective on tactile materiality, Japanese bookbinding traditions, and 380 pages of studio archive printed on FSC-certified cotton paper.",
-      featureImage: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=2000&q=85",
-      featureCaption: "ARGI Monograph Vol. 02 — Cloth-bound hardcover with holographic blind debossing",
+      lead: "ARGI didn’t happen overnight. It took seven years, one failed venture, and finally getting the right people at the same table to make it real.",
+      featureImage: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787059144965_ascii-magic-1.png",
+      featureCaption: "Each Founder of ARGI Studio",
       sections: [
         {
-          id: "weight-of-print",
-          title: "01 / The Weight of Printed Matter",
+          id: "chapter-01",
+          title: "01 / The First Swing (and the Miss)",
           content: `
             <p class="essay-paragraph has-dropcap">
-              In an era dominated by hyper-accelerated digital feeds, algorithmic timelines, and ephemeral synthetic media, there is an enduring, almost sacred weight to the physical book. Holding a bound volume is an intentional, sensory act—the textured resistance of uncoated 180gsm cotton paper, the subtle fragrance of soy-based black inks, and the physical memory of turning chronological archival spreads.
+              Back in 2019, the idea was simple enough: build an independent space where we could make work we actually cared about without unnecessary gatekeeping. By 2020, Gigi and I stopped talking about it and pulled the trigger without any preparations. We called it Nocturn. We had plenty of energy, a shared visual language, and enough optimism to ignore the fact that we barely understood the business side of running a studio.
             </p>
             <p class="essay-paragraph">
-              When we set out to design <em>ARGI Studio Monograph Vol. 02</em> for its international debut at the Tokyo Art Book Fair, our intention was to produce a physical artifact that stubbornly refused to be skimmed. It is a 380-page architectural chronicle documenting four years of studio commissions across Paris, Tokyo, London, and our headquarters in Bali.
+              Nocturn was exciting until reality caught up. We took on projects without clear boundaries, worked late nights without real direction, and treated commercial design like spontaneous art experiments. Passion carried us through the first few months, but passion without operational clarity runs out of steam fast.
+            </p>
+            <p class="essay-paragraph">
+              When Nocturn stalled, it wasn't a dramatic collapse. It was a slow, quiet realization that we weren't ready for the weight of what we were trying to build. We shelved the name, swallowed our pride, and went back to square one. The dream didn't die, but it got a much-needed dose of humility.
             </p>
             <div class="article-pull-quote">
               <p class="pull-quote-text">
-                “A book is not simply a container for images; it is a physical room you enter with your fingertips.”
+                “Passion carries you through the first few months, but passion without operational clarity runs out of steam fast.”
               </p>
-              <span class="pull-quote-citation">— Arya Rajasa, Tokyo Art Book Fair Keynote Address</span>
-            </div>
-            <p class="essay-paragraph">
-              Working alongside master printers in Kyoto, we selected a raw linen cloth binding dyed in deep obsidian charcoal, paired with a precision hot-foil deboss that catches shifting ambient gallery light without glare. Every square millimeter was calibrated to convey restraint, permanence, and dignity.
-            </p>
-          `
-        },
-        {
-          id: "typography-and-grid",
-          title: "02 / Typography & Asymmetrical Grids",
-          content: `
-            <p class="essay-paragraph">
-              Every spread within the monograph adheres to an asymmetrical 12-column Swiss grid system, counterbalanced by generous margins of unprinted alabaster negative space. We developed a proprietary custom serif display cut specifically optimized for high-ink-density letterpress reproduction.
-            </p>
-            
-            <!-- 2-Column Photo Comparison Spread -->
-            <div class="article-inline-grid">
-              <div class="article-grid-card" data-lightbox>
-                <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=85" alt="Monograph Typography Detail" class="article-grid-img" />
-              </div>
-              <div class="article-grid-card" data-lightbox>
-                <img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1000&q=85" alt="Letterpress Ink Density & Cotton Grain" class="article-grid-img" />
-              </div>
-            </div>
-            <div class="article-grid-caption">Fig. 1.2 &amp; 1.3 — Left: Smyth-sewn lay-flat binding detail. Right: High-density letterpress serif imprint on 180gsm cotton rag.</div>
-
-            <p class="essay-paragraph">
-              To honor the material traditions of our Japanese hosts, the binding incorporates exposed Smyth-sewn red binding threads along the spine, allowing the heavy volume to lay completely flat across any flat tabletop surface without spine cracking.
-            </p>
-            <div class="article-key-points-box">
-              <h4 class="key-points-title">Publication Specifications:</h4>
-              <ul class="key-points-list">
-                <li><strong>Extent:</strong> 380 Pages, Hardcover Smyth-Sewn Lay-Flat Binding</li>
-                <li><strong>Paper Stock:</strong> 180gsm Fedrigoni Tintoretto Cotton &amp; 90gsm Japanese Washi Inserts</li>
-                <li><strong>Print Method:</strong> 5-Color Offset with Matte Mineral Varnish &amp; Metallic Gilt Foil</li>
-                <li><strong>Edition:</strong> Limited First Edition of 500 Numbered &amp; Blind-Stamped Copies</li>
-                <li><strong>Typography:</strong> ARGI Display Serif (Custom Cut) &amp; Neue Haas Grotesk</li>
-              </ul>
+              <span class="pull-quote-citation">— Arya Rajasa</span>
             </div>
           `
         },
         {
-          id: "kyoto-craftsmanship",
-          title: "03 / Generational Kyoto Craftsmanship",
+          id: "chapter-02",
+          title: "02 / The Holding Pattern",
           content: `
             <p class="essay-paragraph">
-              Our collaboration took us to a multi-generational paper studio in Kyoto's historic craft district. Together with artisans who have produced handmade washi for over two centuries, we developed custom fibrous endpapers embedded with subtle charcoal filaments.
+              Between the quiet end of Nocturn and early 2026, we kept our heads down. We took on separate work, collaborated with other teams, and paid close attention to how sustainable studios actually operated. That holding pattern wasn't glamorous, but it was necessary. You learn far more about your blind spots when you step back and look at your mistakes without ego.
             </p>
-            <div class="article-inline-image-frame" data-lightbox>
-              <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1400&q=85" alt="Kyoto Print Workshop & Paper Archive" class="article-inline-img" />
-              <div class="article-image-caption">Fig. 1.4 — Press check proofs and material swatches at the Kyoto print workshop.</div>
-            </div>
             <p class="essay-paragraph">
-              This tactile contrast between industrial Swiss typographic precision and organic Japanese paper materiality forms the conceptual spine of the entire volume.
+              Gigi and I kept the conversation alive, trading visual references and dissecting where our first attempt went sideways. The issue was never our technical craft or our design instincts. The real problem was cohesion. We knew how to produce good work in a vacuum, but we had no idea how to frame our story, distribute our voice, or build an audience.
+            </p>
+            <p class="essay-paragraph">
+              That realization changed how we thought about the studio. We realized a creative practice can't just be two designers sitting silently in front of screens hoping the right people stumble across their files. If we were going to build something that lasted, we couldn't just do a cosmetic reboot we needed a third pillar.
             </p>
           `
         },
         {
-          id: "tokyo-reception",
-          title: "04 / The Tokyo Exhibition & Global Reception",
+          id: "chapter-03",
+          title: "03 / The Missing Piece",
           content: `
             <p class="essay-paragraph">
-              The Tokyo Art Book Fair took place at the Museum of Contemporary Art Tokyo (MOT), drawing independent publishers, typographers, and collectors from over thirty countries. The physical response to Vol. 02 surpassed our highest expectations—the entire limited exhibition run of 500 numbered copies sold out within the first forty-eight hours of opening day.
+              In early 2026, when the conversations turned serious again, we agreed on one rule: no repeating the old playbook. We reached out to Kinan to join the team as our social media manager and digital lead.
             </p>
             <p class="essay-paragraph">
-              We extend our deepest gratitude to our curatorial partners in Tokyo, our paper artisans in Kyoto, and every collaborator who contributed to making this volume a reality. A second international reprint is currently in production for release in London and New York in autumn 2026.
+              Bringing Kinan in shifted the dynamic immediately. Where Gigi and I tend to get stuck in visual and endless type debates, Kinan cuts straight through the noise to focus on narrative, distribution, and audience connection. She gave our work context, turning internal design concepts into stories that actually resonate with the outside world.
+            </p>
+            <p class="essay-paragraph">
+              For the first time, the foundation felt balanced. We weren’t just making things and throwing them into the void; we had clear roles, mutual accountability, and a shared standard for where we wanted this studio to go.
+            </p>
+          `
+        },
+        {
+          id: "chapter-04",
+          title: "04 / The Clean Slate",
+          content: `
+            <p class="essay-paragraph">
+              Holding onto the ghost of Nocturn didn't make sense anymore. That chapter belonged to our early twenties and the lessons that came with them. We needed an identity that matched who we are today: more disciplined, more focused, and entirely intentional. That is how ARGI came to life.
+            </p>
+            <p class="essay-paragraph">
+              ARGI isn't just a new logo on an old engine. It’s a grounded commitment to thoughtful, sharp creative direction and strategic content. We aren't chasing every design fad or saying yes to work that lacks direction. The focus is clear: partnering with ambitious brands, building visual identities, and telling stories that leave a mark.
+            </p>
+            <p class="essay-paragraph">
+              Releasing Vol. 01 feels equal parts overdue and right on time. We took the long road, took our hits, and built the team we should have had from the start. Welcome to ARGI Studio.
             </p>
           `
         }
       ],
       nextId: "02"
-    },
-
-    "02": {
-      id: "02",
-      slug: "studio-of-the-month-awwwards-fwa",
-      title: "Recognized as Studio of the Month by Awwwards & FWA",
-      category: "Studio Honors & Philosophy",
-      date: "January 28, 2026",
-      readTime: "5 Min Read",
-      authorName: "ARGI Editorial Desk",
-      authorRole: "Studio Journal • ARGI Studio",
-      authorAvatar: "assets/logo.png",
-      lead: "Reflections on digital restraint, fluid micro-interactions, and why the future of luxury web design lies in stripping away decorative noise.",
-      featureImage: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=2000&q=85",
-      featureCaption: "ARGI Studio Digital Flagships — Honored with Studio of the Month by Awwwards and FWA",
-      sections: [
-        {
-          id: "anti-generic-web",
-          title: "01 / Beyond Generic Digital Design",
-          content: `
-            <p class="essay-paragraph has-dropcap">
-              We are honored to share that ARGI Studio has been named <strong>Studio of the Month</strong> by both Awwwards and the FWA. This international recognition highlights our team’s dedicated focus on crafting digital flagships that feel tactile, responsive, and unapologetically distinct from the homogenized web templates of today.
-            </p>
-            <p class="essay-paragraph">
-              Too much of modern digital design relies on superficial gimmicks—heavy particle effects, illegible 3D canvas shaders, and cluttered dashboard cards. At ARGI Studio, our philosophy begins with the exact opposite premise: <em>radical reduction and architectural restraint</em>.
-            </p>
-            <div class="article-pull-quote">
-              <p class="pull-quote-text">
-                “Luxury on the web is not about adding more decorative layers; it is about calibrating every millisecond of transition until the interface feels weightless.”
-              </p>
-              <span class="pull-quote-citation">— Studio Design Manifesto, 2026</span>
-            </div>
-            <p class="essay-paragraph">
-              Every project we architect is treated not as a disposable website, but as a digital flagship studio with the permanence of physical architecture.
-            </p>
-          `
-        },
-        {
-          id: "fluid-performance",
-          title: "02 / The 60FPS Tactile Web",
-          content: `
-            <p class="essay-paragraph">
-              A luxury digital experience must perform with the speed and crisp feedback of a mechanical timepiece. Every button click, image preview, modal drawer, and font transition in our studio’s websites is tuned with bespoke cubic-bezier curves (<code>cubic-bezier(0.16, 1, 0.3, 1)</code>) running at a locked 60 frames per second.
-            </p>
-            
-            <div class="article-inline-grid">
-              <div class="article-grid-card" data-lightbox>
-                <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1000&q=85" alt="Interface Micro-Interactions" class="article-grid-img" />
-              </div>
-              <div class="article-grid-card" data-lightbox>
-                <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1000&q=85" alt="Digital Flagship Lookbook View" class="article-grid-img" />
-              </div>
-            </div>
-            <div class="article-grid-caption">Fig. 2.1 &amp; 2.2 — Left: Component state machine architecture. Right: Full-bleed digital lookbook presentation.</div>
-
-            <p class="essay-paragraph">
-              By engineering lean vanilla web architectures with zero bloated framework overhead, we achieve sub-second initial load times while delivering rich, immersive visual storytelling for our luxury and cultural clientele.
-            </p>
-            <div class="article-key-points-box">
-              <h4 class="key-points-title">Core Engineering Principles:</h4>
-              <ul class="key-points-list">
-                <li><strong>Sub-Second First Paint:</strong> Zero render-blocking script dependencies</li>
-                <li><strong>Hardware Acceleration:</strong> GPU-composited translate3d and opacity transforms</li>
-                <li><strong>Dynamic Contrast Hierarchy:</strong> Dual warm-ecru and dark obsidian theme modes</li>
-                <li><strong>Tactile Feedback:</strong> Bespoke hover portals with boundary collision detection</li>
-              </ul>
-            </div>
-          `
-        },
-        {
-          id: "looking-forward",
-          title: "03 / Looking Ahead to 2026",
-          content: `
-            <p class="essay-paragraph">
-              We want to thank the international jury members, our daring clients who trust our aesthetic direction, and our close-knit studio in Bali. We have several groundbreaking global commissions launching in the coming months—spanning fragrance brands, sustainable architectural archives, and Tokyo cinema retrospectives.
-            </p>
-          `
-        }
-      ],
-      nextId: "03"
-    },
-
-    "03": {
-      id: "03",
-      slug: "milan-design-week-sensory-identity",
-      title: "Designing the Sensory Identity for Milan Design Week 2026",
-      category: "Exhibition & Spatial Design",
-      date: "November 18, 2025",
-      readTime: "7 Min Read",
-      authorName: "Studio Spatial Team",
-      authorRole: "Environmental Architecture • ARGI Studio",
-      authorAvatar: "assets/logo.png",
-      lead: "How ARGI crafted a multi-sensory environmental brand identity spanning scent diffusion, soundscapes, and cast bronze architectural signage for Fuorisalone.",
-      featureImage: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=2000&q=85",
-      featureCaption: "Sensory Spatial Identity — Milan Design Week Pavilion & Cast Bronze Signage Suite",
-      sections: [
-        {
-          id: "spatial-olfactory",
-          title: "01 / Spatial Architecture Meets Olfactory Form",
-          content: `
-            <p class="essay-paragraph has-dropcap">
-              Exhibition design is fundamentally about orchestrating human emotion in three dimensions. For Milan Design Week (Fuorisalone), ARGI Studio was commissioned to direct the complete spatial and sensory identity for the <em>Materia Prima</em> pavilion in the historic Brera Design District.
-            </p>
-            <p class="essay-paragraph">
-              Rather than relying solely on visual signage and graphic posters, we conceptualized a total environmental atmosphere combining custom olfactory micro-diffusion (developed in Grasse, France), generative ambient acoustic soundscapes, and raw architectural materials.
-            </p>
-            <div class="article-pull-quote">
-              <p class="pull-quote-text">
-                “When an identity engages all five senses simultaneously, it ceases to be branding and becomes a memory etched into physical space.”
-              </p>
-              <span class="pull-quote-citation">— Spatial Direction Team, Milan</span>
-            </div>
-            <p class="essay-paragraph">
-              As visitors crossed the threshold into the 18th-century palazzo courtyard, subtle notes of smoky vetiver, cold stone, and cedarwood created an immediate psychological transition from the chaotic Milanese streets into an oasis of contemplative focus.
-            </p>
-          `
-        },
-        {
-          id: "raw-metal-travertine",
-          title: "02 / Material Honesty: Raw Metal & Travertine",
-          content: `
-            <p class="essay-paragraph">
-              All physical wayfinding plaques and typography within the palazzo were cast in solid recycled bronze with untreated hand-brushed surfaces. Over the course of the week-long exhibition, the natural oils from visitors’ touch gradually patinated the metal, making the audience active co-creators of the artifact.
-            </p>
-            
-            <div class="article-inline-grid">
-              <div class="article-grid-card" data-lightbox>
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85" alt="Bronze Architectural Signage" class="article-grid-img" />
-              </div>
-              <div class="article-grid-card" data-lightbox>
-                <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=85" alt="Roman Travertine Installation" class="article-grid-img" />
-              </div>
-            </div>
-            <div class="article-grid-caption">Fig. 3.1 &amp; 3.2 — Left: CNC-milled bronze signage. Right: Monolithic Roman travertine seating in the central cloister.</div>
-
-            <p class="essay-paragraph">
-              Monolithic Roman travertine benches provided grounding moments of pause throughout the gallery chambers, creating an interplay of cold stone, warm acoustic frequencies, and amber light.
-            </p>
-          `
-        },
-        {
-          id: "pavilion-impact",
-          title: "03 / The Pavilion Experience & Global Acclaim",
-          content: `
-            <p class="essay-paragraph">
-              Over 45,000 visitors passed through the Brera installation across six days, with widespread acclaim in international architectural and design publications including <em>Wallpaper*</em>, <em>Domus</em>, and <em>Disegno</em>.
-            </p>
-            <p class="essay-paragraph">
-              The project underscored our belief that the most profound design experiences do not scream for attention; they establish a serene gravitational field that invites contemplation and material appreciation.
-            </p>
-          `
-        }
-      ],
-      nextId: "04"
-    },
-
-    "04": {
-      id: "04",
-      slug: "tactile-luxury-in-the-age-of-synthetic-noise",
-      title: "Tactile Luxury in the Age of Synthetic Noise",
-      category: "Critical Essay",
-      date: "October 05, 2025",
-      readTime: "8 Min Read",
-      authorName: "Arya Rajasa",
-      authorRole: "Founder & Design Director • ARGI Studio",
-      authorAvatar: "assets/logo.png",
-      lead: "An essay on why physical craft, heavyweight paper stocks, and deliberate slow design matter more than ever in an algorithmic era.",
-      featureImage: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=2000&q=85",
-      featureCaption: "Tactile Luxury Essay — Archival paper exploration and the primacy of touch",
-      sections: [
-        {
-          id: "synthetic-fatigue",
-          title: "01 / Algorithmic Abundance & Synthetic Fatigue",
-          content: `
-            <p class="essay-paragraph has-dropcap">
-              We are currently living through the greatest explosion of synthetic media in human history. When an infinite number of generic images, synthetic texts, and automated layouts can be generated in a fraction of a second, the value of unconsidered mechanical reproduction drops to zero.
-            </p>
-            <p class="essay-paragraph">
-              What becomes infinitely precious in such a world? <strong>Material friction, human intention, and physical scarcity.</strong>
-            </p>
-            <div class="article-pull-quote">
-              <p class="pull-quote-text">
-                “When digital content becomes weightless and costless, true luxury is redefined by whatever cannot be downloaded.”
-              </p>
-              <span class="pull-quote-citation">— Arya Rajasa, Studio Essay Series</span>
-            </div>
-            <p class="essay-paragraph">
-              Consumers and design connoisseurs are experiencing collective synthetic fatigue. In response, audiences are gravitating toward physical artifacts that possess undeniable evidence of human hand, time, and physical resistance.
-            </p>
-          `
-        },
-        {
-          id: "primacy-of-touch",
-          title: "02 / The Primacy of Physical Touch",
-          content: `
-            <p class="essay-paragraph">
-              The human fingertip contains over 3,000 mechanoreceptors per square centimeter—capable of detecting nanoscale surface variations, the subtle tooth of cotton rag paper, and the thermal conductivity of polished solid brass.
-            </p>
-            
-            <div class="article-inline-grid">
-              <div class="article-grid-card" data-lightbox>
-                <img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1000&q=85" alt="Letterpress Blind Deboss" class="article-grid-img" />
-              </div>
-              <div class="article-grid-card" data-lightbox>
-                <img src="https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1000&q=85" alt="Heavy Amber Glass Flacon" class="article-grid-img" />
-              </div>
-            </div>
-            <div class="article-grid-caption">Fig. 4.1 &amp; 4.2 — Left: Deep blind deboss on 600gsm duplex stock. Right: Solid weighted amber glass flacon for Aura Fragrance.</div>
-
-            <p class="essay-paragraph">
-              When a luxury fashion house or an artisanal perfume brand invests in tactile unboxing rituals, they are creating a physical synaptic anchor that algorithmic ads can never replicate.
-            </p>
-          `
-        },
-        {
-          id: "slowness-as-discipline",
-          title: "03 / Slowness as a Creative Discipline",
-          content: `
-            <p class="essay-paragraph">
-              At ARGI Studio, we embrace deliberate slowness. We take on a strictly limited number of studio commissions each quarter, allowing our team to research raw substrates, collaborate with generational artisans, and refine digital micro-interactions until every detail feels inevitable.
-            </p>
-            <p class="essay-paragraph">
-              In doing so, we help our partners build brands that do not merely capture momentary attention, but endure across decades as cultural touchstones.
-            </p>
-          `
-        }
-      ],
-      nextId: "01"
     }
   };
 
-  // Dynamic Database Resolution (Firebase Cloud + Local Fallback)
+  // Dynamic Database Resolution (Supabase Cloud + API + Static Fallback)
   let ARTICLES_DATA = DEFAULT_ARTICLES_DATA;
   try {
     const cloudData = await getCloudArticles();

@@ -464,11 +464,11 @@ const initArticlePage = async () => {
   const shareTwitterBtn = document.getElementById("shareTwitterBtn");
   const shareLinkedinBtn = document.getElementById("shareLinkedinBtn");
 
-  const currentUrl = window.location.href;
+  const sharePageUrl = window.location.href;
 
   if (shareCopyLinkBtn) {
     shareCopyLinkBtn.addEventListener("click", () => {
-      navigator.clipboard.writeText(currentUrl).then(() => {
+      navigator.clipboard.writeText(sharePageUrl).then(() => {
         if (copyLinkText) copyLinkText.textContent = "Copied! ✓";
         setTimeout(() => {
           if (copyLinkText) copyLinkText.textContent = "Copy Link";
@@ -479,11 +479,11 @@ const initArticlePage = async () => {
 
   if (shareTwitterBtn) {
     const tweetText = encodeURIComponent(`"${currentArticle.title}" by @ARGIStudio:`);
-    shareTwitterBtn.href = `https://twitter.com/intent/tweet?text=${tweetText}&url=${encodeURIComponent(currentUrl)}`;
+    shareTwitterBtn.href = `https://twitter.com/intent/tweet?text=${tweetText}&url=${encodeURIComponent(sharePageUrl)}`;
   }
 
   if (shareLinkedinBtn) {
-    shareLinkedinBtn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`;
+    shareLinkedinBtn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(sharePageUrl)}`;
   }
 
   // -------------------------------------------------------------------------

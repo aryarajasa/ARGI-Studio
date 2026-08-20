@@ -3,62 +3,9 @@ import { getCloudProjects } from "./supabase-config.js";
 const initProjectPage = async () => {
 
   // =========================================================================
-  // 1. COMPLETE CASE STUDY DATASET (6 STUDIO PROJECTS)
+  // 1. ACTIVE CASE STUDY DATASET (MATCHING ADMIN DATABASE)
   // =========================================================================
   const DEFAULT_PROJECTS_DATA = {
-    "01": {
-      id: "01",
-      slug: "viviens-haute-couture",
-      title: "Vivien's",
-      titleAccent: "Haute Couture",
-      client: "Vivien's Haute Couture",
-      sector: "Luxury Fashion • Paris, FR",
-      year: "Q1 2026",
-      timeline: "14 Weeks",
-      disciplines: "Brand Identity, Packaging",
-      disciplinesSub: "Web Architecture & Art Direction",
-      liveUrl: "https://viviens-couture.fr",
-      liveUrlText: "viviens-couture.fr ↗",
-      summary: "A comprehensive brand repositioning, bespoke serif typography system, luxury tactile packaging, and high-conversion digital flagship e-commerce experience.",
-      challenge: "Vivien’s required a total visual reinvention to transcend traditional haute couture tropes. The brand needed to harmonize centuries of Parisian bespoke craftsmanship with contemporary, ultra-fast digital commerce without sacrificing an ounce of exclusivity.",
-      concept: "We engineered an architectural typographic identity pairing bespoke letterforms with razor-sharp editorial layouts. Every touchpoint—from French linen embossed garment boxes to the micro-interactions on the digital flagship—was calibrated for tactile luxury and effortless performance.",
-      quote: "ARGI Studio captured the exact balance of Parisian heritage and unapologetic modern edge we had been searching for. The response from our global clientele has been extraordinary.",
-      quoteAuthor: "Éléonore de Vivien",
-      quoteRole: "Creative Director & Founder",
-      heroImage: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=2000&q=85",
-      heroCaption: "EDITORIAL LOOKBOOK & BESPOKE STATIONERY SYSTEM",
-      spreadImg1: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption1: "01 / Archival Lookbook & Blind-Debossed Hardcover Monograph",
-      spreadImg2: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption2: "02 / Tactile Garment Tags & Foil-Stamped Business Cards",
-      colors: [
-        { name: "Noir Intense", hex: "#0c0d0e", bg: "#0c0d0e", textColor: "#fff" },
-        { name: "Silk Alabaster", hex: "#f5f0ea", bg: "#f5f0ea", textColor: "#111" },
-        { name: "Bleu Royal", hex: "#2b4acb", bg: "#2b4acb", textColor: "#fff" },
-        { name: "Gilt Accent", hex: "#d4a373", bg: "#d4a373", textColor: "#111" }
-      ],
-      typeHint: "Instrument Serif + Inter",
-      typeSample: "“Architecture of Elegance & Contemporary Restraint.”",
-      interfaceImg: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=85",
-      gallery: [
-        { img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85", tag: "MONOGRAPH", title: "Lookbook Editorial Spread", desc: "Gold foil stamp & tactile uncoated cotton stock" },
-        { img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=85", tag: "PACKAGING", title: "Bespoke Packaging Suite", desc: "Custom structural rigid boxes & silk ribbons" },
-        { img: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1000&q=85", tag: "STATIONERY", title: "Blind Embossed Cards", desc: "Heavyweight 600gsm Colorplan duplex" },
-        { img: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1000&q=85", tag: "TEXTILE", title: "Monogram Silk Scarf", desc: "Screen-printed archival silk twill" },
-        { img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=85", tag: "ENVIRONMENTAL", title: "Paris Flagship Storefront", desc: "Cast brass letterforms & spatial signage" }
-      ],
-      deliverables: [
-        "Brand Strategy & Positioning",
-        "Custom Wordmark & Monogram",
-        "120-Page Identity Guidelines",
-        "Sustainable Packaging Suite",
-        "Bespoke Shopify Plus Flagship",
-        "Social Campaign Art Direction",
-        "Retail Spatial Typography"
-      ],
-      nextId: "02"
-    },
-
     "02": {
       id: "02",
       slug: "aura-fragrance-studio",
@@ -120,33 +67,33 @@ const initProjectPage = async () => {
       client: "Twyg Botanic Form",
       sector: "Regenerative Skincare • Cape Town / NYC",
       year: "Q3 2025",
-      timeline: "10 Weeks",
-      disciplines: "E-Commerce Web, Sustainable Packaging",
-      disciplinesSub: "Brand Identity & 3D Prototyping",
+      timeline: "16 Weeks",
+      disciplines: "E-Commerce Web, Packaging",
+      disciplinesSub: "Material Sourcing & Campaign Films",
       liveUrl: "https://twygbotanic.com",
       liveUrlText: "twygbotanic.com ↗",
-      summary: "Closed-loop circular packaging, raw mycelium structures, vibrant botanical color theory, and an ultra-fast headless e-commerce store for ethical beauty.",
-      challenge: "Twyg wanted to disrupt the skincare market with 100% compostable mycelium packaging while maintaining a premium high-end bathroom aesthetic.",
+      summary: "Closed-loop mycelium packaging system, brutalist organic visual language, and custom high-speed Shopify Plus digital flagship.",
+      challenge: "Twyg needed to prove that ultra-sustainable, circular beauty could look sharp, avant-garde, and covetable without the dull aesthetic tropes of brown kraft paper.",
       concept: "We embraced brutalist organic shapes paired with high-contrast editorial typography. The visual language bridges raw earth textures with clinical modernism.",
       quote: "ARGI proved that sustainability does not mean boring brown paper. Our brand is bold, artistic, and completely unforgettable.",
-      quoteAuthor: "Thandiwe Khumalo",
-      quoteRole: "Founder & Head of Botanical R&D",
-      heroImage: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1600&q=85",
-      heroCaption: "CIRCULAR MYCELIUM PACKAGING & BOTANIC IDENTITY",
+      quoteAuthor: "Zola Ndlovu",
+      quoteRole: "Founding Formulator",
+      heroImage: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=2000&q=85",
+      heroCaption: "COMPOSTABLE MYCELIUM PACKAGING & GLASSWARE SUITE",
       spreadImg1: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption1: "01 / Recycled FSC Kraft Secondary Cartons & Aluminum Tubes",
-      spreadImg2: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption2: "02 / High-Contrast Laboratory Flasks & Pump Bottles",
+      spreadCaption1: "01 / Seed Paper Brand Collateral with Botanical Inks",
+      spreadImg2: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption2: "02 / Refillable Ceramic Vessels & Minimalist Pump System",
       colors: [
         { name: "Forest Canopy", hex: "#16302b", bg: "#16302b", textColor: "#fff" },
         { name: "Terracotta Clay", hex: "#c85a38", bg: "#c85a38", textColor: "#fff" },
         { name: "Raw Ecru", hex: "#f3ede2", bg: "#f3ede2", textColor: "#111" },
         { name: "Chlorophyll Yellow", hex: "#dfd876", bg: "#dfd876", textColor: "#111" }
       ],
-      typeHint: "Instrument Serif + Inter Tight",
-      typeSample: "“Living Flora & Circular Material Innovation.”",
-      interfaceImg: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1400&q=85",
-      browserUrl: "https://twygbotanic.com/products/restorative-serum",
+      typeHint: "Instrument Serif + Neue Haas",
+      typeSample: "“Circular Bio-Design & Brutalist Organic Purity.”",
+      interfaceImg: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1400&q=85",
+      browserUrl: "https://twygbotanic.com/products/cellular-nectar",
       gallery: [
         { img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=85", tag: "MYCELIUM", title: "Compostable Box Shells", desc: "Grown agricultural mycelium structures" },
         { img: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=1000&q=85", tag: "BOTANICAL", title: "Plant-Based Inks & Cards", desc: "100% post-consumer seed paper print" },
@@ -155,12 +102,12 @@ const initProjectPage = async () => {
         { img: "https://images.unsplash.com/photo-1463936575829-25148e1db1b8?auto=format&fit=crop&w=1200&q=85", tag: "RETAIL", title: "Greenhouse Flagship Space", desc: "Living plant wall retail interior" }
       ],
       deliverables: [
-        "Complete Brand Identity Suite",
-        "Circular Packaging Engineering",
-        "Headless Next.js / Shopify Web",
-        "Custom 3D Product Renders",
-        "Sustainable Material Sourcing",
-        "Global Launch Campaign"
+        "Mycelium Packaging System",
+        "Custom Organic Wordmark",
+        "E-Commerce Shopify Plus Build",
+        "Botanical Ink Print Suite",
+        "Darkfield Scientific Photography",
+        "Retail Store Concept Layout"
       ],
       nextId: "04"
     },
@@ -168,52 +115,52 @@ const initProjectPage = async () => {
     "04": {
       id: "04",
       slug: "monolith-architecture-studio",
-      title: "Monolith",
-      titleAccent: "Architecture Studio",
-      client: "Monolith Architecture",
-      sector: "Spatial Design & Architecture • Zurich / Tokyo",
+      title: "Monolith Architecture",
+      titleAccent: "Studio",
+      client: "Monolith Architects",
+      sector: "Minimalist Architecture • Zurich / Tokyo",
       year: "Q2 2025",
-      timeline: "16 Weeks",
+      timeline: "10 Weeks",
       disciplines: "Interactive Web, Print Monograph",
-      disciplinesSub: "Spatial Signage & Identity Guidelines",
+      disciplinesSub: "Spatial Typography & Project Archive",
       liveUrl: "https://monolith-arch.ch",
       liveUrlText: "monolith-arch.ch ↗",
-      summary: "Brutalist architectural monograph print publication, cast-aluminum spatial wayfinding, and an interactive 3D WebGL project archive.",
-      challenge: "Monolith constructs monumental concrete and glass architecture across the Alps and Japan. They needed a portfolio web platform and physical monograph that reflected their exact architectural discipline: light, mass, and structural honesty.",
-      concept: "We built a monochromatic, high-density layout inspired by architectural blueprints and Swiss typographic grids. The web archive features smooth micro-panoramas and structural blueprints.",
-      quote: "ARGI translated our physical buildings into pure digital mass. Their spatial understanding of typography is unmatched.",
-      quoteAuthor: "Hannes von Berg",
+      summary: "Architectural monograph publication, Swiss grid web archive, interactive 3D spatial models, and brutalist physical signage.",
+      challenge: "Monolith creates monumental concrete and timber residences across the Swiss Alps and Japan. Their previous website failed to reflect the quiet grandeur, textural depth, and structural discipline of their physical buildings.",
+      concept: "We built an architectural website utilizing ultra-precise hairline grids, generous negative space, and smooth cursor-based camera interactions that let the raw materiality of each project breathe.",
+      quote: "The digital experience ARGI designed mirrors our architecture perfectly: monumental, quiet, and constructed with uncompromising precision.",
+      quoteAuthor: "Kenzo Vogel",
       quoteRole: "Principal Architect",
-      heroImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85",
-      heroCaption: "CLOTH-BOUND MONOGRAPH & SPATIAL BLUEPRINT SUITE",
-      spreadImg1: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption1: "01 / Cast-Aluminum Entrance Signage & Building Wayfinding",
-      spreadImg2: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption2: "02 / 380-Page Swiss Linen Monograph Layouts",
+      heroImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=85",
+      heroCaption: "CAST CONCRETE MODEL MONOGRAPH & ALPINE RESIDENCE",
+      spreadImg1: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption1: "01 / Monograph Proof Sheets on Heavy Uncoated Paper",
+      spreadImg2: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption2: "02 / Cast Aluminum Project Numbering & Studio Plates",
       colors: [
-        { name: "Alpine Granite", hex: "#181a1b", bg: "#181a1b", textColor: "#fff" },
-        { name: "Cast Concrete", hex: "#d8d8d6", bg: "#d8d8d6", textColor: "#111" },
-        { name: "Pure Titanium", hex: "#ffffff", bg: "#ffffff", textColor: "#111" },
-        { name: "Safety Ochre", hex: "#ff5e14", bg: "#ff5e14", textColor: "#fff" }
+        { name: "Raw Concrete", hex: "#7a7d80", bg: "#7a7d80", textColor: "#fff" },
+        { name: "Charred Larch", hex: "#1c1b18", bg: "#1c1b18", textColor: "#fff" },
+        { name: "Alabaster Stone", hex: "#ebe8e1", bg: "#ebe8e1", textColor: "#111" },
+        { name: "Alpine Granite", hex: "#3a3d40", bg: "#3a3d40", textColor: "#fff" }
       ],
-      typeHint: "Inter + Instrument Serif",
-      typeSample: "“Monumental Silence, Heavy Concrete & Pure Geometry.”",
-      interfaceImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=85",
-      browserUrl: "https://monolith-arch.ch/projects/alps-pavilion",
+      typeHint: "Suisse Int'l + Instrument Serif",
+      typeSample: "“Monumental Restraint & The Poetry of Raw Mass.”",
+      interfaceImg: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85",
+      browserUrl: "https://monolith-arch.ch/projects/alpenhaus",
       gallery: [
-        { img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85", tag: "PUBLICATION", title: "Hardcover Monograph", desc: "Grey cloth binding with debossed foil" },
-        { img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=85", tag: "BLUEPRINTS", title: "Architectural Folios", desc: "A0 technical scale drawing sheets" },
-        { img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=85", tag: "SIGNAGE", title: "Anodized Steel Plaque", desc: "CNC-milled spatial wayfinding system" },
-        { img: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=1000&q=85", tag: "MATERIALS", title: "Concrete & Travertine", desc: "Tactile architectural material archive" },
-        { img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85", tag: "STUDIO", title: "Zurich Model Archive", desc: "Physical scale models & research space" }
+        { img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85", tag: "RESIDENCE", title: "Alpine Concrete Pavilion", desc: "Board-formed cast concrete & zinc roofing" },
+        { img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=85", tag: "INTERIOR", title: "Minimalist Timber Living Space", desc: "Custom smoked larch joinery" },
+        { img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=85", tag: "FACADE", title: "Perforated Screen Details", desc: "Dynamic shadow play across exterior panels" },
+        { img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=85", tag: "BLUEPRINT", title: "Structural Plan Monograph", desc: "Printed on silver metallic paper stock" },
+        { img: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=1200&q=85", tag: "MATERIAL", title: "Raw Aggregate Stone Samples", desc: "Curated material library for clients" }
       ],
       deliverables: [
-        "Complete Studio Brand Identity",
-        "Hardcover 380-Page Monograph",
-        "Custom WebGL Interactive Archive",
-        "Aluminum Spatial Wayfinding System",
-        "Architectural Exhibition Graphics",
-        "Stationery & Construction Documents"
+        "Monograph Hardcover Publication",
+        "Swiss Grid Archive Website",
+        "Interactive 3D Space Viewer",
+        "Cast Metal Studio Signage",
+        "Architectural Photography Direction",
+        "Identity & Grid Documentation"
       ],
       nextId: "05"
     },
@@ -223,40 +170,40 @@ const initProjectPage = async () => {
       slug: "komorebi-cinema-festival",
       title: "Komorebi Cinema",
       titleAccent: "Festival",
-      client: "Kyoto Film Society",
-      sector: "Film & Cultural Institution • Kyoto, JP",
-      year: "Q1 2025",
+      client: "Komorebi Film Foundation",
+      sector: "Independent Cinema • Kyoto, Japan",
+      year: "Q3 2025",
       timeline: "8 Weeks",
-      disciplines: "Visual Identity, Motion Campaign",
-      disciplinesSub: "Spatial Signage & Festival Program",
+      disciplines: "Visual Identity, Social Campaign",
+      disciplinesSub: "Poster Series & Spatial Projections",
       liveUrl: "https://komorebicinema.jp",
       liveUrlText: "komorebicinema.jp ↗",
-      summary: "Cinematic festival identity, screen-printed silkscreen posters, interactive schedule app, and environmental light projections in historic Kyoto temples.",
-      challenge: "The annual Komorebi Cinema Festival needed an avant-garde visual identity celebrating independent Asian cinema, bridging traditional Japanese woodblock aesthetics with cutting-edge kinetic typography.",
-      concept: "We developed a fluid kinetic typographic grid that mimics light filtering through forest trees (the literal meaning of 'Komorebi'). Custom Kanji-Latin hybrid typography was screenprinted across citywide billboards.",
-      quote: "The visual presence of the festival was breathtaking. ARGI created an aesthetic aura that defined the entire Kyoto art season.",
-      quoteAuthor: "Kenjiro Takahashi",
+      summary: "Cinematic motion identity, bilingual Japanese/English typography system, silk-screened poster archive, and mobile ticketing experience.",
+      challenge: "Komorebi is an international festival celebrating rare 35mm film prints in historic temples and modern art spaces across Kyoto. The identity needed to blend deep reverence for Japanese film heritage with cutting-edge contemporary design.",
+      concept: "We built an identity around the concept of sunlight filtering through trees ('Komorebi'). We created dynamic light-bleed typography, tactile screen-printed paper collateral, and immersive ambient video loops.",
+      quote: "ARGI understood our spirit effortlessly. The festival sold out in record time, and attendees were taking the posters off the walls to take home as art.",
+      quoteAuthor: "Mayumi Tanaka",
       quoteRole: "Festival Director",
-      heroImage: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1600&q=85",
-      heroCaption: "SILKSCREEN POSTER SUITE & KINETIC TYPOGRAPHY",
-      spreadImg1: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption1: "01 / Citywide Billboard Campaign in Gion & Kyoto Station",
-      spreadImg2: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption2: "02 / Festival Passes, Foil Lanyards & Screening Guides",
+      heroImage: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=2000&q=85",
+      heroCaption: "SILKSCREEN A0 POSTER SERIES & TEMPLE PROJECTIONS",
+      spreadImg1: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption1: "01 / Bilingual Festival Catalog with Japanese Kanji Grid",
+      spreadImg2: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1200&q=85",
+      spreadCaption2: "02 / Holographic VIP Festival Passes & Lanyards",
       colors: [
-        { name: "Kyoto Night", hex: "#0b0c10", bg: "#0b0c10", textColor: "#fff" },
-        { name: "Crimson Cinnabar", hex: "#e63946", bg: "#e63946", textColor: "#fff" },
-        { name: "Paper Washi", hex: "#f1ede6", bg: "#f1ede6", textColor: "#111" },
-        { name: "Electric Indigo", hex: "#3a56d4", bg: "#3a56d4", textColor: "#fff" }
+        { name: "Midnight Indigo", hex: "#0d131a", bg: "#0d131a", textColor: "#fff" },
+        { name: "Kyoto Vermilion", hex: "#d9381e", bg: "#d9381e", textColor: "#fff" },
+        { name: "Paper Washi", hex: "#f2ede4", bg: "#f2ede4", textColor: "#111" },
+        { name: "Sunlight Gold", hex: "#e5b842", bg: "#e5b842", textColor: "#111" }
       ],
-      typeHint: "Instrument Serif + Kanji Mono",
-      typeSample: "“Cinema of Light, Shadow & Fleeting Memory.”",
-      interfaceImg: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=85",
+      typeHint: "Shippori Mincho + Instrument Serif",
+      typeSample: "“Shadow, Light & The Celluloid Frame.”",
+      interfaceImg: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1400&q=85",
       browserUrl: "https://komorebicinema.jp/schedule",
       gallery: [
-        { img: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=85", tag: "SILKSCREEN", title: "A0 Festival Poster Series", desc: "Fluorescent vermilion & black screenprints" },
-        { img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1000&q=85", tag: "ACCREDITATION", title: "VIP Pass & Lanyards", desc: "Holographic foil on heavy matte plastic" },
-        { img: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=85", tag: "PROJECTION", title: "Kyoto Temple Renders", desc: "Outdoor spatial light mapping layouts" },
+        { img: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=85", tag: "POSTER", title: "A0 Silkscreen Poster", desc: "Fluorescent vermilion & black on washi stock" },
+        { img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1000&q=85", tag: "PROGRAM", title: "Festival Guide Book", desc: "Bilingual Japanese / English type system" },
+        { img: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1000&q=85", tag: "TICKETS", title: "Holographic Passes", desc: "Numbered attendee badges with foil trim" },
         { img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1000&q=85", tag: "CINEMA PRINT", title: "35mm Archival Film Proofs", desc: "High-contrast grain photography" },
         { img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=85", tag: "PAVILION", title: "Night Screening Stage", desc: "Historic temple courtyard screening hub" }
       ],
@@ -268,87 +215,41 @@ const initProjectPage = async () => {
         "Spatial Temple Light Projections",
         "Merchandise & Ticket Pass Suite"
       ],
-      nextId: "06"
-    },
-
-    "06": {
-      id: "06",
-      slug: "braids-magazine-issue-04",
-      title: "Braids Magazine",
-      titleAccent: "Issue 04",
-      client: "Braids Publishing",
-      sector: "Independent Editorial Press • London / NYC",
-      year: "Q1 2026",
-      timeline: "12 Weeks",
-      disciplines: "Editorial Print, Typography",
-      disciplinesSub: "Digital Edition & Subscription Hub",
-      liveUrl: "https://braidsmagazine.com",
-      liveUrlText: "braidsmagazine.com ↗",
-      summary: "Avant-garde editorial publication art direction, custom ligature typeface design, tactile holographic cover foil, and digital reader app.",
-      challenge: "Braids Magazine is an international print monograph exploring contemporary fashion theory and critical culture. Issue 04 needed a complete typographic overhaul that challenged conventional editorial grids.",
-      concept: "We designed a bespoke high-contrast ligature typeface and deployed asymmetrical 12-column dynamic layouts with extreme typographic scale contrast and tactile coated/uncoated paper stocks.",
-      quote: "ARGI Studio pushed our publication into a work of collectible art. Every single page feels alive, provocative, and razor sharp.",
-      quoteAuthor: "Sienna Callow",
-      quoteRole: "Editor-in-Chief",
-      heroImage: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=2000&q=85",
-      heroCaption: "HOLOGRAPHIC FOIL ISSUE COVER & EDITORIAL SPREADS",
-      spreadImg1: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption1: "01 / Custom Display Serif Ligatures & Column Grids",
-      spreadImg2: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption2: "02 / High-Gloss Fashion Feature & Essay Layouts",
-      colors: [
-        { name: "Editorial Carbon", hex: "#111213", bg: "#111213", textColor: "#fff" },
-        { name: "Bleached Newsprint", hex: "#f6f4ef", bg: "#f6f4ef", textColor: "#111" },
-        { name: "Acid Vermilion", hex: "#e03e2d", bg: "#e03e2d", textColor: "#fff" },
-        { name: "Silver Mylar", hex: "#c0c4cc", bg: "#c0c4cc", textColor: "#111" }
-      ],
-      typeHint: "Braids Serif + Inter Display",
-      typeSample: "“Critical Culture, Avant-Garde Form & Printed Matter.”",
-      interfaceImg: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1400&q=85",
-      browserUrl: "https://braidsmagazine.com/issue-04",
-      gallery: [
-        { img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=85", tag: "HARDCOVER", title: "Holographic Foil Cover", desc: "Silver foil stamped on 400gsm duplex board" },
-        { img: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1000&q=85", tag: "TYPOGRAPHY", title: "Custom Ligature Spreads", desc: "Asymmetrical 12-column editorial grids" },
-        { img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1000&q=85", tag: "SLIPCASE", title: "Custom Archival Box", desc: "Rigid board slipcase with debossed spine" },
-        { img: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1000&q=85", tag: "ESSAYS", title: "Critical Theory Proofs", desc: "Uncoated Munken paper stock testing" },
-        { img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=85", tag: "EXHIBITION", title: "Launch Monograph Event", desc: "London gallery book signing & launch party" }
-      ],
-      deliverables: [
-        "Complete Publication Art Direction",
-        "Custom Editorial Ligature Typeface",
-        "240-Page Print Production R&D",
-        "Digital Reader Progressive Web App",
-        "Holographic Slipcase Packaging",
-        "Launch Exhibition & Book Signing"
-      ],
-      nextId: "01"
+      nextId: "02"
     }
   };
 
-  // Dynamic Database Resolution (Firebase Cloud + Local Fallback)
+  // Dynamic Database Resolution (Supabase Cloud + API + Static Fallback)
   let PROJECTS_DATA = DEFAULT_PROJECTS_DATA;
-  const localProjects = localStorage.getItem("argi_projects_data");
-  if (localProjects) {
-    try {
-      const parsed = JSON.parse(localProjects);
-      if (parsed && Object.keys(parsed).length > 0) PROJECTS_DATA = parsed;
-    } catch(e) {}
+  try {
+    const cloudProjects = await getCloudProjects();
+    if (cloudProjects && Object.keys(cloudProjects).length > 0) {
+      PROJECTS_DATA = cloudProjects;
+    }
+  } catch (e) {
+    const localProjects = localStorage.getItem("argi_projects_data");
+    if (localProjects) {
+      try {
+        const parsed = JSON.parse(localProjects);
+        if (parsed && Object.keys(parsed).length > 0) PROJECTS_DATA = parsed;
+      } catch(err) {}
+    }
   }
-  getCloudProjects().catch(() => {});
 
   // =========================================================================
   // 2. QUERY PARAMETER ROUTING & DATA POPULATION (SLUG + ID RESOLVER)
   // =========================================================================
   const getProjectFromUrl = () => {
     const params = new URLSearchParams(window.location.search);
-    let requested = params.get("slug") || params.get("id") || "01";
+    const defaultKey = Object.keys(PROJECTS_DATA)[0] || "02";
+    let requested = params.get("slug") || params.get("id") || defaultKey;
     // Check slug first, then ID
     let found = Object.values(PROJECTS_DATA).find(
       p => (p.slug && p.slug.toLowerCase() === requested.toLowerCase()) || p.id === requested
     );
     if (!found) {
       if (requested.length === 1) requested = "0" + requested;
-      found = PROJECTS_DATA[requested] || DEFAULT_PROJECTS_DATA["01"];
+      found = PROJECTS_DATA[requested] || DEFAULT_PROJECTS_DATA[defaultKey] || Object.values(DEFAULT_PROJECTS_DATA)[0];
     }
     return found;
   };

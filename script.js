@@ -429,8 +429,9 @@ const initLandingPage = () => {
         const disciplines = p.disciplines || "Brand Identity";
         const sectorOrYear = p.sector ? p.sector.split("•")[1] || p.sector : (p.year || "2026");
 
+        const targetSlug = p.slug || p.id;
         return `
-          <a href="project.html?id=${p.id}" class="gallery-item-sharp" aria-label="Explore ${titleFull} Case Study">
+          <a href="project.html?slug=${targetSlug}" class="gallery-item-sharp" aria-label="Explore ${titleFull} Case Study">
             <div class="gallery-item-frame">
               <img src="${p.heroImage || 'assets/logo.png'}" alt="${titleFull} Brand Identity System" class="gallery-img-sharp" loading="lazy" />
               <div class="gallery-sharp-overlay">
@@ -460,9 +461,10 @@ const initLandingPage = () => {
         const disciplines = p.disciplines || "Brand Identity";
         const sector = p.sector || "Paris, France";
         const year = p.year || "2026";
+        const targetSlug = p.slug || p.id;
 
         return `
-          <a href="project.html?id=${p.id}" class="index-row-item" data-preview="${p.heroImage || 'assets/logo.png'}">
+          <a href="project.html?slug=${targetSlug}" class="index-row-item" data-preview="${p.heroImage || 'assets/logo.png'}">
             <span class="index-col col-num">${p.id}</span>
             <span class="index-col col-client">${titleFull}</span>
             <span class="index-col col-discipline">${disciplines}</span>
@@ -533,8 +535,9 @@ const initLandingPage = () => {
     if (footerArchiveList) {
       footerArchiveList.innerHTML = projectKeys.map(id => {
         const p = projectsData[id];
+        const targetSlug = p.slug || p.id;
         const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
-        return `<li><a href="project.html?id=${p.id}" class="footer-menu-link">${titleFull}</a></li>`;
+        return `<li><a href="project.html?slug=${targetSlug}" class="footer-menu-link">${titleFull}</a></li>`;
       }).join("");
     }
   };
@@ -565,8 +568,9 @@ const initLandingPage = () => {
       setTimeout(() => {
         journalGrid.innerHTML = currentKeys.map(id => {
           const a = articlesData[id];
+          const targetSlug = a.slug || a.id;
           return `
-            <a href="article.html?id=${a.id}" class="news-card" aria-label="Read ${a.title}">
+            <a href="article.html?slug=${targetSlug}" class="news-card" aria-label="Read ${a.title}">
               <div class="news-thumbnail-wrap">
                 <img src="${a.featureImage || 'assets/logo.png'}" alt="${a.title}" class="news-img" loading="lazy" />
               </div>

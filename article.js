@@ -103,12 +103,30 @@ const initArticlePage = async () => {
   getCloudArticles().catch(() => {});
 
   // -------------------------------------------------------------------------
-  // 2. QUERY PARAMETER ROUTING & ARTICLE RESOLUTION
+  // 2. QUERY PARAMETER ROUTING & ARTICLE RESOLUTION (SLUG + ID RESOLVER)
   // -------------------------------------------------------------------------
   const urlParams = new URLSearchParams(window.location.search);
-  const articleId = urlParams.get("id") || "01";
-  const currentArticle = ARTICLES_DATA[articleId] || DEFAULT_ARTICLES_DATA["01"];
-  const nextArticle = ARTICLES_DATA[currentArticle.nextId] || currentArticle;
+  const requestedSlugOrId = urlParams.get("slug") || urlParams.get("id") || "01";
+
+  // Match by slug first, fallback to numeric ID
+  let currentArticle = Object.values(ARTICLES_DATA).find(
+    art => (art.slug && art.slug.toLowerCase() === requestedSlugOrId.toLowerCase()) || art.id === requestedSlugOrId
+  );
+  if (!currentArticle) {
+    currentArticle = ARTICLES_DATA[requestedSlugOrId] || DEFAULT_ARTICLES_DATA["01"];
+  }
+
+  const nextArticle = Object.values(ARTICLES_DATA).find(
+    art => art.id === currentArticle.nextId || (art.slug && art.slug === currentArticle.nextId)
+  ) || ARTICLES_DATA[currentArticle.nextId] || currentArticle;
+
+  const articleSlug = currentArticle.slug || `article-${currentArticle.id}`;
+  const currentUrl = `https://argistudio.com/article.html?slug=${articleSlug}`;
+
+  // Seamlessly update browser address bar to clean title slug URL
+  if (window.history && window.history.replaceState) {
+    window.history.replaceState({ slug: articleSlug }, "", `article.html?slug=${articleSlug}`);
+  }
 
   // Update Page Title
   document.title = `${currentArticle.title} — ARGI Studio Journal`;
@@ -131,9 +149,10 @@ const initArticlePage = async () => {
       <div class="dropdown-scroll-track">
         ${allIds.map(id => {
           const a = ARTICLES_DATA[id];
-          const isCurrent = id === currentArticle.id;
+          const isCurrent = id === currentArticle.id || a.slug === currentArticle.slug;
+          const targetSlug = a.slug || a.id;
           return `
-            <a href="article.html?id=${a.id}" class="dropdown-item ${isCurrent ? 'is-current' : ''}" data-id="${a.id}">
+            <a href="article.html?slug=${targetSlug}" class="dropdown-item ${isCurrent ? 'is-current' : ''}" data-id="${a.id}">
               <span class="d-num">${a.id}</span>
               <span class="d-title">${a.title}</span>
               <span class="d-cat">${a.category || 'Journal'}</span>
@@ -183,8 +202,7 @@ const initArticlePage = async () => {
   const metaDescription = (currentArticle.lead || `Read ${articleTitle} from ARGI Studio, an independent brand and web design agency in Bali, Indonesia.`).slice(0, 200);
   if (pageDesc) pageDesc.content = metaDescription;
 
-  const currentUrl = `https://argistudio.com/article.html?id=${currentArticle.id}`;
-  const featImgUrl = currentArticle.featureImage || "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=85";
+  const featImgUrl = currentArticle.featureImage || "https://argistudio.com/assets/og-image.jpg";
 
   // Dynamic Open Graph & Twitter Cards
   const ogTitle = document.getElementById("ogTitle");
@@ -352,8 +370,9 @@ const initArticlePage = async () => {
 
   if (nextArticleCard) {
     if (nextArticle && nextArticle.id !== currentArticle.id) {
+      const nextSlug = nextArticle.slug || nextArticle.id;
       nextArticleCard.style.display = "block";
-      nextArticleCard.href = `article.html?id=${nextArticle.id}`;
+      nextArticleCard.href = `article.html?slug=${nextSlug}`;
       if (nextArticleId) nextArticleId.textContent = nextArticle.id;
       if (nextArticleTitle) nextArticleTitle.textContent = nextArticle.title;
       if (nextArticleCat) nextArticleCat.textContent = nextArticle.category;
@@ -370,8 +389,9 @@ const initArticlePage = async () => {
         const projectKeys = Object.keys(projectsData).sort((a, b) => a.localeCompare(b));
         footerArchiveList.innerHTML = projectKeys.map((id) => {
           const p = projectsData[id];
+          const targetSlug = p.slug || p.id;
           const titleFull = `${p.title} ${p.titleAccent || ""}`.trim();
-          return `<li><a href="project.html?id=${p.id}" class="footer-menu-link">${titleFull}</a></li>`;
+          return `<li><a href="project.html?slug=${targetSlug}" class="footer-menu-link">${titleFull}</a></li>`;
         }).join("");
       }
     });
@@ -1192,8 +1212,9 @@ ${clientName}`;
     if (e.key === "ArrowRight") {
       const pageWrapper = document.querySelector(".page-wrapper");
       if (pageWrapper) pageWrapper.classList.add("is-leaving");
+      const nextSlug = nextArticle.slug || nextArticle.id;
       setTimeout(() => {
-        window.location.href = `article.html?id=${nextArticle.id}`;
+        window.location.href = `article.html?slug=${nextSlug}`;
       }, 160);
     }
   });

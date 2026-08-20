@@ -1,73 +1,55 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage / Studio Root -->
   <url>
     <loc>https://argistudio.com/</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Portfolio Case Studies -->
+  <!-- Portfolio Case Studies (Clean SEO Slugs) -->
   <url>
-    <loc>https://argistudio.com/project.html?id=01</loc>
-    <lastmod>2026-08-18</lastmod>
+    <loc>https://argistudio.com/project.html?slug=viviens-haute-couture</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://argistudio.com/project.html?id=02</loc>
-    <lastmod>2026-08-18</lastmod>
+    <loc>https://argistudio.com/project.html?slug=aura-fragrance-studio</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://argistudio.com/project.html?id=03</loc>
-    <lastmod>2026-08-18</lastmod>
+    <loc>https://argistudio.com/project.html?slug=twyg-regenerative-botanic</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://argistudio.com/project.html?id=04</loc>
-    <lastmod>2026-08-18</lastmod>
+    <loc>https://argistudio.com/project.html?slug=monolith-architecture-studio</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://argistudio.com/project.html?id=05</loc>
-    <lastmod>2026-08-18</lastmod>
+    <loc>https://argistudio.com/project.html?slug=komorebi-cinema-festival</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://argistudio.com/project.html?id=06</loc>
-    <lastmod>2026-08-18</lastmod>
+    <loc>https://argistudio.com/project.html?slug=braids-magazine-typography</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Journal Articles & Critical Dispatches -->
+  <!-- Journal Articles & Critical Dispatches (Clean SEO Slugs) -->
   <url>
-    <loc>https://argistudio.com/article.html?id=01</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://argistudio.com/article.html?id=02</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://argistudio.com/article.html?id=03</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://argistudio.com/article.html?id=04</loc>
-    <lastmod>2026-08-18</lastmod>
+    <loc>https://argistudio.com/article.html?slug=argi-studio-vol-01-released-worldwide-01</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -337,19 +337,35 @@ const initProjectPage = async () => {
   getCloudProjects().catch(() => {});
 
   // =========================================================================
-  // 2. QUERY PARAMETER ROUTING & DATA POPULATION
+  // 2. QUERY PARAMETER ROUTING & DATA POPULATION (SLUG + ID RESOLVER)
   // =========================================================================
-  const getProjectIdFromUrl = () => {
+  const getProjectFromUrl = () => {
     const params = new URLSearchParams(window.location.search);
-    let id = params.get("id") || "01";
-    // Normalize id like '1' -> '01'
-    if (id.length === 1) id = "0" + id;
-    return PROJECTS_DATA[id] ? id : Object.keys(PROJECTS_DATA)[0] || "01";
+    let requested = params.get("slug") || params.get("id") || "01";
+    // Check slug first, then ID
+    let found = Object.values(PROJECTS_DATA).find(
+      p => (p.slug && p.slug.toLowerCase() === requested.toLowerCase()) || p.id === requested
+    );
+    if (!found) {
+      if (requested.length === 1) requested = "0" + requested;
+      found = PROJECTS_DATA[requested] || DEFAULT_PROJECTS_DATA["01"];
+    }
+    return found;
   };
 
-  const currentProjectId = getProjectIdFromUrl();
-  const currentProject = PROJECTS_DATA[currentProjectId] || DEFAULT_PROJECTS_DATA["01"];
-  const nextProject = PROJECTS_DATA[currentProject.nextId] || currentProject;
+  const currentProject = getProjectFromUrl();
+  const currentProjectId = currentProject.id;
+  const nextProject = Object.values(PROJECTS_DATA).find(
+    p => p.id === currentProject.nextId || (p.slug && p.slug === currentProject.nextId)
+  ) || PROJECTS_DATA[currentProject.nextId] || currentProject;
+
+  const projectSlug = currentProject.slug || `project-${currentProject.id}`;
+  const currentUrl = `https://argistudio.com/project.html?slug=${projectSlug}`;
+
+  // Seamlessly update browser address bar to clean title slug URL
+  if (window.history && window.history.replaceState) {
+    window.history.replaceState({ slug: projectSlug }, "", `project.html?slug=${projectSlug}`);
+  }
 
   // Update Dynamic Page Meta, Title & Rich OpenGraph / Twitter Cards
   const fullTitle = `${currentProject.title} ${currentProject.titleAccent || ''}`.trim();
@@ -359,8 +375,7 @@ const initProjectPage = async () => {
   const metaDescription = `${currentProject.summary || 'Brand Identity, Web Design & Packaging Case Study by ARGI Studio, Bali.'}`;
   if (pageDesc) pageDesc.content = metaDescription;
 
-  const currentUrl = `https://argistudio.com/project.html?id=${currentProject.id}`;
-  const heroImgUrl = currentProject.heroImage || "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85";
+  const heroImgUrl = currentProject.heroImage || "https://argistudio.com/assets/og-image.jpg";
 
   // Dynamic Open Graph & Twitter Cards
   const ogTitle = document.getElementById("ogTitle");
@@ -759,7 +774,8 @@ const initProjectPage = async () => {
   // Populate Next Project Full-Width Hero Card
   const csNextProjectLink = document.getElementById("csNextProjectLink");
   if (csNextProjectLink) {
-    csNextProjectLink.href = `project.html?id=${nextProject.id}`;
+    const nextSlug = nextProject.slug || nextProject.id;
+    csNextProjectLink.href = `project.html?slug=${nextSlug}`;
   }
 
   const csNextBgImg = document.getElementById("csNextBgImg");
@@ -780,15 +796,29 @@ const initProjectPage = async () => {
     csNextDiscipline.textContent = `${nextProject.disciplines} • ${nextProject.sector}`;
   }
 
-  // Highlight Active Dropdown Item
-  const dropdownItems = document.querySelectorAll(".dropdown-item");
-  dropdownItems.forEach(item => {
-    if (item.dataset.id === currentProjectId) {
-      item.classList.add("is-active");
-    } else {
-      item.classList.remove("is-active");
-    }
-  });
+  // Populate Dropdown Switcher Menu with ALL Live Projects
+  const csSwitcherDropdown = document.getElementById("csSwitcherDropdown");
+  if (csSwitcherDropdown) {
+    const allProjectKeys = Object.keys(PROJECTS_DATA).sort((a, b) => a.localeCompare(b));
+    csSwitcherDropdown.innerHTML = `
+      <div class="dropdown-header">ALL CASE STUDIES (${allProjectKeys.length})</div>
+      <div class="dropdown-scroll-track">
+        ${allProjectKeys.map(id => {
+          const p = PROJECTS_DATA[id];
+          const isCurrent = id === currentProjectId || p.slug === currentProject.slug;
+          const targetSlug = p.slug || p.id;
+          const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
+          return `
+            <a href="project.html?slug=${targetSlug}" class="dropdown-item ${isCurrent ? 'is-active' : ''}" data-id="${p.id}">
+              <span class="d-num">${p.id}</span>
+              <span class="d-title">${titleFull}</span>
+              <span class="d-loc">${p.sector ? p.sector.split('•')[0].trim() : ''}</span>
+            </a>
+          `;
+        }).join("")}
+      </div>
+    `;
+  }
 
   // Populate Footer Selected Archive from Portfolio Database
   const footerArchiveList = document.getElementById("footerArchiveList");
@@ -796,8 +826,9 @@ const initProjectPage = async () => {
     const projectKeys = Object.keys(PROJECTS_DATA).sort((a, b) => a.localeCompare(b));
     footerArchiveList.innerHTML = projectKeys.map(id => {
       const p = PROJECTS_DATA[id];
+      const targetSlug = p.slug || p.id;
       const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
-      return `<li><a href="project.html?id=${p.id}" class="footer-menu-link">${titleFull}</a></li>`;
+      return `<li><a href="project.html?slug=${targetSlug}" class="footer-menu-link">${titleFull}</a></li>`;
     }).join("");
   }
 
@@ -1074,8 +1105,9 @@ const initProjectPage = async () => {
     if (e.key === "ArrowRight") {
       const pageWrapper = document.querySelector(".page-wrapper");
       if (pageWrapper) pageWrapper.classList.add("is-leaving");
+      const nextSlug = nextProject.slug || nextProject.id;
       setTimeout(() => {
-        window.location.href = `project.html?id=${nextProject.id}`;
+        window.location.href = `project.html?slug=${nextSlug}`;
       }, 180);
     }
   });

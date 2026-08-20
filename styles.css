@@ -2515,6 +2515,64 @@ body.site-ready .page-wrapper {
 }
 
 /* ==========================================================================
+   CASE STUDY SHARE BAR
+   ========================================================================== */
+.cs-share-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-light);
+  flex-wrap: wrap;
+}
+
+.cs-share-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.cs-share-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.cs-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.95rem;
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.cs-share-btn:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+  transform: translateY(-1px);
+}
+
+.share-action-btn.share-instagram-btn:hover,
+.cs-share-btn.cs-instagram-btn:hover {
+  background: #E1306C;
+  border-color: #E1306C;
+  color: #ffffff;
+}
+
+/* ==========================================================================
    EDITORIAL CREATIVE FOOTER (CREATION OF ADAM ASCII, TOP SPLIT GRID & GIANT LOGO)
    ========================================================================== */
 .site-footer {

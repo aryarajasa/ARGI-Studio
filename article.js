@@ -457,14 +457,67 @@ const initArticlePage = async () => {
   });
 
   // -------------------------------------------------------------------------
-  // 7. SHARE BUTTONS (CLIPBOARD & SOCIAL)
+  // 7. SHARE BUTTONS (INSTAGRAM STORY, CLIPBOARD & SOCIAL)
   // -------------------------------------------------------------------------
+  const shareInstagramBtn = document.getElementById("shareInstagramBtn");
+  const instagramShareText = document.getElementById("instagramShareText");
   const shareCopyLinkBtn = document.getElementById("shareCopyLinkBtn");
   const copyLinkText = document.getElementById("copyLinkText");
   const shareTwitterBtn = document.getElementById("shareTwitterBtn");
   const shareLinkedinBtn = document.getElementById("shareLinkedinBtn");
 
   const sharePageUrl = window.location.href;
+
+  if (shareInstagramBtn) {
+    shareInstagramBtn.addEventListener("click", async () => {
+      const shareData = {
+        title: `${currentArticle.title || "ARGI Studio Journal"}`,
+        text: `Read "${currentArticle.title}" from ARGI Studio:`,
+        url: sharePageUrl
+      };
+
+      // 1. Mobile Web Share API: Native OS share sheet (shows Instagram Stories directly on mobile!)
+      if (navigator.share && /mobile|android|iphone|ipad|ipod/i.test(navigator.userAgent)) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (err) {
+          if (err.name !== "AbortError") {
+            console.log("Web Share fallback:", err);
+          } else {
+            return;
+          }
+        }
+      }
+
+      // 2. Fallback for Desktop / Direct: Copy link + show Story feedback + open Instagram
+      try {
+        await navigator.clipboard.writeText(sharePageUrl);
+      } catch (e) {}
+
+      if (instagramShareText) {
+        const originalText = instagramShareText.textContent;
+        instagramShareText.textContent = "✓ Link Copied for Story!";
+        shareInstagramBtn.style.borderColor = "#E1306C";
+        shareInstagramBtn.style.color = "#E1306C";
+
+        setTimeout(() => {
+          instagramShareText.textContent = originalText;
+          shareInstagramBtn.style.borderColor = "";
+          shareInstagramBtn.style.color = "";
+        }, 2500);
+      }
+
+      const isMobile = /mobile|android|iphone|ipad|ipod/i.test(navigator.userAgent);
+      if (isMobile) {
+        setTimeout(() => {
+          window.location.href = "instagram://story-camera";
+        }, 350);
+      } else {
+        window.open("https://www.instagram.com/", "_blank", "noopener,noreferrer");
+      }
+    });
+  }
 
   if (shareCopyLinkBtn) {
     shareCopyLinkBtn.addEventListener("click", () => {

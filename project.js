@@ -972,6 +972,81 @@ const initProjectPage = async () => {
   updateClock();
   setInterval(updateClock, 1000);
 
+  // Case Study Share Actions (Instagram Story, Link, X, LinkedIn)
+  const csShareInstagramBtn = document.getElementById("shareInstagramBtn");
+  const csInstagramShareText = document.getElementById("instagramShareText");
+  const csShareCopyLinkBtn = document.getElementById("shareCopyLinkBtn");
+  const csCopyLinkText = document.getElementById("copyLinkText");
+  const csShareTwitterBtn = document.getElementById("shareTwitterBtn");
+  const csShareLinkedinBtn = document.getElementById("shareLinkedinBtn");
+
+  const csShareUrl = window.location.href;
+
+  if (csShareInstagramBtn) {
+    csShareInstagramBtn.addEventListener("click", async () => {
+      const shareData = {
+        title: `${currentProject.title} — ARGI Studio Case Study`,
+        text: `Explore "${currentProject.title}" designed by ARGI Studio:`,
+        url: csShareUrl
+      };
+
+      if (navigator.share && /mobile|android|iphone|ipad|ipod/i.test(navigator.userAgent)) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (err) {
+          if (err.name !== "AbortError") console.log("Web Share fallback:", err);
+          else return;
+        }
+      }
+
+      try {
+        await navigator.clipboard.writeText(csShareUrl);
+      } catch (e) {}
+
+      if (csInstagramShareText) {
+        const orig = csInstagramShareText.textContent;
+        csInstagramShareText.textContent = "✓ Link Copied for Story!";
+        csShareInstagramBtn.style.borderColor = "#E1306C";
+        csShareInstagramBtn.style.color = "#E1306C";
+        setTimeout(() => {
+          csInstagramShareText.textContent = orig;
+          csShareInstagramBtn.style.borderColor = "";
+          csShareInstagramBtn.style.color = "";
+        }, 2500);
+      }
+
+      const isMobile = /mobile|android|iphone|ipad|ipod/i.test(navigator.userAgent);
+      if (isMobile) {
+        setTimeout(() => {
+          window.location.href = "instagram://story-camera";
+        }, 350);
+      } else {
+        window.open("https://www.instagram.com/", "_blank", "noopener,noreferrer");
+      }
+    });
+  }
+
+  if (csShareCopyLinkBtn) {
+    csShareCopyLinkBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(csShareUrl).then(() => {
+        if (csCopyLinkText) csCopyLinkText.textContent = "Copied! ✓";
+        setTimeout(() => {
+          if (csCopyLinkText) csCopyLinkText.textContent = "Copy";
+        }, 2200);
+      });
+    });
+  }
+
+  if (csShareTwitterBtn) {
+    const tweetText = encodeURIComponent(`"${currentProject.title}" by @ARGIStudio:`);
+    csShareTwitterBtn.href = `https://twitter.com/intent/tweet?text=${tweetText}&url=${encodeURIComponent(csShareUrl)}`;
+  }
+
+  if (csShareLinkedinBtn) {
+    csShareLinkedinBtn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(csShareUrl)}`;
+  }
+
   // Adaptive Dark/Light Mode Favicon Switcher (Based on OS Preference)
   const initFaviconThemeSwitcher = () => {
     const faviconTag = document.getElementById("faviconTag");

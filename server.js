@@ -231,8 +231,11 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
-  // --- STATIC FILE SERVING ---
+  // --- STATIC FILE SERVING & CLEAN URL REWRITES ---
   if (reqPath === '/') reqPath = '/index.html';
+  else if (reqPath.startsWith('/project/') || reqPath === '/project') reqPath = '/project.html';
+  else if (reqPath.startsWith('/article/') || reqPath === '/article' || reqPath.startsWith('/journal/') || reqPath === '/journal') reqPath = '/article.html';
+
   const filePath = path.join(DIR, reqPath);
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';

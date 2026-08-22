@@ -440,9 +440,11 @@ const initLandingPage = () => {
         const disciplines = p.disciplines || "Brand Identity";
         const sectorOrYear = p.sector ? p.sector.split("•")[1] || p.sector : (p.year || "2026");
 
+        const isLocalFile = window.location.protocol === "file:";
         const targetSlug = p.slug || p.id;
+        const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}`;
         return `
-          <a href="project.html?slug=${targetSlug}" class="gallery-item-sharp" aria-label="Explore ${titleFull} Case Study">
+          <a href="${projectHref}" class="gallery-item-sharp" aria-label="Explore ${titleFull} Case Study">
             <div class="gallery-item-frame">
               <img src="${p.heroImage || 'assets/logo.png'}" alt="${titleFull} Brand Identity System" class="gallery-img-sharp" loading="lazy" />
               <div class="gallery-sharp-overlay">
@@ -472,10 +474,12 @@ const initLandingPage = () => {
         const disciplines = p.disciplines || "Brand Identity";
         const sector = p.sector || "Paris, France";
         const year = p.year || "2026";
+        const isLocalFile = window.location.protocol === "file:";
         const targetSlug = p.slug || p.id;
+        const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}`;
 
         return `
-          <a href="project.html?slug=${targetSlug}" class="index-row-item" data-preview="${p.heroImage || 'assets/logo.png'}">
+          <a href="${projectHref}" class="index-row-item" data-preview="${p.heroImage || 'assets/logo.png'}">
             <span class="index-col col-num">${p.id}</span>
             <span class="index-col col-client">${titleFull}</span>
             <span class="index-col col-discipline">${disciplines}</span>
@@ -542,9 +546,11 @@ const initLandingPage = () => {
     if (footerArchiveList) {
       footerArchiveList.innerHTML = projectKeys.map(id => {
         const p = projectsData[id];
+        const isLocalFile = window.location.protocol === "file:";
         const targetSlug = p.slug || p.id;
+        const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}`;
         const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
-        return `<li><a href="project.html?slug=${targetSlug}" class="footer-menu-link">${titleFull}</a></li>`;
+        return `<li><a href="${projectHref}" class="footer-menu-link">${titleFull}</a></li>`;
       }).join("");
     }
   };
@@ -575,9 +581,11 @@ const initLandingPage = () => {
       setTimeout(() => {
         journalGrid.innerHTML = currentKeys.map(id => {
           const a = articlesData[id];
+          const isLocalFile = window.location.protocol === "file:";
           const targetSlug = a.slug || a.id;
+          const articleHref = isLocalFile ? `article.html?slug=${targetSlug}` : `/article/${targetSlug}`;
           return `
-            <a href="article.html?slug=${targetSlug}" class="news-card" aria-label="Read ${a.title}">
+            <a href="${articleHref}" class="news-card" aria-label="Read ${a.title}">
               <div class="news-thumbnail-wrap">
                 <img src="${a.featureImage || 'assets/logo.png'}" alt="${a.title}" class="news-img" loading="lazy" />
               </div>

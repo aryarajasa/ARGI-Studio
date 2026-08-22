@@ -103,29 +103,44 @@ const initArticlePage = async () => {
   getCloudArticles().catch(() => {});
 
   // -------------------------------------------------------------------------
-  // 2. QUERY PARAMETER ROUTING & ARTICLE RESOLUTION (SLUG + ID RESOLVER)
+  // 2. QUERY PARAMETER & CLEAN URL ROUTING (/article/slug or /journal/slug)
   // -------------------------------------------------------------------------
-  const urlParams = new URLSearchParams(window.location.search);
-  const requestedSlugOrId = urlParams.get("slug") || urlParams.get("id") || "01";
+  const getArticleFromUrl = () => {
+    let requested = "";
+    // 1. Check path format: /article/slug or /journal/slug
+    const pathParts = window.location.pathname.split("/").filter(Boolean);
+    const aIdx = pathParts.indexOf("article") !== -1 ? pathParts.indexOf("article") : pathParts.indexOf("journal");
+    if (aIdx !== -1 && pathParts[aIdx + 1] && !pathParts[aIdx + 1].endsWith(".html")) {
+      requested = decodeURIComponent(pathParts[aIdx + 1]);
+    }
+    // 2. Fallback to query param: ?slug= or ?id=
+    if (!requested) {
+      const urlParams = new URLSearchParams(window.location.search);
+      requested = urlParams.get("slug") || urlParams.get("id");
+    }
+    if (!requested) requested = "01";
 
-  // Match by slug first, fallback to numeric ID
-  let currentArticle = Object.values(ARTICLES_DATA).find(
-    art => (art.slug && art.slug.toLowerCase() === requestedSlugOrId.toLowerCase()) || art.id === requestedSlugOrId
-  );
-  if (!currentArticle) {
-    currentArticle = ARTICLES_DATA[requestedSlugOrId] || DEFAULT_ARTICLES_DATA["01"];
-  }
+    let current = Object.values(ARTICLES_DATA).find(
+      art => (art.slug && art.slug.toLowerCase() === requested.toLowerCase()) || art.id === requested
+    );
+    if (!current) {
+      current = ARTICLES_DATA[requested] || DEFAULT_ARTICLES_DATA["01"] || Object.values(DEFAULT_ARTICLES_DATA)[0];
+    }
+    return current;
+  };
 
+  const currentArticle = getArticleFromUrl();
   const nextArticle = Object.values(ARTICLES_DATA).find(
     art => art.id === currentArticle.nextId || (art.slug && art.slug === currentArticle.nextId)
   ) || ARTICLES_DATA[currentArticle.nextId] || currentArticle;
 
-  const articleSlug = currentArticle.slug || `article-${currentArticle.id}`;
-  const currentUrl = `https://argistudio.com/article.html?slug=${articleSlug}`;
+  const articleSlug = currentArticle.slug || currentArticle.id;
+  const isLocalFile = window.location.protocol === "file:";
+  const currentUrl = `https://argistudio.com/article/${articleSlug}`;
 
-  // Seamlessly update browser address bar to clean title slug URL
-  if (window.history && window.history.replaceState) {
-    window.history.replaceState({ slug: articleSlug }, "", `article.html?slug=${articleSlug}`);
+  // Seamlessly update browser address bar to clean title slug URL (/article/haven)
+  if (window.history && window.history.replaceState && !isLocalFile) {
+    window.history.replaceState({ slug: articleSlug }, "", `/article/${articleSlug}`);
   }
 
   // Update Page Title
@@ -144,6 +159,7 @@ const initArticlePage = async () => {
   const articleSwitcherDropdown = document.getElementById("articleSwitcherDropdown");
   if (articleSwitcherDropdown) {
     const allIds = Object.keys(ARTICLES_DATA).sort((a, b) => a.localeCompare(b));
+    const isLocal = window.location.protocol === "file:";
     articleSwitcherDropdown.innerHTML = `
       <div class="dropdown-header">ALL DISPATCHES (${allIds.length})</div>
       <div class="dropdown-scroll-track">
@@ -151,8 +167,9 @@ const initArticlePage = async () => {
           const a = ARTICLES_DATA[id];
           const isCurrent = id === currentArticle.id || a.slug === currentArticle.slug;
           const targetSlug = a.slug || a.id;
+          const href = isLocal ? `article.html?slug=${targetSlug}` : `/article/${targetSlug}`;
           return `
-            <a href="article.html?slug=${targetSlug}" class="dropdown-item ${isCurrent ? 'is-current' : ''}" data-id="${a.id}">
+            <a href="${href}" class="dropdown-item ${isCurrent ? 'is-current' : ''}" data-id="${a.id}">
               <span class="d-num">${a.id}</span>
               <span class="d-title">${a.title}</span>
               <span class="d-cat">${a.category || 'Journal'}</span>
@@ -371,8 +388,9 @@ const initArticlePage = async () => {
   if (nextArticleCard) {
     if (nextArticle && nextArticle.id !== currentArticle.id) {
       const nextSlug = nextArticle.slug || nextArticle.id;
+      const isLocal = window.location.protocol === "file:";
       nextArticleCard.style.display = "block";
-      nextArticleCard.href = `article.html?slug=${nextSlug}`;
+      nextArticleCard.href = isLocal ? `article.html?slug=${nextSlug}` : `/article/${nextSlug}`;
       if (nextArticleId) nextArticleId.textContent = nextArticle.id;
       if (nextArticleTitle) nextArticleTitle.textContent = nextArticle.title;
       if (nextArticleCat) nextArticleCat.textContent = nextArticle.category;
@@ -387,11 +405,13 @@ const initArticlePage = async () => {
     getCloudProjects().then((projectsData) => {
       if (projectsData && Object.keys(projectsData).length > 0) {
         const projectKeys = Object.keys(projectsData).sort((a, b) => a.localeCompare(b));
+        const isLocal = window.location.protocol === "file:";
         footerArchiveList.innerHTML = projectKeys.map((id) => {
           const p = projectsData[id];
           const targetSlug = p.slug || p.id;
           const titleFull = `${p.title} ${p.titleAccent || ""}`.trim();
-          return `<li><a href="project.html?slug=${targetSlug}" class="footer-menu-link">${titleFull}</a></li>`;
+          const href = isLocal ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}`;
+          return `<li><a href="${href}" class="footer-menu-link">${titleFull}</a></li>`;
         }).join("");
       }
     });

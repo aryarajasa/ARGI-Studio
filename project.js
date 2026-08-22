@@ -121,12 +121,24 @@ const initProjectPage = async () => {
   }
 
   // =========================================================================
-  // 2. QUERY PARAMETER ROUTING & DATA POPULATION (SLUG + ID RESOLVER)
+  // 2. QUERY PARAMETER & CLEAN URL ROUTING (/project/haven)
   // =========================================================================
   const getProjectFromUrl = () => {
-    const params = new URLSearchParams(window.location.search);
+    let requested = "";
+    // 1. Check pathname: /project/slug
+    const pathParts = window.location.pathname.split("/").filter(Boolean);
+    const pIdx = pathParts.indexOf("project");
+    if (pIdx !== -1 && pathParts[pIdx + 1] && !pathParts[pIdx + 1].endsWith(".html")) {
+      requested = decodeURIComponent(pathParts[pIdx + 1]);
+    }
+    // 2. Fallback to query parameter: ?slug= or ?id=
+    if (!requested) {
+      const params = new URLSearchParams(window.location.search);
+      requested = params.get("slug") || params.get("id");
+    }
     const defaultKey = Object.keys(PROJECTS_DATA)[0] || "02";
-    let requested = params.get("slug") || params.get("id") || defaultKey;
+    if (!requested) requested = defaultKey;
+
     // Check slug first, then ID
     let found = Object.values(PROJECTS_DATA).find(
       p => (p.slug && p.slug.toLowerCase() === requested.toLowerCase()) || p.id === requested
@@ -144,12 +156,13 @@ const initProjectPage = async () => {
     p => p.id === currentProject.nextId || (p.slug && p.slug === currentProject.nextId)
   ) || PROJECTS_DATA[currentProject.nextId] || currentProject;
 
-  const projectSlug = currentProject.slug || `project-${currentProject.id}`;
-  const currentUrl = `https://argistudio.com/project.html?slug=${projectSlug}`;
+  const projectSlug = currentProject.slug || currentProject.id;
+  const isLocalFile = window.location.protocol === "file:";
+  const currentUrl = `https://argistudio.com/project/${projectSlug}`;
 
-  // Seamlessly update browser address bar to clean title slug URL
-  if (window.history && window.history.replaceState) {
-    window.history.replaceState({ slug: projectSlug }, "", `project.html?slug=${projectSlug}`);
+  // Seamlessly update browser address bar to clean title slug URL (/project/haven)
+  if (window.history && window.history.replaceState && !isLocalFile) {
+    window.history.replaceState({ slug: projectSlug }, "", `/project/${projectSlug}`);
   }
 
   // Update Dynamic Page Meta, Title & Rich OpenGraph / Twitter Cards
@@ -560,7 +573,8 @@ const initProjectPage = async () => {
   const csNextProjectLink = document.getElementById("csNextProjectLink");
   if (csNextProjectLink) {
     const nextSlug = nextProject.slug || nextProject.id;
-    csNextProjectLink.href = `project.html?slug=${nextSlug}`;
+    const isLocal = window.location.protocol === "file:";
+    csNextProjectLink.href = isLocal ? `project.html?slug=${nextSlug}` : `/project/${nextSlug}`;
   }
 
   const csNextBgImg = document.getElementById("csNextBgImg");
@@ -588,6 +602,7 @@ const initProjectPage = async () => {
   const csSwitcherDropdown = document.getElementById("projectSwitcherDropdown") || document.getElementById("csSwitcherDropdown");
   if (csSwitcherDropdown) {
     const allProjectKeys = Object.keys(PROJECTS_DATA).sort((a, b) => a.localeCompare(b));
+    const isLocal = window.location.protocol === "file:";
     csSwitcherDropdown.innerHTML = `
       <div class="dropdown-header">ALL CASE STUDIES (${allProjectKeys.length})</div>
       <div class="dropdown-scroll-track">
@@ -597,8 +612,9 @@ const initProjectPage = async () => {
           const targetSlug = p.slug || p.id;
           const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
           const location = p.sector ? (p.sector.includes('•') ? p.sector.split('•')[0].trim() : p.sector) : '';
+          const href = isLocal ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}`;
           return `
-            <a href="project.html?slug=${targetSlug}" class="dropdown-item ${isCurrent ? 'is-active' : ''}" data-id="${p.id}">
+            <a href="${href}" class="dropdown-item ${isCurrent ? 'is-active' : ''}" data-id="${p.id}">
               <span class="d-num">${p.id}</span>
               <span class="d-title">${titleFull}</span>
               <span class="d-loc">${location}</span>
@@ -613,11 +629,13 @@ const initProjectPage = async () => {
   const footerArchiveList = document.getElementById("footerArchiveList");
   if (footerArchiveList) {
     const projectKeys = Object.keys(PROJECTS_DATA).sort((a, b) => a.localeCompare(b));
+    const isLocal = window.location.protocol === "file:";
     footerArchiveList.innerHTML = projectKeys.map(id => {
       const p = PROJECTS_DATA[id];
       const targetSlug = p.slug || p.id;
       const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
-      return `<li><a href="project.html?slug=${targetSlug}" class="footer-menu-link">${titleFull}</a></li>`;
+      const href = isLocal ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}`;
+      return `<li><a href="${href}" class="footer-menu-link">${titleFull}</a></li>`;
     }).join("");
   }
 

@@ -374,7 +374,7 @@ body.site-ready .page-wrapper {
 }
 
 .nav-brand-logo {
-  height: 25px;
+  height: 32px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -3286,7 +3286,7 @@ body.site-ready .page-wrapper {
   }
 
   .nav-brand-logo {
-    height: 22px;
+    height: 26px;
   }
 
   .nav-cta {

@@ -2780,29 +2780,12 @@ body.site-ready .page-wrapper {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.4rem 0.85rem;
-  border-radius: var(--radius-full);
-  background: var(--bg-body);
-  border: 1px solid var(--border-light);
+  padding: 0;
+  border: none;
+  background: transparent;
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   color: var(--text-secondary);
-  backdrop-filter: blur(10px);
-}
-
-.location-pulse-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  animation: pulseEmerald 2s infinite;
-}
-
-@keyframes pulseEmerald {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(16, 185, 129, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
 
 .location-clock {
@@ -3647,7 +3630,7 @@ body.site-ready .page-wrapper {
     width: 100%;
     justify-content: flex-start;
     font-size: 0.75rem;
-    padding: 0.35rem 0.75rem;
+    padding: 0;
   }
 
   .location-clock {

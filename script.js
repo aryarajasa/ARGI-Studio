@@ -302,7 +302,7 @@ const initLandingPage = () => {
       }
     });
 
-    navLinks.forEach((link) => {
+    navMenu.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => {
         navMenu.classList.remove("is-open");
         navToggle.setAttribute("aria-expanded", "false");

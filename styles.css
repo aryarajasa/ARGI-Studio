@@ -448,27 +448,50 @@ body.site-ready .page-wrapper {
   padding: 0.55rem 1.25rem;
 }
 
+.nav-drawer-cta-wrap {
+  display: none;
+  width: 100%;
+}
+
+.nav-drawer-cta {
+  width: 100%;
+  justify-content: center;
+  font-size: 0.875rem;
+  padding: 0.7rem 1.25rem;
+}
+
 .nav-toggle {
   display: none;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-sm);
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 0;
   background: transparent;
-  border: 1px solid var(--border-light);
+  border: none;
+  outline: none;
   box-shadow: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 6px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-toggle:focus,
+.nav-toggle:active {
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
 
 .nav-toggle .line {
   display: block;
-  width: 18px;
-  height: 1.5px;
+  width: 22px;
+  height: 1.75px;
   background-color: var(--text-primary);
-  transition: transform var(--transition-fast), opacity var(--transition-fast);
+  border-radius: 1px;
+  transition: transform var(--transition-fast), opacity var(--transition-fast), background-color var(--transition-fast);
 }
 
 /* Dark Theme Overrides (when over Section 3 dark background and NOT scrolled) */
@@ -491,7 +514,8 @@ body.site-ready .page-wrapper {
 }
 
 .navbar-wrapper.theme-dark:not(.is-scrolled) .nav-toggle {
-  border-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  background: transparent;
 }
 
 .navbar-wrapper.theme-dark:not(.is-scrolled) .nav-toggle .line {
@@ -523,7 +547,8 @@ body.site-ready .page-wrapper {
 }
 
 .navbar-wrapper.theme-dark.is-scrolled .nav-toggle {
-  border-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  background: transparent;
 }
 
 .navbar-wrapper.theme-dark.is-scrolled .nav-toggle .line {
@@ -2979,6 +3004,17 @@ body.site-ready .page-wrapper {
     display: flex;
   }
 
+  .nav-actions .nav-cta {
+    display: none !important;
+  }
+
+  .nav-drawer-cta-wrap {
+    display: flex;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-light);
+  }
+
   /* Floating Up Arrow Button on Tablet */
   .mobile-scroll-top-btn {
     display: flex;
@@ -3289,14 +3325,11 @@ body.site-ready .page-wrapper {
     height: 26px;
   }
 
-  .nav-cta {
-    padding: 0.45rem 0.85rem;
-    font-size: 0.8125rem;
-  }
-
   .nav-toggle {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
   }
 
   /* Section Headings: Ethos preserved, other sections set to 32px */

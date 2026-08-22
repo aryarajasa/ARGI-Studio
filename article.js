@@ -630,7 +630,44 @@ const initArticlePage = async () => {
     navToggle.addEventListener("click", () => {
       const isOpen = navMenu.classList.toggle("is-open");
       navToggle.classList.toggle("is-active", isOpen);
-      navToggle.setAttribute("aria-expanded", isOpen);
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      const top = navToggle.querySelector(".line-top");
+      const bottom = navToggle.querySelector(".line-bottom");
+      if (top && bottom) {
+        if (isOpen) {
+          top.style.transform = "translateY(3.5px) rotate(45deg)";
+          bottom.style.transform = "translateY(-3.5px) rotate(-45deg)";
+        } else {
+          top.style.transform = "none";
+          bottom.style.transform = "none";
+        }
+      }
+    });
+
+    navMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navMenu.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        const top = navToggle.querySelector(".line-top");
+        const bottom = navToggle.querySelector(".line-bottom");
+        if (top && bottom) {
+          top.style.transform = "none";
+          bottom.style.transform = "none";
+        }
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      if (navMenu.classList.contains("is-open") && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+        navMenu.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        const top = navToggle.querySelector(".line-top");
+        const bottom = navToggle.querySelector(".line-bottom");
+        if (top && bottom) {
+          top.style.transform = "none";
+          bottom.style.transform = "none";
+        }
+      }
     });
   }
 

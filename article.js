@@ -591,7 +591,20 @@ const initArticlePage = async () => {
   };
   initFaviconThemeSwitcher();
 
-  // Floating Mobile Scroll-to-Top Button
+  // Floating Mobile Scroll-to-Top Button & Navbar Scrolled State
+  const navbarEl = document.getElementById("navbar");
+  const updateNavbarScroll = () => {
+    if (navbarEl) {
+      if (window.scrollY > 20) {
+        navbarEl.classList.add("is-scrolled");
+      } else {
+        navbarEl.classList.remove("is-scrolled");
+      }
+    }
+  };
+  window.addEventListener("scroll", updateNavbarScroll, { passive: true });
+  updateNavbarScroll();
+
   const scrollTopBtn = document.getElementById("mobileScrollTopBtn");
   if (scrollTopBtn) {
     window.addEventListener("scroll", () => {

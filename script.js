@@ -330,21 +330,29 @@ const initLandingPage = () => {
     });
   }
 
-  // 4. NAVBAR THEME SWITCHING & ACTIVE PILL ON SCROLL
+  // 4. NAVBAR THEME SWITCHING, SCROLLED STATE & ACTIVE LINK
   const handleScrollTheme = () => {
-    if (!navbar || !darkSection) return;
+    if (!navbar) return;
 
-    const navRect = navbar.getBoundingClientRect();
-    const darkRect = darkSection.getBoundingClientRect();
-
-    // Check if navbar intersects the dark portfolio section
-    if (navRect.top >= darkRect.top - 30 && navRect.bottom <= darkRect.bottom + 30) {
-      navbar.classList.add("theme-dark");
+    // Toggle scrolled state (Full-width solid white background + bottom stroke)
+    if (window.scrollY > 20) {
+      navbar.classList.add("is-scrolled");
     } else {
-      navbar.classList.remove("theme-dark");
+      navbar.classList.remove("is-scrolled");
     }
 
-    // Active Section Link Highlight in Center Pill
+    // Check if navbar intersects the dark portfolio section
+    if (darkSection) {
+      const navRect = navbar.getBoundingClientRect();
+      const darkRect = darkSection.getBoundingClientRect();
+      if (navRect.top >= darkRect.top - 30 && navRect.bottom <= darkRect.bottom + 30) {
+        navbar.classList.add("theme-dark");
+      } else {
+        navbar.classList.remove("theme-dark");
+      }
+    }
+
+    // Active Section Link Highlight
     let currentSectionId = "";
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();

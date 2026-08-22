@@ -3189,7 +3189,7 @@ body.site-ready .page-wrapper {
   }
 
   .hero-heading-centered {
-    font-size: clamp(2.15rem, 8.5vw, 3rem);
+    font-size: 40px;
     line-height: 1.06;
     letter-spacing: -0.025em;
     margin-bottom: 1.15rem;
@@ -3268,18 +3268,23 @@ body.site-ready .page-wrapper {
     height: 38px;
   }
 
-  /* Section Headings */
-  .editorial-heading,
-  .editorial-heading-dark,
-  .section-title,
-  .workbench-title {
+  /* Section Headings: Ethos preserved, other sections set to 32px */
+  #mission .editorial-heading {
     font-size: clamp(1.45rem, 5.5vw, 1.85rem);
-    line-height: 1.22;
+    line-height: 1.25;
   }
 
-  .datasets-section-title,
+  .editorial-heading-dark,
+  .section-title,
+  .workbench-title,
+  .datasets-section-title {
+    font-size: 32px;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
   .service-name {
-    font-size: clamp(1.2rem, 4.5vw, 1.45rem);
+    font-size: 1.35rem;
     line-height: 1.25;
   }
 
@@ -3700,16 +3705,16 @@ body.site-ready .page-wrapper {
   }
 
   .hero-heading-centered {
-    font-size: clamp(1.75rem, 7.5vw, 2.15rem);
+    font-size: 36px;
     line-height: 1.08;
   }
 
-  .editorial-heading,
   .editorial-heading-dark,
   .section-title,
-  .workbench-title {
-    font-size: clamp(1.25rem, 5.5vw, 1.55rem);
-    line-height: 1.22;
+  .workbench-title,
+  .datasets-section-title {
+    font-size: 28px;
+    line-height: 1.2;
   }
 
   .tag-pill {

@@ -1216,19 +1216,19 @@
   }
 
   .cs-hero-title {
-    font-size: clamp(2.15rem, 8.5vw, 3rem);
+    font-size: 40px;
     line-height: 1.06;
   }
 
   .narrative-heading,
   .artifacts-main-heading {
-    font-size: clamp(1.45rem, 5.5vw, 1.85rem);
-    line-height: 1.22;
+    font-size: 32px;
+    line-height: 1.2;
   }
 
   .next-project-title {
-    font-size: clamp(2rem, 7.5vw, 2.85rem);
-    line-height: 1.08;
+    font-size: 32px;
+    line-height: 1.15;
   }
 
   .deliverables-title {

@@ -756,17 +756,18 @@
   }
 
   .article-main-title {
-    font-size: clamp(1.95rem, 7.5vw, 2.75rem);
-    line-height: 1.1;
+    font-size: 40px;
+    line-height: 1.08;
   }
 
   .essay-subheading {
-    font-size: clamp(1.35rem, 4.5vw, 1.65rem);
+    font-size: 32px;
+    line-height: 1.2;
   }
 
   .next-article-title {
-    font-size: clamp(1.45rem, 5.5vw, 1.85rem);
-    line-height: 1.22;
+    font-size: 32px;
+    line-height: 1.15;
   }
 
   .article-sticky-sidebar {

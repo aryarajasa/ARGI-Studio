@@ -42,6 +42,7 @@ const MIME_TYPES = {
   '.mp4': 'video/mp4',
   '.gif': 'image/gif',
   '.ico': 'image/x-icon',
+  '.webmanifest': 'application/manifest+json',
   '.woff2': 'font/woff2',
   '.woff': 'font/woff',
   '.ttf': 'font/ttf'

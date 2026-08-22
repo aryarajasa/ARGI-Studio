@@ -522,10 +522,6 @@ const initLandingPage = () => {
             imgEl.src = item.img;
             imgEl.alt = `${item.title} — Portfolio Artifact`;
           }
-          const captionEl = card.querySelector(".floating-caption");
-          if (captionEl && item) {
-            captionEl.textContent = `— ${item.tag || 'EDITORIAL'}`;
-          }
         });
       }
     }

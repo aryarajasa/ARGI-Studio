@@ -288,6 +288,7 @@ const initLandingPage = () => {
     navToggle.addEventListener("click", () => {
       const isOpen = navMenu.classList.toggle("is-open");
       navToggle.setAttribute("aria-expanded", isOpen);
+      if (navbar) navbar.classList.toggle("menu-open", isOpen);
       
       const top = navToggle.querySelector(".line-top");
       const bottom = navToggle.querySelector(".line-bottom");
@@ -306,6 +307,7 @@ const initLandingPage = () => {
       link.addEventListener("click", () => {
         navMenu.classList.remove("is-open");
         navToggle.setAttribute("aria-expanded", "false");
+        if (navbar) navbar.classList.remove("menu-open");
         const top = navToggle.querySelector(".line-top");
         const bottom = navToggle.querySelector(".line-bottom");
         if (top && bottom) {
@@ -320,6 +322,7 @@ const initLandingPage = () => {
       if (navMenu.classList.contains("is-open") && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
         navMenu.classList.remove("is-open");
         navToggle.setAttribute("aria-expanded", "false");
+        if (navbar) navbar.classList.remove("menu-open");
         const top = navToggle.querySelector(".line-top");
         const bottom = navToggle.querySelector(".line-bottom");
         if (top && bottom) {

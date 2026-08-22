@@ -631,9 +631,11 @@ const initProjectPage = async () => {
   const navLinks = document.querySelectorAll(".nav-pill .nav-link");
 
   if (navToggle && navMenu) {
+    const navbar = document.getElementById("navbar");
     navToggle.addEventListener("click", () => {
       const isOpen = navMenu.classList.toggle("is-open");
       navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      if (navbar) navbar.classList.toggle("menu-open", isOpen);
       const top = navToggle.querySelector(".line-top");
       const bottom = navToggle.querySelector(".line-bottom");
       if (top && bottom) {
@@ -651,6 +653,7 @@ const initProjectPage = async () => {
       link.addEventListener("click", () => {
         navMenu.classList.remove("is-open");
         navToggle.setAttribute("aria-expanded", "false");
+        if (navbar) navbar.classList.remove("menu-open");
         const top = navToggle.querySelector(".line-top");
         const bottom = navToggle.querySelector(".line-bottom");
         if (top && bottom) {
@@ -664,6 +667,7 @@ const initProjectPage = async () => {
       if (navMenu.classList.contains("is-open") && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
         navMenu.classList.remove("is-open");
         navToggle.setAttribute("aria-expanded", "false");
+        if (navbar) navbar.classList.remove("menu-open");
         const top = navToggle.querySelector(".line-top");
         const bottom = navToggle.querySelector(".line-bottom");
         if (top && bottom) {

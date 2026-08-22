@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARGI STUDIO — Design System & Visual Identity Guidelines</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       PRINT & PAGE SETUP (A4 FORMAT)
+       ========================================================================== */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    :root {
+      --font-serif: "Instrument Serif", Georgia, serif;
+      --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: "Space Mono", monospace;
+      
+      --bg-cream: #fbfbfa;
+      --bg-card: #ffffff;
+      --bg-dark: #0d0d0d;
+      --bg-void: #050505;
+      
+      --text-main: #0d0d0d;
+      --text-muted: #5a5a57;
+      --text-light: #8e8e8a;
+      
+      --accent-terracotta: #e05342;
+      --accent-amber: #d97706;
+      --accent-emerald: #10b981;
+      --accent-sky: #3b82f6;
+      
+      --border-color: #e5e5e0;
+      --border-dark: #222222;
+    }
+
+    body {
+      background-color: #e9e9e6;
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      height: 297mm;
+      background: var(--bg-cream);
+      margin: 20px auto;
+      padding: 24mm 22mm 20mm 22mm;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-after: always;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    @media print {
+      body {
+        background: transparent;
+      }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+        height: 297mm;
+      }
+    }
+
+    /* Page Header & Footer Sub-bars */
+    .doc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .doc-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 8px;
+      margin-top: 18px;
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .page-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Typography Utilities */
+    h1, h2, h3, h4 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      color: var(--text-main);
+    }
+
+    .serif-accent {
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .tag-badge .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent-terracotta);
+    }
+
+    .section-title {
+      font-size: 26px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .section-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      max-width: 90%;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       PAGE 1: COVER PAGE
+       ========================================================================== */
+    .cover-page {
+      background: var(--bg-dark);
+      color: #ffffff;
+      padding: 30mm 25mm 25mm 25mm;
+      justify-content: space-between;
+    }
+
+    .cover-page .doc-header,
+    .cover-page .doc-footer {
+      border-color: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.45);
+    }
+
+    .cover-top-meta {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-amber);
+    }
+
+    .cover-main-content {
+      margin: auto 0;
+    }
+
+    .cover-logo-wrap {
+      width: 140px;
+      margin-bottom: 30px;
+      filter: invert(1);
+    }
+
+    .cover-logo-wrap img {
+      width: 100%;
+      display: block;
+    }
+
+    .cover-headline {
+      font-size: 52px;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+
+    .cover-headline em {
+      font-style: italic;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .cover-subheadline {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin-bottom: 35px;
+    }
+
+    .cover-spec-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 20px;
+    }
+
+    .spec-item .label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 4px;
+    }
+
+    .spec-item .val {
+      font-size: 11px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       PAGE 2: BRAND ARCHITECTURE & PHILOSOPHY
+       ========================================================================== */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 14px 16px;
+    }
+
+    .card-title {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-text {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .quote-box {
+      border-left: 2px solid var(--accent-terracotta);
+      padding-left: 12px;
+      margin: 12px 0;
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-style: italic;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .principles-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .principles-list li {
+      display: flex;
+      gap: 8px;
+      font-size: 10.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .principles-list li strong {
+      color: var(--text-main);
+      font-weight: 600;
+      min-width: 110px;
+    }
+
+    /* Logo Clearspace Box */
+    .logo-anatomy-box {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo-sample-light {
+      background: #fbfbfa;
+      padding: 20px 24px;
+      border: 1px dashed #d5d5d0;
+      border-radius: 4px;
+      text-align: center;
+      flex: 1;
+    }
+
+    .logo-sample-dark {
+      background: #0d0d0d;
+      padding: 20px 24px;
+      border-radius: 4px;
+      text-align: center;
+      flex: 1;
+      filter: invert(1);
+    }
+
+    .logo-sample-light img,
+    .logo-sample-dark img {
+      height: 28px;
+      display: inline-block;
+    }
+
+    /* ==========================================================================
+       PAGE 3: COLOR SYSTEM & TOKENS
+       ========================================================================== */
+    .color-swatches-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .swatch-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .swatch-color {
+      height: 48px;
+      width: 100%;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .swatch-details {
+      padding: 8px 10px;
+    }
+
+    .swatch-name {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .swatch-hex {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-light);
+    }
+
+    .swatch-role {
+      font-size: 8.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9.5px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .token-table th {
+      background: #f4f4f0;
+      text-align: left;
+      padding: 8px 12px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .token-table td {
+      padding: 7px 12px;
+      border-bottom: 1px solid #f0f0eb;
+      color: var(--text-main);
+    }
+
+    .token-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .token-code {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      color: var(--accent-terracotta);
+    }
+
+    /* ==========================================================================
+       PAGE 4: TYPOGRAPHY & FLUID SCALES
+       ========================================================================== */
+    .type-specimen-hero {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+
+    .specimen-row {
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .specimen-row:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .specimen-meta {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 4px;
+    }
+
+    .specimen-display {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+    }
+
+    .specimen-sans {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+
+    .specimen-mono {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       PAGE 5: UI ATOMS & COMPONENTS
+       ========================================================================== */
+    .comp-showcase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .comp-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 14px;
+    }
+
+    .comp-preview {
+      background: #fbfbfa;
+      border: 1px dashed #d5d5d0;
+      border-radius: 4px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 70px;
+      margin: 10px 0;
+    }
+
+    /* Simulated UI Elements */
+    .btn-mock-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #0d0d0d;
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .btn-mock-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: #0d0d0d;
+      border: 1px solid #d5d5d0;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .tag-mock-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #ffffff;
+      border: 1px solid #0d0d0d;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    .input-mock {
+      width: 100%;
+      border: 1px solid #d5d5d0;
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-size: 10px;
+      color: #888888;
+      background: #ffffff;
+    }
+
+    /* ==========================================================================
+       PAGE 6: ASCII ENGINE & CREATIVE SYSTEMS
+       ========================================================================== */
+    .ascii-box-demo {
+      background: #050505;
+      color: #e5e5e5;
+      font-family: var(--font-mono);
+      font-size: 6.5px;
+      line-height: 1.0;
+      letter-spacing: 0.15em;
+      padding: 16px;
+      border-radius: 6px;
+      overflow: hidden;
+      white-space: pre;
+      margin-bottom: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       PAGE 1: COVER
+       ========================================================================== -->
+  <div class="page cover-page">
+    <div class="doc-header">
+      <span>ARGI STUDIO © 2026</span>
+      <span>SYSTEM SPECIFICATION V2.4</span>
+    </div>
+
+    <div class="cover-main-content">
+      <div class="cover-top-meta">DESIGN SYSTEM &amp; BRAND GUIDELINES</div>
+      <div class="cover-logo-wrap">
+        <img src="assets/logo.png" alt="ARGI Studio Logo" />
+      </div>
+      <h1 class="cover-headline">
+        Crafting Identities<br />
+        <em>That Last</em>
+      </h1>
+      <p class="cover-subheadline">
+        A unified technical and creative design framework for progressive visual identities, tactile digital artifacts, and resonant editorial systems.
+      </p>
+
+      <div class="cover-spec-grid">
+        <div class="spec-item">
+          <div class="label">Studio Base</div>
+          <div class="val">Bali, Indonesia (UTC+8)</div>
+        </div>
+        <div class="spec-item">
+          <div class="label">Discipline</div>
+          <div class="val">Branding &amp; Web Direction</div>
+        </div>
+        <div class="spec-item">
+          <div class="label">Release Status</div>
+          <div class="val">Production Specification</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <span>CONFIDENTIAL &amp; PROPRIETARY</span>
+      <span>PAGE 01 / 06</span>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       PAGE 2: BRAND ARCHITECTURE & ETHOS
+       ========================================================================== */
+  -->
+  <div class="page">
+    <div class="doc-header">
+      <span>ARGI STUDIO DESIGN SYSTEM</span>
+      <span>01 / BRAND ARCHITECTURE</span>
+    </div>
+
+    <div class="page-content">
+      <div class="tag-badge"><span class="dot"></span> Studio Foundations</div>
+      <h2 class="section-title">Brand Identity &amp; Creative Ethos</h2>
+      <p class="section-desc">ARGI Studio operates at the intersection of radical craft, Swiss-inspired typographic discipline, and warm editorial sensibilities.</p>
+
+      <div class="grid-2col">
+        <div class="card">
+          <div class="card-title">Studio Mission</div>
+          <p class="card-text">
+            To architect enduring visual languages and digital flagships that elevate ambitious brands beyond transient industry trends. We marry the tactile authenticity of archival printmaking with high-performance digital engineering.
+          </p>
+          <div class="quote-box">
+            "Directing progressive visual languages and resonant digital artifacts."
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Core Principles</div>
+          <ul class="principles-list">
+            <li>
+              <strong>1. Radical Restraint:</strong> Eliminating extraneous UI ornament to allow typographic weight, negative space, and visual artifacts to command focus.
+            </li>
+            <li>
+              <strong>2. Tactile Materiality:</strong> Grounding modern digital surfaces in paper textures, blind debossing aesthetics, and tangible print craft.
+            </li>
+            <li>
+              <strong>3. Fluid Precision:</strong> Designing mathematically rigorous responsive typography that adapts seamlessly from ultra-wide displays to mobile viewports.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tag-badge" style="margin-top: 10px;"><span class="dot"></span> Brand Mark Anatomy &amp; Clearspace</div>
+      
+      <div class="logo-anatomy-box">
+        <div class="logo-sample-light">
+          <img src="assets/logo.png" alt="ARGI Studio Logo Light" />
+          <div style="font-family: var(--font-mono); font-size: 8px; color: var(--text-light); margin-top: 8px;">PRIMARY MARK (LIGHT SURFACES)</div>
+        </div>
+        <div class="logo-sample-dark">
+          <img src="assets/logo.png" alt="ARGI Studio Logo Dark" />
+          <div style="font-family: var(--font-mono); font-size: 8px; color: rgba(255,255,255,0.6); margin-top: 8px; filter: invert(1);">INVERTED MARK (DARK / VOID SURFACES)</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 12px;">
+        <div class="card-title">Clearspace &amp; Minimum Scale</div>
+        <p class="card-text">
+          Always maintain a clear exclusion zone around the studio wordmark equal to 50% of the letterform height ('X-height'). The minimum digital rendering height is <strong>20px</strong> on mobile viewports and <strong>24px</strong> on desktop headers. Never alter proportions, skew, or apply drop shadows.
+        </p>
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <span>ARGI STUDIO © 2026</span>
+      <span>PAGE 02 / 06</span>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       PAGE 3: COLOR SYSTEM & TOKENS
+       ========================================================================== -->
+  <div class="page">
+    <div class="doc-header">
+      <span>ARGI STUDIO DESIGN SYSTEM</span>
+      <span>02 / COLOR TOKENS</span>
+    </div>
+
+    <div class="page-content">
+      <div class="tag-badge"><span class="dot"></span> Chromatic Architecture</div>
+      <h2 class="section-title">Color Palette &amp; Semantic Roles</h2>
+      <p class="section-desc">A curated palette prioritizing warm, low-eyestrain gallery backgrounds paired with deep contrast inks and high-signal accent hues.</p>
+
+      <div class="color-swatches-grid">
+        <!-- 1 -->
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #fbfbfa;"></div>
+          <div class="swatch-details">
+            <div class="swatch-name">Gallery Cream</div>
+            <div class="swatch-hex">#FBFBFA</div>
+            <div class="swatch-role">Primary canvas background for daylight reading.</div>
+          </div>
+        </div>
+        <!-- 2 -->
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #0d0d0d;"></div>
+          <div class="swatch-details">
+            <div class="swatch-name">Obsidian Black</div>
+            <div class="swatch-hex">#0D0D0D</div>
+            <div class="swatch-role">Primary display typography &amp; interactive actions.</div>
+          </div>
+        </div>
+        <!-- 3 -->
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #e05342;"></div>
+          <div class="swatch-details">
+            <div class="swatch-name">Terracotta Accent</div>
+            <div class="swatch-hex">#E05342</div>
+            <div class="swatch-role">Active states, badges &amp; editorial emphasis.</div>
+          </div>
+        </div>
+        <!-- 4 -->
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #d97706;"></div>
+          <div class="swatch-details">
+            <div class="swatch-name">Amber Signal</div>
+            <div class="swatch-hex">#D97706</div>
+            <div class="swatch-role">Category metadata, numbers &amp; studio badges.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tag-badge"><span class="dot"></span> Semantic Token Mapping</div>
+
+      <table class="token-table">
+        <thead>
+          <tr>
+            <th>CSS Variable Token</th>
+            <th>Hex / HSL Value</th>
+            <th>Semantic Application</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="token-code">--bg-body</td>
+            <td>#fbfbfa</td>
+            <td>Main page canvas surface across sections</td>
+          </tr>
+          <tr>
+            <td class="token-code">--bg-dark</td>
+            <td>#050505</td>
+            <td>Selected Work portfolio section &amp; dark callouts</td>
+          </tr>
+          <tr>
+            <td class="token-code">--text-primary</td>
+            <td>#0d0d0d</td>
+            <td>High-contrast headline &amp; body reading copy</td>
+          </tr>
+          <tr>
+            <td class="token-code">--text-secondary</td>
+            <td>#5a5a57</td>
+            <td>Subheadlines, narrative paragraphs &amp; labels</td>
+          </tr>
+          <tr>
+            <td class="token-code">--border-light</td>
+            <td>rgba(0, 0, 0, 0.08)</td>
+            <td>Subtle hairline structure &amp; card dividers</td>
+          </tr>
+          <tr>
+            <td class="token-code">--accent-emerald</td>
+            <td>#10b981</td>
+            <td>Studio availability badge &amp; success confirmations</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="doc-footer">
+      <span>ARGI STUDIO © 2026</span>
+      <span>PAGE 03 / 06</span>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       PAGE 4: TYPOGRAPHY & RESPONSIVE SCALING
+       ========================================================================== -->
+  <div class="page">
+    <div class="doc-header">
+      <span>ARGI STUDIO DESIGN SYSTEM</span>
+      <span>03 / TYPOGRAPHY MATRIX</span>
+    </div>
+
+    <div class="page-content">
+      <div class="tag-badge"><span class="dot"></span> Typographic Harmony</div>
+      <h2 class="section-title">Font Families &amp; Fluid Scale Spec</h2>
+      <p class="section-desc">A three-tier typographic engine pairing literary serif display titles with clean geometric sans body copy and monospaced technical indexing.</p>
+
+      <div class="type-specimen-hero">
+        <div class="specimen-row">
+          <div class="specimen-meta">DISPLAY SERIF — INSTRUMENT SERIF (REGULAR &amp; ITALIC)</div>
+          <div class="specimen-display">
+            Architecting Progressive Brand Identities <em class="serif-accent">&amp; Tactile Artifacts</em>
+          </div>
+        </div>
+
+        <div class="specimen-row">
+          <div class="specimen-meta">BODY SANS — PLUS JAKARTA SANS (300, 400, 500, 600, 700)</div>
+          <div class="specimen-sans">
+            The quick brown fox jumps over the lazy dog. A bespoke approach to creative direction, delivering memorable brand identities that articulate a distinct point of view.
+          </div>
+        </div>
+
+        <div class="specimen-row">
+          <div class="specimen-meta">INDEX MONO — SPACE MONO (REGULAR &amp; BOLD)</div>
+          <div class="specimen-mono">
+            01 / BRANDING • 02 / DIGITAL FLAGGSHIP • LAT: -8.4095° S • LNG: 115.1889° E
+          </div>
+        </div>
+      </div>
+
+      <div class="tag-badge"><span class="dot"></span> Responsive Breakpoint Hierarchy</div>
+
+      <table class="token-table">
+        <thead>
+          <tr>
+            <th>Heading Level</th>
+            <th>Desktop (&gt;1024px)</th>
+            <th>Tablet (768px–1024px)</th>
+            <th>Mobile (≤640px)</th>
+            <th>Line Height</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Hero H1 (Page Title)</strong></td>
+            <td>clamp(3.25rem, 7vw, 5.75rem)</td>
+            <td>clamp(2.65rem, 6.2vw, 4.25rem)</td>
+            <td><strong>40px</strong></td>
+            <td>1.02 – 1.06</td>
+          </tr>
+          <tr>
+            <td><strong>Our Ethos Statement</strong></td>
+            <td>clamp(2.15rem, 3.8vw, 3.25rem)</td>
+            <td>clamp(1.75rem, 3.4vw, 2.5rem)</td>
+            <td>clamp(1.45rem, 5.5vw, 1.85rem)</td>
+            <td>1.16 – 1.25</td>
+          </tr>
+          <tr>
+            <td><strong>Section Titles (H2)</strong></td>
+            <td>clamp(2.15rem, 3.8vw, 3.25rem)</td>
+            <td>clamp(1.75rem, 3.4vw, 2.5rem)</td>
+            <td><strong>32px</strong></td>
+            <td>1.16 – 1.20</td>
+          </tr>
+          <tr>
+            <td><strong>Subsections (H3)</strong></td>
+            <td>clamp(1.4rem, 2.2vw, 1.85rem)</td>
+            <td>clamp(1.25rem, 2vw, 1.55rem)</td>
+            <td>clamp(1.2rem, 4.5vw, 1.45rem)</td>
+            <td>1.25</td>
+          </tr>
+          <tr>
+            <td><strong>Card Headlines</strong></td>
+            <td>1.35rem (~21px)</td>
+            <td>1.25rem (~20px)</td>
+            <td>1.15rem (~18px)</td>
+            <td>1.30</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="doc-footer">
+      <span>ARGI STUDIO © 2026</span>
+      <span>PAGE 04 / 06</span>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       PAGE 5: UI ATOMS & COMPONENTS
+       ========================================================================== -->
+  <div class="page">
+    <div class="doc-header">
+      <span>ARGI STUDIO DESIGN SYSTEM</span>
+      <span>04 / UI COMPONENTS &amp; ATOMS</span>
+    </div>
+
+    <div class="page-content">
+      <div class="tag-badge"><span class="dot"></span> Component Architecture</div>
+      <h2 class="section-title">Interactive Elements &amp; State Models</h2>
+      <p class="section-desc">Reusable atomic components designed with magnetic physics, tactile feedback loops, and crisp hairline geometry.</p>
+
+      <div class="comp-showcase-grid">
+        <!-- 1. Buttons -->
+        <div class="comp-card">
+          <div class="card-title">1. Button System</div>
+          <div class="comp-preview">
+            <div class="btn-mock-primary">
+              <span>Initiate Project</span>
+              <span style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 14px; height: 14px; display: inline-flex; align-items: center; justify-content: center; font-size: 8px;">↗</span>
+            </div>
+            <div class="btn-mock-outline">Copy Email</div>
+          </div>
+          <p class="card-text">Pill-shaped action buttons with magnetic hover physics and animated trailing circle arrow transitions.</p>
+        </div>
+
+        <!-- 2. Tag Selectors -->
+        <div class="comp-card">
+          <div class="card-title">2. Scope Tags &amp; Pills</div>
+          <div class="comp-preview">
+            <div class="tag-mock-pill" style="background: #0d0d0d; color: #ffffff;">✓ Brand Identity</div>
+            <div class="tag-mock-pill">Web Design</div>
+          </div>
+          <p class="card-text">Interactive discipline tags for client commission customization with instant checkmark state toggles.</p>
+        </div>
+
+        <!-- 3. Form Inputs -->
+        <div class="comp-card">
+          <div class="card-title">3. Minimalist Inputs</div>
+          <div class="comp-preview" style="flex-direction: column;">
+            <input class="input-mock" placeholder="Brand / Organization Name" readonly />
+          </div>
+          <p class="card-text">Hairline input frames with high-contrast active borders and smooth floating label transitions.</p>
+        </div>
+
+        <!-- 4. Floating Header Pill -->
+        <div class="comp-card">
+          <div class="card-title">4. Frosted Glass Navbar</div>
+          <div class="comp-preview">
+            <div style="background: rgba(255,255,255,0.85); border: 1px solid #e5e5e0; padding: 4px 12px; border-radius: 9999px; font-size: 9px; display: flex; gap: 8px; align-items: center;">
+              <strong>ARGI</strong>
+              <span style="color: #999;">•</span>
+              <span>Work</span>
+              <span>Ethos</span>
+              <span>Contact</span>
+            </div>
+          </div>
+          <p class="card-text">Sticky floating pill header with backdrop-filter blur and dynamic active scroll spy indicators.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <span>ARGI STUDIO © 2026</span>
+      <span>PAGE 05 / 06</span>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       PAGE 6: ASCII ENGINE & CREATIVE SYSTEMS
+       ========================================================================== -->
+  <div class="page">
+    <div class="doc-header">
+      <span>ARGI STUDIO DESIGN SYSTEM</span>
+      <span>05 / CREATIVE ENGINES</span>
+    </div>
+
+    <div class="page-content">
+      <div class="tag-badge"><span class="dot"></span> Computational Aesthetics</div>
+      <h2 class="section-title">Interactive ASCII Shading Engine</h2>
+      <p class="section-desc">The signature background canvas converts classical imagery (*The Creation of Adam*) into dynamic high-performance ASCII density matrices.</p>
+
+      <div class="ascii-box-demo">
+  .:+*#%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%#*+:.
+ .*#%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*.
+ =#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#=
+ %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+
+ =#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#=
+  :*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%*: 
+    .:+*#%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%#*+:.  
+      </div>
+
+      <div class="grid-2col">
+        <div class="card">
+          <div class="card-title">Engine Configuration</div>
+          <ul class="principles-list">
+            <li><strong>Character Density:</strong> <code> .:-=+*#%@</code></li>
+            <li><strong>Sampling Step:</strong> 6px × 11px grid resolution</li>
+            <li><strong>Interactive Physics:</strong> Dynamic mouse proximity luminance displacement</li>
+            <li><strong>Rendering Pipeline:</strong> HTML5 2D Canvas with sub-pixel crisp alignment</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Motion &amp; Physics Standards</div>
+          <ul class="principles-list">
+            <li><strong>Smooth Easing:</strong> <code>cubic-bezier(0.16, 1, 0.3, 1)</code></li>
+            <li><strong>Hover Scale:</strong> <code>transform: scale(1.04) translateY(-2px)</code></li>
+            <li><strong>Scroll Engine:</strong> Native hardware-accelerated momentum interpolation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 10px; background: var(--bg-dark); color: #ffffff; border-color: rgba(255,255,255,0.1);">
+        <div class="card-title" style="color: var(--accent-amber);">Production Quality Commitment</div>
+        <p class="card-text" style="color: rgba(255,255,255,0.75);">
+          All deliverables authored under the ARGI Studio brand must adhere strictly to these token standards, typography constraints, and accessibility contrasts (WCAG AAA rating on all editorial text).
+        </p>
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <span>ARGI STUDIO DESIGN SYSTEM SPECIFICATION</span>
+      <span>PAGE 06 / 06</span>
+    </div>
+  </div>
+
+</body>
+</html>

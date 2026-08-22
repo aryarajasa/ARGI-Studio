@@ -93,14 +93,20 @@ const initArticlePage = async () => {
 
   // Dynamic Database Resolution (Supabase Cloud + API + Static Fallback)
   let ARTICLES_DATA = DEFAULT_ARTICLES_DATA;
-  const localArticles = localStorage.getItem("argi_articles_data");
-  if (localArticles) {
-    try {
-      const parsed = JSON.parse(localArticles);
-      if (parsed && Object.keys(parsed).length > 0) ARTICLES_DATA = parsed;
-    } catch(e) {}
+  try {
+    const cloudArticles = await getCloudArticles();
+    if (cloudArticles && Object.keys(cloudArticles).length > 0) {
+      ARTICLES_DATA = cloudArticles;
+    }
+  } catch (e) {
+    const localArticles = localStorage.getItem("argi_articles_data");
+    if (localArticles) {
+      try {
+        const parsed = JSON.parse(localArticles);
+        if (parsed && Object.keys(parsed).length > 0) ARTICLES_DATA = parsed;
+      } catch(err) {}
+    }
   }
-  getCloudArticles().catch(() => {});
 
   // -------------------------------------------------------------------------
   // 2. QUERY PARAMETER & CLEAN URL ROUTING (/article/slug or /journal/slug)

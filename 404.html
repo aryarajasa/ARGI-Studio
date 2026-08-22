@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ARGI Studio — Creative Studio Bali</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <style>
+    body {
+      margin: 0;
+      background-color: #0c0d0e;
+      color: #f7f7f5;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .loading-wrap {
+      text-align: center;
+      opacity: 0.85;
+    }
+    .loading-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #f7f7f5;
+      margin: 0 3px;
+      animation: pulse 1.2s infinite ease-in-out both;
+    }
+    .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+    .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes pulse {
+      0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+  <script>
+    (function() {
+      // GitHub Pages SPA Clean URL Handler
+      const path = window.location.pathname;
+      const search = window.location.search;
+      const hash = window.location.hash;
+
+      // Project clean URL (/project/haven-02)
+      if (path.startsWith('/project/') || path === '/project') {
+        const parts = path.split('/').filter(Boolean);
+        const slug = parts.length > 1 ? parts[1] : '';
+        sessionStorage.setItem('gh_redirect_url', path + search + hash);
+        const targetUrl = '/project.html' + (slug ? '?slug=' + encodeURIComponent(slug) : '') + (search ? (slug ? '&' + search.slice(1) : search) : '') + hash;
+        window.location.replace(targetUrl);
+        return;
+      }
+
+      // Article clean URL (/article/slug or /journal/slug)
+      if (path.startsWith('/article/') || path === '/article' || path.startsWith('/journal/') || path === '/journal') {
+        const parts = path.split('/').filter(Boolean);
+        const slug = parts.length > 1 ? parts[1] : '';
+        sessionStorage.setItem('gh_redirect_url', path + search + hash);
+        const targetUrl = '/article.html' + (slug ? '?slug=' + encodeURIComponent(slug) : '') + (search ? (slug ? '&' + search.slice(1) : search) : '') + hash;
+        window.location.replace(targetUrl);
+        return;
+      }
+
+      // Default fallback to home
+      window.location.replace('/' + search + hash);
+    })();
+  </script>
+</head>
+<body>
+  <div class="loading-wrap">
+    <div class="loading-dot"></div>
+    <div class="loading-dot"></div>
+    <div class="loading-dot"></div>
+  </div>
+</body>
+</html>

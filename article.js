@@ -146,6 +146,7 @@ const initArticlePage = async () => {
 
   // Seamlessly update browser address bar to clean title slug URL (/article/haven)
   if (window.history && window.history.replaceState && !isLocalFile) {
+    sessionStorage.removeItem("gh_redirect_url");
     window.history.replaceState({ slug: articleSlug }, "", `/article/${articleSlug}`);
   }
 

@@ -6,216 +6,100 @@ const initProjectPage = async () => {
   // 1. ACTIVE CASE STUDY DATASET (MATCHING ADMIN DATABASE)
   // =========================================================================
   const DEFAULT_PROJECTS_DATA = {
-    "02": {
-      id: "02",
-      slug: "aura-fragrance-studio",
-      title: "Aura Fragrance",
-      titleAccent: "Studio",
-      client: "Aura Parfumerie",
-      sector: "Artisanal Fragrance • Grasse / London",
-      year: "Q4 2025",
-      timeline: "12 Weeks",
-      disciplines: "Packaging Design, Visual Identity",
-      disciplinesSub: "Flagship Web & 3D Spatial Renders",
-      liveUrl: "https://aurafragrance.co.uk",
-      liveUrlText: "aurafragrance.co.uk ↗",
-      summary: "Olfactory identity, weighted flacon packaging structures, tactile unboxing rituals, and an ambient sensory web platform for an avant-garde perfume brand.",
-      challenge: "Aura needed to communicate the invisible art of scent through visual and tactile media. The objective was to avoid clichéd luxury tropes and create an ethereal, grounding identity celebrating raw organic botanicals and molecular perfumery.",
-      concept: "We developed a sensory design system based on translucent glass substrates, blind debossing, and a muted earth-smoke palette. The digital flagship leverages ambient soundscapes and generative scent notes visualization.",
-      quote: "The packaging ARGI created feels sacred in your hands. Our direct-to-consumer launch sold out within 48 hours purely based on the visual and sensory storytelling.",
-      quoteAuthor: "Julian Mercer",
-      quoteRole: "Master Perfumer & Co-Founder",
-      heroImage: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1600&q=85",
-      heroCaption: "WEIGHTED FLACON SUITE & EMBOSSED ARCHIVAL BOXES",
-      spreadImg1: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption1: "01 / Recycled Cotton Box Shell with Organic Amber Glass Flacon",
-      spreadImg2: "https://images.unsplash.com/photo-1608248597359-05d688cf41f8?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption2: "02 / Molecular Note Formula Cards & Dropper Packaging",
+    "01": {
+      id: "01",
+      slug: "pizzacult--01",
+      title: "PizzaCult©",
+      titleAccent: "Rebranding",
+      client: "Pizza Cult",
+      sector: "Food & Beverage",
+      year: "Q2 2024",
+      timeline: "4 Weeks",
+      disciplines: "Brand Identity",
+      disciplinesSub: "Packaging & Spatial Collateral",
+      liveUrl: "",
+      liveUrlText: "",
+      summary: "Pizza Cult is an artisanal, wood-fired pizza brand that blends ancient culinary traditions with modern urban culture. Rooted in ritual, passion, and uncompromising quality, Pizza Cult transforms casual dining into a communal experience.",
+      challenge: "Positioning Pizza Cult as a culinary ritual in a crowded casual dining market requires balancing authenticity with modern edge. The identity needed to evoke artisanal craft without feeling dusty or traditional.",
+      concept: "The concept revolves around the 'Ritual of Pizza,' featuring bold, ritualistic typography, custom woodcut symbols, high-contrast monochrome and fire-red palettes, and visceral macro food photography.",
+      quote: "",
+      quoteAuthor: "",
+      quoteRole: "",
+      heroImage: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787062407487_1.png",
+      heroCaption: "Pizza Cult Monogram & Packaging System",
+      spreadImg1: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787062483863_Artboard_4.png",
+      spreadCaption1: "Custom Pizza Box Print & Stickers",
+      spreadImg2: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787062481745_Artboard_3.png",
+      spreadCaption2: "Brand Collateral & Uniform Suite",
       colors: [
-        { name: "Obsidian Amber", hex: "#1f1813", bg: "#1f1813", textColor: "#fff" },
-        { name: "Smoked Alabaster", hex: "#ede7e0", bg: "#ede7e0", textColor: "#111" },
-        { name: "Botanical Sage", hex: "#839788", bg: "#839788", textColor: "#fff" },
-        { name: "Warm Ochre", hex: "#c98a4c", bg: "#c98a4c", textColor: "#fff" }
+        { name: "Noir Intense", hex: "#0c0d0e", bg: "#0c0d0e", textColor: "#fff" },
+        { name: "Flame Vermilion", hex: "#e03e2d", bg: "#e03e2d", textColor: "#fff" },
+        { name: "Flour White", hex: "#f8f6f0", bg: "#f8f6f0", textColor: "#111" }
       ],
-      typeHint: "Instrument Serif + SFMono",
-      typeSample: "“Sensory Architecture & Distilled Botanical Form.”",
-      interfaceImg: "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?auto=format&fit=crop&w=1400&q=85",
-      browserUrl: "https://aurafragrance.co.uk/sensory-finder",
+      typeHint: "Instrument Serif + Inter",
+      typeSample: "“The Sacred Craft of Wood-Fired Form.”",
+      interfaceImg: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787062479607_Artboard_2.png",
       gallery: [
-        { img: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=85", tag: "FLACON ARCHIVE", title: "Heavyweight Amber Flacon", desc: "Solid glass base & laser-etched metal cap" },
-        { img: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=85", tag: "FORMULATION", title: "Botanical Scent Cards", desc: "Printed on heavy cotton rag paper" },
-        { img: "https://images.unsplash.com/photo-1608248597359-05d688cf41f8?auto=format&fit=crop&w=1000&q=85", tag: "LABORATORY", title: "Raw Extraction Glassware", desc: "Organic essence distillation protocols" },
-        { img: "https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=1000&q=85", tag: "MONOGRAM", title: "Tactile Wax Seal", desc: "Custom seal stamp for numbered batches" },
-        { img: "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?auto=format&fit=crop&w=1200&q=85", tag: "SPATIAL", title: "London Olfactory Chamber", desc: "Atmospheric sensory flagship installation" }
+        { img: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787062534571_Artboard_5.png", tag: "PACKAGING", title: "Embossed Box Suite", desc: "Rigid corrugated kraft pizza box packaging" },
+        { img: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787062536768_Artboard_6.png", tag: "COLLATERAL", title: "Menu & Receipt System", desc: "Thermal receipt paper & menu prints" },
+        { img: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787062539077_Artboard_7.png", tag: "SPATIAL", title: "Neon & Spatial Signage", desc: "Laser-cut steel and neon storefront" }
       ],
       deliverables: [
-        "Flacon Structural 3D Design",
-        "Visual Identity & Monogram",
-        "Paper & Cotton Sourcing R&D",
-        "Sensory Web E-Commerce Flagship",
-        "Social Art Direction & Still Life",
-        "Point of Sale Fragrance Stand"
-      ],
-      nextId: "03"
-    },
-
-    "03": {
-      id: "03",
-      slug: "twyg-regenerative-botanic",
-      title: "Twyg Regenerative",
-      titleAccent: "Botanic",
-      client: "Twyg Botanic Form",
-      sector: "Regenerative Skincare • Cape Town / NYC",
-      year: "Q3 2025",
-      timeline: "16 Weeks",
-      disciplines: "E-Commerce Web, Packaging",
-      disciplinesSub: "Material Sourcing & Campaign Films",
-      liveUrl: "https://twygbotanic.com",
-      liveUrlText: "twygbotanic.com ↗",
-      summary: "Closed-loop mycelium packaging system, brutalist organic visual language, and custom high-speed Shopify Plus digital flagship.",
-      challenge: "Twyg needed to prove that ultra-sustainable, circular beauty could look sharp, avant-garde, and covetable without the dull aesthetic tropes of brown kraft paper.",
-      concept: "We embraced brutalist organic shapes paired with high-contrast editorial typography. The visual language bridges raw earth textures with clinical modernism.",
-      quote: "ARGI proved that sustainability does not mean boring brown paper. Our brand is bold, artistic, and completely unforgettable.",
-      quoteAuthor: "Zola Ndlovu",
-      quoteRole: "Founding Formulator",
-      heroImage: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=2000&q=85",
-      heroCaption: "COMPOSTABLE MYCELIUM PACKAGING & GLASSWARE SUITE",
-      spreadImg1: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption1: "01 / Seed Paper Brand Collateral with Botanical Inks",
-      spreadImg2: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption2: "02 / Refillable Ceramic Vessels & Minimalist Pump System",
-      colors: [
-        { name: "Forest Canopy", hex: "#16302b", bg: "#16302b", textColor: "#fff" },
-        { name: "Terracotta Clay", hex: "#c85a38", bg: "#c85a38", textColor: "#fff" },
-        { name: "Raw Ecru", hex: "#f3ede2", bg: "#f3ede2", textColor: "#111" },
-        { name: "Chlorophyll Yellow", hex: "#dfd876", bg: "#dfd876", textColor: "#111" }
-      ],
-      typeHint: "Instrument Serif + Neue Haas",
-      typeSample: "“Circular Bio-Design & Brutalist Organic Purity.”",
-      interfaceImg: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1400&q=85",
-      browserUrl: "https://twygbotanic.com/products/cellular-nectar",
-      gallery: [
-        { img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=85", tag: "MYCELIUM", title: "Compostable Box Shells", desc: "Grown agricultural mycelium structures" },
-        { img: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=1000&q=85", tag: "BOTANICAL", title: "Plant-Based Inks & Cards", desc: "100% post-consumer seed paper print" },
-        { img: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1000&q=85", tag: "CERAMIC", title: "Handmade Ceramic Jars", desc: "Refillable stoneware containers" },
-        { img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1000&q=85", tag: "MICROSCOPY", title: "Flora Cellular Macro", desc: "Brand imagery shot under darkfield lens" },
-        { img: "https://images.unsplash.com/photo-1463936575829-25148e1db1b8?auto=format&fit=crop&w=1200&q=85", tag: "RETAIL", title: "Greenhouse Flagship Space", desc: "Living plant wall retail interior" }
-      ],
-      deliverables: [
-        "Mycelium Packaging System",
-        "Custom Organic Wordmark",
-        "E-Commerce Shopify Plus Build",
-        "Botanical Ink Print Suite",
-        "Darkfield Scientific Photography",
-        "Retail Store Concept Layout"
-      ],
-      nextId: "04"
-    },
-
-    "04": {
-      id: "04",
-      slug: "monolith-architecture-studio",
-      title: "Monolith Architecture",
-      titleAccent: "Studio",
-      client: "Monolith Architects",
-      sector: "Minimalist Architecture • Zurich / Tokyo",
-      year: "Q2 2025",
-      timeline: "10 Weeks",
-      disciplines: "Interactive Web, Print Monograph",
-      disciplinesSub: "Spatial Typography & Project Archive",
-      liveUrl: "https://monolith-arch.ch",
-      liveUrlText: "monolith-arch.ch ↗",
-      summary: "Architectural monograph publication, Swiss grid web archive, interactive 3D spatial models, and brutalist physical signage.",
-      challenge: "Monolith creates monumental concrete and timber residences across the Swiss Alps and Japan. Their previous website failed to reflect the quiet grandeur, textural depth, and structural discipline of their physical buildings.",
-      concept: "We built an architectural website utilizing ultra-precise hairline grids, generous negative space, and smooth cursor-based camera interactions that let the raw materiality of each project breathe.",
-      quote: "The digital experience ARGI designed mirrors our architecture perfectly: monumental, quiet, and constructed with uncompromising precision.",
-      quoteAuthor: "Kenzo Vogel",
-      quoteRole: "Principal Architect",
-      heroImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=85",
-      heroCaption: "CAST CONCRETE MODEL MONOGRAPH & ALPINE RESIDENCE",
-      spreadImg1: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption1: "01 / Monograph Proof Sheets on Heavy Uncoated Paper",
-      spreadImg2: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption2: "02 / Cast Aluminum Project Numbering & Studio Plates",
-      colors: [
-        { name: "Raw Concrete", hex: "#7a7d80", bg: "#7a7d80", textColor: "#fff" },
-        { name: "Charred Larch", hex: "#1c1b18", bg: "#1c1b18", textColor: "#fff" },
-        { name: "Alabaster Stone", hex: "#ebe8e1", bg: "#ebe8e1", textColor: "#111" },
-        { name: "Alpine Granite", hex: "#3a3d40", bg: "#3a3d40", textColor: "#fff" }
-      ],
-      typeHint: "Suisse Int'l + Instrument Serif",
-      typeSample: "“Monumental Restraint & The Poetry of Raw Mass.”",
-      interfaceImg: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85",
-      browserUrl: "https://monolith-arch.ch/projects/alpenhaus",
-      gallery: [
-        { img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85", tag: "RESIDENCE", title: "Alpine Concrete Pavilion", desc: "Board-formed cast concrete & zinc roofing" },
-        { img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=85", tag: "INTERIOR", title: "Minimalist Timber Living Space", desc: "Custom smoked larch joinery" },
-        { img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=85", tag: "FACADE", title: "Perforated Screen Details", desc: "Dynamic shadow play across exterior panels" },
-        { img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=85", tag: "BLUEPRINT", title: "Structural Plan Monograph", desc: "Printed on silver metallic paper stock" },
-        { img: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=1200&q=85", tag: "MATERIAL", title: "Raw Aggregate Stone Samples", desc: "Curated material library for clients" }
-      ],
-      deliverables: [
-        "Monograph Hardcover Publication",
-        "Swiss Grid Archive Website",
-        "Interactive 3D Space Viewer",
-        "Cast Metal Studio Signage",
-        "Architectural Photography Direction",
-        "Identity & Grid Documentation"
-      ],
-      nextId: "05"
-    },
-
-    "05": {
-      id: "05",
-      slug: "komorebi-cinema-festival",
-      title: "Komorebi Cinema",
-      titleAccent: "Festival",
-      client: "Komorebi Film Foundation",
-      sector: "Independent Cinema • Kyoto, Japan",
-      year: "Q3 2025",
-      timeline: "8 Weeks",
-      disciplines: "Visual Identity, Social Campaign",
-      disciplinesSub: "Poster Series & Spatial Projections",
-      liveUrl: "https://komorebicinema.jp",
-      liveUrlText: "komorebicinema.jp ↗",
-      summary: "Cinematic motion identity, bilingual Japanese/English typography system, silk-screened poster archive, and mobile ticketing experience.",
-      challenge: "Komorebi is an international festival celebrating rare 35mm film prints in historic temples and modern art spaces across Kyoto. The identity needed to blend deep reverence for Japanese film heritage with cutting-edge contemporary design.",
-      concept: "We built an identity around the concept of sunlight filtering through trees ('Komorebi'). We created dynamic light-bleed typography, tactile screen-printed paper collateral, and immersive ambient video loops.",
-      quote: "ARGI understood our spirit effortlessly. The festival sold out in record time, and attendees were taking the posters off the walls to take home as art.",
-      quoteAuthor: "Mayumi Tanaka",
-      quoteRole: "Festival Director",
-      heroImage: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=2000&q=85",
-      heroCaption: "SILKSCREEN A0 POSTER SERIES & TEMPLE PROJECTIONS",
-      spreadImg1: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption1: "01 / Bilingual Festival Catalog with Japanese Kanji Grid",
-      spreadImg2: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1200&q=85",
-      spreadCaption2: "02 / Holographic VIP Festival Passes & Lanyards",
-      colors: [
-        { name: "Midnight Indigo", hex: "#0d131a", bg: "#0d131a", textColor: "#fff" },
-        { name: "Kyoto Vermilion", hex: "#d9381e", bg: "#d9381e", textColor: "#fff" },
-        { name: "Paper Washi", hex: "#f2ede4", bg: "#f2ede4", textColor: "#111" },
-        { name: "Sunlight Gold", hex: "#e5b842", bg: "#e5b842", textColor: "#111" }
-      ],
-      typeHint: "Shippori Mincho + Instrument Serif",
-      typeSample: "“Shadow, Light & The Celluloid Frame.”",
-      interfaceImg: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1400&q=85",
-      browserUrl: "https://komorebicinema.jp/schedule",
-      gallery: [
-        { img: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=85", tag: "POSTER", title: "A0 Silkscreen Poster", desc: "Fluorescent vermilion & black on washi stock" },
-        { img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1000&q=85", tag: "PROGRAM", title: "Festival Guide Book", desc: "Bilingual Japanese / English type system" },
-        { img: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1000&q=85", tag: "TICKETS", title: "Holographic Passes", desc: "Numbered attendee badges with foil trim" },
-        { img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1000&q=85", tag: "CINEMA PRINT", title: "35mm Archival Film Proofs", desc: "High-contrast grain photography" },
-        { img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=85", tag: "PAVILION", title: "Night Screening Stage", desc: "Historic temple courtyard screening hub" }
-      ],
-      deliverables: [
-        "Festival Identity & Logo System",
-        "Motion Design & Title Idents",
-        "Interactive Screening Schedule Web",
-        "Silkscreen Poster Series (A0)",
-        "Spatial Temple Light Projections",
-        "Merchandise & Ticket Pass Suite"
+        "Complete Brand Identity",
+        "Packaging System",
+        "Digital Menu & Ordering",
+        "Spatial Storefront Signage"
       ],
       nextId: "02"
+    },
+
+    "02": {
+      id: "02",
+      slug: "haven-02",
+      title: "Haven",
+      titleAccent: "Branding & Website",
+      client: "Haven",
+      sector: "Interior • Scandinavian Design",
+      year: "Q1 2025",
+      timeline: "4 Weeks",
+      disciplines: "Branding Identity",
+      disciplinesSub: "Web Design & Development",
+      liveUrl: "",
+      liveUrlText: "",
+      summary: "Haven is a Scandinavian-inspired furniture brand designed for eco-conscious urban dwellers seeking serenity in their living spaces. Rooted in sustainability and craftsmanship, Haven merges minimalist Nordic aesthetics with warm, organic materials like reclaimed wood and vegan leather.",
+      challenge: "Positioning Haven as a serene, eco-conscious furniture brand in a saturated market requires addressing several nuanced tensions. First, Scandinavian minimalism risks feeling overly sterile, so the challenge lies in infusing warmth into clean lines to evoke the idea of a sanctuary. Second, sustainability must be communicated without relying on clichéd visuals like generic leaves or overt “green” motifs, which could dilute authenticity.",
+      concept: "The solution centers on “mindful minimalism,” blending Scandinavian simplicity with organic warmth. The logo combines a soft, custom sans-serif wordmark with an abstract symbol to evoke openness. A warm, earthy color palette of oatmeal and terracotta replaces cold neutrals.",
+      quote: "",
+      quoteAuthor: "",
+      quoteRole: "",
+      heroImage: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787061380671_Artboard_1.png",
+      heroCaption: "Editorial Scandinavian-Inspired Wordmark Logo",
+      spreadImg1: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787062076818_5-1.png",
+      spreadCaption1: "App & Website Favicon",
+      spreadImg2: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787062074029_Artboard_2.png",
+      spreadCaption2: "Applied Logo To Product",
+      colors: [
+        { name: "Quicksand", hex: "#a59b8d", bg: "#a59b8d", textColor: "#ffffff" },
+        { name: "Muslin", hex: "#f5f1ed", bg: "#f5f1ed", textColor: "#ffffff" },
+        { name: "Cake White", hex: "#f7f5f2", bg: "#f7f5f2", textColor: "#ffffff" }
+      ],
+      typeHint: "Instrument Serif + Neue Haas",
+      typeSample: "“Mindful Minimalism & Organic Warmth.”",
+      interfaceImg: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787061720418_7.png",
+      gallery: [
+        { img: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787061773144_5-2.png", tag: "ARTIFACT 01", title: "Physical Artifact 01", desc: "Physical Studio Artifact & Craft" },
+        { img: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787061777289_6.png", tag: "ARTIFACT 02", title: "Physical Artifact 02", desc: "Physical Studio Artifact & Craft" },
+        { img: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787061781129_8.png", tag: "ARTIFACT 03", title: "Physical Artifact 03", desc: "Physical Studio Artifact & Craft" },
+        { img: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787061814672_10.png", tag: "ARTIFACT 04", title: "Physical Artifact 04", desc: "Physical Studio Artifact & Craft" },
+        { img: "https://ttxpfodgbdgholcunqpl.supabase.co/storage/v1/object/public/media/uploads/1787062137436_9.png", tag: "ARTIFACT 05", title: "Physical Artifact 05", desc: "Physical Studio Artifact & Craft" }
+      ],
+      deliverables: [
+        "Branding Strategy",
+        "Visual Identity System",
+        "E-Commerce Web Architecture",
+        "Product Packaging"
+      ],
+      nextId: "01"
     }
   };
 
@@ -685,20 +569,23 @@ const initProjectPage = async () => {
   }
 
   const csNextNum = document.getElementById("csNextNum");
-  if (csNextNum) csNextNum.textContent = `${nextProject.id} / 06`;
+  if (csNextNum) {
+    const totalCount = String(Object.keys(PROJECTS_DATA).length).padStart(2, '0');
+    csNextNum.textContent = `${nextProject.id} / ${totalCount}`;
+  }
 
   const csNextTitle = document.getElementById("csNextTitle");
   if (csNextTitle) {
-    csNextTitle.innerHTML = `${nextProject.title} <em class="serif-accent" id="csNextTitleAccent">${nextProject.titleAccent}</em>`;
+    csNextTitle.innerHTML = `${nextProject.title} <em class="serif-accent" id="csNextTitleAccent">${nextProject.titleAccent || ''}</em>`;
   }
 
   const csNextDiscipline = document.getElementById("csNextDiscipline");
   if (csNextDiscipline) {
-    csNextDiscipline.textContent = `${nextProject.disciplines} • ${nextProject.sector}`;
+    csNextDiscipline.textContent = `${nextProject.disciplines || ''} • ${nextProject.sector || ''}`;
   }
 
   // Populate Dropdown Switcher Menu with ALL Live Projects
-  const csSwitcherDropdown = document.getElementById("csSwitcherDropdown");
+  const csSwitcherDropdown = document.getElementById("projectSwitcherDropdown") || document.getElementById("csSwitcherDropdown");
   if (csSwitcherDropdown) {
     const allProjectKeys = Object.keys(PROJECTS_DATA).sort((a, b) => a.localeCompare(b));
     csSwitcherDropdown.innerHTML = `
@@ -709,11 +596,12 @@ const initProjectPage = async () => {
           const isCurrent = id === currentProjectId || p.slug === currentProject.slug;
           const targetSlug = p.slug || p.id;
           const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
+          const location = p.sector ? (p.sector.includes('•') ? p.sector.split('•')[0].trim() : p.sector) : '';
           return `
             <a href="project.html?slug=${targetSlug}" class="dropdown-item ${isCurrent ? 'is-active' : ''}" data-id="${p.id}">
               <span class="d-num">${p.id}</span>
               <span class="d-title">${titleFull}</span>
-              <span class="d-loc">${p.sector ? p.sector.split('•')[0].trim() : ''}</span>
+              <span class="d-loc">${location}</span>
             </a>
           `;
         }).join("")}

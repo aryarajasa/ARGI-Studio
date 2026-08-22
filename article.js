@@ -1082,9 +1082,20 @@ ${clientName}`;
       _template: "table"
     };
 
-    let emailSent = false;
+    // Save locally to argi_inquiries in localStorage
+    try {
+      const stored = JSON.parse(localStorage.getItem("argi_inquiries") || "[]");
+      stored.unshift({ ...briefPayload, date: new Date().toISOString() });
+      localStorage.setItem("argi_inquiries", JSON.stringify(stored.slice(0, 50)));
+    } catch (e) {}
 
-    // 1. Send via FormSubmit to hello@argistudio.com
+    let emailSent = false;
+    let needsActivation = false;
+
+    // 1. Send via FormSubmit with 5-second timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
     try {
       const res = await fetch("https://formsubmit.co/ajax/hello@argistudio.com", {
         method: "POST",
@@ -1092,16 +1103,23 @@ ${clientName}`;
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify(briefPayload)
+        body: JSON.stringify(briefPayload),
+        signal: controller.signal
       });
-      if (res.ok) {
+      clearTimeout(timeoutId);
+      
+      const data = await res.json();
+      if (data && (data.success === "true" || data.success === true)) {
         emailSent = true;
+      } else if (data && data.message && data.message.includes("Activation")) {
+        needsActivation = true;
       }
     } catch (err) {
-      console.warn("Direct transmission fallback:", err);
+      clearTimeout(timeoutId);
+      console.warn("Direct transmission status:", err);
     }
 
-    // 2. Also log to Local Server /api/inquiries
+    // 2. Also log to Local Server /api/inquiries if available
     try {
       await fetch("/api/inquiries", {
         method: "POST",
@@ -1112,22 +1130,33 @@ ${clientName}`;
 
     if (modalSubmitInquiryBtn) modalSubmitInquiryBtn.classList.remove("is-loading");
 
+    const mailtoUrl = `mailto:hello@argistudio.com?subject=${encodeURIComponent(`Studio Commission Inquiry — ${clientName}`)}&body=${encodeURIComponent(briefPreText ? briefPreText.textContent : details)}`;
+
     if (emailSent) {
       modalStatusBox.className = "modal-status-box is-success";
-      modalStatusBox.innerHTML = `✓ Commission brief sent to <strong>hello@argistudio.com</strong>! Our partners will respond within 24–48h.`;
+      modalStatusBox.innerHTML = `✓ Commission brief transmitted directly to <strong>hello@argistudio.com</strong>! Our partners will respond within 24–48h.`;
       if (modalSubmitBtnText) modalSubmitBtnText.textContent = "✓ Brief Sent!";
       if (modalSubmitInquiryBtn) modalSubmitInquiryBtn.style.background = "#10b981";
       setTimeout(() => {
         if (modalSubmitBtnText) modalSubmitBtnText.textContent = "Send Commission Brief";
         if (modalSubmitInquiryBtn) modalSubmitInquiryBtn.style.background = "";
       }, 5000);
-    } else {
-      // Fallback: Open prefilled mail client
+    } else if (needsActivation) {
       modalStatusBox.className = "modal-status-box is-success";
-      modalStatusBox.innerHTML = `Inquiry logged! Opening mail client to dispatch to <strong>hello@argistudio.com</strong>...`;
-      const mailtoUrl = `mailto:hello@argistudio.com?subject=${encodeURIComponent(`Studio Commission Inquiry — ${clientName}`)}&body=${encodeURIComponent(briefPreText ? briefPreText.textContent : details)}`;
+      modalStatusBox.innerHTML = `Brief recorded! One-time email activation pending for <strong>hello@argistudio.com</strong>.<br /><a href="${mailtoUrl}" class="modal-status-link" style="color: inherit; text-decoration: underline; font-weight: 600;">Click here to dispatch immediately via your Mail App ↗</a>`;
+      if (modalSubmitBtnText) modalSubmitBtnText.textContent = "Dispatch in Mail App ↗";
+      if (modalSubmitInquiryBtn) {
+        modalSubmitInquiryBtn.onclick = () => { window.location.href = mailtoUrl; };
+      }
+    } else {
+      // Fallback: Dispatch via pre-filled mail client
+      modalStatusBox.className = "modal-status-box is-success";
+      modalStatusBox.innerHTML = `Brief saved! Dispatching to <strong>hello@argistudio.com</strong> via your default Mail App...`;
       window.location.href = mailtoUrl;
-      if (modalSubmitBtnText) modalSubmitBtnText.textContent = "Send Commission Brief";
+      if (modalSubmitBtnText) modalSubmitBtnText.textContent = "Open Mail App ↗";
+      if (modalSubmitInquiryBtn) {
+        modalSubmitInquiryBtn.onclick = () => { window.location.href = mailtoUrl; };
+      }
     }
   };
 

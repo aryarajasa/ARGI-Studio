@@ -10,23 +10,23 @@
 
   <!-- Active Portfolio Case Studies (Clean SEO Slugs) -->
   <url>
-    <loc>https://argistudio.com/project.html?slug=haven-02</loc>
+    <loc>https://argistudio.com/project/haven-02</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://argistudio.com/project.html?slug=pizzacult--01</loc>
+    <loc>https://argistudio.com/project/pizzacult--01</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
 
   <!-- Journal Articles & Critical Dispatches (Clean SEO Slugs) -->
   <url>
-    <loc>https://argistudio.com/article.html?slug=argi-studio-vol-01-released-worldwide-01</loc>
+    <loc>https://argistudio.com/article/argi-studio-vol-01-released-worldwide-01</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
 </urlset>

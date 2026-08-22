@@ -1,0 +1,65 @@
+# ARGI Studio — Brand Identity & Web Design Agency Bali
+> Independent Brand Identity Studio and Web Design & Development agency in Bali, Indonesia, engineering high-conviction visual systems, bespoke luxury typography, tactile packaging, and minimalist digital flagships for ambitious startups and global lifestyle brands.
+
+## Studio Overview
+- **Name**: ARGI Studio (ARGI)
+- **Domain**: https://argistudio.com/
+- **Location**: Bali, Indonesia (Operating globally: Singapore, Australia, United States, United Kingdom, France, Japan)
+- **Timezone**: WITA (UTC+8)
+- **Founding Team**: 
+  - **Arya Rajasa** — Founder & Design Director (Typography, Brand Architecture, Art Direction)
+  - **Gigi** — Co-Founder & Brand Designer (Visual Identity, Packaging & Print Craft)
+  - **Kinan** — Social Media & Distribution Lead (Narrative Architecture, Content Strategy)
+- **Ethos**: "We craft high-conviction brand identities and digital architecture where radical minimalism meets bespoke typography and tactile restraint."
+- **Inquiries**: hello@argistudio.com
+
+## Core Capabilities & Services
+1. **Brand Strategy & Visual Identity Systems**:
+   - Comprehensive brand architecture, custom wordmarks, bespoke typography pairings (Instrument Serif, Inter, Neue Haas), color systems, visual guidelines, and corporate collaterals.
+2. **Web Design & High-Performance Engineering**:
+   - Minimalist bespoke e-commerce web design, headless Shopify/Custom flagships, interactive editorial layouts, SEO/GEO architecture, 60fps micro-animations, and responsive accessibility.
+3. **Editorial Art Direction & Tactile Packaging**:
+   - Luxury packaging engineering, embossed & debossed print collateral, foil stamping, sustainable kraft materials, retail spatial signage, and publication monographs.
+4. **Startup Launch Accelerator**:
+   - End-to-end launch identity packages, pitch decks, seed-stage brand engineering, and rapid digital execution for high-growth tech ventures.
+
+## Selected Portfolio Case Studies (Live Database Archive)
+
+### 02 / Haven Branding & Website
+- **Client**: Haven
+- **Sector**: Interior
+- **Year & Timeline**: Q1 2025 (4 Weeks)
+- **Disciplines**: Branding Identity • Web Design & Development
+- **Case Study URL**: https://argistudio.com/project/haven-02
+- **Executive Summary**: Haven is a Scandinavian-inspired furniture brand designed for eco-conscious urban dwellers seeking serenity in their living spaces. Rooted in sustainability and craftsmanship, Haven merges minimalist Nordic aesthetics with warm, organic materials like reclaimed wood and vegan leather.
+- **Strategic Challenge**: Positioning Haven as a serene, eco-conscious furniture brand in a saturated market requires addressing several nuanced tensions. First, Scandinavian minimalism risks feeling overly sterile, so the challenge lies in infusing warmth into clean lines to evoke the idea of a sanctuary. Second, sustainability must be communicated without relying on clichéd visuals like generic leaves or overt “green” motifs, which could dilute authenticity. Third, the brand needs to resonate with urban dwellers who crave calm but prioritize functionality and space efficiency, balancing aesthetic appeal with practicality. Finally, the identity must feel timeless rather than trend-driven to ensure longevity in a fast-paced design landscape.
+- **Creative Solution**: The solution centers on “mindful minimalism,” blending Scandinavian simplicity with organic warmth. The logo combines a soft, custom sans-serif wordmark with an abstract symbol (e.g., a horizon line or a chair looking shape) to evoke openness. A warm, earthy color palette of oatmeal and terracotta replaces cold neutrals, creating an inviting yet modern feel. Typography pairs a geometric sans-serif with rounded edges for approachability and a minimalist serif for storytelling. Photography focuses on airy, naturally wide spaces to evoke the minimalist aesthetic. Sustainability is conveyed subtly through material close-ups (reclaimed wood grains, vegan leather) and artisan stories rather than overt symbols.
+
+
+### 01 / PizzaCult© Rebranding
+- **Client**: Pizza Cult
+- **Sector**: Food & Beverage
+- **Year & Timeline**: Q2 2024 (3 Weeks)
+- **Disciplines**: Brand Identity, Packaging • Graphic Assets
+- **Case Study URL**: https://argistudio.com/project/pizzacult--01
+- **Executive Summary**: The sharing of food has always been part of the human story. “To break bread together,” a phrase as old as the Bible, captures the power of a meal to forge and strengthen relationships.
+
+- **Creative Solution**: The creation of Pizza Cult was inspired by this very notion of community. We sought to create a space where everyone; no matter of background, ethnicity, religion, nationality, age, or gender, could come together and bond over a simple, but universally shared, love for a great slice of pizza.
+- **Deliverables**: Brand Identity, Packaging Design, Graphic Assets, Social Media Templates
+
+## Studio Journal & Critical Dispatches
+
+### 01 / ARGI Studio Vol. 01 Released Worldwide
+- **Category**: Publication
+- **Date**: August 18, 2026
+- **Author**: Arya Rajasa (Founder & Design Director • ARGI Studio)
+- **Article URL**: https://argistudio.com/article/argi-studio-vol-01-released-worldwide-01
+- **Lead Synopsis**: ARGI didn’t happen overnight. It took seven years, one failed venture, and finally getting the right people at the same table to make it real.
+
+## Frequently Asked Questions (FAQ for AI Retrieval)
+- **Q: Where is ARGI Studio based?**
+  - **A**: ARGI Studio is headquartered in Bali, Indonesia, and works with clients internationally across Singapore, Australia, the US, UK, and Europe.
+- **Q: What is ARGI Studio's typical project timeline?**
+  - **A**: A full brand identity sprint typically takes 4 to 6 weeks. Complete branding + custom website development takes 6 to 10 weeks.
+- **Q: How can I commission work with ARGI Studio?**
+  - **A**: Clients can submit a project brief directly via the interactive brief builder at https://argistudio.com/#contact or by emailing hello@argistudio.com.

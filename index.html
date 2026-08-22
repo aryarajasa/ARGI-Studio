@@ -31,6 +31,12 @@
   <meta name="twitter:description" content="Independent Brand Identity Studio &amp; Web Design and Development agency in Bali, Indonesia." />
   <meta name="twitter:image" content="https://argistudio.com/assets/og-image.jpg" />
 
+  <!-- Geographic & Regional SEO Targeting -->
+  <meta name="geo.region" content="ID-BA" />
+  <meta name="geo.placename" content="Bali, Indonesia" />
+  <meta name="geo.position" content="-8.409518;115.188919" />
+  <meta name="ICBM" content="-8.409518, 115.188919" />
+
   <!-- Google Fonts: Instrument Serif & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,91 +44,163 @@
 
   <!-- Favicon Suite: Google Search & Universal Standard -->
   <link rel="icon" href="/favicon.ico" sizes="48x48" />
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" id="faviconTag" />
-  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48x48.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192x192.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
-  <link rel="manifest" href="site.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" id="faviconTag" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
 
-  <!-- Structured Data: Schema.org JSON-LD (Organization & ProfessionalService) -->
+  <!-- Structured Data: Schema.org Interconnected @graph (GEO & AI Engine Optimization) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "ARGI Studio",
-    "alternateName": "ARGI Brand and Web Agency",
-    "url": "https://argistudio.com/",
-    "logo": "https://argistudio.com/assets/logo.png",
-    "image": "https://argistudio.com/assets/og-image.jpg",
-    "description": "ARGI Studio is an independent Brand Identity Studio and Web Design and Development agency in Bali, Indonesia specializing in startup brand identity design, minimalist bespoke e-commerce web design, and tactile packaging.",
-    "priceRange": "$$$$",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Bali",
-      "addressRegion": "Bali",
-      "addressCountry": "ID"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": -8.409518,
-      "longitude": 115.188919
-    },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday"
-      ],
-      "opens": "09:00",
-      "closes": "18:00"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Creative Studio Services",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Brand Identity Design Studio",
-            "description": "Comprehensive brand strategy, bespoke serif typography systems, luxury tactile packaging, and brand guidelines."
-          }
+    "@graph": [
+      {
+        "@type": ["ProfessionalService", "Organization"],
+        "@id": "https://argistudio.com/#organization",
+        "name": "ARGI Studio",
+        "alternateName": ["ARGI", "ARGI Brand and Web Agency", "ARGI Studio Bali"],
+        "url": "https://argistudio.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://argistudio.com/#logo",
+          "url": "https://argistudio.com/assets/logo.png",
+          "caption": "ARGI Studio Monogram"
         },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Web Design and Development Bali",
-            "description": "Minimalist bespoke e-commerce web design, headless Shopify flagships, and high-conversion digital architectures."
-          }
+        "image": "https://argistudio.com/assets/og-image.jpg",
+        "description": "ARGI Studio is an independent Brand Identity Studio and Web Design & Development agency in Bali, Indonesia. Specializing in startup brand identity design, minimalist bespoke e-commerce web design, luxury typography, and tactile packaging.",
+        "email": "hello@argistudio.com",
+        "priceRange": "$$$$",
+        "currenciesAccepted": "USD, EUR, AUD, SGD, IDR",
+        "paymentAccepted": "Bank Transfer, Stripe, Wise",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Bali",
+          "addressRegion": "Bali",
+          "addressCountry": "ID"
         },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Startup Brand Identity Design Studio",
-            "description": "Complete visual identity engineering, wordmarks, pitch decks, and digital design systems for early-stage and scale-up ventures."
-          }
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -8.409518,
+          "longitude": 115.188919
         },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Editorial Graphic Design & Sustainable Packaging",
-            "description": "Tactile packaging engineering, foil stamping, FSC-certified bookbinding monographs, and spatial signage."
+        "areaServed": [
+          { "@type": "Country", "name": "Indonesia" },
+          { "@type": "Country", "name": "Singapore" },
+          { "@type": "Country", "name": "Australia" },
+          { "@type": "Country", "name": "United States" },
+          { "@type": "Country", "name": "United Kingdom" },
+          { "@type": "Country", "name": "France" },
+          { "@type": "Country", "name": "Japan" }
+        ],
+        "knowsLanguage": ["en", "id"],
+        "founder": [
+          {
+            "@type": "Person",
+            "@id": "https://argistudio.com/#founder",
+            "name": "Arya Rajasa",
+            "jobTitle": "Founder & Design Director",
+            "worksFor": { "@id": "https://argistudio.com/#organization" },
+            "knowsAbout": [
+              "Brand Architecture",
+              "Creative Direction",
+              "Bespoke Typography",
+              "Minimalist Web Engineering"
+            ]
           }
-        }
-      ]
-    },
-    "sameAs": [
-      "https://www.instagram.com/",
-      "https://www.linkedin.com/",
-      "https://twitter.com/",
-      "https://www.behance.net/"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "ARGI Creative Studio Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Brand Identity Design Studio",
+                "description": "Comprehensive visual identity architecture, custom wordmarks, bespoke typography pairings, and luxury brand guidelines."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Web Design & Development Bali",
+                "description": "High-conversion minimalist bespoke e-commerce flagships, headless web architectures, and interactive digital experiences."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Startup Brand Identity Design Studio",
+                "description": "Complete visual identity engineering, pitch decks, investor collateral, and rapid digital execution for high-growth tech ventures."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Editorial Art Direction & Sustainable Packaging",
+                "description": "Tactile packaging engineering, foil-stamped print collaterals, FSC-certified monograph publications, and spatial storefront signage."
+              }
+            }
+          ]
+        },
+        "sameAs": [
+          "https://www.instagram.com/",
+          "https://www.linkedin.com/",
+          "https://twitter.com/",
+          "https://www.behance.net/"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://argistudio.com/#website",
+        "url": "https://argistudio.com/",
+        "name": "ARGI Studio",
+        "publisher": { "@id": "https://argistudio.com/#organization" },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://argistudio.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Where is ARGI Studio located?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ARGI Studio is an independent brand identity and digital design agency headquartered in Bali, Indonesia, serving ambitious founders and luxury lifestyle brands worldwide including in Singapore, Australia, the US, and Europe."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What services does ARGI Studio specialize in?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ARGI Studio specializes in four core disciplines: Brand Strategy & Visual Identity Systems, Minimalist Bespoke Web Design & Development, Editorial Art Direction & Tactile Packaging, and Startup Launch Brand Acceleration."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the typical project timeline at ARGI Studio?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A comprehensive Brand Identity sprint typically spans 4 to 6 weeks. An integrated Brand Identity + Digital Flagship Web Design project typically spans 6 to 10 weeks."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can I commission a project with ARGI Studio?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can submit your project brief through the interactive Commission Brief builder at https://argistudio.com/#contact or send an inquiry to hello@argistudio.com."
+            }
+          }
+        ]
+      }
     ]
   }
   </script>

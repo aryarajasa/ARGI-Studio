@@ -252,36 +252,73 @@ const initArticlePage = async () => {
   const twitterImage = document.getElementById("twitterImage");
   if (twitterImage) twitterImage.content = featImgUrl;
 
-  // Dynamic Schema.org JSON-LD Structured Data for BlogPosting
+  // Dynamic Schema.org JSON-LD Structured Data for BlogPosting & GEO
   const articleSchema = document.getElementById("articleSchema");
   if (articleSchema) {
     articleSchema.textContent = JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": articleTitle,
-      "description": metaDescription,
-      "image": featImgUrl,
-      "url": currentUrl,
-      "datePublished": currentArticle.date || "2026-01-01",
-      "dateModified": new Date().toISOString().split("T")[0],
-      "author": {
-        "@type": "Person",
-        "name": currentArticle.authorName || "ARGI Editorial Team",
-        "jobTitle": currentArticle.authorRole || "Creative Director"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "ARGI Studio",
-        "url": "https://argistudio.com/",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://argistudio.com/assets/logo.png"
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "@id": `${currentUrl}#article`,
+          "headline": articleTitle,
+          "description": metaDescription,
+          "articleBody": currentArticle.lead || metaDescription,
+          "image": featImgUrl,
+          "url": currentUrl,
+          "datePublished": currentArticle.date || "2026-01-01",
+          "dateModified": new Date().toISOString().split("T")[0],
+          "articleSection": currentArticle.category || "Journal",
+          "inLanguage": "en-US",
+          "author": {
+            "@type": "Person",
+            "name": currentArticle.authorName || "Arya Rajasa",
+            "jobTitle": currentArticle.authorRole || "Founder & Design Director"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "ARGI Studio",
+            "url": "https://argistudio.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://argistudio.com/assets/logo.png"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Bali",
+              "addressCountry": "ID"
+            }
+          },
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": currentUrl
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": `${currentUrl}#breadcrumb`,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://argistudio.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Journal",
+              "item": "https://argistudio.com/#journal"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": articleTitle,
+              "item": currentUrl
+            }
+          ]
         }
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": currentUrl
-      }
+      ]
     });
   }
 

@@ -1,18 +1,43 @@
-﻿# ARGI Studio — Creative Studio Bali (Robots.txt)
+# ARGI Studio — Creative Studio Bali (Robots.txt & AI Crawler Directives)
 User-agent: *
 Allow: /
 Allow: /index.html
+Allow: /project/
+Allow: /article/
+Allow: /journal/
 Allow: /project.html
 Allow: /article.html
 Allow: /assets/
-Allow: /data/
+Allow: /llms.txt
 
-# Disallow Private Administrative Control Panel & Internal Scripts
+# AI Search & Generative Engine Crawlers (Google AI, OpenAI ChatGPT, Anthropic Claude, Perplexity AI, Apple)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Disallow Private Administrative Control Panel & Internal Configurations
 Disallow: /admin.html
 Disallow: /admin.js
 Disallow: /admin.css
 Disallow: /server.js
 Disallow: /data/auth.json
 
-# XML Sitemap
+# XML Sitemap & LLM Standard Knowledge File
 Sitemap: https://argistudio.com/sitemap.xml

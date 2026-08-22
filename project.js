@@ -200,40 +200,71 @@ const initProjectPage = async () => {
   const twitterImage = document.getElementById("twitterImage");
   if (twitterImage) twitterImage.content = heroImgUrl;
 
-  // Dynamic Schema.org JSON-LD Structured Data
+  // Dynamic Schema.org JSON-LD Structured Data (GEO & Generative AI Indexing)
   const projectSchema = document.getElementById("projectSchema");
   if (projectSchema) {
+    const deliverablesList = Array.isArray(currentProject.deliverables)
+      ? currentProject.deliverables
+      : (currentProject.deliverables ? [currentProject.deliverables] : ["Brand Identity System", "Digital Architecture"]);
+
     projectSchema.textContent = JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "CreativeWork",
-      "name": `${fullTitle} Case Study`,
-      "headline": `${fullTitle} — ${currentProject.disciplines || 'Brand Identity & Web Design'}`,
-      "author": {
-        "@type": "Organization",
-        "name": "ARGI Studio",
-        "url": "https://argistudio.com/"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "ARGI Studio",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://argistudio.com/assets/logo.png"
+      "@graph": [
+        {
+          "@type": "CreativeWork",
+          "@id": `${currentUrl}#caseStudy`,
+          "name": `${fullTitle} Case Study`,
+          "headline": `${fullTitle} — ${currentProject.disciplines || 'Brand Identity & Web Design'}`,
+          "description": currentProject.summary || metaDescription,
+          "abstract": currentProject.concept || currentProject.challenge || currentProject.summary || "",
+          "image": heroImgUrl,
+          "url": currentUrl,
+          "genre": "Brand Identity & Digital Design Case Study",
+          "keywords": `${currentProject.disciplines || 'Branding'}, ${currentProject.sector || 'Design'}, Minimalist Bespoke Web Design, Brand Identity Studio, ARGI Studio, Bali`,
+          "dateCreated": currentProject.year || "2026",
+          "inLanguage": "en-US",
+          "creator": {
+            "@type": "Organization",
+            "name": "ARGI Studio",
+            "url": "https://argistudio.com/",
+            "logo": "https://argistudio.com/assets/logo.png",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Bali",
+              "addressCountry": "ID"
+            }
+          },
+          "about": {
+            "@type": "Brand",
+            "name": currentProject.client || currentProject.title,
+            "description": currentProject.summary || ""
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": `${currentUrl}#breadcrumb`,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://argistudio.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Selected Work",
+              "item": "https://argistudio.com/#projects"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": fullTitle,
+              "item": currentUrl
+            }
+          ]
         }
-      },
-      "description": metaDescription,
-      "image": heroImgUrl,
-      "url": currentUrl,
-      "dateCreated": currentProject.year || "2026",
-      "provider": {
-        "@type": "Organization",
-        "name": "ARGI Studio",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Bali",
-          "addressCountry": "ID"
-        }
-      }
+      ]
     });
   }
 

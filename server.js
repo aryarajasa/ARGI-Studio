@@ -43,6 +43,8 @@ const MIME_TYPES = {
   '.gif': 'image/gif',
   '.ico': 'image/x-icon',
   '.webmanifest': 'application/manifest+json',
+  '.txt': 'text/plain; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8',
   '.woff2': 'font/woff2',
   '.woff': 'font/woff',
   '.ttf': 'font/ttf'
@@ -175,6 +177,10 @@ const server = http.createServer(async (req, res) => {
         if (req.method === 'POST') {
           const body = await readRequestBody(req);
           fs.writeFileSync(PROJECTS_FILE, JSON.stringify(body, null, 2), 'utf-8');
+          try {
+            const { generateAll } = require('./build_seo_assets.js');
+            generateAll().catch(() => {});
+          } catch(e) {}
           return sendJson(res, 200, { success: true, message: 'Projects saved successfully', count: Object.keys(body).length });
         }
       }
@@ -192,6 +198,10 @@ const server = http.createServer(async (req, res) => {
         if (req.method === 'POST') {
           const body = await readRequestBody(req);
           fs.writeFileSync(ARTICLES_FILE, JSON.stringify(body, null, 2), 'utf-8');
+          try {
+            const { generateAll } = require('./build_seo_assets.js');
+            generateAll().catch(() => {});
+          } catch(e) {}
           return sendJson(res, 200, { success: true, message: 'Articles saved successfully', count: Object.keys(body).length });
         }
       }

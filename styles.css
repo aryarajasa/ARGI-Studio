@@ -793,9 +793,9 @@ body.site-ready .page-wrapper {
 
 .hero-heading-centered {
   font-family: var(--font-serif);
-  font-size: clamp(3.25rem, 7.8vw, 6.25rem);
+  font-size: clamp(3.25rem, 7vw, 5.75rem);
   font-weight: 400;
-  line-height: 1.04;
+  line-height: 1.02;
   letter-spacing: -0.025em;
   color: var(--text-primary);
   margin-bottom: 1.5rem;
@@ -962,9 +962,9 @@ body.site-ready .page-wrapper {
 
 .editorial-heading {
   font-family: var(--font-serif);
-  font-size: clamp(2.2rem, 4.2vw, 3.5rem);
+  font-size: clamp(2.15rem, 3.8vw, 3.25rem);
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.16;
   letter-spacing: -0.015em;
 }
 
@@ -992,9 +992,9 @@ body.site-ready .page-wrapper {
 
 .section-title {
   font-family: var(--font-serif);
-  font-size: clamp(2.2rem, 4vw, 3.35rem);
+  font-size: clamp(2.15rem, 3.8vw, 3.25rem);
   font-weight: 400;
-  line-height: 1.15;
+  line-height: 1.16;
   letter-spacing: -0.015em;
   max-width: 850px;
   color: var(--text-primary);
@@ -1135,9 +1135,9 @@ body.site-ready .page-wrapper {
 
 .editorial-heading-dark {
   font-family: var(--font-serif);
-  font-size: clamp(2.2rem, 4.2vw, 3.5rem);
+  font-size: clamp(2.15rem, 3.8vw, 3.25rem);
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.16;
   letter-spacing: -0.015em;
 }
 
@@ -1914,9 +1914,9 @@ body.site-ready .page-wrapper {
 
 .workbench-title {
   font-family: var(--font-serif);
-  font-size: clamp(2.4rem, 4.4vw, 3.75rem);
+  font-size: clamp(2.15rem, 3.8vw, 3.25rem);
   font-weight: 400;
-  line-height: 1.15;
+  line-height: 1.16;
   letter-spacing: -0.015em;
   margin-bottom: 1rem;
 }
@@ -2962,10 +2962,18 @@ body.site-ready .page-wrapper {
   }
 
   .hero-heading-centered {
-    font-size: clamp(3.5rem, 8vw, 4.85rem);
-    line-height: 1.03;
-    letter-spacing: -0.035em;
+    font-size: clamp(2.65rem, 6.2vw, 4.25rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
     margin-bottom: 1.35rem;
+  }
+
+  .editorial-heading,
+  .editorial-heading-dark,
+  .section-title,
+  .workbench-title {
+    font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+    line-height: 1.18;
   }
 
   .hero-subcaption {
@@ -3181,9 +3189,9 @@ body.site-ready .page-wrapper {
   }
 
   .hero-heading-centered {
-    font-size: clamp(2.85rem, 11vw, 3.85rem);
-    line-height: 1.02;
-    letter-spacing: -0.035em;
+    font-size: clamp(2.15rem, 8.5vw, 3rem);
+    line-height: 1.06;
+    letter-spacing: -0.025em;
     margin-bottom: 1.15rem;
   }
 
@@ -3223,7 +3231,7 @@ body.site-ready .page-wrapper {
   .pos-tr-2 { width: 95px; height: 125px; top: 7%; right: 2%; opacity: 0.95; }
   .pos-bl-1 { width: 95px; height: 125px; bottom: 7%; left: 2%; opacity: 0.95; }
   .pos-br { width: 100px; height: 135px; bottom: 6%; right: 2%; opacity: 0.95; }
-  .floating-caption { font-size: 0.65rem; }
+  .floating-caption { display: none !important; }
 
   /* Floating Up Arrow on Mobile */
   .mobile-scroll-top-btn {
@@ -3263,13 +3271,16 @@ body.site-ready .page-wrapper {
   /* Section Headings */
   .editorial-heading,
   .editorial-heading-dark,
-  .section-title {
+  .section-title,
+  .workbench-title {
     font-size: clamp(1.45rem, 5.5vw, 1.85rem);
-    line-height: 1.3;
+    line-height: 1.22;
   }
 
-  .datasets-section-title {
-    font-size: clamp(1.35rem, 5vw, 1.75rem);
+  .datasets-section-title,
+  .service-name {
+    font-size: clamp(1.2rem, 4.5vw, 1.45rem);
+    line-height: 1.25;
   }
 
   /* Methodology / Process */
@@ -3439,7 +3450,6 @@ body.site-ready .page-wrapper {
   }
 
   .workbench-title {
-    font-size: clamp(1.5rem, 6.5vw, 2.15rem);
     word-break: break-word;
   }
 
@@ -3690,7 +3700,16 @@ body.site-ready .page-wrapper {
   }
 
   .hero-heading-centered {
-    font-size: 1.95rem;
+    font-size: clamp(1.75rem, 7.5vw, 2.15rem);
+    line-height: 1.08;
+  }
+
+  .editorial-heading,
+  .editorial-heading-dark,
+  .section-title,
+  .workbench-title {
+    font-size: clamp(1.25rem, 5.5vw, 1.55rem);
+    line-height: 1.22;
   }
 
   .tag-pill {

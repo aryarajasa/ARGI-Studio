@@ -569,48 +569,73 @@ const initLandingPage = () => {
       seeMoreBtnText.textContent = `See More Works (${extraCount})`;
     }
 
-    // 4. Dynamically Populate Hero Floating Cards from Portfolio Database (Randomized Shuffle)
+    // 4. Dynamically Populate Hero Floating Cards from Portfolio Database (Balanced, Deduplicated Randomizer)
     const heroFloatingCards = document.querySelectorAll("#heroGallery .floating-card");
     if (heroFloatingCards.length > 0) {
-      // Gather authentic visual artifacts across all projects in the database
-      const visualPool = [];
       const isLocalFile = window.location.protocol === "file:";
+      const seenVisualKeys = new Set();
+      const projectPools = {}; // { projId: [items] }
+
+      const getCleanFileKey = (url) => {
+        if (!url || typeof url !== "string") return "";
+        const filename = url.split("/").pop().split("?")[0].split("#")[0];
+        return filename.replace(/^\d+_/, "").toLowerCase();
+      };
 
       projectKeys.forEach(id => {
         const p = projectsData[id];
         if (!p) return;
+        projectPools[id] = [];
         const targetSlug = p.slug || p.id;
         const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}`;
         const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
 
-        if (p.heroImage && p.heroImage.trim() && p.heroImage !== "assets/logo.png") {
-          visualPool.push({ img: p.heroImage, title: titleFull, id: p.id, href: projectHref });
-        }
-        if (p.spreadImg1 && p.spreadImg1.trim()) {
-          visualPool.push({ img: p.spreadImg1, title: titleFull, id: p.id, href: projectHref });
-        }
-        if (p.spreadImg2 && p.spreadImg2.trim()) {
-          visualPool.push({ img: p.spreadImg2, title: titleFull, id: p.id, href: projectHref });
-        }
-        if (p.interfaceImg && p.interfaceImg.trim()) {
-          visualPool.push({ img: p.interfaceImg, title: titleFull, id: p.id, href: projectHref });
-        }
+        const addCandidate = (url) => {
+          if (!url || typeof url !== "string") return;
+          const cleanUrl = url.trim();
+          if (!cleanUrl || cleanUrl === "assets/logo.png") return;
+          const fileKey = id + "_" + getCleanFileKey(cleanUrl);
+          if (seenVisualKeys.has(fileKey)) return;
+          seenVisualKeys.add(fileKey);
+          projectPools[id].push({ img: cleanUrl, title: titleFull, id: p.id, href: projectHref });
+        };
+
+        addCandidate(p.heroImage);
+        addCandidate(p.spreadImg1);
+        addCandidate(p.spreadImg2);
+        addCandidate(p.interfaceImg);
         if (Array.isArray(p.gallery)) {
           p.gallery.forEach(g => {
-            if (g && g.img && g.img.trim()) {
-              visualPool.push({ img: g.img, title: g.title || titleFull, id: p.id, href: projectHref });
-            }
+            if (g && g.img) addCandidate(g.img);
           });
+        }
+
+        // Shuffle this project's pool using Fisher-Yates
+        for (let i = projectPools[id].length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [projectPools[id][i], projectPools[id][j]] = [projectPools[id][j], projectPools[id][i]];
         }
       });
 
-      if (visualPool.length > 0) {
-        // High-Entropy Fisher-Yates Shuffle for authentic dynamic randomization on every load
-        for (let i = visualPool.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [visualPool[i], visualPool[j]] = [visualPool[j], visualPool[i]];
-        }
+      // Interleave round-robin across randomized projects for maximum variety and zero duplicates
+      const visualPool = [];
+      let hasMore = true;
+      let round = 0;
+      const shuffledProjectKeys = [...projectKeys].sort(() => Math.random() - 0.5);
 
+      while (hasMore && visualPool.length < heroFloatingCards.length * 2) {
+        hasMore = false;
+        shuffledProjectKeys.forEach(id => {
+          const pool = projectPools[id] || [];
+          if (pool.length > round) {
+            visualPool.push(pool[round]);
+            hasMore = true;
+          }
+        });
+        round++;
+      }
+
+      if (visualPool.length > 0) {
         heroFloatingCards.forEach((card, idx) => {
           const item = visualPool[idx % visualPool.length];
           const imgEl = card.querySelector(".floating-img");

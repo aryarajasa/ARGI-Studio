@@ -569,43 +569,70 @@ const initLandingPage = () => {
       seeMoreBtnText.textContent = `See More Works (${extraCount})`;
     }
 
-    // 4. Dynamically Populate Hero Floating Cards from Portfolio Database
+    // 4. Dynamically Populate Hero Floating Cards from Portfolio Database (Randomized Shuffle)
     const heroFloatingCards = document.querySelectorAll("#heroGallery .floating-card");
     if (heroFloatingCards.length > 0) {
       // Gather authentic visual artifacts across all projects in the database
       const visualPool = [];
+      const isLocalFile = window.location.protocol === "file:";
+
       projectKeys.forEach(id => {
         const p = projectsData[id];
         if (!p) return;
+        const targetSlug = p.slug || p.id;
+        const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}`;
+        const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
+
         if (p.heroImage && p.heroImage.trim() && p.heroImage !== "assets/logo.png") {
-          visualPool.push({ img: p.heroImage, title: p.title, id: p.id, tag: "IDENTITY" });
+          visualPool.push({ img: p.heroImage, title: titleFull, id: p.id, href: projectHref });
         }
         if (p.spreadImg1 && p.spreadImg1.trim()) {
-          visualPool.push({ img: p.spreadImg1, title: p.title, id: p.id, tag: "EDITORIAL" });
+          visualPool.push({ img: p.spreadImg1, title: titleFull, id: p.id, href: projectHref });
         }
         if (p.spreadImg2 && p.spreadImg2.trim()) {
-          visualPool.push({ img: p.spreadImg2, title: p.title, id: p.id, tag: "PACKAGING" });
+          visualPool.push({ img: p.spreadImg2, title: titleFull, id: p.id, href: projectHref });
         }
         if (p.interfaceImg && p.interfaceImg.trim()) {
-          visualPool.push({ img: p.interfaceImg, title: p.title, id: p.id, tag: "DIGITAL" });
+          visualPool.push({ img: p.interfaceImg, title: titleFull, id: p.id, href: projectHref });
         }
         if (Array.isArray(p.gallery)) {
           p.gallery.forEach(g => {
             if (g && g.img && g.img.trim()) {
-              visualPool.push({ img: g.img, title: g.title || p.title, id: p.id, tag: g.tag || "ARCHIVE" });
+              visualPool.push({ img: g.img, title: g.title || titleFull, id: p.id, href: projectHref });
             }
           });
         }
       });
 
       if (visualPool.length > 0) {
+        // High-Entropy Fisher-Yates Shuffle for authentic dynamic randomization on every load
+        for (let i = visualPool.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [visualPool[i], visualPool[j]] = [visualPool[j], visualPool[i]];
+        }
+
         heroFloatingCards.forEach((card, idx) => {
           const item = visualPool[idx % visualPool.length];
           const imgEl = card.querySelector(".floating-img");
           if (imgEl && item) {
             setMediaElement(imgEl, item.img, `${item.title} — Portfolio Artifact`);
+            card.style.cursor = "pointer";
+            card.setAttribute("title", `${item.title} ↗`);
+            card.onclick = () => {
+              window.location.href = item.href;
+            };
           }
         });
+
+        // Trigger autoplay for any video in floating cards
+        const heroGal = document.getElementById("heroGallery");
+        if (heroGal) {
+          heroGal.querySelectorAll("video").forEach(v => {
+            v.muted = true;
+            v.playsInline = true;
+            v.play().catch(() => {});
+          });
+        }
       }
     }
 

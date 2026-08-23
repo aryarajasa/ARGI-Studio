@@ -21,62 +21,70 @@ export async function getSupabaseClient() {
 }
 
 /**
- * Fetch all projects from Supabase (with multi-tier fallback)
+ * Fetch all projects from Supabase (Instant Cache + Background Revalidate)
  */
-export async function getCloudProjects() {
-  // 1. Try Supabase Cloud Database first
-  try {
-    const supabase = await getSupabaseClient();
-    if (supabase) {
-      const { data, error } = await supabase
-        .from("projects")
-        .select("*");
-
-      if (!error && data && data.length > 0) {
-        const projectsMap = {};
-        data.forEach(item => {
-          projectsMap[item.id] = item.data || item;
-        });
-        localStorage.setItem("argi_projects_data", JSON.stringify(projectsMap));
-        return projectsMap;
-      }
-    }
-  } catch (err) {
-    console.warn("Supabase projects read fallback:", err);
-  }
-
-  // 2. Try Local Server API
-  try {
-    const apiRes = await fetch("/api/projects");
-    if (apiRes.ok) {
-      const apiData = await apiRes.json();
-      if (apiData && Object.keys(apiData).length > 0) {
-        localStorage.setItem("argi_projects_data", JSON.stringify(apiData));
-        return apiData;
-      }
-    }
-  } catch (e) {}
-
-  // 3. Try Static JSON file
-  try {
-    const staticRes = await fetch("data/projects.json");
-    if (staticRes.ok) {
-      const staticData = await staticRes.json();
-      if (staticData && Object.keys(staticData).length > 0) {
-        localStorage.setItem("argi_projects_data", JSON.stringify(staticData));
-        return staticData;
-      }
-    }
-  } catch (err) {}
-
-  // 4. LocalStorage Fallback
+export async function getCloudProjects(onUpdate = null) {
+  // 1. Instant Cache: Return cached projects in 0ms so the UI renders immediately!
+  let cached = null;
   const local = localStorage.getItem("argi_projects_data");
   if (local) {
     try {
-      return JSON.parse(local);
+      cached = JSON.parse(local);
     } catch (e) {}
   }
-  return {};
+
+  // 2. Fetch fresh data via native ultra-fast HTTP/2 REST API
+  const fetchFresh = async () => {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/projects?select=*`, {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          const projectsMap = {};
+          data.forEach(item => {
+            projectsMap[item.id] = item.data || item;
+          });
+          const newStr = JSON.stringify(projectsMap);
+          if (newStr !== local) {
+            localStorage.setItem("argi_projects_data", newStr);
+            if (typeof onUpdate === "function") {
+              onUpdate(projectsMap);
+            }
+          }
+          return projectsMap;
+        }
+      }
+    } catch (err) {
+      console.warn("Direct REST projects fetch fallback:", err);
+    }
+
+    // Local Server API fallback
+    try {
+      const apiRes = await fetch("/api/projects");
+      if (apiRes.ok) {
+        const apiData = await apiRes.json();
+        if (apiData && Object.keys(apiData).length > 0) {
+          localStorage.setItem("argi_projects_data", JSON.stringify(apiData));
+          return apiData;
+        }
+      }
+    } catch (e) {}
+
+    return cached || {};
+  };
+
+  // If cached data exists, trigger background revalidation without blocking 0ms render
+  if (cached && Object.keys(cached).length > 0) {
+    fetchFresh();
+    return cached;
+  }
+
+  return await fetchFresh();
 }
 
 /**
@@ -129,62 +137,69 @@ export async function deleteCloudProject(id) {
 }
 
 /**
- * Fetch all articles from Supabase (with multi-tier fallback)
+ * Fetch all articles from Supabase (Instant Cache + Background Revalidate)
  */
-export async function getCloudArticles() {
-  // 1. Try Supabase Cloud Database first
-  try {
-    const supabase = await getSupabaseClient();
-    if (supabase) {
-      const { data, error } = await supabase
-        .from("articles")
-        .select("*");
-
-      if (!error && data && data.length > 0) {
-        const articlesMap = {};
-        data.forEach(item => {
-          articlesMap[item.id] = item.data || item;
-        });
-        localStorage.setItem("argi_articles_data", JSON.stringify(articlesMap));
-        return articlesMap;
-      }
-    }
-  } catch (err) {
-    console.warn("Supabase articles read fallback:", err);
-  }
-
-  // 2. Try Local Server API
-  try {
-    const apiRes = await fetch("/api/articles");
-    if (apiRes.ok) {
-      const apiData = await apiRes.json();
-      if (apiData && Object.keys(apiData).length > 0) {
-        localStorage.setItem("argi_articles_data", JSON.stringify(apiData));
-        return apiData;
-      }
-    }
-  } catch (e) {}
-
-  // 3. Try Static JSON file
-  try {
-    const staticRes = await fetch("data/articles.json");
-    if (staticRes.ok) {
-      const staticData = await staticRes.json();
-      if (staticData && Object.keys(staticData).length > 0) {
-        localStorage.setItem("argi_articles_data", JSON.stringify(staticData));
-        return staticData;
-      }
-    }
-  } catch (err) {}
-
-  // 4. LocalStorage Fallback
+export async function getCloudArticles(onUpdate = null) {
+  // 1. Instant Cache: Return cached articles in 0ms!
+  let cached = null;
   const local = localStorage.getItem("argi_articles_data");
   if (local) {
     try {
-      return JSON.parse(local);
+      cached = JSON.parse(local);
     } catch (e) {}
   }
-  return {};
+
+  // 2. Fetch fresh articles via native ultra-fast HTTP/2 REST API
+  const fetchFresh = async () => {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/articles?select=*`, {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          const articlesMap = {};
+          data.forEach(item => {
+            articlesMap[item.id] = item.data || item;
+          });
+          const newStr = JSON.stringify(articlesMap);
+          if (newStr !== local) {
+            localStorage.setItem("argi_articles_data", newStr);
+            if (typeof onUpdate === "function") {
+              onUpdate(articlesMap);
+            }
+          }
+          return articlesMap;
+        }
+      }
+    } catch (err) {
+      console.warn("Direct REST articles fetch fallback:", err);
+    }
+
+    // Local Server API fallback
+    try {
+      const apiRes = await fetch("/api/articles");
+      if (apiRes.ok) {
+        const apiData = await apiRes.json();
+        if (apiData && Object.keys(apiData).length > 0) {
+          localStorage.setItem("argi_articles_data", JSON.stringify(apiData));
+          return apiData;
+        }
+      }
+    } catch (e) {}
+
+    return cached || {};
+  };
+
+  if (cached && Object.keys(cached).length > 0) {
+    fetchFresh();
+    return cached;
+  }
+
+  return await fetchFresh();
 }
 
 /**

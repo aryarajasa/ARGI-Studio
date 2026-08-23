@@ -442,9 +442,9 @@ const initLandingPage = () => {
   const renderMediaTag = (url, className = "", alt = "", extraAttrs = "") => {
     if (!url) return "";
     if (isVideoUrl(url)) {
-      return `<video src="${url}" class="${className}" autoplay loop muted playsinline webkit-playsinline preload="auto" disablepictureinpicture ${extraAttrs}></video>`;
+      return `<video src="${url}" class="${className}" autoplay loop muted playsinline webkit-playsinline preload="metadata" disablepictureinpicture ${extraAttrs}></video>`;
     }
-    return `<img src="${url}" class="${className}" alt="${alt}" loading="lazy" ${extraAttrs} />`;
+    return `<img src="${url}" class="${className}" alt="${alt}" loading="lazy" decoding="async" ${extraAttrs} />`;
   };
 
   const setMediaElement = (el, url, alt = "") => {
@@ -463,7 +463,7 @@ const initLandingPage = () => {
       video.playsInline = true;
       video.setAttribute("webkit-playsinline", "");
       video.setAttribute("disablepictureinpicture", "");
-      video.setAttribute("preload", "auto");
+      video.setAttribute("preload", "metadata");
       if (parent) parent.replaceChild(video, el);
       video.play().catch(() => {});
       return video;
@@ -474,11 +474,15 @@ const initLandingPage = () => {
       img.className = el.className;
       img.alt = alt;
       img.loading = "lazy";
+      img.decoding = "async";
       if (parent) parent.replaceChild(img, el);
       return img;
     } else {
       el.src = url;
-      if (el.tagName === "IMG") el.alt = alt;
+      if (el.tagName === "IMG") {
+        el.alt = alt;
+        el.decoding = "async";
+      }
       if (el.tagName === "VIDEO") {
         el.autoplay = true;
         el.loop = true;

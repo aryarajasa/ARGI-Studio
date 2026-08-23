@@ -577,9 +577,59 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const uploadMediaFile = async (file, groupEl) => {
-    if (!file) return;
+  const compressImageForWeb = async (file) => {
+    // If not an image (e.g. video), return original file
+    if (!file || !file.type.startsWith("image/") || file.type === "image/svg+xml" || file.type === "image/gif") {
+      return file;
+    }
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const maxDim = 2000;
+          let width = img.width;
+          let height = img.height;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
 
+          // Convert to optimized WebP (or JPEG fallback)
+          canvas.toBlob((blob) => {
+            if (blob && blob.size < file.size) {
+              const ext = blob.type === "image/webp" ? ".webp" : ".jpg";
+              const newName = file.name.replace(/\.[^/.]+$/, "") + ext;
+              const optimizedFile = new File([blob], newName, { type: blob.type });
+              resolve(optimizedFile);
+            } else {
+              resolve(file);
+            }
+          }, "image/webp", 0.85);
+        };
+        img.onerror = () => resolve(file);
+        img.src = e.target.result;
+      };
+      reader.onerror = () => resolve(file);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const uploadMediaFile = async (rawFile, groupEl) => {
+    if (!rawFile) return;
+
+    showToast(`Optimizing ${rawFile.name}...`, "⏳");
+    const file = await compressImageForWeb(rawFile);
     showToast(`Uploading ${file.name} to Supabase CDN...`, "⏳");
 
     // 1. Try Supabase Cloud Media Storage (100% Free CDN)

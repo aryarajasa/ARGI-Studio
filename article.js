@@ -108,6 +108,75 @@ const initArticlePage = async () => {
     }
   }
 
+  // =========================================================================
+  // UNIVERSAL MEDIA & VIDEO ENGINE (IMAGE & AUTOPLAY/LOOPING VIDEO SUPPORT)
+  // =========================================================================
+  const isVideoUrl = (url) => {
+    if (!url || typeof url !== "string") return false;
+    const clean = url.trim().toLowerCase().split("?")[0].split("#")[0];
+    return (
+      clean.endsWith(".mp4") ||
+      clean.endsWith(".webm") ||
+      clean.endsWith(".mov") ||
+      clean.endsWith(".ogg") ||
+      clean.endsWith(".m4v") ||
+      url.startsWith("data:video/") ||
+      url.includes("/video/") ||
+      url.includes(".mp4")
+    );
+  };
+
+  const renderMediaTag = (url, className = "", alt = "", extraAttrs = "") => {
+    if (!url) return "";
+    if (isVideoUrl(url)) {
+      return `<video src="${url}" class="${className}" autoplay loop muted playsinline webkit-playsinline preload="auto" disablepictureinpicture ${extraAttrs}></video>`;
+    }
+    return `<img src="${url}" class="${className}" alt="${alt}" loading="lazy" ${extraAttrs} />`;
+  };
+
+  const setMediaElement = (el, url, alt = "") => {
+    if (!el || !url) return null;
+    const isVideo = isVideoUrl(url);
+    const parent = el.parentElement;
+
+    if (isVideo && el.tagName === "IMG") {
+      const video = document.createElement("video");
+      video.src = url;
+      video.id = el.id;
+      video.className = el.className;
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.setAttribute("webkit-playsinline", "");
+      video.setAttribute("disablepictureinpicture", "");
+      video.setAttribute("preload", "auto");
+      if (parent) parent.replaceChild(video, el);
+      video.play().catch(() => {});
+      return video;
+    } else if (!isVideo && el.tagName === "VIDEO") {
+      const img = document.createElement("img");
+      img.src = url;
+      img.id = el.id;
+      img.className = el.className;
+      img.alt = alt;
+      img.loading = "lazy";
+      if (parent) parent.replaceChild(img, el);
+      return img;
+    } else {
+      el.src = url;
+      if (el.tagName === "IMG") el.alt = alt;
+      if (el.tagName === "VIDEO") {
+        el.autoplay = true;
+        el.loop = true;
+        el.muted = true;
+        el.playsInline = true;
+        el.play().catch(() => {});
+      }
+      return el;
+    }
+  };
+
   // -------------------------------------------------------------------------
   // 2. QUERY PARAMETER & CLEAN URL ROUTING (/article/slug or /journal/slug)
   // -------------------------------------------------------------------------
@@ -376,8 +445,7 @@ const initArticlePage = async () => {
     if (rawFeatureImg && rawFeatureImg !== "assets/logo.png") {
       featureMediaWrap.style.display = "block";
       if (articleFeatureImg) {
-        articleFeatureImg.src = rawFeatureImg;
-        articleFeatureImg.alt = currentArticle.featureCaption || currentArticle.title || "Feature Visual";
+        setMediaElement(articleFeatureImg, rawFeatureImg, currentArticle.featureCaption || currentArticle.title || "Feature Visual");
       }
     } else {
       featureMediaWrap.style.display = "none";

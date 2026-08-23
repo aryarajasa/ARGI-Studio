@@ -3830,3 +3830,16 @@ body.site-ready .page-wrapper {
     display: none;
   }
 }
+
+/* Universal Video Media Engine Styles */
+video.gallery-img-sharp,
+video.floating-img,
+video.news-img,
+video.index-portal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  border-radius: 0px !important;
+}

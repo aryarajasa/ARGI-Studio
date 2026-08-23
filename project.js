@@ -121,6 +121,75 @@ const initProjectPage = async () => {
   }
 
   // =========================================================================
+  // UNIVERSAL MEDIA & VIDEO ENGINE (IMAGE & AUTOPLAY/LOOPING VIDEO SUPPORT)
+  // =========================================================================
+  const isVideoUrl = (url) => {
+    if (!url || typeof url !== "string") return false;
+    const clean = url.trim().toLowerCase().split("?")[0].split("#")[0];
+    return (
+      clean.endsWith(".mp4") ||
+      clean.endsWith(".webm") ||
+      clean.endsWith(".mov") ||
+      clean.endsWith(".ogg") ||
+      clean.endsWith(".m4v") ||
+      url.startsWith("data:video/") ||
+      url.includes("/video/") ||
+      url.includes(".mp4")
+    );
+  };
+
+  const renderMediaTag = (url, className = "", alt = "", extraAttrs = "") => {
+    if (!url) return "";
+    if (isVideoUrl(url)) {
+      return `<video src="${url}" class="${className}" autoplay loop muted playsinline webkit-playsinline preload="auto" disablepictureinpicture ${extraAttrs}></video>`;
+    }
+    return `<img src="${url}" class="${className}" alt="${alt}" loading="lazy" ${extraAttrs} />`;
+  };
+
+  const setMediaElement = (el, url, alt = "") => {
+    if (!el || !url) return null;
+    const isVideo = isVideoUrl(url);
+    const parent = el.parentElement;
+
+    if (isVideo && el.tagName === "IMG") {
+      const video = document.createElement("video");
+      video.src = url;
+      video.id = el.id;
+      video.className = el.className;
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.setAttribute("webkit-playsinline", "");
+      video.setAttribute("disablepictureinpicture", "");
+      video.setAttribute("preload", "auto");
+      if (parent) parent.replaceChild(video, el);
+      video.play().catch(() => {});
+      return video;
+    } else if (!isVideo && el.tagName === "VIDEO") {
+      const img = document.createElement("img");
+      img.src = url;
+      img.id = el.id;
+      img.className = el.className;
+      img.alt = alt;
+      img.loading = "lazy";
+      if (parent) parent.replaceChild(img, el);
+      return img;
+    } else {
+      el.src = url;
+      if (el.tagName === "IMG") el.alt = alt;
+      if (el.tagName === "VIDEO") {
+        el.autoplay = true;
+        el.loop = true;
+        el.muted = true;
+        el.playsInline = true;
+        el.play().catch(() => {});
+      }
+      return el;
+    }
+  };
+
+  // =========================================================================
   // 2. QUERY PARAMETER & CLEAN URL ROUTING (/project/haven)
   // =========================================================================
   const getProjectFromUrl = () => {
@@ -333,8 +402,7 @@ const initProjectPage = async () => {
   // Populate Hero Image Frame
   const csHeroImg = document.getElementById("csHeroImg");
   if (csHeroImg) {
-    csHeroImg.src = currentProject.heroImage;
-    csHeroImg.alt = `${currentProject.title} Hero Visual`;
+    setMediaElement(csHeroImg, currentProject.heroImage, `${currentProject.title} Hero Visual`);
   }
 
   const csHeroCaption = document.getElementById("csHeroCaption");
@@ -369,14 +437,15 @@ const initProjectPage = async () => {
     }
   }
 
+  // Populate Pull Quote (Hide if empty)
   const csPullQuoteCard = document.getElementById("csPullQuoteCard");
+  const csQuoteText = document.getElementById("csQuoteText");
+  const csQuoteAuthor = document.getElementById("csQuoteAuthor");
+
   if (csPullQuoteCard) {
     if (rawQuote) {
       csPullQuoteCard.style.display = "block";
-      const csQuoteText = document.getElementById("csQuoteText");
-      if (csQuoteText) csQuoteText.textContent = rawQuote;
-
-      const csQuoteAuthor = document.getElementById("csQuoteAuthor");
+      if (csQuoteText) csQuoteText.textContent = `“${rawQuote}”`;
       if (csQuoteAuthor) csQuoteAuthor.textContent = (currentProject.quoteAuthor || "").trim();
 
       const csQuoteRole = document.getElementById("csQuoteRole");
@@ -410,8 +479,7 @@ const initProjectPage = async () => {
       
       if (s1 && spreadItem1) {
         spreadItem1.style.display = "block";
-        csSpreadImg1.src = s1;
-        csSpreadImg1.alt = currentProject.spreadCaption1 || "Spread Visual 1";
+        setMediaElement(csSpreadImg1, s1, currentProject.spreadCaption1 || "Spread Visual 1");
         if (csSpreadCaption1) {
           if (currentProject.spreadCaption1 && currentProject.spreadCaption1.trim()) {
             csSpreadCaption1.style.display = "block";
@@ -426,8 +494,7 @@ const initProjectPage = async () => {
 
       if (s2 && spreadItem2) {
         spreadItem2.style.display = "block";
-        csSpreadImg2.src = s2;
-        csSpreadImg2.alt = currentProject.spreadCaption2 || "Spread Visual 2";
+        setMediaElement(csSpreadImg2, s2, currentProject.spreadCaption2 || "Spread Visual 2");
         if (csSpreadCaption2) {
           if (currentProject.spreadCaption2 && currentProject.spreadCaption2.trim()) {
             csSpreadCaption2.style.display = "block";
@@ -546,8 +613,7 @@ const initProjectPage = async () => {
     if (rawInterfaceImg) {
       csInterfaceSection.style.display = "block";
       if (csInterfaceImg) {
-        csInterfaceImg.src = rawInterfaceImg;
-        csInterfaceImg.alt = `${currentProject.title} Interface Showcase`;
+        setMediaElement(csInterfaceImg, rawInterfaceImg, `${currentProject.title} Interface Showcase`);
       }
     } else {
       csInterfaceSection.style.display = "none";
@@ -564,7 +630,7 @@ const initProjectPage = async () => {
       csGallerySection.style.display = "block";
       csGalleryMosaic.innerHTML = validGallery.map((item, idx) => `
         <div class="bento-tile" data-lightbox>
-          <img src="${item.img}" alt="${item.title || item.caption || 'Gallery Image'}" class="bento-img" />
+          ${renderMediaTag(item.img, "bento-img", item.title || item.caption || "Gallery Media")}
           <div class="bento-overlay">
             <div class="bento-top-meta">
               <span class="bento-tag">${item.tag || `ARCHIVE // 0${idx + 1}`}</span>
@@ -777,8 +843,43 @@ const initProjectPage = async () => {
   const lightboxBackdrop = document.getElementById("lightboxBackdrop");
 
   const openLightbox = (src, caption) => {
-    if (!lightboxModal || !lightboxImg) return;
-    lightboxImg.src = src;
+    if (!lightboxModal) return;
+    const isVideo = isVideoUrl(src);
+    let targetEl = document.getElementById("lightboxImg");
+    const parent = targetEl ? targetEl.parentElement : null;
+
+    if (targetEl && parent) {
+      if (isVideo && targetEl.tagName === "IMG") {
+        const video = document.createElement("video");
+        video.src = src;
+        video.id = "lightboxImg";
+        video.className = targetEl.className;
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = false;
+        video.controls = true;
+        video.playsInline = true;
+        video.setAttribute("webkit-playsinline", "");
+        parent.replaceChild(video, targetEl);
+        video.play().catch(() => {});
+      } else if (!isVideo && targetEl.tagName === "VIDEO") {
+        const img = document.createElement("img");
+        img.src = src;
+        img.id = "lightboxImg";
+        img.className = targetEl.className;
+        img.alt = caption || "Full Resolution Visual";
+        parent.replaceChild(img, targetEl);
+      } else {
+        targetEl.src = src;
+        if (targetEl.tagName === "IMG") targetEl.alt = caption || "";
+        if (targetEl.tagName === "VIDEO") {
+          targetEl.autoplay = true;
+          targetEl.loop = true;
+          targetEl.play().catch(() => {});
+        }
+      }
+    }
+
     if (lightboxCaption) lightboxCaption.textContent = caption || "";
     lightboxModal.classList.add("is-open");
     document.body.style.overflow = "hidden";
@@ -786,6 +887,10 @@ const initProjectPage = async () => {
 
   const closeLightbox = () => {
     if (!lightboxModal) return;
+    const targetEl = document.getElementById("lightboxImg");
+    if (targetEl && targetEl.tagName === "VIDEO") {
+      targetEl.pause();
+    }
     lightboxModal.classList.remove("is-open");
     document.body.style.overflow = "";
   };
@@ -800,13 +905,13 @@ const initProjectPage = async () => {
   // Attach Lightbox to all clickable image containers
   document.querySelectorAll("[data-lightbox]").forEach(el => {
     el.addEventListener("click", () => {
-      const img = el.querySelector("img");
+      const media = el.querySelector("img, video");
       const bentoTitle = el.querySelector(".bento-title")?.textContent;
       const bentoDesc = el.querySelector(".bento-desc")?.textContent;
       const spreadCaption = el.querySelector(".spread-caption")?.textContent;
-      const caption = bentoTitle ? `${bentoTitle} — ${bentoDesc}` : (spreadCaption || img?.alt || "");
-      if (img && img.src) {
-        openLightbox(img.src, caption);
+      const caption = bentoTitle ? `${bentoTitle} — ${bentoDesc}` : (spreadCaption || media?.alt || "");
+      if (media && media.src) {
+        openLightbox(media.src, caption);
       }
     });
   });

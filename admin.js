@@ -17,6 +17,75 @@ document.addEventListener("DOMContentLoaded", () => {
   let editingProjectId = null;
   let editingArticleId = null;
 
+  // =========================================================================
+  // UNIVERSAL MEDIA & VIDEO ENGINE (IMAGE & AUTOPLAY/LOOPING VIDEO SUPPORT)
+  // =========================================================================
+  const isVideoUrl = (url) => {
+    if (!url || typeof url !== "string") return false;
+    const clean = url.trim().toLowerCase().split("?")[0].split("#")[0];
+    return (
+      clean.endsWith(".mp4") ||
+      clean.endsWith(".webm") ||
+      clean.endsWith(".mov") ||
+      clean.endsWith(".ogg") ||
+      clean.endsWith(".m4v") ||
+      url.startsWith("data:video/") ||
+      url.includes("/video/") ||
+      url.includes(".mp4")
+    );
+  };
+
+  const renderMediaTag = (url, className = "", alt = "", extraAttrs = "") => {
+    if (!url) return "";
+    if (isVideoUrl(url)) {
+      return `<video src="${url}" class="${className}" autoplay loop muted playsinline webkit-playsinline preload="auto" disablepictureinpicture ${extraAttrs}></video>`;
+    }
+    return `<img src="${url}" class="${className}" alt="${alt}" loading="lazy" ${extraAttrs} />`;
+  };
+
+  const setMediaElement = (el, url, alt = "") => {
+    if (!el || !url) return null;
+    const isVideo = isVideoUrl(url);
+    const parent = el.parentElement;
+
+    if (isVideo && el.tagName === "IMG") {
+      const video = document.createElement("video");
+      video.src = url;
+      video.id = el.id;
+      video.className = el.className;
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.setAttribute("webkit-playsinline", "");
+      video.setAttribute("disablepictureinpicture", "");
+      video.setAttribute("preload", "auto");
+      if (parent) parent.replaceChild(video, el);
+      video.play().catch(() => {});
+      return video;
+    } else if (!isVideo && el.tagName === "VIDEO") {
+      const img = document.createElement("img");
+      img.src = url;
+      img.id = el.id;
+      img.className = el.className;
+      img.alt = alt;
+      img.loading = "lazy";
+      if (parent) parent.replaceChild(img, el);
+      return img;
+    } else {
+      el.src = url;
+      if (el.tagName === "IMG") el.alt = alt;
+      if (el.tagName === "VIDEO") {
+        el.autoplay = true;
+        el.loop = true;
+        el.muted = true;
+        el.playsInline = true;
+        el.play().catch(() => {});
+      }
+      return el;
+    }
+  };
+
   // DOM Elements
   const authOverlay = document.getElementById("authOverlay");
   const authForm = document.getElementById("authForm");
@@ -369,7 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       card.innerHTML = `
         <div class="card-image-preview">
-          <img src="${p.heroImage || 'assets/logo.png'}" alt="${p.title}" loading="lazy" />
+          ${renderMediaTag(p.heroImage || 'assets/logo.png', '', p.title)}
           <span class="card-id-pill">ID // ${p.id}</span>
         </div>
         <div class="card-content-body">
@@ -441,7 +510,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       card.innerHTML = `
         <div class="card-image-preview">
-          <img src="${a.featureImage || 'assets/logo.png'}" alt="${a.title}" loading="lazy" />
+          ${renderMediaTag(a.featureImage || 'assets/logo.png', '', a.title)}
           <span class="card-id-pill">DISPATCH // ${a.id}</span>
         </div>
         <div class="card-content-body">
@@ -493,8 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (mediaUrl) {
       if (previewImg) {
-        previewImg.src = mediaUrl;
-        previewImg.alt = filename || "Uploaded media preview";
+        setMediaElement(previewImg, mediaUrl, filename || "Uploaded media preview");
       }
       if (previewFilename) {
         const cleanName = filename || mediaUrl.split("/").pop().split("?")[0] || "media";

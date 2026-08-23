@@ -421,6 +421,75 @@ const initLandingPage = () => {
     });
   }
 
+  // =========================================================================
+  // UNIVERSAL MEDIA & VIDEO ENGINE (IMAGE & AUTOPLAY/LOOPING VIDEO SUPPORT)
+  // =========================================================================
+  const isVideoUrl = (url) => {
+    if (!url || typeof url !== "string") return false;
+    const clean = url.trim().toLowerCase().split("?")[0].split("#")[0];
+    return (
+      clean.endsWith(".mp4") ||
+      clean.endsWith(".webm") ||
+      clean.endsWith(".mov") ||
+      clean.endsWith(".ogg") ||
+      clean.endsWith(".m4v") ||
+      url.startsWith("data:video/") ||
+      url.includes("/video/") ||
+      url.includes(".mp4")
+    );
+  };
+
+  const renderMediaTag = (url, className = "", alt = "", extraAttrs = "") => {
+    if (!url) return "";
+    if (isVideoUrl(url)) {
+      return `<video src="${url}" class="${className}" autoplay loop muted playsinline webkit-playsinline preload="auto" disablepictureinpicture ${extraAttrs}></video>`;
+    }
+    return `<img src="${url}" class="${className}" alt="${alt}" loading="lazy" ${extraAttrs} />`;
+  };
+
+  const setMediaElement = (el, url, alt = "") => {
+    if (!el || !url) return null;
+    const isVideo = isVideoUrl(url);
+    const parent = el.parentElement;
+
+    if (isVideo && el.tagName === "IMG") {
+      const video = document.createElement("video");
+      video.src = url;
+      video.id = el.id;
+      video.className = el.className;
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.setAttribute("webkit-playsinline", "");
+      video.setAttribute("disablepictureinpicture", "");
+      video.setAttribute("preload", "auto");
+      if (parent) parent.replaceChild(video, el);
+      video.play().catch(() => {});
+      return video;
+    } else if (!isVideo && el.tagName === "VIDEO") {
+      const img = document.createElement("img");
+      img.src = url;
+      img.id = el.id;
+      img.className = el.className;
+      img.alt = alt;
+      img.loading = "lazy";
+      if (parent) parent.replaceChild(img, el);
+      return img;
+    } else {
+      el.src = url;
+      if (el.tagName === "IMG") el.alt = alt;
+      if (el.tagName === "VIDEO") {
+        el.autoplay = true;
+        el.loop = true;
+        el.muted = true;
+        el.playsInline = true;
+        el.play().catch(() => {});
+      }
+      return el;
+    }
+  };
+
   // 6. DYNAMIC PORTFOLIO & JOURNAL RENDERING (FROM FIREBASE CLOUD + LOCAL CACHE)
   const renderDynamicProjects = async () => {
     let projectsData = await getCloudProjects();
@@ -446,7 +515,7 @@ const initLandingPage = () => {
         return `
           <a href="${projectHref}" class="gallery-item-sharp" aria-label="Explore ${titleFull} Case Study">
             <div class="gallery-item-frame">
-              <img src="${p.heroImage || 'assets/logo.png'}" alt="${titleFull} Brand Identity System" class="gallery-img-sharp" loading="lazy" />
+              ${renderMediaTag(p.heroImage || 'assets/logo.png', 'gallery-img-sharp', `${titleFull} Brand Identity System`)}
               <div class="gallery-sharp-overlay">
                 <span class="explore-sharp-pill">Explore Case Study <span class="pill-arrow">↗</span></span>
               </div>
@@ -534,8 +603,7 @@ const initLandingPage = () => {
           const item = visualPool[idx % visualPool.length];
           const imgEl = card.querySelector(".floating-img");
           if (imgEl && item) {
-            imgEl.src = item.img;
-            imgEl.alt = `${item.title} — Portfolio Artifact`;
+            setMediaElement(imgEl, item.img, `${item.title} — Portfolio Artifact`);
           }
         });
       }
@@ -587,7 +655,7 @@ const initLandingPage = () => {
           return `
             <a href="${articleHref}" class="news-card" aria-label="Read ${a.title}">
               <div class="news-thumbnail-wrap">
-                <img src="${a.featureImage || 'assets/logo.png'}" alt="${a.title}" class="news-img" loading="lazy" />
+                ${renderMediaTag(a.featureImage || 'assets/logo.png', 'news-img', a.title)}
               </div>
               <div class="news-body">
                 <h3 class="news-headline">${a.title}</h3>
@@ -718,7 +786,8 @@ const initLandingPage = () => {
       row.addEventListener("mouseenter", (e) => {
         const previewUrl = row.getAttribute("data-preview");
         if (previewUrl) {
-          indexPortalImg.src = previewUrl;
+          const currentImg = document.getElementById("indexPortalImg");
+          if (currentImg) setMediaElement(currentImg, previewUrl);
 
           const pos = calcPosition(e.clientX, e.clientY);
           currentX = pos.x;

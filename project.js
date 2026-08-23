@@ -189,6 +189,26 @@ const initProjectPage = async () => {
     }
   };
 
+  const initAutoPlayVideos = (scope = document) => {
+    if (!scope) return;
+    scope.querySelectorAll("video").forEach(video => {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.setAttribute("playsinline", "");
+      video.setAttribute("webkit-playsinline", "");
+      video.setAttribute("preload", "auto");
+      const play = () => {
+        const p = video.play();
+        if (p !== undefined) p.catch(() => {});
+      };
+      play();
+      video.addEventListener("loadeddata", play, { once: true });
+      video.addEventListener("canplay", play, { once: true });
+      video.addEventListener("loadedmetadata", play, { once: true });
+    });
+  };
+
   // =========================================================================
   // 2. QUERY PARAMETER & CLEAN URL ROUTING (/project/haven)
   // =========================================================================
@@ -643,6 +663,7 @@ const initProjectPage = async () => {
           </div>
         </div>
       `).join("");
+      initAutoPlayVideos(csGalleryMosaic);
     } else {
       csGallerySection.style.display = "none";
     }
@@ -1526,6 +1547,7 @@ ${clientName}`;
     }
   });
 
+  initAutoPlayVideos();
 };
 
 if (document.readyState === "loading") {

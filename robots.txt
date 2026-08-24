@@ -32,12 +32,11 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-# Disallow Private Administrative Control Panel & Internal Configurations
-Disallow: /admin.html
-Disallow: /admin.js
-Disallow: /admin.css
+# Disallow Internal Sensitive Assets & Server Files
 Disallow: /server.js
 Disallow: /data/auth.json
+Disallow: /data/inquiries.json
+Disallow: /scratch/
 
 # XML Sitemap & LLM Standard Knowledge File
 Sitemap: https://argistudio.com/sitemap.xml

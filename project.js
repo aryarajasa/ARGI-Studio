@@ -245,9 +245,21 @@ const initProjectPage = async () => {
 
   const currentProject = getProjectFromUrl();
   const currentProjectId = currentProject.id;
-  const nextProject = Object.values(PROJECTS_DATA).find(
-    p => p.id === currentProject.nextId || (p.slug && p.slug === currentProject.nextId)
-  ) || PROJECTS_DATA[currentProject.nextId] || currentProject;
+
+  // Dynamically resolve next sequential project in catalog
+  const allProjectsList = Object.values(PROJECTS_DATA).sort((a, b) => {
+    const numA = parseInt(a.id, 10);
+    const numB = parseInt(b.id, 10);
+    if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+    return String(a.id).localeCompare(String(b.id));
+  });
+
+  const currentProjectIdx = allProjectsList.findIndex(
+    p => p.id === currentProject.id || (p.slug && p.slug === currentProject.slug)
+  );
+
+  const nextProjectIdx = currentProjectIdx !== -1 ? (currentProjectIdx + 1) % allProjectsList.length : 0;
+  const nextProject = allProjectsList[nextProjectIdx] || currentProject;
 
   const projectSlug = currentProject.slug || currentProject.id;
   const isLocalFile = window.location.protocol === "file:";
@@ -707,8 +719,9 @@ const initProjectPage = async () => {
 
   const csNextNum = document.getElementById("csNextNum");
   if (csNextNum) {
-    const totalCount = String(Object.keys(PROJECTS_DATA).length).padStart(2, '0');
-    csNextNum.textContent = `${nextProject.id} / ${totalCount}`;
+    const totalCount = String(allProjectsList.length).padStart(2, '0');
+    const displayNum = String(nextProjectIdx + 1).padStart(2, '0');
+    csNextNum.textContent = `${displayNum} / ${totalCount}`;
   }
 
   const csNextTitle = document.getElementById("csNextTitle");

@@ -209,9 +209,21 @@ const initArticlePage = async () => {
   };
 
   const currentArticle = getArticleFromUrl();
-  const nextArticle = Object.values(ARTICLES_DATA).find(
-    art => art.id === currentArticle.nextId || (art.slug && art.slug === currentArticle.nextId)
-  ) || ARTICLES_DATA[currentArticle.nextId] || currentArticle;
+
+  // Dynamically resolve next sequential article in catalog
+  const allArticlesList = Object.values(ARTICLES_DATA).sort((a, b) => {
+    const numA = parseInt(a.id, 10);
+    const numB = parseInt(b.id, 10);
+    if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+    return String(a.id).localeCompare(String(b.id));
+  });
+
+  const currentArtIdx = allArticlesList.findIndex(
+    art => art.id === currentArticle.id || (art.slug && art.slug === currentArticle.slug)
+  );
+
+  const nextArtIdx = currentArtIdx !== -1 ? (currentArtIdx + 1) % allArticlesList.length : 0;
+  const nextArticle = allArticlesList[nextArtIdx] || currentArticle;
 
   const articleSlug = currentArticle.slug || currentArticle.id;
   const isLocalFile = window.location.protocol === "file:";

@@ -567,6 +567,30 @@ const initLandingPage = () => {
       initIndexHoverPortal();
     }
 
+    // 2.1 Dynamically Match Capabilities Hover Previews to Database Works
+    const capRows = document.querySelectorAll(".capability-row");
+    if (capRows.length && projectKeys.length) {
+      capRows.forEach((row, idx) => {
+        const targetDisc = (row.getAttribute("data-discipline") || "").toLowerCase();
+        let matchedImg = "";
+        for (let id of projectKeys) {
+          const p = projectsData[id];
+          if (p && p.disciplines && p.disciplines.toLowerCase().includes(targetDisc) && p.heroImage) {
+            matchedImg = p.heroImage;
+            break;
+          }
+        }
+        if (!matchedImg && projectKeys[idx % projectKeys.length]) {
+          const p = projectsData[projectKeys[idx % projectKeys.length]];
+          if (p && p.heroImage) matchedImg = p.heroImage;
+        }
+        if (matchedImg) {
+          row.setAttribute("data-preview", matchedImg);
+        }
+      });
+      initIndexHoverPortal();
+    }
+
     // 3. Update Mobile / Tablet 'See More' Count
     if (seeMoreBtnText) {
       const extraCount = Math.max(0, projectKeys.length - 3);
@@ -781,13 +805,13 @@ const initLandingPage = () => {
     });
   }
 
-  // 8. INDEX TABLE HOVER CURSOR PORTAL (GPU-ACCELERATED FLOATING MAIN IMAGE)
+  // 8. HOVER CURSOR PORTAL (GPU-ACCELERATED FLOATING MAIN IMAGE FOR INDEX & CAPABILITIES)
   const initIndexHoverPortal = () => {
-    const indexRows = document.querySelectorAll(".index-row-item");
+    const hoverRows = document.querySelectorAll(".index-row-item, .capability-row");
     const indexHoverPortal = document.getElementById("indexHoverPortal");
     const indexPortalImg = document.getElementById("indexPortalImg");
 
-    if (!indexRows.length || !indexHoverPortal || !indexPortalImg) return;
+    if (!hoverRows.length || !indexHoverPortal || !indexPortalImg) return;
     if (indexHoverPortal.parentElement !== document.body) {
       document.body.appendChild(indexHoverPortal);
     }
@@ -838,7 +862,11 @@ const initLandingPage = () => {
     };
     requestAnimationFrame(updatePortalPosition);
 
-    indexRows.forEach((row) => {
+    hoverRows.forEach((row) => {
+      // Remove any existing listeners by replacing clone or checking flag
+      if (row._hoverBound) return;
+      row._hoverBound = true;
+
       row.addEventListener("mouseenter", (e) => {
         const previewUrl = row.getAttribute("data-preview");
         if (previewUrl) {

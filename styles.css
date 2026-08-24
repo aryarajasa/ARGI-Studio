@@ -1639,12 +1639,14 @@ body.site-ready .page-wrapper {
   align-items: start;
   padding: 3rem 1rem;
   border-bottom: 1px solid var(--border-light);
+  cursor: pointer;
+  user-select: none;
   transition: background-color var(--transition-fast), padding var(--transition-fast);
   position: relative;
 }
 
 .capability-row:hover {
-  background-color: rgba(0, 0, 0, 0.015);
+  background-color: rgba(0, 0, 0, 0.025);
 }
 
 .cap-col-title {

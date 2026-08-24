@@ -567,7 +567,7 @@ body.site-ready .page-wrapper {
   font-size: 0.9375rem;
   font-weight: 500;
   padding: 0.7rem 1.45rem;
-  border-radius: var(--radius-full);
+  border-radius: 5px;
   transition: all var(--transition-smooth);
   white-space: nowrap;
   overflow: hidden;
@@ -626,7 +626,7 @@ body.site-ready .page-wrapper {
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: 4px;
   background-color: rgba(255, 255, 255, 0.18);
   color: #ffffff;
   transition: transform var(--transition-bounce), background-color var(--transition-fast);
@@ -1239,7 +1239,7 @@ body.site-ready .page-wrapper {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 0.3rem 0.4rem;
-  border-radius: var(--radius-full);
+  border-radius: 5px;
   user-select: none;
 }
 
@@ -1251,7 +1251,7 @@ body.site-ready .page-wrapper {
   border: none;
   cursor: pointer;
   padding: 0.45rem 1.15rem;
-  border-radius: var(--radius-full);
+  border-radius: 5px;
   transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
   outline: none;
 }
@@ -1352,7 +1352,7 @@ body.site-ready .page-wrapper {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 0.65rem 1.45rem;
-  border-radius: var(--radius-full);
+  border-radius: 5px;
   box-shadow: 
     0 4px 14px rgba(0, 0, 0, 0.15),
     0 16px 36px rgba(0, 0, 0, 0.35);
@@ -1769,7 +1769,7 @@ body.site-ready .page-wrapper {
 .journal-arrow-btn {
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: 5px;
   border: 1px solid var(--border-light);
   background: var(--bg-card);
   color: var(--text-primary);
@@ -2010,7 +2010,7 @@ body.site-ready .page-wrapper {
   background: var(--bg-body);
   border: 1px solid var(--border-light);
   padding: 0.55rem 1.15rem;
-  border-radius: var(--radius-full);
+  border-radius: 5px;
   cursor: pointer;
   transition: all var(--transition-fast);
   user-select: none;
@@ -2479,7 +2479,7 @@ body.site-ready .page-wrapper {
   background: var(--bg-body);
   border: 1px solid var(--border-light);
   padding: 0.3rem 0.75rem;
-  border-radius: var(--radius-full);
+  border-radius: 5px;
 }
 
 /* Generated Brief Box */
@@ -2595,7 +2595,7 @@ body.site-ready .page-wrapper {
   padding: 0.45rem 0.95rem;
   background: var(--bg-card, #ffffff);
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-full);
+  border-radius: 5px;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--text-primary);
@@ -2704,7 +2704,7 @@ body.site-ready .page-wrapper {
   justify-content: center;
   width: 38px;
   height: 38px;
-  border-radius: 50%;
+  border-radius: 5px;
   background: var(--bg-body);
   border: 1px solid var(--border-light);
   color: var(--text-secondary);
@@ -2857,7 +2857,7 @@ body.site-ready .page-wrapper {
   font-weight: 500;
   padding: 0.75rem 1.65rem;
   gap: 0.65rem;
-  border-radius: var(--radius-full);
+  border-radius: 5px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
@@ -2898,7 +2898,7 @@ body.site-ready .page-wrapper {
   right: 1.25rem;
   width: 46px;
   height: 46px;
-  border-radius: 50%;
+  border-radius: 5px;
   background: rgba(18, 19, 20, 0.88);
   color: #ffffff;
   backdrop-filter: blur(16px);

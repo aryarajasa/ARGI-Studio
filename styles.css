@@ -1994,7 +1994,7 @@ body.site-ready .page-wrapper {
   color: var(--text-secondary);
   background: var(--bg-body);
   border: 1px solid var(--border-light);
-  padding: 0.55rem 1.15rem;
+  padding: 0.52rem 1rem;
   border-radius: 5px;
   cursor: pointer;
   transition: all var(--transition-fast);

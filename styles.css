@@ -1525,9 +1525,9 @@ body.site-ready .page-wrapper {
   visibility: hidden;
   z-index: 2147483647;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.10);
-  border-radius: 5px !important;
+  border: none;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+  border-radius: 0 !important;
   background: #141618;
   transform: translate3d(-9999px, -9999px, 0);
   transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s;
@@ -1544,7 +1544,7 @@ body.site-ready .page-wrapper {
   height: 100%;
   object-fit: cover;
   display: block;
-  border-radius: 5px !important;
+  border-radius: 0 !important;
 }
 
 /* Mobile & Tablet Only 'See More' Wrap (Hidden on Desktop by default) */

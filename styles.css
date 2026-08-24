@@ -1751,28 +1751,44 @@ body.site-ready .page-wrapper {
 .journal-nav-arrows {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1.15rem;
 }
 
 .journal-arrow-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 5px;
-  border: 1px solid var(--border-light);
-  background: var(--bg-card);
+  width: auto;
+  height: auto;
+  padding: 0.35rem;
+  border-radius: 0;
+  border: none;
+  background: transparent;
   color: var(--text-primary);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  outline: none;
+  box-shadow: none;
+  transition: transform var(--transition-bounce), color var(--transition-fast), opacity var(--transition-fast);
 }
 
 .journal-arrow-btn:hover {
-  background: var(--text-primary);
-  color: var(--bg-body);
-  border-color: var(--text-primary);
-  transform: scale(1.05);
+  background: transparent;
+  color: var(--text-primary);
+  border: none;
+}
+
+.journal-arrow-btn.prev:hover,
+#journalPrevBtn:hover {
+  transform: translateX(-4px);
+}
+
+.journal-arrow-btn.next:hover,
+#journalNextBtn:hover {
+  transform: translateX(4px);
+}
+
+.journal-arrow-btn:active {
+  transform: scale(0.92);
 }
 
 .journal-slider-container {

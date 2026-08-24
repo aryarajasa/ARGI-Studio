@@ -616,34 +616,20 @@ body.site-ready .page-wrapper {
 }
 
 .btn-large {
-  font-size: 1.05rem;
-  padding: 0.75rem 0.95rem 0.75rem 1.85rem;
-}
-
-.btn-icon-circle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.18);
-  color: #ffffff;
-  transition: transform var(--transition-bounce), background-color var(--transition-fast);
-}
-
-.btn-animated:hover .btn-icon-circle {
-  transform: translateX(4px) scale(1.1);
-  background-color: #ffffff;
-  color: #000000;
+  font-size: 1rem;
+  padding: 0.8rem 1.65rem;
 }
 
 .btn-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: transform var(--transition-bounce);
 }
 
+.btn:hover .btn-arrow,
 .nav-cta:hover .btn-arrow {
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 .btn-outline {

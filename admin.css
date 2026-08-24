@@ -284,14 +284,14 @@
   border-radius: 5px;
 }
 
-/* Tabs */
+/* Tabs (Concentric R1 + D = R2: 5px button + 4px pad = 9px container) */
 .admin-nav-tabs {
   display: flex;
   align-items: center;
   gap: 0.35rem;
   background: rgba(0, 0, 0, 0.05);
-  padding: 0.3rem 0.4rem;
-  border-radius: 5px;
+  padding: 4px;
+  border-radius: 9px;
 }
 
 .admin-tab-btn {

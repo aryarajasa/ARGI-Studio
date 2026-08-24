@@ -32,14 +32,17 @@
   --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
-  /* Spacing & Subtle 5px Radii for Boxes / Cards (Except Images & Visuals) */
+  /* Concentric Mathematical Radius Tokens (R1 + D = R2) */
   --container-max-width: 1200px;
   --container-padding: 2rem;
+  --radius-xs: 2px;
   --radius-sm: 3px;
+  --radius-btn: 5px;
   --radius-md: 5px;
-  --radius-lg: 5px;
-  --radius-xl: 5px;
-  --radius-full: 9999px; /* Reserved for buttons, pills & circular CTAs */
+  --radius-box: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-card: 12px;
 
   /* Transitions */
   --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1217,15 +1220,15 @@ body.site-ready .page-wrapper {
   color: var(--text-white-muted);
 }
 
-/* View Switcher */
+/* View Switcher (Concentric R1 + D = R2: 5px button + 4px pad = 9px container) */
 .portfolio-view-switcher {
   display: flex;
   align-items: center;
   gap: 0.35rem;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 0.3rem 0.4rem;
-  border-radius: 5px;
+  padding: 4px;
+  border-radius: 9px;
   user-select: none;
 }
 
@@ -2123,7 +2126,7 @@ body.site-ready .page-wrapper {
   color: #34d399;
   border: 1px solid rgba(16, 185, 129, 0.3);
   padding: 0.35rem 0.85rem;
-  border-radius: var(--radius-full);
+  border-radius: 5px;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -2185,7 +2188,7 @@ body.site-ready .page-wrapper {
   font-weight: 600;
   background: rgba(96, 165, 250, 0.12);
   padding: 0.3rem 0.75rem;
-  border-radius: var(--radius-full);
+  border-radius: 4px;
   white-space: nowrap;
   text-align: center;
   display: inline-flex;
@@ -2367,7 +2370,7 @@ body.site-ready .page-wrapper {
   color: var(--accent-blue);
   background: rgba(48, 98, 212, 0.08);
   padding: 0.25rem 0.65rem;
-  border-radius: var(--radius-full);
+  border-radius: 4px;
   margin-bottom: 0.5rem;
 }
 
@@ -2382,7 +2385,7 @@ body.site-ready .page-wrapper {
   font-size: 1.1rem;
   width: 36px;
   height: 36px;
-  border-radius: 50%;
+  border-radius: 5px;
   background: var(--bg-body);
   border: 1px solid var(--border-light);
   display: flex;

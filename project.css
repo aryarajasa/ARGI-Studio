@@ -652,27 +652,26 @@
   flex-wrap: wrap;
 }
 
+.bento-meta-label,
 .bento-meta-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  padding: 0.45rem 1.15rem;
-  border-radius: 5px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: var(--text-secondary);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  color: var(--text-muted);
+  box-shadow: none;
 }
 
-.bento-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-blue);
+.bento-dash {
+  color: var(--text-muted);
+  font-weight: 400;
 }
 
 /* Bento 12-Column Grid Architecture */

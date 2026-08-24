@@ -873,9 +873,9 @@
 }
 
 .deliverables-box {
-  background: var(--bg-card);
+  background: var(--bg-body);
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-xl);
+  border-radius: 5px;
   padding: 3.5rem 3rem;
   display: grid;
   grid-template-columns: 1fr 1.6fr;
@@ -884,8 +884,9 @@
 }
 
 .deliverables-tag {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
+  font-weight: 600;
   letter-spacing: 0.12em;
   color: var(--text-muted);
   display: block;
@@ -911,7 +912,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  background: var(--bg-subtle);
+  background: #ffffff;
   border: 1px solid var(--border-light);
   padding: 0.6rem 1.15rem;
   border-radius: 5px;
@@ -1040,8 +1041,10 @@
 
 .next-project-card:hover .next-arrow-circle {
   transform: scale(1.1) translateX(6px);
-  background: var(--accent-blue);
+  background: #000000;
   color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
 }
 
 /* ==========================================================================

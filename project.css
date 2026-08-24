@@ -29,11 +29,9 @@
 .project-pill-header {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.55rem;
   padding: 0.45rem 1.15rem;
-  background: rgba(246, 241, 235, 0.75);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: 5px;
   cursor: pointer;
@@ -55,15 +53,11 @@
 }
 
 .project-pill-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  display: none !important;
 }
 
 .project-pill-chevron {
-  transition: transform var(--transition-bounce);
+  transition: transform var(--transition-fast);
 }
 
 .nav-project-pill.is-open .project-pill-chevron,

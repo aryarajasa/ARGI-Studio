@@ -3313,10 +3313,10 @@ body.site-ready .page-wrapper {
   }
 
   .hero-heading-centered {
-    font-size: 40px;
-    line-height: 1.06;
+    font-size: clamp(2.85rem, 11vw, 3.85rem);
+    line-height: 1.02;
     letter-spacing: -0.025em;
-    margin-bottom: 1.15rem;
+    margin-bottom: 1.25rem;
   }
 
   .hero-subcaption {

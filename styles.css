@@ -1301,22 +1301,22 @@ body.site-ready .page-wrapper {
 
 .gallery-item-sharp:hover .gallery-img-sharp {
   transform: scale(1.035);
-  filter: brightness(0.7) contrast(1.08);
+  filter: brightness(0.85) contrast(1.04);
 }
 
-/* Velvety Noir Editorial Overlay (Rich Dark Hover) */
+/* Velvety Noir Editorial Overlay (60% Tint) */
 .gallery-sharp-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(8, 9, 10, 0.72);
+  background: rgba(8, 9, 10, 0.60);
   opacity: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
   transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   z-index: 4;
 }
 

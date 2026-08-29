@@ -567,29 +567,8 @@ const initLandingPage = () => {
       initIndexHoverPortal();
     }
 
-    // 2.1 Dynamically Match Capabilities Hover Previews to Database Works
-    const capRows = document.querySelectorAll(".capability-row");
-    if (capRows.length && projectKeys.length) {
-      capRows.forEach((row, idx) => {
-        const targetDisc = (row.getAttribute("data-discipline") || "").toLowerCase();
-        let matchedImg = "";
-        for (let id of projectKeys) {
-          const p = projectsData[id];
-          if (p && p.disciplines && p.disciplines.toLowerCase().includes(targetDisc) && p.heroImage) {
-            matchedImg = p.heroImage;
-            break;
-          }
-        }
-        if (!matchedImg && projectKeys[idx % projectKeys.length]) {
-          const p = projectsData[projectKeys[idx % projectKeys.length]];
-          if (p && p.heroImage) matchedImg = p.heroImage;
-        }
-        if (matchedImg) {
-          row.setAttribute("data-preview", matchedImg);
-        }
-      });
-      initIndexHoverPortal();
-    }
+    // 2.1 Re-bind hover portal to capabilities and index rows
+    initIndexHoverPortal();
 
     // 3. Update Mobile / Tablet 'See More' Count
     if (seeMoreBtnText) {

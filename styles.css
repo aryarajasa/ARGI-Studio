@@ -1086,11 +1086,11 @@ body.site-ready .page-wrapper {
 }
 
 .step-indicator {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1.2rem;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 500;
   color: var(--text-muted);
-  width: 20px;
+  min-width: 30px;
   transition: color var(--transition-fast);
 }
 

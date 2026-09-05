@@ -273,7 +273,7 @@ const initLandingPage = () => {
       if (e.matches) {
         faviconTag.href = "assets/favicon-dark.svg";
       } else {
-        faviconTag.href = "assets/favicon.svg";
+        faviconTag.href = "assets/favicon-light.svg";
       }
     };
 

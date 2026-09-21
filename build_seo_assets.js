@@ -79,7 +79,7 @@ async function generateAll() {
   - **Gigi** — Co-Founder & Brand Designer (Visual Identity, Packaging & Print Craft)
   - **Kinan** — Social Media & Distribution Lead (Narrative Architecture, Content Strategy)
 - **Ethos**: "We craft high-conviction brand identities and digital architecture where radical minimalism meets bespoke typography and tactile restraint."
-- **Inquiries**: hello@argistudio.com
+- **Inquiries**: hello.argistudio@gmail.com
 
 ## Core Capabilities & Services
 1. **Brand Strategy & Visual Identity Systems**:
@@ -152,7 +152,7 @@ ${deliverables ? `- **Deliverables**: ${deliverables}` : ''}
 - **Q: What is ARGI Studio's typical project timeline?**
   - **A**: A full brand identity sprint typically takes 4 to 6 weeks. Complete branding + custom website development takes 6 to 10 weeks.
 - **Q: How can I commission work with ARGI Studio?**
-  - **A**: Clients can submit a project brief directly via the interactive brief builder at https://argistudio.com/#contact or by emailing hello@argistudio.com.
+  - **A**: Clients can submit a project brief directly via the interactive brief builder at https://argistudio.com/#contact or by emailing hello.argistudio@gmail.com.
 `;
 
   fs.writeFileSync('llms.txt', llmsTxt.trim() + '\n', 'utf-8');

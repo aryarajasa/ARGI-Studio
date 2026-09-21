@@ -630,7 +630,6 @@ const initArticlePage = async () => {
   const shareCopyLinkBtn = document.getElementById("shareCopyLinkBtn");
   const copyLinkText = document.getElementById("copyLinkText");
   const shareTwitterBtn = document.getElementById("shareTwitterBtn");
-  const shareLinkedinBtn = document.getElementById("shareLinkedinBtn");
 
   const sharePageUrl = window.location.href;
 
@@ -648,10 +647,6 @@ const initArticlePage = async () => {
   if (shareTwitterBtn) {
     const tweetText = encodeURIComponent(`"${currentArticle.title}" by @ARGIStudio:`);
     shareTwitterBtn.href = `https://twitter.com/intent/tweet?text=${tweetText}&url=${encodeURIComponent(sharePageUrl)}`;
-  }
-
-  if (shareLinkedinBtn) {
-    shareLinkedinBtn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(sharePageUrl)}`;
   }
 
   // -------------------------------------------------------------------------
@@ -1166,7 +1161,7 @@ e.preventDefault();
       ? modalInquiryDetails.value.trim()
       : "[Briefly describe your brand ambitions, key deliverables, and target timeframe...]";
 
-    const briefText = `To: hello@argistudio.com
+    const briefText = `To: hello.argistudio@gmail.com
 Subject: Studio Commission Inquiry — ${clientName}
 
 Dear ARGI Studio Team,
@@ -1193,7 +1188,7 @@ ${clientName}`;
     if (modalSendEmailBtn) {
       const subject = encodeURIComponent(`Studio Commission Inquiry — ${clientName}`);
       const body = encodeURIComponent(briefText);
-      modalSendEmailBtn.href = `mailto:hello@argistudio.com?subject=${subject}&body=${body}`;
+      modalSendEmailBtn.href = `mailto:hello.argistudio@gmail.com?subject=${subject}&body=${body}`;
     }
   };
 
@@ -1264,7 +1259,7 @@ ${clientName}`;
 
     const emailBody = briefPreText ? briefPreText.textContent : `Dear ARGI Studio Team,\n\nName: ${clientName}\nEmail: ${clientEmail}\nDetails: ${details}`;
     const subject = `Studio Commission Inquiry — ${clientName}`;
-    const mailtoUrl = `mailto:hello@argistudio.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+    const mailtoUrl = `mailto:hello.argistudio@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
 
     // 1. Copy to clipboard automatically for convenience
     try {
@@ -1287,7 +1282,7 @@ ${clientName}`;
     // 3. Show instant success notice
     modalStatusBox.style.display = "flex";
     modalStatusBox.className = "modal-status-box is-success";
-    modalStatusBox.innerHTML = `✓ Formatted brief prepared &amp; copied! Opening your Mail App to send to <strong>hello@argistudio.com</strong>...`;
+    modalStatusBox.innerHTML = `✓ Formatted brief prepared &amp; copied! Opening your Mail App to send to <strong>hello.argistudio@gmail.com</strong>...`;
 
     // 4. Open native Mail App
     window.location.href = mailtoUrl;

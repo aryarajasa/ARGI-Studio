@@ -11,7 +11,7 @@ Official website and custom database CMS for **ARGI Studio**, an independent cre
 - **Location**: Bali, Indonesia
 - **Disciplines**: Brand Identity Design, Web Design & Development, Social Media & Content, Graphic Design & Print
 - **Database & Media CDN**: Supabase PostgreSQL & Cloud Media Storage
-- **Contact**: `hello@argistudio.com`
+- **Contact**: `hello.argistudio@gmail.com`
 - **Tech Stack**: HTML5, Vanilla CSS3, Vanilla JavaScript, Supabase JS v2
 
 ---

@@ -936,7 +936,7 @@ const initLandingPage = () => {
       ? modalInquiryDetails.value.trim()
       : "[Briefly describe your brand ambitions, key deliverables, and target timeframe...]";
 
-    const briefText = `To: hello@argistudio.com
+    const briefText = `To: hello.argistudio@gmail.com
 Subject: Studio Commission Inquiry — ${clientName}
 
 Dear ARGI Studio Team,
@@ -982,7 +982,7 @@ Best regards,
 ${clientName}`
       );
 
-      modalSendEmailBtn.href = `mailto:hello@argistudio.com?subject=${subject}&body=${body}`;
+      modalSendEmailBtn.href = `mailto:hello.argistudio@gmail.com?subject=${subject}&body=${body}`;
     }
 
     // Also update chips in modal
@@ -1124,7 +1124,7 @@ ${clientName}`
 
     const emailBody = briefPreText ? briefPreText.textContent : `Dear ARGI Studio Team,\n\nName: ${clientName}\nEmail: ${clientEmail}\nDetails: ${details}`;
     const subject = `Studio Commission Inquiry — ${clientName}`;
-    const mailtoUrl = `mailto:hello@argistudio.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+    const mailtoUrl = `mailto:hello.argistudio@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
 
     // 1. Copy to clipboard automatically for convenience
     try {
@@ -1147,7 +1147,7 @@ ${clientName}`
     // 3. Show instant success notice
     modalStatusBox.style.display = "flex";
     modalStatusBox.className = "modal-status-box is-success";
-    modalStatusBox.innerHTML = `✓ Formatted brief prepared &amp; copied! Opening your Mail App to send to <strong>hello@argistudio.com</strong>...`;
+    modalStatusBox.innerHTML = `✓ Formatted brief prepared &amp; copied! Opening your Mail App to send to <strong>hello.argistudio@gmail.com</strong>...`;
 
     // 4. Open native Mail App
     window.location.href = mailtoUrl;
@@ -1185,9 +1185,9 @@ ${clientName}`
   // Copy Email Address button with feedback on main page
   if (copyEmailBtn && copyEmailText) {
     copyEmailBtn.addEventListener("click", () => {
-      navigator.clipboard.writeText("hello@argistudio.com").then(() => {
+      navigator.clipboard.writeText("hello.argistudio@gmail.com").then(() => {
         const original = copyEmailText.textContent;
-        copyEmailText.textContent = "✓ Copied hello@argistudio.com";
+        copyEmailText.textContent = "✓ Copied hello.argistudio@gmail.com";
         copyEmailBtn.style.borderColor = "var(--accent-green)";
         copyEmailBtn.style.color = "var(--accent-green)";
 

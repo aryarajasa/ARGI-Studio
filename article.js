@@ -625,11 +625,10 @@ const initArticlePage = async () => {
   });
 
   // -------------------------------------------------------------------------
-  // 7. SHARE BUTTONS (CLIPBOARD & SOCIAL)
+  // 7. SHARE BUTTONS (CLIPBOARD LINK)
   // -------------------------------------------------------------------------
   const shareCopyLinkBtn = document.getElementById("shareCopyLinkBtn");
   const copyLinkText = document.getElementById("copyLinkText");
-  const shareTwitterBtn = document.getElementById("shareTwitterBtn");
 
   const sharePageUrl = window.location.href;
 
@@ -642,11 +641,6 @@ const initArticlePage = async () => {
         }, 2200);
       });
     });
-  }
-
-  if (shareTwitterBtn) {
-    const tweetText = encodeURIComponent(`"${currentArticle.title}" by @ARGIStudio:`);
-    shareTwitterBtn.href = `https://twitter.com/intent/tweet?text=${tweetText}&url=${encodeURIComponent(sharePageUrl)}`;
   }
 
   // -------------------------------------------------------------------------

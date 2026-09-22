@@ -1002,10 +1002,9 @@ const initProjectPage = async () => {
   updateClock();
   setInterval(updateClock, 1000);
 
-  // Case Study Share Actions (Link, X)
+  // Case Study Share Actions (Clipboard Link)
   const csShareCopyLinkBtn = document.getElementById("shareCopyLinkBtn");
   const csCopyLinkText = document.getElementById("copyLinkText");
-  const csShareTwitterBtn = document.getElementById("shareTwitterBtn");
 
   const csShareUrl = window.location.href;
 
@@ -1018,11 +1017,6 @@ const initProjectPage = async () => {
         }, 2200);
       });
     });
-  }
-
-  if (csShareTwitterBtn) {
-    const tweetText = encodeURIComponent(`"${currentProject.title}" by @ARGIStudio:`);
-    csShareTwitterBtn.href = `https://twitter.com/intent/tweet?text=${tweetText}&url=${encodeURIComponent(csShareUrl)}`;
   }
 
   // Adaptive Dark/Light Mode Favicon Switcher (Based on OS Preference)

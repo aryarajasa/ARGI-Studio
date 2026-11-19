@@ -114,7 +114,7 @@ async function generateAll() {
 - **Sector**: ${sector}
 - **Year & Timeline**: ${year} (${timeline})
 - **Disciplines**: ${disciplines}
-- **Case Study URL**: https://argistudio.com/project/${slug}
+- **Case Study URL**: https://argistudio.com/project/${slug}/
 - **Executive Summary**: ${summary}
 ${challenge ? `- **Strategic Challenge**: ${challenge}` : ''}
 ${concept ? `- **Creative Solution**: ${concept}` : ''}
@@ -140,7 +140,7 @@ ${deliverables ? `- **Deliverables**: ${deliverables}` : ''}
 - **Category**: ${category}
 - **Date**: ${date}
 - **Author**: ${author}
-- **Article URL**: https://argistudio.com/article/${slug}
+- **Article URL**: https://argistudio.com/article/${slug}/
 - **Lead Synopsis**: ${lead}
 `;
   });
@@ -177,7 +177,7 @@ ${deliverables ? `- **Deliverables**: ${deliverables}` : ''}
   projectList.forEach(p => {
     const slug = p.slug || p.id;
     sitemapXml += `  <url>
-    <loc>https://argistudio.com/project/${slug}</loc>
+    <loc>https://argistudio.com/project/${slug}/</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
@@ -192,7 +192,7 @@ ${deliverables ? `- **Deliverables**: ${deliverables}` : ''}
   articleList.forEach(a => {
     const slug = a.slug || a.id;
     sitemapXml += `  <url>
-    <loc>https://argistudio.com/article/${slug}</loc>
+    <loc>https://argistudio.com/article/${slug}/</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
@@ -204,6 +204,200 @@ ${deliverables ? `- **Deliverables**: ${deliverables}` : ''}
 
   fs.writeFileSync('sitemap.xml', sitemapXml, 'utf-8');
   console.log('Generated sitemap.xml with all database routes!');
+
+  // =========================================================================
+  // 3. PRE-RENDER STATIC HTML PAGES FOR GITHUB PAGES (200 OK FOR GOOGLEBOT)
+  // =========================================================================
+  const escHtml = (str = '') =>
+    String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+
+  const isVideoUrl = (url = '') => {
+    const clean = String(url).trim().toLowerCase().split('?')[0];
+    return clean.endsWith('.mp4') || clean.endsWith('.webm') || clean.endsWith('.mov');
+  };
+
+  if (fs.existsSync('project.html')) {
+    const projectTemplate = fs.readFileSync('project.html', 'utf-8');
+    projectList.forEach(p => {
+      const slug = p.slug || p.id;
+      if (!slug) return;
+      const fullTitle = `${p.title || ''} ${p.titleAccent || ''}`.trim();
+      const pageTitle = `${fullTitle} — Case Study | ARGI Studio Bali`;
+      const desc = p.summary || `${fullTitle} brand identity and digital design case study by ARGI Studio, Bali.`;
+      const canonical = `https://argistudio.com/project/${slug}/`;
+      const ogImage = (p.heroImage && !isVideoUrl(p.heroImage))
+        ? p.heroImage
+        : 'https://argistudio.com/assets/og-image.jpg';
+
+      const schemaObj = {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CreativeWork",
+            "@id": `${canonical}#caseStudy`,
+            "name": fullTitle,
+            "headline": `${fullTitle} — ${p.disciplines || 'Brand Identity & Web Design'}`,
+            "description": desc,
+            "url": canonical,
+            "image": ogImage,
+            "author": {
+              "@type": "Organization",
+              "name": "ARGI Studio",
+              "url": "https://argistudio.com/"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "ARGI Studio",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://argistudio.com/assets/logo.png"
+              }
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": `${canonical}#breadcrumb`,
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ARGI Studio", "item": "https://argistudio.com/" },
+              { "@type": "ListItem", "position": 2, "name": "Selected Work", "item": "https://argistudio.com/#projects" },
+              { "@type": "ListItem", "position": 3, "name": fullTitle, "item": canonical }
+            ]
+          }
+        ]
+      };
+
+      let html = projectTemplate;
+      html = html.replace(/<title id="pageTitle">[\s\S]*?<\/title>/, `<title id="pageTitle">${escHtml(pageTitle)}</title>`);
+      html = html.replace(/<meta name="description" id="pageDescription" content="[^"]*"\s*\/>/, `<meta name="description" id="pageDescription" content="${escHtml(desc)}" />`);
+      html = html.replace(/<link rel="canonical" id="canonicalUrl" href="[^"]*"\s*\/>/, `<link rel="canonical" id="canonicalUrl" href="${escHtml(canonical)}" />`);
+      html = html.replace(/<meta property="og:url" id="ogUrl" content="[^"]*"\s*\/>/, `<meta property="og:url" id="ogUrl" content="${escHtml(canonical)}" />`);
+      html = html.replace(/<meta property="og:title" id="ogTitle" content="[^"]*"\s*\/>/, `<meta property="og:title" id="ogTitle" content="${escHtml(pageTitle)}" />`);
+      html = html.replace(/<meta property="og:description" id="ogDescription" content="[^"]*"\s*\/>/, `<meta property="og:description" id="ogDescription" content="${escHtml(desc)}" />`);
+      html = html.replace(/<meta property="og:image" id="ogImage" content="[^"]*"\s*\/>/, `<meta property="og:image" id="ogImage" content="${escHtml(ogImage)}" />`);
+      html = html.replace(/<meta name="twitter:title" id="twitterTitle" content="[^"]*"\s*\/>/, `<meta name="twitter:title" id="twitterTitle" content="${escHtml(pageTitle)}" />`);
+      html = html.replace(/<meta name="twitter:description" id="twitterDescription" content="[^"]*"\s*\/>/, `<meta name="twitter:description" id="twitterDescription" content="${escHtml(desc)}" />`);
+      html = html.replace(/<meta name="twitter:image" id="twitterImage" content="[^"]*"\s*\/>/, `<meta name="twitter:image" id="twitterImage" content="${escHtml(ogImage)}" />`);
+      html = html.replace(
+        /<script type="application\/ld\+json" id="projectSchema">[\s\S]*?<\/script>/,
+        `<script type="application/ld+json" id="projectSchema">\n  ${JSON.stringify(schemaObj, null, 2)}\n  </script>`
+      );
+
+      // Hydrate visible SEO body elements so crawlers read authentic copy immediately
+      html = html.replace(
+        /<h1 class="cs-hero-title" id="csTitle">[\s\S]*?<\/h1>/,
+        `<h1 class="cs-hero-title" id="csTitle">\n            ${escHtml(p.title || '')} <em class="serif-accent" id="csTitleAccent">${escHtml(p.titleAccent || '')}</em>\n          </h1>`
+      );
+      html = html.replace(
+        /<p class="cs-hero-summary" id="csSummary">[\s\S]*?<\/p>/,
+        `<p class="cs-hero-summary" id="csSummary">\n            ${escHtml(desc)}\n          </p>`
+      );
+      html = html.replace(/<span class="meta-val" id="csMetaClient">[\s\S]*?<\/span>/, `<span class="meta-val" id="csMetaClient">${escHtml(p.client || p.title || '')}</span>`);
+      html = html.replace(/<span class="meta-sub" id="csMetaSector">[\s\S]*?<\/span>/, `<span class="meta-sub" id="csMetaSector">${escHtml(p.sector || '')}</span>`);
+      html = html.replace(/<span class="meta-val" id="csMetaTimeline">[\s\S]*?<\/span>/, `<span class="meta-val" id="csMetaTimeline">${escHtml(p.timeline || '')}</span>`);
+      html = html.replace(/<span class="meta-sub" id="csMetaYear">[\s\S]*?<\/span>/, `<span class="meta-sub" id="csMetaYear">${escHtml(p.year || '')}</span>`);
+      html = html.replace(/<span class="meta-val" id="csMetaDisciplines">[\s\S]*?<\/span>/, `<span class="meta-val" id="csMetaDisciplines">${escHtml(p.disciplines || '')}</span>`);
+      html = html.replace(/<span class="meta-sub" id="csMetaDisciplinesSub">[\s\S]*?<\/span>/, `<span class="meta-sub" id="csMetaDisciplinesSub">${escHtml(p.disciplinesSub || '')}</span>`);
+      if (p.challenge) {
+        html = html.replace(
+          /<p class="narrative-p" id="csChallengeText">[\s\S]*?<\/p>/,
+          `<p class="narrative-p" id="csChallengeText">\n                  ${escHtml(p.challenge)}\n                </p>`
+        );
+      }
+      if (p.concept) {
+        html = html.replace(
+          /<p class="narrative-p" id="csConceptText">[\s\S]*?<\/p>/,
+          `<p class="narrative-p" id="csConceptText">\n                  ${escHtml(p.concept)}\n                </p>`
+        );
+      }
+
+      const outDir = path.join('project', slug);
+      fs.mkdirSync(outDir, { recursive: true });
+      fs.writeFileSync(path.join(outDir, 'index.html'), html, 'utf-8');
+      console.log(`Pre-rendered static case study: project/${slug}/index.html`);
+    });
+  }
+
+  if (fs.existsSync('article.html')) {
+    const articleTemplate = fs.readFileSync('article.html', 'utf-8');
+    articleList.forEach(a => {
+      const slug = a.slug || a.id;
+      if (!slug) return;
+      const title = a.title || 'Studio Dispatch';
+      const pageTitle = `${title} — ARGI Studio Journal`;
+      const desc = a.lead || `${title} — Studio Journal by ARGI Studio, Bali.`;
+      const canonical = `https://argistudio.com/article/${slug}/`;
+      const ogImage = (a.featureImage && !isVideoUrl(a.featureImage))
+        ? a.featureImage
+        : 'https://argistudio.com/assets/og-image.jpg';
+
+      const schemaObj = {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": `${canonical}#article`,
+            "headline": title,
+            "description": desc,
+            "url": canonical,
+            "image": ogImage,
+            "author": {
+              "@type": "Person",
+              "name": a.authorName || "ARGI Studio Editorial"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "ARGI Studio",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://argistudio.com/assets/logo.png"
+              }
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": canonical
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": `${canonical}#breadcrumb`,
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ARGI Studio", "item": "https://argistudio.com/" },
+              { "@type": "ListItem", "position": 2, "name": "Journal", "item": "https://argistudio.com/#journal" },
+              { "@type": "ListItem", "position": 3, "name": title, "item": canonical }
+            ]
+          }
+        ]
+      };
+
+      let html = articleTemplate;
+      html = html.replace(/<title id="pageTitle">[\s\S]*?<\/title>/, `<title id="pageTitle">${escHtml(pageTitle)}</title>`);
+      html = html.replace(/<meta name="description" id="pageDescription" content="[^"]*"\s*\/>/, `<meta name="description" id="pageDescription" content="${escHtml(desc)}" />`);
+      html = html.replace(/<link rel="canonical" id="canonicalUrl" href="[^"]*"\s*\/>/, `<link rel="canonical" id="canonicalUrl" href="${escHtml(canonical)}" />`);
+      html = html.replace(/<meta property="og:url" id="ogUrl" content="[^"]*"\s*\/>/, `<meta property="og:url" id="ogUrl" content="${escHtml(canonical)}" />`);
+      html = html.replace(/<meta property="og:title" id="ogTitle" content="[^"]*"\s*\/>/, `<meta property="og:title" id="ogTitle" content="${escHtml(pageTitle)}" />`);
+      html = html.replace(/<meta property="og:description" id="ogDescription" content="[^"]*"\s*\/>/, `<meta property="og:description" id="ogDescription" content="${escHtml(desc)}" />`);
+      html = html.replace(/<meta property="og:image" id="ogImage" content="[^"]*"\s*\/>/, `<meta property="og:image" id="ogImage" content="${escHtml(ogImage)}" />`);
+      html = html.replace(/<meta name="twitter:title" id="twitterTitle" content="[^"]*"\s*\/>/, `<meta name="twitter:title" id="twitterTitle" content="${escHtml(pageTitle)}" />`);
+      html = html.replace(/<meta name="twitter:description" id="twitterDescription" content="[^"]*"\s*\/>/, `<meta name="twitter:description" id="twitterDescription" content="${escHtml(desc)}" />`);
+      html = html.replace(/<meta name="twitter:image" id="twitterImage" content="[^"]*"\s*\/>/, `<meta name="twitter:image" id="twitterImage" content="${escHtml(ogImage)}" />`);
+      html = html.replace(
+        /<script type="application\/ld\+json" id="articleSchema">[\s\S]*?<\/script>/,
+        `<script type="application/ld+json" id="articleSchema">\n  ${JSON.stringify(schemaObj, null, 2)}\n  </script>`
+      );
+      html = html.replace(/<h1 class="article-main-title" id="articleMainTitle">[\s\S]*?<\/h1>/, `<h1 class="article-main-title" id="articleMainTitle">\n            ${escHtml(title)}\n          </h1>`);
+      html = html.replace(/<p class="article-lead-text" id="articleLeadText">[\s\S]*?<\/p>/, `<p class="article-lead-text" id="articleLeadText">\n            ${escHtml(desc)}\n          </p>`);
+
+      const outDir = path.join('article', slug);
+      fs.mkdirSync(outDir, { recursive: true });
+      fs.writeFileSync(path.join(outDir, 'index.html'), html, 'utf-8');
+      console.log(`Pre-rendered static article: article/${slug}/index.html`);
+    });
+  }
+
   return { projectCount: projectList.length, articleCount: articleList.length };
 }
 

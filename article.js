@@ -227,12 +227,12 @@ const initArticlePage = async () => {
 
   const articleSlug = currentArticle.slug || currentArticle.id;
   const isLocalFile = window.location.protocol === "file:";
-  const currentUrl = `https://argistudio.com/article/${articleSlug}`;
+  const currentUrl = `https://argistudio.com/article/${articleSlug}/`;
 
-  // Seamlessly update browser address bar to clean title slug URL (/article/haven)
+  // Seamlessly update browser address bar to clean title slug URL (/article/slug/)
   if (window.history && window.history.replaceState && !isLocalFile) {
     sessionStorage.removeItem("gh_redirect_url");
-    window.history.replaceState({ slug: articleSlug }, "", `/article/${articleSlug}`);
+    window.history.replaceState({ slug: articleSlug }, "", `/article/${articleSlug}/`);
   }
 
   // Update Page Title

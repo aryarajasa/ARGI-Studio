@@ -263,17 +263,17 @@ const initProjectPage = async () => {
 
   const projectSlug = currentProject.slug || currentProject.id;
   const isLocalFile = window.location.protocol === "file:";
-  const currentUrl = `https://argistudio.com/project/${projectSlug}`;
+  const currentUrl = `https://argistudio.com/project/${projectSlug}/`;
 
-  // Seamlessly update browser address bar to clean title slug URL (/project/haven)
+  // Seamlessly update browser address bar to clean title slug URL (/project/haven/)
   if (window.history && window.history.replaceState && !isLocalFile) {
     sessionStorage.removeItem("gh_redirect_url");
-    window.history.replaceState({ slug: projectSlug }, "", `/project/${projectSlug}`);
+    window.history.replaceState({ slug: projectSlug }, "", `/project/${projectSlug}/`);
   }
 
   // Update Dynamic Page Meta, Title & Rich OpenGraph / Twitter Cards
   const fullTitle = `${currentProject.title} ${currentProject.titleAccent || ''}`.trim();
-  document.title = `${fullTitle} — Case Study | ARGI Studio — Creative Studio Bali`;
+  document.title = `${fullTitle} — Case Study | ARGI Studio Bali`;
   
   const pageDesc = document.getElementById("pageDescription");
   const metaDescription = `${currentProject.summary || 'Brand Identity, Web Design & Packaging Case Study by ARGI Studio, Bali.'}`;

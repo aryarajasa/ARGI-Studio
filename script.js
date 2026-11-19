@@ -515,7 +515,7 @@ const initLandingPage = () => {
 
         const isLocalFile = window.location.protocol === "file:";
         const targetSlug = p.slug || p.id;
-        const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}`;
+        const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}/`;
         return `
           <a href="${projectHref}" class="gallery-item-sharp" aria-label="Explore ${titleFull} Case Study">
             <div class="gallery-item-frame">
@@ -549,7 +549,7 @@ const initLandingPage = () => {
         const year = p.year || "2026";
         const isLocalFile = window.location.protocol === "file:";
         const targetSlug = p.slug || p.id;
-        const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}`;
+        const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}/`;
 
         return `
           <a href="${projectHref}" class="index-row-item" data-preview="${p.heroImage || 'assets/logo.png'}">
@@ -594,7 +594,7 @@ const initLandingPage = () => {
         if (!p) return;
         projectPools[id] = [];
         const targetSlug = p.slug || p.id;
-        const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}`;
+        const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}/`;
         const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
 
         const addCandidate = (url) => {
@@ -675,7 +675,7 @@ const initLandingPage = () => {
         const p = projectsData[id];
         const isLocalFile = window.location.protocol === "file:";
         const targetSlug = p.slug || p.id;
-        const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}`;
+        const projectHref = isLocalFile ? `project.html?slug=${targetSlug}` : `/project/${targetSlug}/`;
         const titleFull = `${p.title} ${p.titleAccent || ''}`.trim();
         return `<li><a href="${projectHref}" class="footer-menu-link">${titleFull}</a></li>`;
       }).join("");
@@ -710,7 +710,7 @@ const initLandingPage = () => {
           const a = articlesData[id];
           const isLocalFile = window.location.protocol === "file:";
           const targetSlug = a.slug || a.id;
-          const articleHref = isLocalFile ? `article.html?slug=${targetSlug}` : `/article/${targetSlug}`;
+          const articleHref = isLocalFile ? `article.html?slug=${targetSlug}` : `/article/${targetSlug}/`;
           return `
             <a href="${articleHref}" class="news-card" aria-label="Read ${a.title}">
               <div class="news-thumbnail-wrap">
